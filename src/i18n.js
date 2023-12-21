@@ -62,6 +62,7 @@ export const i18n = createI18n({
             unused: 'Unused',
             used: 'Used',
             id: 'ID',
+            demoTip: 'This is a demo site, the data is not real. If you want to experience the real data, please contact us: admin@niostack.com',
 
         },
         'zh-CN': {
@@ -122,6 +123,7 @@ export const i18n = createI18n({
             unused: '未使用',
             used: '已使用',
             id: 'ID',
+            demoTip: '这是一个演示站点，数据并不真实。如果您想体验真实数据，请联系我们：admin@niostack.com'
 
         }
     }

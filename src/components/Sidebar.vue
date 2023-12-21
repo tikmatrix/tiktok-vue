@@ -13,6 +13,11 @@
             </li>
         </ul>
         <div class="mt-auto">
+            <div v-show="showDemoTip" class="m-2">
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
+                    <p class="font-bold">{{ $t('demoTip') }}</p>
+                </div>
+            </div>
             <div class="relative inline-flex items-center bg-gray-800 rounded-full p-2 border border-white">
                 <font-awesome-icon icon="globe" class="text-white" />
                 <div class="relative">
@@ -58,7 +63,8 @@ export default {
                 { name: 'autoTrain', icon: 'sync-alt' }, // 或者 'redo', 'refresh', 'retweet' 等
                 { name: 'dialogWatcher', icon: 'exclamation-circle' }, // 或者 'bell', 'eye', 'binoculars' 等
             ]
-            , open: false
+            , open: false,
+            showDemoTip: import.meta.env.VITE_APP_MOCK === 'true',
         }
     },
     methods: {

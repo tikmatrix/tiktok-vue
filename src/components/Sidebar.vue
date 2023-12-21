@@ -64,7 +64,7 @@ export default {
                 { name: 'dialogWatcher', icon: 'exclamation-circle' }, // 或者 'bell', 'eye', 'binoculars' 等
             ]
             , open: false,
-            showDemoTip: import.meta.env.VITE_APP_MOCK === 'true',
+            showDemoTip: false,
         }
     },
     methods: {
@@ -80,6 +80,7 @@ export default {
     },
     mounted() {
         this.selectItem(this.selectedItem, this.menuItems[this.selectedItem]);
+        this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
     }
 }
 </script>

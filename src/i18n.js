@@ -38,10 +38,10 @@ export const i18n = createI18n({
             enableProxy: 'Enable Proxy',
             disableProxy: 'Disable Proxy',
             batchAction: 'Batch Action',
-            totalDevices: 'Total devices',
+            total: 'Total',
             previous: 'Previous',
             next: 'Next',
-            enterDeviceSerial: 'Enter device serial',
+            enterTips: 'Enter keywords',
             clearTiktok: 'Clear Tiktok',
             connecting: 'Connecting',
             autoScripts: 'Auto Scripts',
@@ -61,6 +61,7 @@ export const i18n = createI18n({
             status: 'Status',
             unused: 'Unused',
             used: 'Used',
+            id: 'ID',
 
         },
         'zh-CN': {
@@ -97,10 +98,10 @@ export const i18n = createI18n({
             enableProxy: '启用代理',
             disableProxy: '禁用代理',
             batchAction: '批量操作',
-            totalDevices: '总设备数',
+            total: '总数',
             previous: '上一页',
             next: '下一页',
-            enterDeviceSerial: '输入设备序列号',
+            enterTips: '输入关键字',
             clearTiktok: '清除 Tiktok',
             connecting: '连接中',
             autoScripts: '自动脚本',
@@ -120,6 +121,7 @@ export const i18n = createI18n({
             status: '状态',
             unused: '未使用',
             used: '已使用',
+            id: 'ID',
 
         }
     }

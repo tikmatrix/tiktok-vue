@@ -1,55 +1,57 @@
 <template>
     <div class="w-full">
-        <div ref="header" class="w-full p-4 bg-gray-200 border-b border-gray-300  sticky top-0 z-10">
-            <Button @click="create_job" label="add" />
-        </div>
-        <div>
-            <table class="w-full text-left table-auto border-collapse">
-                <thead :style="{ top: `${headerHeight - 3}px` }" class="sticky bg-white z-10">
-                    <tr>
-                        <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                        <th class="px-4 py-2 border font-bold">{{ $t('startTime') }}</th>
-                        <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
-                        <th class="px-4 py-2 border font-bold">{{ $t('material') }}</th>
-                        <th class="px-4 py-2 border font-bold">{{ $t('account') }}</th>
-                        <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
-                        <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(job, index) in jobs" :key="index"
-                        :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                        <td class="px-4 py-2 border">{{ job.id }}</td>
-                        <td class="px-4 py-2 border">{{ job.start_time }}</td>
-                        <td class="px-4 py-2 border" :class="{
-                            'text-green-500': job.status === 2,
-                            'text-red-500': job.status === 3,
-                            'text-yellow-500': job.status === 1,
-                            'text-gray-500': job.status === 0
-                        }">
-                            {{ { 0: $t('waiting'), 1: $t('execing'), 2: $t('success'), 3: $t('failed') }[job.status] }}
-                        </td>
-                        <td class="px-4 py-2 border">
-                            <template v-if="job.material.endsWith('.mp4') || job.material.endsWith('.webm')">
-                                <video :src="`${job.material}`" class="w-[100px] h-[100px] max-w-none">
-                                </video>
-                            </template>
-                            <template v-else>
-                                <img :src="`${job.material}`" class="w-[100px] h-[100px] max-w-none" />
-                            </template>
-                        </td>
-                        <td class="px-4 py-2 border">{{ job.account }}</td>
-                        <td class="px-4 py-2 border">{{ job.device || 'N/A' }}</td>
-                        <td class="px-4 py-2 border space-x-4">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                @click="editJob(job)">{{ $t('edit') }}</button>
-                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                @click="deleteJob(job)">{{ $t('delete') }}</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <Pagination :items="jobs" :pageSize="10" searchKey="account">
+            <template v-slot:buttons>
+                <Button @click="create_job" label="add" />
+            </template>
+            <template v-slot:default="slotProps">
+                <table class="w-full text-left table-auto border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('startTime') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('material') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('account') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(job, index) in slotProps.items" :key="index"
+                            :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
+                            <td class="px-4 py-2 border">{{ job.id }}</td>
+                            <td class="px-4 py-2 border">{{ job.start_time }}</td>
+                            <td class="px-4 py-2 border" :class="{
+                                'text-green-500': job.status === 2,
+                                'text-red-500': job.status === 3,
+                                'text-yellow-500': job.status === 1,
+                                'text-gray-500': job.status === 0
+                            }">
+                                {{ { 0: $t('waiting'), 1: $t('execing'), 2: $t('success'), 3: $t('failed') }[job.status] }}
+                            </td>
+                            <td class="px-4 py-2 border">
+                                <template v-if="job.material.endsWith('.mp4') || job.material.endsWith('.webm')">
+                                    <video :src="`${job.material}`" class="w-[100px] h-[100px] max-w-none">
+                                    </video>
+                                </template>
+                                <template v-else>
+                                    <img :src="`${job.material}`" class="w-[100px] h-[100px] max-w-none" />
+                                </template>
+                            </td>
+                            <td class="px-4 py-2 border">{{ job.account }}</td>
+                            <td class="px-4 py-2 border">{{ job.device || 'N/A' }}</td>
+                            <td class="px-4 py-2 border space-x-4">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                    @click="editJob(job)">{{ $t('edit') }}</button>
+                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                    @click="deleteJob(job)">{{ $t('delete') }}</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+        </Pagination>
         <Modal :show="currentJob" @close="currentJob = null">
             <Edit :job="currentJob" @update="updateJob" />
         </Modal>
@@ -63,6 +65,7 @@ import Create from './Create.vue'
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
 import Edit from './Edit.vue'
+import Pagination from '../Pagination.vue'
 
 export default {
     name: 'app',
@@ -70,11 +73,11 @@ export default {
         Create,
         Modal,
         Button,
-        Edit
+        Edit,
+        Pagination
     },
     data() {
         return {
-            headerHeight: 0,
             jobs: [],
             currentJob: null,
             showCreateView: false,
@@ -139,7 +142,6 @@ export default {
         }
     },
     mounted() {
-        this.headerHeight = this.$refs.header.offsetHeight;
         this.get_jobs()
     }
 

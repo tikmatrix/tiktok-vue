@@ -1,16 +1,16 @@
 <template>
     <div class=" w-full">
-        <BatchButtons @get_devices="get_devices" class="sticky top-0 z-10" />
-        <p class="font-bold">{{ $t('totalDevices') }}: {{ devices.length }}</p>
-        <Button @click="prevPage" :disabled="currentPage <= 1" label="previous" :loading-time=300 />
-        <Button @click="nextPage" :disabled="currentPage >= pageCount" label="next" :loading-time=300 />
-        <input v-model="searchSerial" :placeholder="$t('enterDeviceSerial')"
-            class="w-full p-3 my-2 border-2 border-gray-300 rounded" />
-        <div class="flex flex-wrap align-top">
-            <Miniremote v-for="(device, index) in paginatedDevices" :device="device"
-                :index="(currentPage - 1) * pageSize + index + 1" :key="device.serial" @show_device="show_device"
-                @show_shell="show_shell" />
-        </div>
+        <Pagination :items="devices" :pageSize="5" searchKey="serial">
+            <template v-slot:buttons>
+                <BatchButtons @get_devices="get_devices" />
+            </template>
+            <template v-slot:default="slotProps">
+                <div class="flex flex-wrap align-top">
+                    <Miniremote v-for="(device, index) in slotProps.items" :device="device" :index="device.id"
+                        :key="device.serial" @show_device="show_device" @show_shell="show_shell" />
+                </div>
+            </template>
+        </Pagination>
         <Modal :show="currentDevice" @close="handleDeviceClose">
             <Remote :device="currentDevice" />
         </Modal>
@@ -26,6 +26,7 @@ import Miniremote from './Miniremote.vue'
 import Remote from './Remote.vue'
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
+import Pagination from '../Pagination.vue'
 
 export default {
     name: 'app',
@@ -35,32 +36,16 @@ export default {
         BatchButtons,
         Button,
         Modal,
+        Pagination
     },
     data() {
         return {
             devices: [],
             currentDevice: null,
             currentShell: null,
-            currentPage: 1,
-            pageSize: 5,
-            searchSerial: '',
         }
     },
-    computed: {
-        pageCount() {
-            return Math.ceil(this.devices.length / this.pageSize);
-        },
-        paginatedDevices() {
-            const start = (this.currentPage - 1) * this.pageSize;
-            const end = start + this.pageSize;
-            if (this.searchSerial) {
-                return this.devices.filter(device => device.serial.includes(this.searchSerial)).slice(start, end);
-            } else {
-                return this.devices.slice(start, end);
-            }
 
-        }
-    },
     methods: {
 
         handleDeviceClose() {
@@ -84,16 +69,7 @@ export default {
             this.currentShell = device
 
         },
-        nextPage() {
-            if (this.currentPage < this.pageCount) {
-                this.currentPage++;
-            }
-        },
-        prevPage() {
-            if (this.currentPage > 1) {
-                this.currentPage--;
-            }
-        }
+
     },
     mounted() {
         this.get_devices()
@@ -102,5 +78,5 @@ export default {
 
 }
 </script>
-  
+
   

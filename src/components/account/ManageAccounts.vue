@@ -1,38 +1,46 @@
 <template>
     <div class="w-full">
-        <div ref="header" class="w-full p-4 bg-gray-200 border-b border-gray-300 sticky top-0 z-10">
-            <Button @click="add_account" label="add" />
-        </div>
-        <table class="w-full text-left table-auto border-collapse">
-            <thead :style="{ top: `${headerHeight - 3}px` }" class="sticky bg-white z-10">
-                <tr>
-                    <th class="px-4 py-2 border font-bold">{{ $t('email') }}</th>
-                    <!-- <th class="px-4 py-2 border font-bold">{{ $t('password') }}</th> -->
-                    <!-- <th class="px-4 py-2 border font-bold">{{ $t('shop_creator') }}</th> -->
-                    <th class="px-4 py-2 border font-bold">{{ $t('autoTrain') }}</th>
-                    <!-- <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th> -->
-                    <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
-                    <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(account, index) in accounts" :key="index"
-                    :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                    <td class="px-4 py-2 border">{{ account.email }}</td>
-                    <!-- <td class="px-4 py-2 border">{{ account.pwd }}</td> -->
-                    <!-- <td class="px-4 py-2 border">{{ parseInt(account.shop_creator) === 0 ? $t('disable') : $t('enable') }}</td> -->
-                    <td class="px-4 py-2 border">{{ parseInt(account.automated) === 0 ? $t('disable') : $t('enable') }}</td>
-                    <!-- <td class="px-4 py-2 border">{{ account.fans }}</td> -->
-                    <td class="px-4 py-2 border">{{ account.device }}</td>
-                    <td class="px-4 py-2 border space-x-4">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            @click="editAccount(account)">{{ $t('edit') }}</button>
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                            @click="deleteAccount(account)">{{ $t('delete') }}</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <Pagination :items="accounts" :pageSize="10" searchKey="email">
+            <template v-slot:buttons>
+                <Button @click="add_account" label="add" />
+            </template>
+            <template v-slot:default="slotProps">
+                <div class="flex flex-wrap align-top">
+                    <table class="w-full text-left table-auto border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 border font-bold">{{ $t('email') }}</th>
+                                <!-- <th class="px-4 py-2 border font-bold">{{ $t('password') }}</th> -->
+                                <!-- <th class="px-4 py-2 border font-bold">{{ $t('shop_creator') }}</th> -->
+                                <th class="px-4 py-2 border font-bold">{{ $t('autoTrain') }}</th>
+                                <!-- <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th> -->
+                                <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(account, index) in slotProps.items" :key="index"
+                                :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
+                                <td class="px-4 py-2 border">{{ account.email }}</td>
+                                <!-- <td class="px-4 py-2 border">{{ account.pwd }}</td> -->
+                                <!-- <td class="px-4 py-2 border">{{ parseInt(account.shop_creator) === 0 ? $t('disable') : $t('enable') }}</td> -->
+                                <td class="px-4 py-2 border">{{ parseInt(account.automated) === 0 ? $t('disable') :
+                                    $t('enable') }}</td>
+                                <!-- <td class="px-4 py-2 border">{{ account.fans }}</td> -->
+                                <td class="px-4 py-2 border">{{ account.device }}</td>
+                                <td class="px-4 py-2 border space-x-4">
+                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                        @click="editAccount(account)">{{ $t('edit') }}</button>
+                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                        @click="deleteAccount(account)">{{ $t('delete') }}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+        </Pagination>
+
         <Modal :show="currentAccount" @close="currentAccount = null">
             <Edit :account="currentAccount" @update="updateAccount" />
         </Modal>
@@ -46,6 +54,7 @@ import Modal from '../Modal.vue'
 import Button from '../Button.vue'
 import Edit from './Edit.vue'
 import Add from './Add.vue'
+import Pagination from '../Pagination.vue'
 
 export default {
     name: 'app',
@@ -53,11 +62,11 @@ export default {
         Modal,
         Button,
         Edit,
-        Add
+        Add,
+        Pagination
     },
     data() {
         return {
-            headerHeight: 0,
             accounts: [],
             currentAccount: null,
             showAddAccount: false,
@@ -122,7 +131,6 @@ export default {
         }
     },
     mounted() {
-        this.headerHeight = this.$refs.header.offsetHeight;
         this.get_accounts()
     }
 

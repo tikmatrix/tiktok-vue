@@ -80,7 +80,7 @@ export default {
     },
     mounted() {
         this.selectItem(this.selectedItem, this.menuItems[this.selectedItem]);
-        this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
+        // this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
     }
 }
 </script>

@@ -6,5 +6,6 @@ const api = {
     material: '/api/material',
     job: '/api/job',
     shell: '/api/shell',
+    init: '/api/device/init',
 }
 export default api

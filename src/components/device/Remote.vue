@@ -8,7 +8,9 @@
                 :style="{ top: `${effectY}px`, left: `${effectX}px` }"></div>
         </div>
         <div class="m-1">
-            <p class="p-1 text-lg font-bold">{{ device.serial }}</p>
+            <p class="p-1 text-lg font-bold">{{ device.serial }}
+                <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
+            </p>
             <div class="flex items-center space-x-2" v-show="readonly">
                 <svg class="animate-spin h-5 w-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24">
@@ -94,6 +96,16 @@ export default {
         }
     },
     methods: {
+        repair(serial) {
+            this.$service.init({
+                serial: serial,
+                init: 0
+            }).then(res => {
+                console.log(res)
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         inputText() {
             let encodedText = btoa(this.text);
             this.shell(`am broadcast -a ADB_INPUT_TEXT --es text "${encodedText}"`)

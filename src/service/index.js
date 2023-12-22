@@ -18,8 +18,8 @@ export function install(formData) {
     data: formData
   })
 }
-export function connect_ws(uri,host,forward_port) {
-  return wsFetch(uri,host,forward_port)
+export function connect_ws(uri, host, forward_port) {
+  return wsFetch(uri, host, forward_port)
 }
 
 export function script({ script, serial = "", args = [] }) {
@@ -130,6 +130,14 @@ export function shell({ serial, cmd }) {
     method: 'post',
     url: api.shell,
     data: { serial, cmd }
+  })
+}
+//repair
+export function init({ serial, init }) {
+  return request({
+    method: 'get',
+    url: api.init,
+    data: { serial, init }
   })
 }
 

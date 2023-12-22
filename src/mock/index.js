@@ -2,7 +2,7 @@ import api from '../api'
 let devices = [];
 for (let i = 1; i <= 200; i++) {
   devices.push({
-    'id': i.toString(),
+    'id': i,
     'serial': 'deviceid' + i,
     'forward_port': '10800',
     'ip': '192.168.0.' + i,

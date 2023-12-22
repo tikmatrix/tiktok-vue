@@ -137,7 +137,7 @@ export function init({ serial, init }) {
   return request({
     method: 'get',
     url: api.init,
-    data: { serial, init }
+    params: { serial, init }
   })
 }
 

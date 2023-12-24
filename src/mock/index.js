@@ -9,6 +9,15 @@ for (let i = 1; i <= 200; i++) {
     'email': Math.random() < 0.5 ? null : i + '11@gmai.com', // 50%的概率设置email为null
   });
 }
+let groups = [];
+for (let i = 1; i <= 10; i++) {
+  groups.push({
+    'id': i,
+    'name': 'Group' + i,
+    'autoTrain': 1,
+    'autoPublish': 1,
+  });
+}
 let materials = [];
 for (let i = 1; i <= 100; i++) {
   materials.push({
@@ -56,6 +65,7 @@ const data = {
     [api.material]: materials,
     [api.account]: users,
     [api.job]: jobs,
+    [api.group]: groups,
   },
 }
 

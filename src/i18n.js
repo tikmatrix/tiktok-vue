@@ -9,7 +9,7 @@ export const i18n = createI18n({
             devices: 'Devices',
             accounts: 'Accounts',
             materials: 'Materials',
-            autoPublishing: 'Auto Publishing',
+            autoPublish: 'Auto Publishing',
             autoTrain: 'Auto Train', // Corrected the key name
             dialogWatcher: 'Dialog Watcher',
             version: 'Version',
@@ -64,14 +64,18 @@ export const i18n = createI18n({
             id: 'ID',
             demoTip: 'This is a demo site, the data is not real. If you want to experience the real data, please contact us: {email}',
             repair: 'Repair',
-
+            groups: 'Group',
+            title: 'Title',
+            name: 'Name',
+            addAccount: 'Add Account',
+            addMaterial: 'Add Material',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
             devices: '设备', // Corrected the key name
             accounts: '帐号', // Corrected the key name
             materials: '素材', // Corrected the key name
-            autoPublishing: '自动发布',
+            autoPublish: '自动发布',
             autoTrain: '自动养号',
             dialogWatcher: '弹窗监控',
             version: '版本',
@@ -126,7 +130,11 @@ export const i18n = createI18n({
             id: 'ID',
             demoTip: '这是一个演示站点，数据并不真实。如果您想体验真实数据，请联系我们：{email}',
             repair: '修复',
-
+            groups: '分组',
+            title: '标题',
+            name: '名称',
+            addAccount: '添加帐号',
+            addMaterial: '添加素材',
         }
     }
 })

@@ -57,9 +57,10 @@ export default {
             selectedItem: 0,
             menuItems: [
                 { name: 'devices', icon: 'laptop' },
+                { name: 'groups', icon: 'users' },
                 { name: 'accounts', icon: 'user' },
                 { name: 'materials', icon: 'images' },
-                { name: 'autoPublishing', icon: 'robot' }, // 或者 'auto-fix', 'magic', 'cogs' 等
+                { name: 'autoPublish', icon: 'robot' }, // 或者 'auto-fix', 'magic', 'cogs' 等
                 { name: 'autoTrain', icon: 'sync-alt' }, // 或者 'redo', 'refresh', 'retweet' 等
                 { name: 'dialogWatcher', icon: 'exclamation-circle' }, // 或者 'bell', 'eye', 'binoculars' 等
             ]

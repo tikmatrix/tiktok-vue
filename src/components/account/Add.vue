@@ -28,6 +28,19 @@
                 </div>
             </div>
         </div>
+        <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
+            <label class="font-bold text-right col-span-1">{{ $t('device') }}:</label>
+            <div class="relative col-span-2">
+                <input class="border-2 border-gray-300 p-2 rounded w-full" v-model="account.group_name"
+                    @click="showGroupList = !showGroupList" readonly />
+                <div class="absolute z-10 bg-white border border-gray-300 rounded mt-2 w-full overflow-y-auto"
+                    style="max-height: 200px;" v-show="showGroupList">
+                    <div class="cursor-pointer p-2 hover:bg-gray-200" v-for="(group, index) in groups" :key="group.id"
+                        @click="selectGroup(group)">{{ group.id }} - {{ group.name }}
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">Shop Creator:</label>
             <select class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="account.shop_creator">
@@ -35,13 +48,7 @@
                 <option value="1">Enable</option>
             </select>
         </div> -->
-        <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
-            <label class="font-bold text-right col-span-1">{{ $t('autoTrain') }}:</label>
-            <select class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="account.automated">
-                <option value="0">{{ $t('disable') }}</option>
-                <option value="1">{{ $t('enable') }}</option>
-            </select>
-        </div>
+
         <!-- other fields... -->
         <div class="mt-4 w-full flex justify-end">
             <button
@@ -61,11 +68,14 @@ export default {
                 pwd: '',
                 fans: 0,
                 device: '',
+                group_name: '',
                 shop_creator: 0,
-                automated: 0,
+                group_id: 0,
             },
             showDeviceList: false,
-            devices: []
+            devices: [],
+            showGroupList: false,
+            groups: [],
         };
     },
     methods: {
@@ -83,9 +93,23 @@ export default {
                 console.log(err)
             })
         },
+        get_groups() {
+            this.$service.get_groups().then(res => {
+                this.groups = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        selectGroup(group) {
+            this.account.group_id = group.id;
+            this.account.group_name = group.name;
+            this.showGroupList = false;
+        },
+
     },
     mounted() {
         this.get_devices();
+        this.get_groups();
     }
 };
 </script>

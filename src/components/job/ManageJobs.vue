@@ -56,12 +56,12 @@
             <Edit :job="currentJob" @update="updateJob" />
         </Modal>
         <Modal :show="showCreateView" @close="showCreateView = false">
-            <Create @create="add_job" />
+            <Add @create="add_job" />
         </Modal>
     </div>
 </template>
 <script>
-import Create from './Create.vue'
+import Add from './Add.vue'
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
 import Edit from './Edit.vue'
@@ -70,7 +70,7 @@ import Pagination from '../Pagination.vue'
 export default {
     name: 'app',
     components: {
-        Create,
+        Add,
         Modal,
         Button,
         Edit,

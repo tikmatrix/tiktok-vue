@@ -10,9 +10,8 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2 border font-bold">{{ $t('email') }}</th>
-                                <!-- <th class="px-4 py-2 border font-bold">{{ $t('password') }}</th> -->
+                                <th class="px-4 py-2 border font-bold">{{ $t('password') }}</th>
                                 <!-- <th class="px-4 py-2 border font-bold">{{ $t('shop_creator') }}</th> -->
-                                <th class="px-4 py-2 border font-bold">{{ $t('autoTrain') }}</th>
                                 <!-- <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th> -->
                                 <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
@@ -92,7 +91,7 @@ export default {
                 fans: account.fans,
                 device: account.device,
                 shop_creator: Number(account.shop_creator),
-                automated: Number(account.automated),
+                group_id: account.group_id,
             }).then(res => {
                 console.log(res)
                 this.showAddAccount = false
@@ -106,12 +105,13 @@ export default {
         },
         updateAccount(account) {
             this.$service.update_account({
+                id: account.id,
                 email: account.email,
                 pwd: account.pwd,
                 fans: account.fans,
                 device: account.device,
                 shop_creator: Number(account.shop_creator),
-                automated: Number(account.automated),
+                group_id: account.group_id,
             }).then(res => {
                 console.log(res)
                 this.get_accounts()

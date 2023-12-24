@@ -7,5 +7,6 @@ const api = {
     job: '/api/job',
     shell: '/api/shell',
     init: '/api/device/init',
+    group: '/api/group',
 }
 export default api

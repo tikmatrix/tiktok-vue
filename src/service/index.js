@@ -82,18 +82,18 @@ export function get_jobs() {
     url: api.job,
   })
 }
-export function add_account({ email, pwd, fans, device, shop_creator, automated }) {
+export function add_account({ email, pwd, fans, device, shop_creator, group_id }) {
   return request({
     method: 'post',
     url: api.account,
-    data: { email, pwd, fans, device, shop_creator, automated }
+    data: { email, pwd, fans, device, shop_creator, group_id }
   })
 }
-export function update_account({ email, pwd, fans, device, shop_creator, automated }) {
+export function update_account({ id, email, pwd, fans, device, shop_creator, group_id }) {
   return request({
     method: 'put',
     url: api.account,
-    data: { email, pwd, fans, device, shop_creator, automated }
+    data: { id, email, pwd, fans, device, shop_creator, group_id }
   })
 }
 export function delete_account({ id }) {
@@ -138,6 +138,33 @@ export function init({ serial, init }) {
     method: 'get',
     url: api.init,
     params: { serial, init }
+  })
+}
+export function get_groups() {
+  return request({
+    method: 'get',
+    url: api.group,
+  })
+}
+export function add_group({ name, auto_train, auto_publish, start_time, title, tags }) {
+  return request({
+    method: 'post',
+    url: api.group,
+    data: { name, auto_train, auto_publish, start_time, title, tags }
+  })
+}
+export function update_group({ id, name, auto_train, auto_publish, start_time, title, tags }) {
+  return request({
+    method: 'put',
+    url: api.group,
+    data: { id, name, auto_train, auto_publish, start_time, title, tags }
+  })
+}
+export function delete_group({ id }) {
+  return request({
+    method: 'delete',
+    url: api.group,
+    params: { id }
   })
 }
 

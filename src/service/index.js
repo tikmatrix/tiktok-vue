@@ -52,6 +52,13 @@ export function get_materials() {
     url: api.material,
   })
 }
+export function get_material_count({ used, group_id }) {
+  return request({
+    method: 'get',
+    url: api.material_count,
+    params: { used, group_id }
+  })
+}
 
 export function upload_material(formData) {
   return post({
@@ -118,11 +125,11 @@ export function delete_job({ id }) {
     params: { id }
   })
 }
-export function update_job({ id, start_time, material, account, title, tags, status }) {
+export function update_job_status({ id, status }) {
   return request({
-    method: 'put',
+    method: 'get',
     url: api.job,
-    data: { id, start_time, material, account, title, tags, status }
+    params: { id, status }
   })
 }
 export function shell({ serial, cmd }) {

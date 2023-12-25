@@ -1,35 +1,56 @@
 <template>
     <div class=" w-full">
-        <div class="w-full p-4 bg-gray-200 border-b border-gray-300 sticky top-0 z-10">
-            <Button @click="upload_material" label="add" />
-            <input id="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden>
-        </div>
-        <div class="flex flex-wrap align-top">
-            <div class="overflow-hidden m-4 border-2 border-black shadow-lg rounded-lg cursor-pointer transform hover:scale-105 transition-transform duration-200 relative"
-                v-for="material in materials">
-                <div class="bg-blue-500 overflow-hidden whitespace-nowrap absolute right-[-40px] top-[10px] transform rotate-[45deg] shadow-md"
-                    v-if="material.used === 0">
-                    <span
-                        class="border border-blue-600 text-white block font-bold text-base leading-none my-0.5 px-12 text-center text-shadow-md">{{
-                            $t('unused') }}</span>
-                </div>
-                <div class="bg-red-500 overflow-hidden whitespace-nowrap absolute right-[-40px] top-[10px] transform rotate-[45deg] shadow-md"
-                    v-else>
-                    <span
-                        class="border border-red-600 text-white block font-bold text-base leading-none my-0.5 px-12 text-center text-shadow-md">{{
-                            $t('used') }}</span>
-                </div>
-                <template v-if="material.name.endsWith('.mp4') || material.name.endsWith('.webm')">
-                    <video @click="show_material(material)" :src="`${material.name}`" class="w-[105px] h-[180px]">
-                    </video>
-                </template>
-                <template v-else>
-                    <img @click="show_material(material)" :src="`${material.name}`" class="w-[105px] h-[180px]" />
-                </template>
-            </div>
-        </div>
-        <Modal :show="currentMaterial" @close="currentMaterial = null">
-            <Detail :material="currentMaterial" @delete="get_materials" />
+        <Pagination :items="materials" :pageSize="10" searchKey="name">
+            <template v-slot:buttons>
+                <!-- <Button @click="create_material" label="add" /> -->
+            </template>
+            <template v-slot:default="slotProps">
+                <table class="w-full text-left table-auto border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('name') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('preview') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(material, index) in slotProps.items" :key="index"
+                            :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
+                            <td class="px-4 py-2 border">{{ material.id }}</td>
+                            <td class="px-4 py-2 border">{{ material.name }}</td>
+                            <td class="px-4 py-2 border" :class="{
+                                'text-green-500': material.used === 0,
+                                'text-red-500': material.used === 1,
+                            }">
+                                {{ {
+                                    0: $t('unused'), 1: $t('used')
+                                }[material.used] }}
+                            </td>
+                            <td class="px-4 py-2 border cursor-pointer" @click="show_material(material)">
+                                <template v-if="material.name.endsWith('.mp4') || material.name.endsWith('.webm')">
+                                    <video :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none">
+                                    </video>
+                                </template>
+                                <template v-else>
+                                    <img :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none" />
+                                </template>
+                            </td>
+                            <td class="px-4 py-2 border">{{ material.group_name }}</td>
+                            <td class="px-4 py-2 border space-x-4">
+                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                    @click="delete_material(material)">{{ $t('delete') }}</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+        </Pagination>
+
+        <Modal :show="showDetailView" @close="showDetailView = false">
+            <Detail :material="currentMaterial" />
         </Modal>
     </div>
 </template>
@@ -37,6 +58,7 @@
 import Detail from './Detail.vue'
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
+import Pagination from '../Pagination.vue'
 
 export default {
     name: 'app',
@@ -44,11 +66,14 @@ export default {
         Detail,
         Modal,
         Button,
+        Pagination
     },
     data() {
         return {
             materials: [],
+            groups: [],
             currentMaterial: null,
+            showDetailView: false,
         }
     },
     methods: {
@@ -57,38 +82,44 @@ export default {
             this.$service.get_materials().then(res => {
                 console.log(res)
                 this.materials = res.data
+                this.get_groups();
             }).catch(err => {
                 console.log(err)
             })
         },
         show_material(material) {
-            console.log(material)
+            this.showDetailView = true
             this.currentMaterial = material
 
         },
-        upload_material() {
-            document.getElementById('upload_material_input').click()
-        },
-        on_upload_material(e) {
-            //拼接FormData
-            const formData = new FormData()
-            for (let i = 0; i < e.target.files.length; i++) {
-                formData.append('files', e.target.files[i])
-                console.log(e.target.files[i])
-            }
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
-            this.$service.upload_material(formData).then(res => {
+        delete_material(material) {
+            this.$service.delete_material({
+                id: material.id
+            }).then(res => {
                 console.log(res)
-                this.get_materials()
+                this.$emit('delete')
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+        get_groups() {
+            this.$service.get_groups().then(res => {
+                this.groups = res.data
+                this.materials.forEach(material => {
+                    if (material.group_id === 0) {
+                        material.group_name = this.$t('defaultGroup')
+                        return
+                    }
+                    material.group_name = this.groups.find(group => group.id === material.group_id).name
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
     },
     mounted() {
-        this.get_materials()
+        this.get_materials();
+
     }
 
 }

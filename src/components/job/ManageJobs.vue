@@ -2,7 +2,7 @@
     <div class="w-full">
         <Pagination :items="jobs" :pageSize="10" searchKey="account">
             <template v-slot:buttons>
-                <Button @click="create_job" label="add" />
+                <!-- <Button @click="create_job" label="add" /> -->
             </template>
             <template v-slot:default="slotProps">
                 <table class="w-full text-left table-auto border-collapse">
@@ -14,6 +14,7 @@
                             <th class="px-4 py-2 border font-bold">{{ $t('material') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('account') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
                         </tr>
                     </thead>
@@ -43,7 +44,7 @@
                             <td class="px-4 py-2 border">{{ job.device || 'N/A' }}</td>
                             <td class="px-4 py-2 border space-x-4">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    @click="editJob(job)">{{ $t('edit') }}</button>
+                                    @click="retry(job)">{{ $t('retry') }}</button>
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                     @click="deleteJob(job)">{{ $t('delete') }}</button>
                             </td>
@@ -52,35 +53,23 @@
                 </table>
             </template>
         </Pagination>
-        <Modal :show="currentJob" @close="currentJob = null">
-            <Edit :job="currentJob" @update="updateJob" />
-        </Modal>
-        <Modal :show="showCreateView" @close="showCreateView = false">
-            <Add @create="add_job" />
-        </Modal>
+
     </div>
 </template>
 <script>
-import Add from './Add.vue'
-import Modal from '../Modal.vue'
 import Button from '../Button.vue'
-import Edit from './Edit.vue'
 import Pagination from '../Pagination.vue'
 
 export default {
     name: 'app',
     components: {
-        Add,
-        Modal,
         Button,
-        Edit,
         Pagination
     },
     data() {
         return {
             jobs: [],
-            currentJob: null,
-            showCreateView: false,
+            groups: [],
         }
     },
     methods: {
@@ -89,40 +78,16 @@ export default {
             this.$service.get_jobs().then(res => {
                 console.log(res)
                 this.jobs = res.data
+                this.get_groups();
             }).catch(err => {
                 console.log(err)
             })
         },
-        create_job() {
-            this.showCreateView = true
-        },
-        add_job(job) {
-            this.showCreateView = false
-            this.$service.add_job({
-                start_time: new Date(job.start_time).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-'),
-                material: job.material,
-                account: job.account,
-                title: job.title,
-                tags: job.tags,
-            }).then(res => {
-                console.log(res)
-                this.get_jobs()
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        editJob(job) {
-            this.currentJob = job;
-        },
-        updateJob(job) {
-            this.$service.update_job({
+
+        retry(job) {
+            this.$service.update_job_status({
                 id: job.id,
-                start_time: new Date(job.start_time).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-'),
-                material: job.material,
-                account: job.account,
-                title: job.title,
-                tags: job.tags,
-                status: Number(job.status),
+                status: 0,
             }).then(res => {
                 console.log(res)
                 this.get_jobs()
@@ -139,11 +104,24 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+        get_groups() {
+            this.$service.get_groups().then(res => {
+                this.groups = res.data
+                this.jobs.forEach(job => {
+                    if (job.group_id === 0) {
+                        job.group_name = this.$t('defaultGroup')
+                        return
+                    }
+                    job.group_name = this.groups.find(group => group.id === job.group_id).name
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
     },
     mounted() {
         this.get_jobs()
     }
-
 }
 </script>

@@ -14,6 +14,7 @@
                                 <!-- <th class="px-4 py-2 border font-bold">{{ $t('shop_creator') }}</th> -->
                                 <!-- <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th> -->
                                 <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -21,12 +22,11 @@
                             <tr v-for="(account, index) in slotProps.items" :key="index"
                                 :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
                                 <td class="px-4 py-2 border">{{ account.email }}</td>
-                                <!-- <td class="px-4 py-2 border">{{ account.pwd }}</td> -->
+                                <td class="px-4 py-2 border">{{ account.pwd }}</td>
                                 <!-- <td class="px-4 py-2 border">{{ parseInt(account.shop_creator) === 0 ? $t('disable') : $t('enable') }}</td> -->
-                                <td class="px-4 py-2 border">{{ parseInt(account.automated) === 0 ? $t('disable') :
-                                    $t('enable') }}</td>
                                 <!-- <td class="px-4 py-2 border">{{ account.fans }}</td> -->
                                 <td class="px-4 py-2 border">{{ account.device }}</td>
+                                <td class="px-4 py-2 border">{{ account.group_name }}</td>
                                 <td class="px-4 py-2 border space-x-4">
                                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                         @click="editAccount(account)">{{ $t('edit') }}</button>
@@ -67,6 +67,7 @@ export default {
     data() {
         return {
             accounts: [],
+            groups: [],
             currentAccount: null,
             showAddAccount: false,
         }
@@ -77,6 +78,7 @@ export default {
             this.$service.get_accounts().then(res => {
                 console.log(res)
                 this.accounts = res.data
+                this.get_groups();
             }).catch(err => {
                 console.log(err)
             })
@@ -128,10 +130,28 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+        get_groups() {
+            this.$service.get_groups().then(res => {
+                this.groups = res.data
+                this.accounts.forEach(account => {
+                    if (account.group_id === 0) {
+                        account.group_name = this.$t('defaultGroup')
+                        console.log(account.group_name)
+                        return
+                    }
+                    console.log(account.group_id)
+                    account.group_name = this.groups.find(group => group.id === account.group_id).name
+                    console.log(account.group_name)
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
     },
     mounted() {
-        this.get_accounts()
+        this.get_accounts();
+
     }
 
 }

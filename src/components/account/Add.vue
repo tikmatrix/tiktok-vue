@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
-            <label class="font-bold text-right col-span-1">{{ $t('device') }}:</label>
+            <label class="font-bold text-right col-span-1">{{ $t('group') }}:</label>
             <div class="relative col-span-2">
                 <input class="border-2 border-gray-300 p-2 rounded w-full" v-model="account.group_name"
                     @click="showGroupList = !showGroupList" readonly />

@@ -4,6 +4,7 @@ const api = {
     device: '/api/device',
     account: '/api/account',
     material: '/api/material',
+    material_count: '/api/material/count',
     job: '/api/job',
     shell: '/api/shell',
     init: '/api/device/init',

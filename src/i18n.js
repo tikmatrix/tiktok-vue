@@ -69,6 +69,9 @@ export const i18n = createI18n({
             name: 'Name',
             addAccount: 'Add Account',
             addMaterial: 'Add Material',
+            group: 'Group',
+            defaultGroup: 'Default Group',
+            retry: 'Retry',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -135,6 +138,9 @@ export const i18n = createI18n({
             name: '名称',
             addAccount: '添加帐号',
             addMaterial: '添加素材',
+            group: '分组',
+            defaultGroup: '默认分组',
+            retry: '重试',
         }
     }
 })

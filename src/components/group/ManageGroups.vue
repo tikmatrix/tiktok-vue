@@ -31,7 +31,8 @@
                                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                         @click="deletegroup(group)">{{ $t('delete') }}</button>
                                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="addMaterial(group)">{{ $t('addMaterial') }}</button>
+                                        @click="addMaterial(group)">{{ $t('addMaterial') }}: {{ group.unused_material_count
+                                        }}</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -78,6 +79,9 @@ export default {
             this.$service.get_groups().then(res => {
                 console.log(res)
                 this.groups = res.data
+                for (let i = 0; i < this.groups.length; i++) {
+                    this.get_unused_material_count(this.groups[i])
+                }
             }).catch(err => {
                 console.log(err)
             })
@@ -86,6 +90,7 @@ export default {
             this.showAddGroup = true
         },
         addgroup(group) {
+
             this.$service.add_group({
                 name: group.name,
                 auto_train: Number(group.auto_train),
@@ -106,6 +111,7 @@ export default {
             this.currentGroup = group
         },
         updateGroup(group) {
+
             this.$service.update_group({
                 id: group.id,
                 name: group.name,
@@ -144,11 +150,22 @@ export default {
             }
             this.$service.upload_material(formData).then(res => {
                 console.log(res)
-                this.get_materials()
+                this.get_unused_material_count(this.currentGroup)
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+        get_unused_material_count(group) {
+            this.$service.get_material_count({
+                group_id: group.id,
+                used: 0
+            }).then(res => {
+                console.log(res)
+                group.unused_material_count = res
+            }).catch(err => {
+                console.log(err)
+            })
+        },
     },
     mounted() {
         this.get_groups()

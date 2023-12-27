@@ -42,6 +42,7 @@
                             </td>
                             <td class="px-4 py-2 border">{{ job.account }}</td>
                             <td class="px-4 py-2 border">{{ job.device || 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ job.group_name || 'N/A' }}</td>
                             <td class="px-4 py-2 border space-x-4">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     @click="retry(job)">{{ $t('retry') }}</button>

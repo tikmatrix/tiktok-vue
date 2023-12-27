@@ -128,7 +128,7 @@ export function delete_job({ id }) {
 export function update_job_status({ id, status }) {
   return request({
     method: 'get',
-    url: api.job,
+    url: api.update_job_status,
     params: { id, status }
   })
 }

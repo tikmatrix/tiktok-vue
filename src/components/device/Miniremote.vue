@@ -3,7 +3,7 @@
         <div class="m-5">
             <span
                 class="bg-blue-500 text-white rounded-full w-6 h-6 inline-flex items-center justify-center whitespace-nowrap">{{
-                    index }}</span>
+                    device.id }}</span>
             <span class="m-1" @click="copyToClipboard">{{ device.serial }}</span><br />
             <span v-if="device.email" class="text-green-500 m-1">{{ device.email }}</span>
             <span v-else class="text-red-500 m-1">{{ $t('unbinded') }}</span>

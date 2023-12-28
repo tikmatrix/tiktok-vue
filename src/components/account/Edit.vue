@@ -84,6 +84,10 @@ export default {
                 console.log(err)
             })
         },
+        selectDevice(device) {
+            this.account.device = device.serial;
+            this.showDeviceList = false;
+        },
         get_groups() {
             this.$service.get_groups().then(res => {
                 this.groups = res.data

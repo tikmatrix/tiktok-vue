@@ -5,7 +5,7 @@
                 <BatchButtons @get_devices="get_devices" />
             </template>
             <template v-slot:default="slotProps">
-                <div class="flex flex-wrap align-top">
+                <div class="grid grid-cols-5 gap-4">
                     <Miniremote v-for="(device, index) in slotProps.items" :device="device" :index="device.id"
                         :key="device.serial" @show_device="show_device" @show_shell="show_shell" />
                 </div>

@@ -10,7 +10,7 @@
             <!-- <Button label="" loadingTime=1 color="bg-black text-white" icon="fa-solid fa-terminal" @click="$emit('show_shell', device)" /> -->
         </div>
         <img @click="$emit('show_device', device)" v-bind:src="img"
-            class="w-[250px] rounded-lg  cursor-pointer transform hover:scale-105 transition-transform duration-200" />
+            class="rounded-lg  cursor-pointer transform hover:scale-105 transition-transform duration-200" />
     </div>
 </template>
 <script>

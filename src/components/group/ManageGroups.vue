@@ -160,8 +160,7 @@ export default {
                 group_id: group.id,
                 used: 0
             }).then(res => {
-                console.log(res)
-                group.unused_material_count = res
+                group.unused_material_count = res.data
             }).catch(err => {
                 console.log(err)
             })

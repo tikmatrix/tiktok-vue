@@ -72,6 +72,7 @@ export const i18n = createI18n({
             group: 'Group',
             defaultGroup: 'Default Group',
             retry: 'Retry',
+            preview: 'Preview',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -141,6 +142,7 @@ export const i18n = createI18n({
             group: '分组',
             defaultGroup: '默认分组',
             retry: '重试',
+            preview: '预览',
         }
     }
 })

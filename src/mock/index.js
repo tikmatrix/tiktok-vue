@@ -10,7 +10,7 @@ for (let i = 1; i <= 200; i++) {
   });
 }
 let groups = [];
-for (let i = 1; i <= 10; i++) {
+for (let i = 1; i <= 20; i++) {
   groups.push({
     'id': i,
     'name': 'Group' + i,
@@ -21,10 +21,12 @@ for (let i = 1; i <= 10; i++) {
 let materials = [];
 for (let i = 1; i <= 100; i++) {
   materials.push({
+    "id": i.toString(),
     "md5": "6aed71a8304f9dc68a9acd66fc5e057d",
     "name": "preview.jpg",
     "create_time": "2023-11-13 13:43:49",
-    "used": Math.round(Math.random()) // 生成0或1的随机整数
+    "used": Math.round(Math.random()), // 生成0或1的随机整数
+    "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数
   });
 }
 let users = [];
@@ -39,6 +41,7 @@ for (let i = 1; i <= 10; i++) {
     "device": "device" + i,
     "automated": 0,
     "online": 1,
+    "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数
   });
 }
 let jobs = [];
@@ -66,6 +69,7 @@ const data = {
     [api.account]: users,
     [api.job]: jobs,
     [api.group]: groups,
+    [api.material_count]: Math.floor(Math.random() * 100),
   },
 }
 

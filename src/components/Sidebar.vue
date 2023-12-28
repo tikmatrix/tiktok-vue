@@ -16,6 +16,7 @@
             <div v-show="showDemoTip" class="m-2">
                 <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
                     <p class="font-bold">{{ $t('demoTip', { email: 'admin@niostack.com' }) }}</p>
+                    <a href="https://t.me/+iGhozoBfAbI5YmE1">Join Telegram Group</a>
                 </div>
             </div>
             <div class="relative inline-flex items-center bg-gray-800 rounded-full p-2 border border-white">

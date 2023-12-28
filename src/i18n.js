@@ -73,6 +73,8 @@ export const i18n = createI18n({
             defaultGroup: 'Default Group',
             retry: 'Retry',
             preview: 'Preview',
+            openAutoDateTime: 'Open Auto Date Time',
+            closeAutoDateTime: 'Close Auto Date Time',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -143,6 +145,8 @@ export const i18n = createI18n({
             defaultGroup: '默认分组',
             retry: '重试',
             preview: '预览',
+            openAutoDateTime: '打开自动日期时间',
+            closeAutoDateTime: '关闭自动日期时间',
         }
     }
 })

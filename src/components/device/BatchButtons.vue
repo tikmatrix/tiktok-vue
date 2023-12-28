@@ -20,9 +20,9 @@
         <!-- <Button @click="script('connect_wifi')" label="连接WIFI" />
         <Button @click="script('disconnect_wifi')" label="断开WIFI" />
         <Button @click="script('torch_on')" label="打开手电" />
-        <Button @click="script('torch_off')" label="关闭手电" />
-        <Button @click="shell('settings put global auto_time 1')" label="开启网络时间" />
-        <Button @click="shell('settings put global auto_time 0')" label="关闭网络时间" /> -->
+        <Button @click="script('torch_off')" label="关闭手电" />-->
+        <Button @click="shell('settings put global auto_time 1')" label="openAutoDateTime" />
+        <Button @click="shell('settings put global auto_time 0')" label="closeAutoDateTime" />
         <!-- <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="查看SIM信息" /> -->
     </div>
 </template>

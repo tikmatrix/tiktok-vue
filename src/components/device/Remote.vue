@@ -38,16 +38,7 @@
                 <Button label="reboot" icon="fa-solid fa-sync" @click="shell('reboot')" />
             </div>
 
-            <!-- <div class="p-1">
-                <p class="text-lg font-bold">快捷操作</p>
-                <Button label="打开Whoer.net" icon="fa-brands fa-wikipedia-w"
-                    @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
-                <Button label="打开Tiktok" icon="fa-brands fa-tiktok"
-                    @click="shell('am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity')" />
-                <input id="upload_material_input" type="file" v-on:change="onFileSelected" hidden>
-                <Button label="上传素材" icon="fa-solid fa-video" @click="upload_material" />
-                <Button label="清除Tiktok缓存" icon="fa-solid fa-trash" @click="clearTiktok" />
-            </div> -->
+
             <div class="p-1">
                 <p class="text-lg font-bold">{{ $t('autoScripts') }}</p>
                 <Button @click="script('torch_on', device.serial)" label="torchOn" />
@@ -165,6 +156,7 @@ export default {
 
         killMinitouch() {
             this.shell('pkill minitouch')
+            this.shell('input keyevent KEYCODE_WAKEUP')
             this.syncTouchpad()
         },
         coords(boundingW, boundingH, relX, relY, rotation) {

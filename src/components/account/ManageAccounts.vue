@@ -9,6 +9,7 @@
                     <table class="w-full text-left table-auto border-collapse">
                         <thead>
                             <tr>
+                                <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('email') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('password') }}</th>
                                 <!-- <th class="px-4 py-2 border font-bold">{{ $t('shop_creator') }}</th> -->
@@ -21,6 +22,7 @@
                         <tbody>
                             <tr v-for="(account, index) in slotProps.items" :key="index"
                                 :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
+                                <td class="px-4 py-2 border">{{ account.id }}</td>
                                 <td class="px-4 py-2 border">{{ account.email }}</td>
                                 <td class="px-4 py-2 border">{{ account.pwd }}</td>
                                 <!-- <td class="px-4 py-2 border">{{ parseInt(account.shop_creator) === 0 ? $t('disable') : $t('enable') }}</td> -->

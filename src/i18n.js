@@ -1,4 +1,3 @@
-// i18n.js
 import { createI18n } from 'vue-i18n'
 
 export const i18n = createI18n({
@@ -10,7 +9,7 @@ export const i18n = createI18n({
             accounts: 'Accounts',
             materials: 'Materials',
             autoPublish: 'Auto Publishing',
-            autoTrain: 'Auto Train', // Corrected the key name
+            autoTrain: 'Auto Train',
             dialogWatcher: 'Dialog Watcher',
             version: 'Version',
             email: 'Email',
@@ -79,12 +78,13 @@ export const i18n = createI18n({
             disconnectWifi: 'Disconnect Wifi',
             torchOn: 'Torch On',
             torchOff: 'Torch Off',
+            showSimInfo: 'Show Sim Info',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
-            devices: '设备', // Corrected the key name
-            accounts: '帐号', // Corrected the key name
-            materials: '素材', // Corrected the key name
+            devices: '设备',
+            accounts: '帐号',
+            materials: '素材',
             autoPublish: '自动发布',
             autoTrain: '自动养号',
             dialogWatcher: '弹窗监控',
@@ -155,6 +155,7 @@ export const i18n = createI18n({
             disconnectWifi: '断开 Wifi',
             torchOn: '打开手电筒',
             torchOff: '关闭手电筒',
+            showSimInfo: '显示 Sim 信息',
         }
     }
 })

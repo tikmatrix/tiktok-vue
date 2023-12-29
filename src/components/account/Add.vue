@@ -65,12 +65,12 @@ export default {
         return {
             account: {
                 email: '',
-                pwd: '',
+                pwd: '123qwe...',
                 fans: 0,
                 device: '',
                 group_name: '',
                 shop_creator: 0,
-                group_id: 0,
+                group_id: 1,
             },
             showDeviceList: false,
             devices: [],

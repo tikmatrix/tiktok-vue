@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-start p-4">
+    <div class="flex flex-col items-start p-4 min-h-96">
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('email') }}:</label>
             <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="account.email" readonly />
@@ -17,8 +17,8 @@
             <div class="relative col-span-2">
                 <input class="border-2 border-gray-300 p-2 rounded w-full" v-model="account.device"
                     @click="showDeviceList = !showDeviceList" readonly />
-                <div class="absolute z-10 bg-white border border-gray-300 rounded mt-2 w-full overflow-y-auto"
-                    style="max-height: 200px;" v-show="showDeviceList">
+                <div class="absolute z-10 bg-white border border-gray-300 rounded mt-2 w-full overflow-y-auto max-h-32"
+                    v-show="showDeviceList">
                     <div class="cursor-pointer p-2 hover:bg-gray-200" v-for="(device, index) in devices"
                         :key="device.serial" @click="selectDevice(device)">{{ device.id }} - {{ device.serial }}
                         <span v-if="device.email" class="text-green-500 m-1">{{ device.email }}</span>
@@ -32,8 +32,8 @@
             <div class="relative col-span-2">
                 <input class="border-2 border-gray-300 p-2 rounded w-full" v-model="account.group_name"
                     @click="showGroupList = !showGroupList" readonly />
-                <div class="absolute z-10 bg-white border border-gray-300 rounded mt-2 w-full overflow-y-auto"
-                    style="max-height: 200px;" v-show="showGroupList">
+                <div class="absolute z-10 bg-white border border-gray-300 rounded mt-2 w-full overflow-y-auto max-h-32"
+                    v-show="showGroupList">
                     <div class="cursor-pointer p-2 hover:bg-gray-200" v-for="(group, index) in groups" :key="group.id"
                         @click="selectGroup(group)">{{ group.id }} - {{ group.name }}
                     </div>
@@ -79,6 +79,8 @@ export default {
         },
         get_devices() {
             this.$service.get_devices().then(res => {
+                //only need device.email is empty
+                res.data = res.data.filter(device => !device.email)
                 this.devices = res.data
             }).catch(err => {
                 console.log(err)

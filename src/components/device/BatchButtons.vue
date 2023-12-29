@@ -24,6 +24,7 @@
         <Button @click="shell('settings put global auto_time 1')" label="openAutoDateTime" />
         <Button @click="shell('settings put global auto_time 0')" label="closeAutoDateTime" />
         <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo" />
+        <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" />
     </div>
 </template>
 <script>

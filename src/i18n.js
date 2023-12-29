@@ -80,6 +80,7 @@ export const i18n = createI18n({
             torchOff: 'Torch Off',
             showSimInfo: 'Show Sim Info',
             openWhoer: 'Open Whoer',
+            openNotification: 'Open Notification',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -158,6 +159,7 @@ export const i18n = createI18n({
             torchOff: '关闭手电筒',
             showSimInfo: '显示 Sim 信息',
             openWhoer: '打开 Whoer',
+            openNotification: '打开通知',
         }
     }
 })

@@ -33,6 +33,8 @@
                 <Button label="stopTiktok" icon="fa-brands fa-tiktok"
                     @click="shell('am force-stop com.zhiliaoapp.musically')" />
                 <Button label="clearTiktok" icon="fa-solid fa-trash" @click="clearTiktok" />
+                <Button label="openWhoer" icon="fa-brands fa-wikipedia-w"
+                    @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
             </div>
 
             <!-- <div class="p-1">

@@ -67,7 +67,6 @@ export default {
         },
         show_shell(device) {
             this.currentShell = device
-
         },
 
     },

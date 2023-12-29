@@ -17,10 +17,10 @@
             icon="fa-solid fa-link" />
         <Button @click="shell('settings put global http_proxy :0')" label="disableProxy" icon="fa-solid fa-unlink" />
 
-        <!-- <Button @click="script('connect_wifi')" label="连接WIFI" />
-        <Button @click="script('disconnect_wifi')" label="断开WIFI" />
-        <Button @click="script('torch_on')" label="打开手电" />
-        <Button @click="script('torch_off')" label="关闭手电" />-->
+        <Button @click="script('connect_wifi')" label="connectWifi" />
+        <Button @click="script('disconnect_wifi')" label="disconnectWifi" />
+        <Button @click="script('torch_on')" label="torchOn" />
+        <Button @click="script('torch_off')" label="关闭手电" />
         <Button @click="shell('settings put global auto_time 1')" label="openAutoDateTime" />
         <Button @click="shell('settings put global auto_time 0')" label="closeAutoDateTime" />
         <!-- <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="查看SIM信息" /> -->

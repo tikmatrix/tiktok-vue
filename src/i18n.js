@@ -75,6 +75,10 @@ export const i18n = createI18n({
             preview: 'Preview',
             openAutoDateTime: 'Open Auto Date Time',
             closeAutoDateTime: 'Close Auto Date Time',
+            connectWifi: 'Connect Wifi',
+            disconnectWifi: 'Disconnect Wifi',
+            torchOn: 'Torch On',
+            torchOff: 'Torch Off',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -147,6 +151,10 @@ export const i18n = createI18n({
             preview: '预览',
             openAutoDateTime: '打开自动日期时间',
             closeAutoDateTime: '关闭自动日期时间',
+            connectWifi: '连接 Wifi',
+            disconnectWifi: '断开 Wifi',
+            torchOn: '打开手电筒',
+            torchOff: '关闭手电筒',
         }
     }
 })

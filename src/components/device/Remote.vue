@@ -157,6 +157,7 @@ export default {
         killMinitouch() {
             this.shell('pkill minitouch')
             this.shell('input keyevent KEYCODE_WAKEUP')
+            this.shell('settings put system screen_off_timeout 2147483647')
             this.syncTouchpad()
         },
         coords(boundingW, boundingH, relX, relY, rotation) {

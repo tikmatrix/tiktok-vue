@@ -82,6 +82,7 @@ export const i18n = createI18n({
             openWhoer: 'Open Whoer',
             openNotification: 'Open Notification',
             reboot: 'Reboot',
+            rebootAll: 'Reboot All',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -162,6 +163,7 @@ export const i18n = createI18n({
             openWhoer: '打开 Whoer',
             openNotification: '打开通知',
             reboot: '重启',
+            rebootAll: '重启所有设备',
         }
     }
 })

@@ -25,6 +25,7 @@
         <Button @click="shell('settings put global auto_time 0')" label="closeAutoDateTime" />
         <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo" />
         <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" />
+        <Button @click="shell('reboot')" label="rebootAll" color="bg-red-500 text-white" />
     </div>
 </template>
 <script>

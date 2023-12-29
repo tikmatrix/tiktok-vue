@@ -88,6 +88,8 @@ export default {
         },
         get_devices() {
             this.$service.get_devices().then(res => {
+                //only need device.email is empty
+                res.data = res.data.filter(device => !device.email)
                 this.devices = res.data
             }).catch(err => {
                 console.log(err)

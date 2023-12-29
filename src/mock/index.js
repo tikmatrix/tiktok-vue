@@ -3,7 +3,7 @@ let devices = [];
 for (let i = 1; i <= 200; i++) {
   devices.push({
     'id': i,
-    'serial': 'deviceid' + i,
+    'serial': 'device' + i,
     'forward_port': '10800',
     'ip': '192.168.0.' + i,
     'email': Math.random() < 0.5 ? null : i + '11@gmai.com', // 50%的概率设置email为null
@@ -32,6 +32,7 @@ for (let i = 1; i <= 100; i++) {
 let users = [];
 for (let i = 1; i <= 10; i++) {
   users.push({
+    "id": i,
     "email": "admin" + i + "@niostack.com",
     "pwd": "123qwe...",
     "register_time": "2023-11-13 13:43:49",

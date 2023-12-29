@@ -15,6 +15,7 @@
                                 <!-- <th class="px-4 py-2 border font-bold">{{ $t('shop_creator') }}</th> -->
                                 <!-- <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th> -->
                                 <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
                             </tr>
@@ -28,6 +29,10 @@
                                 <!-- <td class="px-4 py-2 border">{{ parseInt(account.shop_creator) === 0 ? $t('disable') : $t('enable') }}</td> -->
                                 <!-- <td class="px-4 py-2 border">{{ account.fans }}</td> -->
                                 <td class="px-4 py-2 border">{{ account.device }}</td>
+                                <td class="px-4 py-2 border">
+                                    <span v-if="account.online" class="text-green-500 m-1">{{ $t('online') }}</span>
+                                    <span v-else class="text-red-500 m-1">{{ $t('offline') }}</span>
+                                </td>
                                 <td class="px-4 py-2 border">{{ account.group_name }}</td>
                                 <td class="px-4 py-2 border space-x-4">
                                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -75,11 +80,22 @@ export default {
         }
     },
     methods: {
+        get_devices() {
+            this.$service.get_devices().then(res => {
+                this.devices = res.data
+                this.accounts.forEach(account => {
+                    account.online = this.devices.find(device => device.serial === account.device)
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         get_accounts() {
             this.currentAccount = null
             this.$service.get_accounts().then(res => {
                 console.log(res)
                 this.accounts = res.data
+                this.get_devices();
                 this.get_groups();
             }).catch(err => {
                 console.log(err)

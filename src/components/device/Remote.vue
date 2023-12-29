@@ -47,8 +47,8 @@
             </div> -->
             <div class="p-1">
                 <p class="text-lg font-bold">{{ $t('autoScripts') }}</p>
-                <Button @click="script('torch_on')" label="torchOn" />
-                <Button @click="script('torch_off')" label="torchOff" />
+                <Button @click="script('torch_on', device.serial)" label="torchOn" />
+                <Button @click="script('torch_off', device.serial)" label="torchOff" />
                 <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)" />
                 <Button label="login" icon="fa-solid fa-address-card" @click="script('login', device.serial)" />
                 <Button label="uploadAvatar" icon="fa-solid fa-user-plus" @click="script('upload_avatar', device.serial)" />

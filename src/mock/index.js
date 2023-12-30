@@ -6,7 +6,6 @@ for (let i = 1; i <= 200; i++) {
     'serial': 'device' + i,
     'forward_port': '10800',
     'ip': '192.168.0.' + i,
-    'email': Math.random() < 0.5 ? null : i + '11@gmai.com', // 50%的概率设置email为null
   });
 }
 let groups = [];
@@ -58,6 +57,7 @@ for (let i = 1; i <= 100; i++) {
     "title": "title",
     "device": "deviceid" + i,
     "tags": "tag1 tag2 tag3",
+    "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数
   });
 }
 const data = {

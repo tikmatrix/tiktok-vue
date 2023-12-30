@@ -47,7 +47,6 @@ export default {
     },
 
     methods: {
-
         handleDeviceClose() {
             this.currentDevice = null;
         },
@@ -57,6 +56,7 @@ export default {
         get_devices() {
             this.$service.get_devices().then(res => {
                 this.devices = res.data
+                this.get_accounts();
             }).catch(err => {
                 console.log(err)
             })
@@ -68,7 +68,33 @@ export default {
         show_shell(device) {
             this.currentShell = device
         },
-
+        get_accounts() {
+            this.$service.get_accounts().then(res => {
+                this.accounts = res.data
+                //append email to device
+                this.devices.forEach(device => {
+                    device.email = this.accounts.find(account => account.device === device.serial)?.email
+                })
+                //append group_id to device
+                this.devices.forEach(device => {
+                    device.group_id = this.accounts.find(account => account.device === device.serial)?.group_id
+                })
+                this.get_groups();
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        get_groups() {
+            this.$service.get_groups().then(res => {
+                this.groups = res.data
+                //append group_name to device
+                this.devices.forEach(device => {
+                    device.group_name = this.groups.find(group => group.id === device.group_id)?.name
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
     },
     mounted() {
         this.get_devices()

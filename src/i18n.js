@@ -83,6 +83,9 @@ export const i18n = createI18n({
             openNotification: 'Open Notification',
             reboot: 'Reboot',
             rebootAll: 'Reboot All',
+            search: 'Search',
+            shell: 'Shell',
+            all: 'All',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -164,6 +167,9 @@ export const i18n = createI18n({
             openNotification: '打开通知',
             reboot: '重启',
             rebootAll: '重启所有设备',
+            search: '搜索',
+            shell: '终端',
+            all: '全部',
         }
     }
 })

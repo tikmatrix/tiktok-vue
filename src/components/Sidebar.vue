@@ -1,5 +1,5 @@
 <template>
-    <div class=" w-60 min-h-screen bg-gray-800 text-white p-2 flex flex-col">
+    <div class="min-h-screen bg-gray-800 text-white p-2 flex flex-col">
         <h1 class="text-2xl p-3 mb-6">
             <font-awesome-icon icon="fa-brands fa-tiktok" /> {{ $t('siteName') }}
         </h1>
@@ -61,9 +61,9 @@ export default {
                 { name: 'groups', icon: 'users' },
                 { name: 'accounts', icon: 'user' },
                 { name: 'materials', icon: 'images' },
-                { name: 'autoPublish', icon: 'robot' }, // 或者 'auto-fix', 'magic', 'cogs' 等
-                { name: 'autoTrain', icon: 'sync-alt' }, // 或者 'redo', 'refresh', 'retweet' 等
-                { name: 'dialogWatcher', icon: 'exclamation-circle' }, // 或者 'bell', 'eye', 'binoculars' 等
+                { name: 'autoPublish', icon: 'robot' },
+                { name: 'autoTrain', icon: 'sync-alt' },
+                { name: 'dialogWatcher', icon: 'exclamation-circle' },
             ]
             , open: false,
             showDemoTip: false,

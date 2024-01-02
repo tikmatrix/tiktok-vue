@@ -83,10 +83,10 @@ export function get_accounts() {
     url: api.account,
   })
 }
-export function get_jobs() {
+export function get_publish_jobs() {
   return request({
     method: 'get',
-    url: api.job,
+    url: api.publish_job,
   })
 }
 export function add_account({ email, pwd, fans, device, shop_creator, group_id }) {
@@ -111,24 +111,37 @@ export function delete_account({ id }) {
   })
 }
 
-export function add_job({ start_time, material, account, title, tags }) {
+export function get_train_jobs() {
   return request({
-    method: 'post',
-    url: api.job,
-    data: { start_time, material, account, title, tags }
+    method: 'get',
+    url: api.train_job,
   })
 }
-export function delete_job({ id }) {
+export function delete_train_job({ id }) {
   return request({
     method: 'delete',
-    url: api.job,
+    url: api.train_job,
     params: { id }
   })
 }
-export function update_job_status({ id, status }) {
+export function update_train_job({ id, status }) {
   return request({
     method: 'get',
-    url: api.update_job_status,
+    url: api.update_train_job,
+    params: { id, status }
+  })
+}
+export function delete_publish_job({ id }) {
+  return request({
+    method: 'delete',
+    url: api.publish_job,
+    params: { id }
+  })
+}
+export function update_publish_job({ id, status }) {
+  return request({
+    method: 'get',
+    url: api.update_publish_job,
     params: { id, status }
   })
 }
@@ -153,18 +166,18 @@ export function get_groups() {
     url: api.group,
   })
 }
-export function add_group({ name, auto_train, auto_publish, start_time, title, tags }) {
+export function add_group({ name, auto_train, auto_publish, publish_start_time, title, tags }) {
   return request({
     method: 'post',
     url: api.group,
-    data: { name, auto_train, auto_publish, start_time, title, tags }
+    data: { name, auto_train, auto_publish, publish_start_time, title, tags }
   })
 }
-export function update_group({ id, name, auto_train, auto_publish, start_time, title, tags }) {
+export function update_group({ id, name, auto_train, auto_publish, publish_start_time, title, tags }) {
   return request({
     method: 'put',
     url: api.group,
-    data: { id, name, auto_train, auto_publish, start_time, title, tags }
+    data: { id, name, auto_train, auto_publish, publish_start_time, title, tags }
   })
 }
 export function delete_group({ id }) {

@@ -1,12 +1,12 @@
 <template>
-  <Sidebar class="fixed top-0 bottom-0 overflow-auto w-64" @menu_selected="menu_selected" />
-  <div class="flex-grow ml-64">
+  <Sidebar class="fixed top-0 bottom-0 overflow-auto lg:w-64 w-0" @menu_selected="menu_selected" />
+  <div class="flex-grow lg:ml-64 ml-0">
     <ManageDevices v-if="selectedItem === 'devices'" />
     <ManageGroups v-if="selectedItem === 'groups'" />
     <ManageAccounts v-if="selectedItem === 'accounts'" />
     <ManageMaterials v-if="selectedItem === 'materials'" />
-    <ManageJobs v-if="selectedItem === 'autoPublish'" />
-    <ManageTrain v-if="selectedItem === 'autoTrain'" />
+    <ManagePublishJobs v-if="selectedItem === 'autoPublish'" />
+    <ManageTrainJobs v-if="selectedItem === 'autoTrain'" />
     <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
   </div>
 </template>
@@ -15,9 +15,9 @@ import Sidebar from './components/Sidebar.vue'
 import ManageDevices from './components/device/ManageDevices.vue'
 import ManageAccounts from './components/account/ManageAccounts.vue'
 import ManageMaterials from './components/material/ManageMaterials.vue'
-import ManageJobs from './components/job/ManageJobs.vue'
+import ManagePublishJobs from './components/publishJob/ManagePublishJobs.vue'
 import ManageDialog from './components/dialog/ManageDialog.vue'
-import ManageTrain from './components/train/ManageTrain.vue'
+import ManageTrainJobs from './components/trainJob/ManageTrainJobs.vue'
 import ManageGroups from './components/group/ManageGroups.vue'
 
 
@@ -28,9 +28,9 @@ export default {
     ManageDevices,
     ManageAccounts,
     ManageMaterials,
-    ManageJobs,
+    ManagePublishJobs,
     ManageDialog,
-    ManageTrain,
+    ManageTrainJobs,
     ManageGroups
   },
   data() {

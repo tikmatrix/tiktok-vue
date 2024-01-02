@@ -19,35 +19,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(job, index) in slotProps.items" :key="index"
+                        <tr v-for="(publish_job, index) in slotProps.items" :key="index"
                             :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                            <td class="px-4 py-2 border">{{ job.id }}</td>
-                            <td class="px-4 py-2 border">{{ job.start_time }}</td>
+                            <td class="px-4 py-2 border">{{ publish_job.id }}</td>
+                            <td class="px-4 py-2 border">{{ publish_job.start_time }}</td>
                             <td class="px-4 py-2 border" :class="{
-                                'text-green-500': job.status === 2,
-                                'text-red-500': job.status === 3,
-                                'text-yellow-500': job.status === 1,
-                                'text-gray-500': job.status === 0
+                                'text-green-500': publish_job.status === 2,
+                                'text-red-500': publish_job.status === 3,
+                                'text-yellow-500': publish_job.status === 1,
+                                'text-gray-500': publish_job.status === 0
                             }">
-                                {{ { 0: $t('waiting'), 1: $t('execing'), 2: $t('success'), 3: $t('failed') }[job.status] }}
+                                {{ {
+                                    0: $t('waiting'), 1: $t('execing'), 2: $t('success'), 3: $t('failed')
+                                }[publish_job.status] }}
                             </td>
                             <td class="px-4 py-2 border">
-                                <template v-if="job.material.endsWith('.mp4') || job.material.endsWith('.webm')">
-                                    <video :src="`${job.material}`" class="w-[100px] h-[100px] max-w-none">
+                                <template
+                                    v-if="publish_job.material.endsWith('.mp4') || publish_job.material.endsWith('.webm')">
+                                    <video :src="`${publish_job.material}`" class="w-[100px] h-[100px] max-w-none">
                                     </video>
                                 </template>
                                 <template v-else>
-                                    <img :src="`${job.material}`" class="w-[100px] h-[100px] max-w-none" />
+                                    <img :src="`${publish_job.material}`" class="w-[100px] h-[100px] max-w-none" />
                                 </template>
                             </td>
-                            <td class="px-4 py-2 border">{{ job.account }}</td>
-                            <td class="px-4 py-2 border">{{ job.device || 'N/A' }}</td>
-                            <td class="px-4 py-2 border">{{ job.group_name || 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ publish_job.account }}</td>
+                            <td class="px-4 py-2 border">{{ publish_job.device || 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ publish_job.group_name || 'N/A' }}</td>
                             <td class="px-4 py-2 border space-x-4">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                    @click="retry(job)">{{ $t('retry') }}</button>
+                                    @click="retry(publish_job)">{{ $t('retry') }}</button>
                                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    @click="deleteJob(job)">{{ $t('delete') }}</button>
+                                    @click="deleteJob(publish_job)">{{ $t('delete') }}</button>
                             </td>
                         </tr>
                     </tbody>
@@ -74,10 +77,9 @@ export default {
         }
     },
     methods: {
-        get_jobs() {
+        get_publish_jobs() {
             this.currentJob = null
-            this.$service.get_jobs().then(res => {
-                console.log(res)
+            this.$service.get_publish_jobs().then(res => {
                 this.jobs = res.data
                 this.get_groups();
             }).catch(err => {
@@ -85,23 +87,22 @@ export default {
             })
         },
 
-        retry(job) {
-            this.$service.update_job_status({
-                id: job.id,
+        retry(publish_job) {
+            this.$service.update_publish_job({
+                id: publish_job.id,
                 status: 0,
             }).then(res => {
-                console.log(res)
-                this.get_jobs()
+                this.get_publish_jobs()
             }).catch(err => {
                 console.log(err)
             })
         },
-        deleteJob(job) {
-            this.$service.delete_job({
-                id: job.id,
+        deleteJob(publish_job) {
+            this.$service.delete_publish_job({
+                id: publish_job.id,
             }).then(res => {
                 console.log(res)
-                this.get_jobs()
+                this.get_publish_jobs()
             }).catch(err => {
                 console.log(err)
             })
@@ -109,12 +110,12 @@ export default {
         get_groups() {
             this.$service.get_groups().then(res => {
                 this.groups = res.data
-                this.jobs.forEach(job => {
-                    if (job.group_id === 0) {
-                        job.group_name = this.$t('defaultGroup')
+                this.jobs.forEach(publish_job => {
+                    if (publish_job.group_id === 0) {
+                        publish_job.group_name = this.$t('defaultGroup')
                         return
                     }
-                    job.group_name = this.groups.find(group => group.id === job.group_id).name
+                    publish_job.group_name = this.groups.find(group => group.id === publish_job.group_id).name
                 })
             }).catch(err => {
                 console.log(err)
@@ -122,7 +123,7 @@ export default {
         },
     },
     mounted() {
-        this.get_jobs()
+        this.get_publish_jobs()
     }
 }
 </script>

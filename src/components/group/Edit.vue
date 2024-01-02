@@ -14,6 +14,11 @@
             </select>
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
+            <label class="font-bold text-right col-span-1">{{ $t('startTime') }}</label>
+            <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.train_start_time"
+                placeholder="00:00" />
+        </div>
+        <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('autoPublish') }}:</label>
             <select class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.auto_publish">
                 <option value="0">{{ $t('disable') }}</option>
@@ -22,7 +27,8 @@
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('startTime') }}</label>
-            <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.start_time" placeholder="00:00" />
+            <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.publish_start_time"
+                placeholder="00:00" />
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('title') }}</label>
@@ -66,9 +72,9 @@ export default {
     emits: ['update'],
     methods: {
         update() {
-            //check start_time format 00:00
-            if (!this.group.start_time.match(/^\d{2}:\d{2}$/)) {
-                alert('start_time format error')
+            //check publish_start_time format 00:00
+            if (!this.group.publish_start_time.match(/^\d{2}:\d{2}$/)) {
+                alert('publish_start_time format error')
                 return
             }
             this.group.tags = this.tags.join(' ');

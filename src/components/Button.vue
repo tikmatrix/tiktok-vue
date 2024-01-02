@@ -1,9 +1,9 @@
 <template>
     <button
-        :class="`px-4 py-2 rounded m-1 ${color} ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-700'}`"
+        :class="`lg:px-4 lg:py-2 rounded lg:m-1 px-2 py-1 m-0.5 ${color} ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:' + hoverColor}`"
         :disabled="disabled || isLoading" @click="handleClick">
         <font-awesome-icon v-if="icon" :icon="icon" />
-        <span class="m-1">{{ isLoading ? $t('execing') + '...' : $t(`${label}`) }}</span>
+        <span class="lg:m-1 m-0.5">{{ isLoading ? $t('execing') + '...' : $t(`${label}`) }}</span>
     </button>
 </template>
 
@@ -34,6 +34,11 @@ export default {
     data() {
         return {
             isLoading: false
+        }
+    },
+    computed: {
+        hoverColor() {
+            return this.color.replace('500', '700');
         }
     },
     methods: {

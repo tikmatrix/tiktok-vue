@@ -95,7 +95,8 @@ export default {
                 name: group.name,
                 auto_train: Number(group.auto_train),
                 auto_publish: Number(group.auto_publish),
-                start_time: group.start_time,
+                publish_start_time: group.publish_start_time,
+                train_start_time: group.train_start_time,
                 title: group.title,
                 tags: group.tags,
             }).then(res => {
@@ -117,7 +118,8 @@ export default {
                 name: group.name,
                 auto_train: Number(group.auto_train),
                 auto_publish: Number(group.auto_publish),
-                start_time: group.start_time,
+                publish_start_time: group.publish_start_time,
+                train_start_time: group.train_start_time,
                 title: group.title,
                 tags: group.tags,
             }).then(res => {

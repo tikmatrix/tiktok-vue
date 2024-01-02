@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="watchers" :pageSize="10" searchKey="email">
+        <Pagination :items="watchers" :pageSize="10" searchKey="conditions">
             <template v-slot:buttons>
                 <Button @click="add_watcher" label="add" />
             </template>

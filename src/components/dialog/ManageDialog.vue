@@ -10,7 +10,6 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('name') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('conditions') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('action') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
@@ -21,7 +20,6 @@
                             <tr v-for="(watcher, index) in slotProps.items" :key="index"
                                 :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
                                 <td class="px-4 py-2 border">{{ watcher.id }}</td>
-                                <td class="px-4 py-2 border">{{ watcher.name }}</td>
                                 <td class="px-4 py-2 border">{{ watcher.conditions }}</td>
                                 <td class="px-4 py-2 border">{{ watcher.action }}</td>
                                 <td class="px-4 py-2 border">{{ parseInt(watcher.status) === 0 ? $t('disable') :
@@ -84,12 +82,12 @@ export default {
         },
         addWatcher(watcher) {
             this.$service.add_watcher({
-                name: watcher.name,
                 conditions: watcher.conditions,
                 action: watcher.action,
                 status: watcher.status,
             }).then(res => {
                 this.showAddWatcher = false
+                this.get_watchers()
             }).catch(err => {
                 console.log(err)
             })
@@ -100,12 +98,13 @@ export default {
         updateWatcher(watcher) {
             this.$service.update_account({
                 id: watcher.id,
-                name: watcher.name,
                 conditions: watcher.conditions,
                 action: watcher.action,
                 status: watcher.status,
             }).then(res => {
                 console.log(res)
+                this.currentWatcher = null
+                this.get_watchers()
             }).catch(err => {
                 console.log(err)
             })
@@ -115,7 +114,7 @@ export default {
                 id: watcher.id
             }).then(res => {
                 console.log(res)
-                this.get_accounts()
+                this.get_watchers()
             }).catch(err => {
                 console.log(err)
             })

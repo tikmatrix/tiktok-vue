@@ -87,6 +87,10 @@ export const i18n = createI18n({
             search: 'Search',
             shell: 'Shell',
             all: 'All',
+            conditions: 'Conditions',
+            action: 'Action',
+            online: 'Online',
+            offline: 'Offline',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -172,6 +176,10 @@ export const i18n = createI18n({
             search: '搜索',
             shell: '终端',
             all: '全部',
+            conditions: '条件',
+            action: '动作',
+            online: '在线',
+            offline: '离线',
         }
     }
 })

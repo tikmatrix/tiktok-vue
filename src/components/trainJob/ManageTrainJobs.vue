@@ -87,7 +87,7 @@ export default {
             })
         },
         deleteJob(train_job) {
-            this.$service.delete_job({
+            this.$service.delete_train_job({
                 id: train_job.id,
             }).then(res => {
                 console.log(res)

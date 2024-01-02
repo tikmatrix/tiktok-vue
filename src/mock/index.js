@@ -65,7 +65,7 @@ for (let i = 1; i <= 100; i++) {
   train_jobs.push({
     "id": i.toString(),
     "create_time": "2023-11-13 13:43:49",
-    "start_time": "13:43:49",
+    "start_time": "2023-11-13 13:43:49",
     "end_time": "2023-11-13 13:43:49",
     "status": Math.floor(Math.random() * 4), // 生成0到3之间的随机整数
     "click": 1,

@@ -76,6 +76,16 @@ for (let i = 1; i <= 100; i++) {
     "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数
   });
 }
+let watchers = [];
+for (let i = 1; i <= 100; i++) {
+  watchers.push({
+    "id": i.toString(),
+    "name": "name",
+    "conditions": "hello,ok",
+    "action": "click",
+    "status": Math.floor(Math.random() * 4), // 生成0到3之间的随机整数
+  });
+}
 const data = {
   post: {
     [api.shell]: {}
@@ -88,6 +98,7 @@ const data = {
     [api.train_job]: train_jobs,
     [api.group]: groups,
     [api.material_count]: Math.floor(Math.random() * 100),
+    [api.watcher]: watchers,
   },
 }
 

@@ -1,98 +1,129 @@
 <template>
     <div class="w-full">
-        <div ref="header" class="w-full p-4 bg-gray-200 border-b border-gray-300  sticky top-0 z-10">
-            <Button @click="create_job" label="Developing" />
-        </div>
-        <div>
+        <Pagination :items="watchers" :pageSize="10" searchKey="email">
+            <template v-slot:buttons>
+                <Button @click="add_watcher" label="add" />
+            </template>
+            <template v-slot:default="slotProps">
+                <div class="flex flex-wrap align-top">
+                    <table class="w-full text-left table-auto border-collapse">
+                        <thead>
+                            <tr>
+                                <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('name') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('conditions') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('action') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(watcher, index) in slotProps.items" :key="index"
+                                :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
+                                <td class="px-4 py-2 border">{{ watcher.id }}</td>
+                                <td class="px-4 py-2 border">{{ watcher.name }}</td>
+                                <td class="px-4 py-2 border">{{ watcher.conditions }}</td>
+                                <td class="px-4 py-2 border">{{ watcher.action }}</td>
+                                <td class="px-4 py-2 border">{{ parseInt(watcher.status) === 0 ? $t('disable') :
+                                    $t('enable') }}</td>
+                                <td class="px-4 py-2 border space-x-4">
+                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                        @click="editWatcher(watcher)">{{ $t('edit') }}</button>
+                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                        @click="deleteWatcher(watcher)">{{ $t('delete') }}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </template>
+        </Pagination>
 
-        </div>
-        <Modal :show="currentJob" @close="currentJob = null">
-            <Edit :publish_job="currentJob" @update="updateJob" />
+        <Modal :show="currentWatcher" @close="currentWatcher = null">
+            <Edit :watcher="currentWatcher" @update="updateWatcher" />
         </Modal>
-        <Modal :show="showCreateView" @close="showCreateView = false">
-            <Create @create="add_job" />
+        <Modal :show="showAddWatcher" @close="showAddWatcher = false">
+            <Add @add="addWatcher" />
         </Modal>
     </div>
 </template>
 <script>
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
+import Edit from './Edit.vue'
+import Add from './Add.vue'
+import Pagination from '../Pagination.vue'
 
 export default {
     name: 'app',
     components: {
         Modal,
         Button,
+        Edit,
+        Add,
+        Pagination
     },
     data() {
         return {
-            headerHeight: 0,
-            jobs: [],
-            currentJob: null,
-            showCreateView: false,
+            watchers: [],
+            currentWatcher: null,
+            showAddWatcher: false,
         }
     },
     methods: {
-        get_publish_jobs() {
-            this.currentJob = null
-            this.$service.get_publish_jobs().then(res => {
-                console.log(res)
-                this.jobs = res.data
+        get_watchers() {
+            this.$service.get_watchers().then(res => {
+                this.watchers = res.data
             }).catch(err => {
                 console.log(err)
             })
         },
-        create_job() {
-            this.showCreateView = true
+
+        add_watcher() {
+            this.showAddWatcher = true
         },
-        add_job(publish_job) {
-            this.showCreateView = false
-            this.$service.add_job({
-                publish_start_time: new Date(publish_job.publish_start_time).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-'),
-                material: publish_job.material,
-                account: publish_job.account,
-                title: publish_job.title,
-                tags: publish_job.tags,
+        addWatcher(watcher) {
+            this.$service.add_watcher({
+                name: watcher.name,
+                conditions: watcher.conditions,
+                action: watcher.action,
+                status: watcher.status,
+            }).then(res => {
+                this.showAddWatcher = false
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        editWatcher(watcher) {
+            this.currentWatcher = watcher;
+        },
+        updateWatcher(watcher) {
+            this.$service.update_account({
+                id: watcher.id,
+                name: watcher.name,
+                conditions: watcher.conditions,
+                action: watcher.action,
+                status: watcher.status,
             }).then(res => {
                 console.log(res)
-                this.get_publish_jobs()
             }).catch(err => {
                 console.log(err)
             })
         },
-        editJob(publish_job) {
-            this.currentJob = publish_job;
-        },
-        updateJob(publish_job) {
-            this.$service.update_job({
-                id: publish_job.id,
-                publish_start_time: new Date(publish_job.publish_start_time).toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).replace(/\//g, '-'),
-                material: publish_job.material,
-                account: publish_job.account,
-                title: publish_job.title,
-                tags: publish_job.tags,
-                status: Number(publish_job.status),
+        deleteWatcher(watcher) {
+            this.$service.delete_account({
+                id: watcher.id
             }).then(res => {
                 console.log(res)
-                this.get_publish_jobs()
+                this.get_accounts()
             }).catch(err => {
                 console.log(err)
             })
         },
-        deleteJob(publish_job) {
-            this.$service.delete_job({
-                id: publish_job.id,
-            }).then(res => {
-                console.log(res)
-                this.get_publish_jobs()
-            }).catch(err => {
-                console.log(err)
-            })
-        }
     },
     mounted() {
-        this.headerHeight = this.$refs.header.offsetHeight;
-        this.get_publish_jobs()
+        this.get_watchers();
+
     }
 
 }

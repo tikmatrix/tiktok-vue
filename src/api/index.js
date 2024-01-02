@@ -11,5 +11,6 @@ const api = {
     init: '/api/device/init',
     group: '/api/group',
     train_job: '/api/train_job',
+    watcher: '/api/dialog_watcher',
 }
 export default api

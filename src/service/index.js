@@ -187,4 +187,31 @@ export function delete_group({ id }) {
     params: { id }
   })
 }
+export function get_watchers() {
+  return request({
+    method: 'get',
+    url: api.watcher,
+  })
+}
+export function add_watcher({ name, conditions, action, status }) {
+  return request({
+    method: 'post',
+    url: api.watcher,
+    data: { name, conditions, action, status }
+  })
+}
+export function update_watcher({ id, name, conditions, action, status }) {
+  return request({
+    method: 'put',
+    url: api.watcher,
+    data: { id, name, conditions, action, status }
+  })
+}
+export function delete_watcher({ id }) {
+  return request({
+    method: 'delete',
+    url: api.watcher,
+    params: { id }
+  })
+}
 

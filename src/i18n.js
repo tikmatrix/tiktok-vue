@@ -91,6 +91,7 @@ export const i18n = createI18n({
             action: 'Action',
             online: 'Online',
             offline: 'Offline',
+            setTimeAndLanguage: 'Set Time And Language',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -180,6 +181,7 @@ export const i18n = createI18n({
             action: '动作',
             online: '在线',
             offline: '离线',
+            setTimeAndLanguage: '设置时间和语言',
         }
     }
 })

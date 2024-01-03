@@ -17,12 +17,14 @@
             icon="fa-solid fa-link" />
         <Button @click="shell('settings put global http_proxy :0')" label="disableProxy" icon="fa-solid fa-unlink" />
 
-        <Button @click="script('connect_wifi')" label="connectWifi" />
+        <!-- <Button @click="script('connect_wifi')" label="connectWifi" />
         <Button @click="script('disconnect_wifi')" label="disconnectWifi" />
         <Button @click="script('torch_on')" label="torchOn" />
-        <Button @click="script('torch_off')" label="torchOff" />
+        <Button @click="script('torch_off')" label="torchOff" /> -->
         <Button @click="shell('settings put global auto_time 1')" label="openAutoDateTime" />
         <Button @click="shell('settings put global auto_time 0')" label="closeAutoDateTime" />
+        <Button @click="shell('am start -n com.github.uiautomator/.ToastActivity -e language en -e timezone Europe/London')"
+            label="setTimeAndLanguage" />
         <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo" />
         <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" />
         <Button @click="shell('reboot')" label="rebootAll" color="bg-red-500 text-white" />

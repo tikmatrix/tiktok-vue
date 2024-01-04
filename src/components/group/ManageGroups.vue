@@ -75,6 +75,8 @@ export default {
     },
     methods: {
         get_groups() {
+            this.showEditGroup = false
+            this.showAddGroup = false
             this.currentGroup = null
             this.$service.get_groups().then(res => {
                 console.log(res)

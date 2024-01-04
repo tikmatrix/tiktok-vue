@@ -126,9 +126,9 @@ export function delete_train_job({ id }) {
 }
 export function update_train_job({ id, status }) {
   return request({
-    method: 'get',
-    url: api.update_train_job,
-    params: { id, status }
+    method: 'put',
+    url: api.train_job,
+    data: { id, status }
   })
 }
 export function delete_publish_job({ id }) {
@@ -140,9 +140,9 @@ export function delete_publish_job({ id }) {
 }
 export function update_publish_job({ id, status }) {
   return request({
-    method: 'get',
-    url: api.update_publish_job,
-    params: { id, status }
+    method: 'put',
+    url: api.publish_job,
+    data: { id, status }
   })
 }
 export function shell({ serial, cmd }) {

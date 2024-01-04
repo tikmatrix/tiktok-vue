@@ -110,7 +110,7 @@ export default {
             })
         },
         deleteWatcher(watcher) {
-            this.$service.delete_account({
+            this.$service.delete_watcher({
                 id: watcher.id
             }).then(res => {
                 console.log(res)

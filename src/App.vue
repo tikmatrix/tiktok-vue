@@ -1,5 +1,5 @@
 <template>
-  <Sidebar class="fixed top-0 bottom-0 overflow-auto lg:w-64 w-0" @menu_selected="menu_selected" />
+  <Sidebar class="fixed top-0 bottom-0 overflow-auto lg:w-64 lg:p-2 w-0 p-0" @menu_selected="menu_selected" />
   <div class="flex-grow lg:ml-64 ml-0">
     <ManageDevices v-if="selectedItem === 'devices'" />
     <ManageGroups v-if="selectedItem === 'groups'" />
@@ -40,7 +40,6 @@ export default {
   },
   methods: {
     menu_selected(item) {
-      console.log(item)
       this.selectedItem = item.name
     }
   },

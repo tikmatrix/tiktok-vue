@@ -155,12 +155,9 @@ export default {
                 this.accounts.forEach(account => {
                     if (account.group_id === 0) {
                         account.group_name = this.$t('defaultGroup')
-                        console.log(account.group_name)
                         return
                     }
-                    console.log(account.group_id)
                     account.group_name = this.groups.find(group => group.id === account.group_id).name
-                    console.log(account.group_name)
                 })
             }).catch(err => {
                 console.log(err)

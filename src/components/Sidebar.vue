@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-800 text-white p-2 flex flex-col">
+    <div class="min-h-screen bg-gray-800 text-white flex flex-col">
         <h1 class="text-2xl p-3 mb-6">
             <font-awesome-icon icon="fa-brands fa-tiktok" /> {{ $t('siteName') }}
         </h1>
@@ -71,7 +71,6 @@ export default {
     },
     methods: {
         selectItem(index, item) {
-            console.log(item);
             this.selectedItem = index;
             this.$emit('menu_selected', item);
         },

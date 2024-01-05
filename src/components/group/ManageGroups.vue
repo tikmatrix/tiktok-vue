@@ -57,7 +57,7 @@
 <script>
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
-import Edit from './Edit.vue'c
+import Edit from './Edit.vue'
 import Add from './Add.vue'
 import Pagination from '../Pagination.vue'
 

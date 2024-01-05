@@ -2,7 +2,7 @@
     <div>
         <div class="w-full bg-gray-200 border-b border-gray-300 sticky top-0 z-10">
             <slot name="buttons"></slot>
-            <p class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</p>
+            <span class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</span>
             <Button @click="prevPage" :disabled="currentPage <= 1" label="previous" :loading-time=100 />
             <span>{{ currentPage }} / {{ pageCount }}</span>
             <Button @click="nextPage" :disabled="currentPage >= pageCount" label="next" :loading-time=100 />

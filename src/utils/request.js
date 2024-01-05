@@ -60,7 +60,6 @@ const request = function request(config) {
   config.baseURL = `http://${window.location.hostname}:8090`
   const { method, url, data, params, headers } = config
   const mockMethod = method || 'get'
-  console.log(import.meta.env.VITE_APP_MOCK)
   if (import.meta.env.VITE_APP_MOCK === 'true') {
     return Promise.resolve(mock(url, mockMethod.toLowerCase()))
   }

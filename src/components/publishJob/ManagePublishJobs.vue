@@ -10,14 +10,14 @@
                         <tr>
                             <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('startTime') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('endTime') }}</th>
+                            <!-- <th class="px-4 py-2 border font-bold">{{ $t('endTime') }}</th> -->
                             <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('material') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('account') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('publishType') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('productLink') }}</th>
+                            <!-- <th class="px-4 py-2 border font-bold">{{ $t('productLink') }}</th> -->
                             <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
                         </tr>
                     </thead>
@@ -26,7 +26,7 @@
                             :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
                             <td class="px-4 py-2 border">{{ publish_job.id }}</td>
                             <td class="px-4 py-2 border">{{ publish_job.start_time }}</td>
-                            <td class="px-4 py-2 border">{{ publish_job.end_time }}</td>
+                            <!-- <td class="px-4 py-2 border">{{ publish_job.end_time }}</td> -->
                             <td class="px-4 py-2 border" :class="{
                                 'text-green-500': publish_job.status === 2,
                                 'text-red-500': publish_job.status === 3,
@@ -52,7 +52,7 @@
                             <td class="px-4 py-2 border">{{ publish_job.group_name || 'N/A' }}</td>
                             <td class="px-4 py-2 border">{{ parseInt(publish_job.publish_type) === 1 ? $t('selfMade') :
                                 $t('aiMade') }}</td>
-                            <td class="px-4 py-2 border">{{ publish_job.product_link }}</td>
+                            <!-- <td class="px-4 py-2 border">{{ publish_job.product_link }}</td> -->
                             <td class="px-4 py-2 border space-x-4">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     @click="retry(publish_job)">{{ $t('retry') }}</button>

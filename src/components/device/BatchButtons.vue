@@ -21,7 +21,6 @@
         <Button @click="script('disconnect_wifi')" label="disconnectWifi" />
         <Button @click="script('torch_on')" label="torchOn" />
         <Button @click="script('torch_off')" label="torchOff" />
-        <Button @click="script('publish_ai', ['https://vm.tiktok.com/ZGe2xRC8t/'])" label="aiVideo" />
         <Button @click="shell('settings put global auto_time 1')" label="openAutoDateTime" />
         <Button @click="shell('settings put global auto_time 0')" label="closeAutoDateTime" />
         <Button @click="shell('am start -n com.github.uiautomator/.ToastActivity -e language en -e timezone Europe/London')"

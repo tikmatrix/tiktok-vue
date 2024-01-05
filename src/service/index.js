@@ -138,11 +138,11 @@ export function delete_publish_job({ id }) {
     params: { id }
   })
 }
-export function update_publish_job({ id, status }) {
+export function update_publish_job({ id, status, publish_type }) {
   return request({
     method: 'put',
     url: api.publish_job,
-    data: { id, status }
+    data: { id, status, publish_type }
   })
 }
 export function shell({ serial, cmd }) {
@@ -166,18 +166,18 @@ export function get_groups() {
     url: api.group,
   })
 }
-export function add_group({ name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags }) {
+export function add_group({ name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags, publish_type, product_link }) {
   return request({
     method: 'post',
     url: api.group,
-    data: { name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags }
+    data: { name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags, publish_type, product_link }
   })
 }
-export function update_group({ id, name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags }) {
+export function update_group({ id, name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags, publish_type, product_link }) {
   return request({
     method: 'put',
     url: api.group,
-    data: { id, name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags }
+    data: { id, name, auto_train, auto_publish, publish_start_time, train_start_time, title, tags, publish_type, product_link }
   })
 }
 export function delete_group({ id }) {

@@ -13,6 +13,8 @@
                                 <th class="px-4 py-2 border font-bold">{{ $t('name') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('autoPublish') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('autoTrain') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('publishType') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('productLink') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -25,6 +27,9 @@
                                     $t('enable') }}</td>
                                 <td class="px-4 py-2 border">{{ parseInt(group.auto_train) === 0 ? $t('disable') :
                                     $t('enable') }}</td>
+                                <td class="px-4 py-2 border">{{ parseInt(group.publish_type) === 1 ? $t('selfMade') :
+                                    $t('aiMade') }}</td>
+                                <td class="px-4 py-2 border">{{ group.product_link }}</td>
                                 <td class="px-4 py-2 border space-x-4">
                                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                         @click="editgroup(group)">{{ $t('edit') }}</button>
@@ -52,7 +57,7 @@
 <script>
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
-import Edit from './Edit.vue'
+import Edit from './Edit.vue'c
 import Add from './Add.vue'
 import Pagination from '../Pagination.vue'
 
@@ -101,6 +106,8 @@ export default {
                 train_start_time: group.train_start_time,
                 title: group.title,
                 tags: group.tags,
+                publish_type: Number(group.publish_type),
+                product_link: group.product_link,
             }).then(res => {
                 console.log(res)
                 this.showAddGroup = false
@@ -124,6 +131,9 @@ export default {
                 train_start_time: group.train_start_time,
                 title: group.title,
                 tags: group.tags,
+                publish_type: Number(group.publish_type),
+                product_link: group.product_link,
+
             }).then(res => {
                 console.log(res)
                 this.get_groups()

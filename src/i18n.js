@@ -92,6 +92,10 @@ export const i18n = createI18n({
             online: 'Online',
             offline: 'Offline',
             setTimeAndLanguage: 'Set Time And Language',
+            selfMade: 'Self Made',
+            aiMade: 'AI Made',
+            publishType: 'Publish Type',
+            productLink: 'Product Link',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -182,6 +186,10 @@ export const i18n = createI18n({
             online: '在线',
             offline: '离线',
             setTimeAndLanguage: '设置时间和语言',
+            selfMade: '自制',
+            aiMade: 'AI 制作',
+            publishType: '发布类型',
+            productLink: '商品链接',
         }
     }
 })

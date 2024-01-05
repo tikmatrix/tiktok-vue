@@ -16,6 +16,8 @@
                             <th class="px-4 py-2 border font-bold">{{ $t('account') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('publishType') }}</th>
+                            <th class="px-4 py-2 border font-bold">{{ $t('productLink') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
                         </tr>
                     </thead>
@@ -48,6 +50,9 @@
                             <td class="px-4 py-2 border">{{ publish_job.account }}</td>
                             <td class="px-4 py-2 border">{{ publish_job.device || 'N/A' }}</td>
                             <td class="px-4 py-2 border">{{ publish_job.group_name || 'N/A' }}</td>
+                            <td class="px-4 py-2 border">{{ parseInt(publish_job.publish_type) === 1 ? $t('selfMade') :
+                                $t('aiMade') }}</td>
+                            <td class="px-4 py-2 border">{{ publish_job.product_link }}</td>
                             <td class="px-4 py-2 border space-x-4">
                                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                     @click="retry(publish_job)">{{ $t('retry') }}</button>
@@ -93,6 +98,7 @@ export default {
             this.$service.update_publish_job({
                 id: publish_job.id,
                 status: 0,
+                publish_type: publish_job.publish_type,
             }).then(res => {
                 this.get_publish_jobs()
             }).catch(err => {

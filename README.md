@@ -1,17 +1,26 @@
 # tiktok-vue
-
+## Deployment
+### one master node with multiple worker nodes
+### support no limit android devices if you have enough pc and android devices
+![](framework.png)
+## get started
 ```shell
 # vue
-npm create vue@latest
+git clone https://github.com/niostack/tiktok-vue.git
+cd tiktok-vue
 npm install
+# for demo
 npm run dev
+# for production
 npm run build
-# tailwindcss
+```
+## for development
+```shell
+# install tailwindcss
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 npx tailwindcss init -p
 ```
-
-## Pagination
+### Pagination component
 
 ```vue
 <Pagination :items="devices" :pageSize="5" searchKey="name">

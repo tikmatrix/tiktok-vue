@@ -214,4 +214,17 @@ export function delete_watcher({ id }) {
     params: { id }
   })
 }
+export function get_cdk() {
+  return request({
+    method: 'get',
+    url: api.cdk,
+  })
+}
+export function add_cdk({ code }) {
+  return request({
+    method: 'post',
+    url: api.cdk,
+    data: { code }
+  })
+}
 

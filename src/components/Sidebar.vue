@@ -3,6 +3,19 @@
         <h1 class="text-2xl p-3 mb-6">
             <font-awesome-icon icon="fa-brands fa-tiktok" /> {{ $t('siteName') }}
         </h1>
+        <div class="flex items-center p-3 space-x-2">
+            <font-awesome-icon icon="fa-solid fa-key" class="text-xl" />
+            <div class="ml-3">
+                <!-- If in edit mode, show input field. -->
+                <input ref="cdkInput" v-if="editMode" v-model="cdk.code" @blur="disableEditMode"
+                    @keyup.enter="disableEditMode" class="bg-gray-800 text-white" />
+                <!-- If cdk.name is not empty and not in edit mode, display it. -->
+                <span v-else-if="cdk.name">{{ cdk.name }}</span>
+                <!-- Otherwise, show 'Please enter CDK' text. -->
+                <span v-else @click="enableEditMode">请填写 CDK</span>
+                <div v-if="cdk.name" class="text-sm font-medium leading-none text-gray-400">{{ cdk.code }}</div>
+            </div>
+        </div>
         <hr class="mb-6" />
         <ul>
             <li v-for="(item, index) in menuItems" :key="index">
@@ -67,6 +80,11 @@ export default {
             ]
             , open: false,
             showDemoTip: false,
+            cdk: {
+                name: '',
+                code: ''
+            },
+            editMode: false
         }
     },
     methods: {
@@ -77,6 +95,28 @@ export default {
         changeLocale(locale) {
             this.$i18n.locale = locale;
             this.open = false;
+        },
+        enableEditMode() {
+            this.editMode = true;
+            this.$nextTick(() => {
+                this.$refs.cdkInput.focus();
+            });
+        },
+        disableEditMode() {
+            this.editMode = false;
+            this.add_cdk();
+        },
+        get_cdk() {
+            this.$service.get_cdk().then((res) => {
+                this.cdk = res.data;
+            });
+        },
+        add_cdk() {
+            this.$service.add_cdk({
+                code: this.cdk.code
+            }).then((res) => {
+                this.cdk = res.data;
+            });
         }
     },
     mounted() {

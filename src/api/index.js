@@ -12,6 +12,6 @@ const api = {
     group: '/api/group',
     train_job: '/api/train_job',
     watcher: '/api/dialog_watcher',
-    cdk: '/api/cdk',
+    license: '/api/license',
 }
 export default api

@@ -96,6 +96,7 @@ export const i18n = createI18n({
             aiMade: 'AI Made',
             publishType: 'Publish Type',
             productLink: 'Product Link',
+            enterLicenseId: 'Enter License ID',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -190,6 +191,7 @@ export const i18n = createI18n({
             aiMade: 'AI 制作',
             publishType: '发布类型',
             productLink: '商品链接',
+            enterLicenseId: '输入 License ID',
         }
     }
 })

@@ -93,12 +93,9 @@ for (let i = 1; i <= 100; i++) {
 const data = {
   post: {
     [api.shell]: {},
-    [api.cdk]: {
-      "name": "test cdk",
-      "code": "123456",
-      "create_time": "2023-11-13 13:43:49",
-      "expire_time": "2023-11-13 13:43:49",
-      "status": 1,
+    [api.license]: {
+      "name": "Niostack",
+      "expire": 1704601102,
     }
   },
   get: {
@@ -110,7 +107,9 @@ const data = {
     [api.group]: groups,
     [api.material_count]: Math.floor(Math.random() * 100),
     [api.watcher]: watchers,
-    [api.cdk]: {
+    [api.license]: {
+      "name": "Niostack",
+      "expire": 1704601102,
     }
   },
 }

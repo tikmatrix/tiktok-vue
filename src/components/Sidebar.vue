@@ -7,13 +7,17 @@
             <font-awesome-icon icon="fa-solid fa-key" class="text-xl" />
             <div class="ml-3">
                 <!-- If in edit mode, show input field. -->
-                <input ref="cdkInput" v-if="editMode" v-model="cdk.code" @blur="disableEditMode"
-                    @keyup.enter="disableEditMode" class="bg-gray-800 text-white" />
-                <!-- If cdk.name is not empty and not in edit mode, display it. -->
-                <span v-else-if="cdk.name">{{ cdk.name }}</span>
-                <!-- Otherwise, show 'Please enter CDK' text. -->
-                <span v-else @click="enableEditMode">请填写 CDK</span>
-                <div v-if="cdk.name" class="text-sm font-medium leading-none text-gray-400">{{ cdk.code }}</div>
+                <input ref="licenseInput" v-if="editMode" @blur="add_license" @keyup.enter="disableEditMode"
+                    class="bg-gray-800 text-white" v-model="inputCode" />
+
+                <div v-else-if="license" class="text-sm font-medium leading-none text-gray-400">
+                    <span class=" text-white font-bold">{{ license.name }}</span>
+                    <span class=""> membership expires in <span class="text-green-500">{{ remainingDays }}</span>
+                        days.</span>
+                    <span class="text-red-500 font-bold" @click="enableEditMode">change</span>
+                </div>
+                <span v-else @click="enableEditMode">{{ $t('enterLicenseId') }}</span>
+
             </div>
         </div>
         <hr class="mb-6" />
@@ -80,11 +84,20 @@ export default {
             ]
             , open: false,
             showDemoTip: false,
-            cdk: {
-                name: '',
-                code: ''
-            },
-            editMode: false
+            license: null,
+            editMode: false,
+            inputCode: ''
+        }
+    },
+    computed: {
+        remainingDays() {
+            if (!this.license || !this.license.expire) {
+                return 0;
+            }
+            const now = Date.now();
+            const expireDate = new Date(this.license.expire * 1000); // Convert seconds to milliseconds
+            const remainingTime = expireDate - now;
+            return Math.ceil(remainingTime / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
         }
     },
     methods: {
@@ -99,29 +112,30 @@ export default {
         enableEditMode() {
             this.editMode = true;
             this.$nextTick(() => {
-                this.$refs.cdkInput.focus();
+                this.$refs.licenseInput.focus();
             });
         },
         disableEditMode() {
             this.editMode = false;
-            this.add_cdk();
         },
-        get_cdk() {
-            this.$service.get_cdk().then((res) => {
-                this.cdk = res.data;
+        get_license() {
+            this.$service.get_license().then((res) => {
+                this.license = res.data;
             });
         },
-        add_cdk() {
-            this.$service.add_cdk({
-                code: this.cdk.code
+        add_license() {
+            this.$service.add_license({
+                code: this.inputCode
             }).then((res) => {
-                this.cdk = res.data;
+                this.license = res.data;
+                this.disableEditMode();
             });
         }
     },
     mounted() {
         this.selectItem(this.selectedItem, this.menuItems[this.selectedItem]);
         this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
+        this.get_license();
     }
 }
 </script>

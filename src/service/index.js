@@ -214,16 +214,16 @@ export function delete_watcher({ id }) {
     params: { id }
   })
 }
-export function get_cdk() {
+export function get_license() {
   return request({
     method: 'get',
-    url: api.cdk,
+    url: api.license,
   })
 }
-export function add_cdk({ code }) {
+export function add_license({ code }) {
   return request({
     method: 'post',
-    url: api.cdk,
+    url: api.license,
     data: { code }
   })
 }

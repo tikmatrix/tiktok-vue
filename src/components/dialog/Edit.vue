@@ -6,7 +6,18 @@
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('action') }}:</label>
-            <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="watcher.action" />
+            <div class="col-span-2 flex items-center gap-4">
+                <div class="flex items-center">
+                    <input type="radio" id="click" value="click" v-model="watcher.action"
+                        class="form-radio text-blue-500 h-4 w-4">
+                    <label for="click" class="ml-2">{{ $t('click') }}</label>
+                </div>
+                <div class="flex items-center">
+                    <input type="radio" id="back" value="back" v-model="watcher.action"
+                        class="form-radio text-blue-500 h-4 w-4">
+                    <label for="back" class="ml-2">{{ $t('back') }}</label>
+                </div>
+            </div>
         </div>
 
 

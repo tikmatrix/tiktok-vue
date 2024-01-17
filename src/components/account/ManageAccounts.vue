@@ -32,7 +32,7 @@
                                         $t('disable') }}</span>
                                     <span v-else-if="parseInt(account.shop_creator) === 1" class="text-green-500 m-1">{{
                                         $t('enable') }}</span>
-                                    <span v-else-if="parseInt(account.shop_creator) === 1" class="text-red-500 m-1">{{
+                                    <span v-else-if="parseInt(account.shop_creator) === 2" class="text-red-500 m-1">{{
                                         $t('block') }}</span>
                                 </td>
                                 <td class="px-4 py-2 border">{{ account.username }}</td>

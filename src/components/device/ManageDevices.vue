@@ -71,9 +71,8 @@ export default {
         get_accounts() {
             this.$service.get_accounts().then(res => {
                 this.accounts = res.data
-                //append email to device
                 this.devices.forEach(device => {
-                    device.email = this.accounts.find(account => account.device === device.serial)?.email
+                    device.account = this.accounts.find(account => account.device === device.serial)?.username
                 })
                 //append group_id to device
                 this.devices.forEach(device => {

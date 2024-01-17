@@ -97,6 +97,11 @@ export const i18n = createI18n({
             publishType: 'Publish Type',
             productLink: 'Product Link',
             enterLicenseId: 'Enter License ID',
+            infoCrawler: 'Info Crawler',
+            username: 'Username',
+            fans: 'Fans',
+            shopCreator: 'Shop Creator',
+            block: 'Block',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -192,6 +197,11 @@ export const i18n = createI18n({
             publishType: '发布类型',
             productLink: '商品链接',
             enterLicenseId: '输入 License ID',
+            infoCrawler: '信息采集',
+            username: '用户名',
+            fans: '粉丝',
+            shopCreator: '创作者',
+            block: '封禁',
         }
     }
 })

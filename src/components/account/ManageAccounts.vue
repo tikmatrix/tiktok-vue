@@ -12,8 +12,9 @@
                                 <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('email') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('password') }}</th>
-                                <!-- <th class="px-4 py-2 border font-bold">{{ $t('shop_creator') }}</th> -->
-                                <!-- <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th> -->
+                                <th class="px-4 py-2 border font-bold">{{ $t('shopCreator') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('username') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
@@ -26,9 +27,20 @@
                                 <td class="px-4 py-2 border">{{ account.id }}</td>
                                 <td class="px-4 py-2 border">{{ account.email }}</td>
                                 <td class="px-4 py-2 border">{{ account.pwd }}</td>
-                                <!-- <td class="px-4 py-2 border">{{ parseInt(account.shop_creator) === 0 ? $t('disable') : $t('enable') }}</td> -->
-                                <!-- <td class="px-4 py-2 border">{{ account.fans }}</td> -->
-                                <td class="px-4 py-2 border">{{ account.device }}</td>
+                                <td class="px-4 py-2 border">
+                                    <span v-if="parseInt(account.shop_creator) === 0" class=" m-1">{{
+                                        $t('disable') }}</span>
+                                    <span v-else-if="parseInt(account.shop_creator) === 1" class="text-green-500 m-1">{{
+                                        $t('enable') }}</span>
+                                    <span v-else-if="parseInt(account.shop_creator) === 1" class="text-red-500 m-1">{{
+                                        $t('block') }}</span>
+                                </td>
+                                <td class="px-4 py-2 border">{{ account.username }}</td>
+                                <td class="px-4 py-2 border">{{ account.fans }}</td>
+                                <td class="px-4 py-2 border">
+                                    <a class="cursor-pointer underline text-blue-500"
+                                        @click="show_device(account.device)">{{ account.device }}</a>
+                                </td>
                                 <td class="px-4 py-2 border">
                                     <span v-if="account.online" class="text-green-500 m-1">{{ $t('online') }}</span>
                                     <span v-else class="text-red-500 m-1">{{ $t('offline') }}</span>
@@ -53,6 +65,9 @@
         <Modal :show="showAddAccount" @close="showAddAccount = false">
             <Add @add="addAccount" />
         </Modal>
+        <Modal :show="currentDevice" @close="handleDeviceClose">
+            <Remote :device="currentDevice" />
+        </Modal>
     </div>
 </template>
 <script>
@@ -61,6 +76,7 @@ import Button from '../Button.vue'
 import Edit from './Edit.vue'
 import Add from './Add.vue'
 import Pagination from '../Pagination.vue'
+import Remote from '../device/Remote.vue'
 
 export default {
     name: 'app',
@@ -69,17 +85,26 @@ export default {
         Button,
         Edit,
         Add,
-        Pagination
+        Pagination,
+        Remote
     },
     data() {
         return {
             accounts: [],
             groups: [],
+            devices: [],
             currentAccount: null,
             showAddAccount: false,
+            currentDevice: null,
         }
     },
     methods: {
+        handleDeviceClose() {
+            this.currentDevice = null;
+        },
+        show_device(device) {
+            this.currentDevice = this.devices.find(d => d.serial === device)
+        },
         get_devices() {
             this.$service.get_devices().then(res => {
                 this.devices = res.data

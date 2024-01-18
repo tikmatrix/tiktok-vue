@@ -47,7 +47,6 @@
                 <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)" />
                 <Button label="login" icon="fa-solid fa-address-card" @click="script('login', device.serial)" />
                 <Button label="uploadAvatar" icon="fa-solid fa-user-plus" @click="script('upload_avatar', device.serial)" />
-                <Button label="autoTrain" icon="fa-solid fa-hand-holding-droplet" @click="script('train', device.serial)" />
             </div>
 
 

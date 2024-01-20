@@ -102,6 +102,7 @@ export const i18n = createI18n({
             fans: 'Fans',
             shopCreator: 'Shop Creator',
             block: 'Block',
+            earnings: 'Earnings',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -202,6 +203,7 @@ export const i18n = createI18n({
             fans: '粉丝',
             shopCreator: '创作者',
             block: '封禁',
+            earnings: '收益',
         }
     }
 })

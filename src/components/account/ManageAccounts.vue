@@ -15,6 +15,7 @@
                                 <th class="px-4 py-2 border font-bold">{{ $t('shopCreator') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('username') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('earnings') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
@@ -37,6 +38,7 @@
                                 </td>
                                 <td class="px-4 py-2 border">{{ account.username }}</td>
                                 <td class="px-4 py-2 border">{{ account.fans }}</td>
+                                <td class="px-4 py-2 border">{{ account.earnings }}</td>
                                 <td class="px-4 py-2 border">
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(account.device)">{{ account.device }}</a>

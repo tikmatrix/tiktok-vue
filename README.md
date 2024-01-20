@@ -23,7 +23,7 @@ npx tailwindcss init -p
 ### Pagination component
 
 ```vue
-<Pagination :items="devices" :pageSize="5" searchKey="name">
+<Pagination :items="devices" :pageSize="5" searchKeys="name">
     <template v-slot:buttons>
         <Button label="Button 1" />
         <Button label="Button 2" />

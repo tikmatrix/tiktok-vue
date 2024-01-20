@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="jobs" :pageSize="10" searchKey="account">
+        <Pagination :items="jobs" :pageSize="10" :searchKeys="['device', 'id', 'account']" @refresh="get_publish_jobs">
             <template v-slot:buttons>
                 <!-- <Button @click="create_job" label="add" /> -->
             </template>

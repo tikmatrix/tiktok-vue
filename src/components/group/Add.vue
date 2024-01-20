@@ -85,8 +85,8 @@ export default {
                 tags: '',
                 auto_train: 1,
                 auto_publish: 1,
-                publish_start_time: '02:10',
-                train_start_time: '20:00,21:00,22:00,23:00',
+                publish_start_time: '02:10,03:10',
+                train_start_time: '20:00,21:00',
                 publish_type: 1,
             },
             newTag: '',
@@ -96,8 +96,12 @@ export default {
     emits: ['add'],
     methods: {
         add() {
-            //check publish_start_time format 00:00
-            if (!this.group.publish_start_time.match(/^\d{2}:\d{2}$/)) {
+            // Check publish_start_time format 00:00,01:00,02:00,...
+            if (!this.group.train_start_time.match(/^(\d{2}:\d{2},)*\d{2}:\d{2}$/)) {
+                alert('train_start_time format error')
+                return
+            }
+            if (!this.group.publish_start_time.match(/^(\d{2}:\d{2},)*\d{2}:\d{2}$/)) {
                 alert('publish_start_time format error')
                 return
             }

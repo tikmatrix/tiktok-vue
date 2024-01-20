@@ -1,8 +1,8 @@
 <template>
     <div class=" w-full">
-        <Pagination :items="devices" :pageSize="5" searchKey="serial">
+        <Pagination :items="devices" :pageSize="5" :searchKeys="['serial', 'account']" @refresh="get_devices">
             <template v-slot:buttons>
-                <BatchButtons @get_devices="get_devices" />
+                <BatchButtons />
             </template>
             <template v-slot:default="slotProps">
                 <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

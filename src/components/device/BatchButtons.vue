@@ -1,7 +1,6 @@
 <template>
     <div class="w-full p-4 bg-gray-200 border-b border-gray-300">
         <label class="text-gray-700  font-bold">{{ $t('batchAction') }}</label>
-        <Button icon="fa fa-refresh" @click="$emit('get_devices')" label="refresh" />
         <input id="app_install_input" type="file" v-on:change="on_app_install" hidden>
         <Button icon="fa fa-upload" @click="app_install" label="installApk" />
         <Button icon="fa fa-trash" @click="app_uninstall" label="uninstallApk" />

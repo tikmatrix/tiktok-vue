@@ -90,8 +90,12 @@ export default {
     emits: ['update'],
     methods: {
         update() {
-            //check publish_start_time format 00:00
-            if (!this.group.publish_start_time.match(/^\d{2}:\d{2}$/)) {
+            // Check publish_start_time format 00:00,01:00,02:00,...
+            if (!this.group.train_start_time.match(/^(\d{2}:\d{2},)*\d{2}:\d{2}$/)) {
+                alert('train_start_time format error')
+                return
+            }
+            if (!this.group.publish_start_time.match(/^(\d{2}:\d{2},)*\d{2}:\d{2}$/)) {
                 alert('publish_start_time format error')
                 return
             }

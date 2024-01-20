@@ -1,6 +1,6 @@
 <template>
     <div class=" w-full">
-        <Pagination :items="materials" :pageSize="10" searchKey="name">
+        <Pagination :items="materials" :pageSize="10" :searchKeys="['name']" @refresh="get_materials">
             <template v-slot:buttons>
                 <!-- <Button @click="create_material" label="add" /> -->
             </template>

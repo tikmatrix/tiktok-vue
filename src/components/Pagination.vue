@@ -6,6 +6,7 @@
             <Button @click="prevPage" :disabled="currentPage <= 1" label="previous" :loading-time=100 />
             <span>{{ currentPage }} / {{ pageCount }}</span>
             <Button @click="nextPage" :disabled="currentPage >= pageCount" label="next" :loading-time=100 />
+            <Button icon="fa fa-refresh" @click="$emit('refresh')" label="refresh" />
             {{ $t('search') }}：
             <input v-model="searchTerm" :placeholder="$t('enterTips')"
                 class=" m-3 p-3 my-2 border-2 border-gray-300 rounded" />
@@ -40,8 +41,8 @@ export default {
             type: Number,
             default: 5
         },
-        searchKey: {
-            type: String,
+        searchKeys: {
+            type: Array,
             required: true
         }
     },
@@ -64,7 +65,9 @@ export default {
         filteredItems() {
             if (this.searchTerm) {
                 return this.items.filter(item =>
-                    item[this.searchKey].includes(this.searchTerm) &&
+                    this.searchKeys.some(key =>
+                        item[key] ? item[key].includes(this.searchTerm) : false
+                    ) &&
                     (!this.searchGroup || item.group_name === this.searchGroup)
                 );
             } else {

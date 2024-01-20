@@ -41,6 +41,7 @@
 
             <div class="p-1">
                 <p class="text-lg font-bold">{{ $t('autoScripts') }}</p>
+                <Button @click="script('info', device.serial)" label="infoCrawler" />
                 <Button @click="script('torch_on', device.serial)" label="torchOn" />
                 <Button @click="script('torch_off', device.serial)" label="torchOff" />
                 <Button @click="script('datetime', device.serial)" label="setTimeAndLanguage" />

@@ -267,6 +267,7 @@ export default {
             this.minitouch.onopen = (ret) => {
                 this.readonly = false
                 console.log("minitouch connected")
+                this.minitouch.send(`ws://127.0.0.1:${this.device.forward_port}/minitouch`)
                 this.minitouch.send(JSON.stringify({ // touch reset, fix when device is outof control
                     operation: "r",
                 }))
@@ -312,6 +313,7 @@ export default {
             }
             this.minicap.onopen = () => {
                 console.log('minicap connected')
+                this.minicap.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
             }
         },
     },

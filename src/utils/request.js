@@ -26,7 +26,8 @@ export function wsFetch(uri, host, forward_port) {
     }
   }
   // 创建 WebSocket 连接
-  const socket = new WebSocket(`ws://${host}:${forward_port}/${uri}`);
+  // const socket = new WebSocket(`ws://${host}:${forward_port}/${uri}`);
+  const socket = new WebSocket(`ws://${host}:8092`);
   return socket
 }
 export function post(config) {

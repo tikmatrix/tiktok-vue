@@ -84,6 +84,7 @@ export default {
             }
             this.ws.onopen = () => {
                 console.log('onopen', arguments)
+                this.ws.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
             }
         },
     },

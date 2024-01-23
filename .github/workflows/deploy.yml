@@ -25,9 +25,9 @@ jobs:
           - name: 📂 upload to server
             uses: appleboy/scp-action@v0.1.4
             with:
-              host: 154.197.98.63
+              host: 154.197.99.171
               username: root
               key: ${{ secrets.SSH_PRIVATE_KEY }}
-              port: 22
+              port: 31275
               source: dist/*
               target: /root/tt.niostack.com

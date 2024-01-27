@@ -19,6 +19,14 @@ for (let i = 1; i <= 20; i++) {
     'product_link': 'https://vm.tiktok.com/ZGe2xRC8t/',
   });
 }
+let musics = [];
+for (let i = 1; i <= 20; i++) {
+  musics.push({
+    'id': i,
+    'release_name': 'release_name' + i,
+    'artist_name': 'artist_name' + i,
+  });
+}
 let materials = [];
 for (let i = 1; i <= 100; i++) {
   materials.push({
@@ -105,6 +113,7 @@ const data = {
     [api.publish_job]: publish_jobs,
     [api.train_job]: train_jobs,
     [api.group]: groups,
+    [api.music]: musics,
     [api.material_count]: Math.floor(Math.random() * 100),
     [api.watcher]: watchers,
     [api.license]: {

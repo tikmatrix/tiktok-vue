@@ -187,6 +187,34 @@ export function delete_group({ id }) {
     params: { id }
   })
 }
+export function get_musics() {
+  return request({
+    method: 'get',
+    url: api.music,
+  })
+}
+export function add_music({ release_name, artist_name }) {
+  return request({
+    method: 'post',
+    url: api.music,
+    data: { release_name, artist_name }
+  })
+}
+export function update_music({ id, release_name, artist_name }) {
+  return request({
+    method: 'put',
+    url: api.music,
+    data: { id, release_name, artist_name }
+  })
+}
+export function delete_music({ id }) {
+  return request({
+    method: 'delete',
+    url: api.music,
+    params: { id }
+  })
+}
+
 export function get_watchers() {
   return request({
     method: 'get',

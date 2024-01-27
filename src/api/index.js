@@ -10,6 +10,7 @@ const api = {
     shell: '/api/shell',
     init: '/api/device/init',
     group: '/api/group',
+    music: '/api/music',
     train_job: '/api/train_job',
     watcher: '/api/dialog_watcher',
     license: '/api/license',

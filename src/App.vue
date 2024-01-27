@@ -5,6 +5,7 @@
     <ManageGroups v-if="selectedItem === 'groups'" />
     <ManageAccounts v-if="selectedItem === 'accounts'" />
     <ManageMaterials v-if="selectedItem === 'materials'" />
+    <ManageMusics v-if="selectedItem === 'musics'" />
     <ManagePublishJobs v-if="selectedItem === 'autoPublish'" />
     <ManageTrainJobs v-if="selectedItem === 'autoTrain'" />
     <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
@@ -19,6 +20,7 @@ import ManagePublishJobs from './components/publishJob/ManagePublishJobs.vue'
 import ManageDialog from './components/dialog/ManageDialog.vue'
 import ManageTrainJobs from './components/trainJob/ManageTrainJobs.vue'
 import ManageGroups from './components/group/ManageGroups.vue'
+import ManageMusics from './components/music/ManageMusics.vue'
 
 
 export default {
@@ -31,7 +33,8 @@ export default {
     ManagePublishJobs,
     ManageDialog,
     ManageTrainJobs,
-    ManageGroups
+    ManageGroups,
+    ManageMusics
   },
   data() {
     return {

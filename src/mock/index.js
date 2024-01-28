@@ -65,7 +65,7 @@ for (let i = 1; i <= 100; i++) {
     "material": "/preview.jpg",
     "account": "admin@niostack.com",
     "title": "title",
-    "device": "deviceid" + i,
+    "device": "device" + i,
     "tags": "tag1 tag2 tag3",
     'publish_type': 1,
     'product_link': 'https://vm.tiktok.com/ZGe2xRC8t/',

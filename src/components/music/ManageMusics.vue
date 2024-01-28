@@ -10,8 +10,8 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('releaseName') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('artistName') }}</th>
+                                <th class="px-4 py-2 border font-bold">{{ $t('releaseName') }}</th>
                                 <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -19,8 +19,8 @@
                             <tr v-for="(music, index) in slotProps.items" :key="index"
                                 :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
                                 <td class="px-4 py-2 border">{{ music.id }}</td>
-                                <td class="px-4 py-2 border">{{ music.release_name }}</td>
                                 <td class="px-4 py-2 border">{{ music.artist_name }}</td>
+                                <td class="px-4 py-2 border">{{ music.release_name }}</td>
                                 <td class="px-4 py-2 border space-x-4">
                                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                         @click="editmusic(music)">{{ $t('edit') }}</button>

@@ -208,8 +208,8 @@ export const i18n = createI18n({
             block: '封禁',
             earnings: '收益',
             musics: '音乐',
-            releaseName: '发布名称',
-            artistName: '艺术家名称',
+            releaseName: '发行名称',
+            artistName: '音乐名称',
         }
     }
 })

@@ -48,7 +48,11 @@
                                 </template>
                             </td>
                             <td class="px-4 py-2 border">{{ publish_job.account }}</td>
-                            <td class="px-4 py-2 border">{{ publish_job.device || 'N/A' }}</td>
+                            <td class="px-4 py-2 border">
+                                <a class="cursor-pointer underline text-blue-500"
+                                    @click="show_device(publish_job.device)">{{
+                                        publish_job.device }}</a>
+                            </td>
                             <td class="px-4 py-2 border">{{ publish_job.group_name || 'N/A' }}</td>
                             <td class="px-4 py-2 border">{{ parseInt(publish_job.publish_type) === 1 ? $t('selfMade') :
                                 $t('aiMade') }}</td>
@@ -64,26 +68,46 @@
                 </table>
             </template>
         </Pagination>
-
+        <Modal :show="currentDevice" @close="handleDeviceClose">
+            <Remote :device="currentDevice" />
+        </Modal>
     </div>
 </template>
 <script>
+import Modal from '../Modal.vue'
 import Button from '../Button.vue'
 import Pagination from '../Pagination.vue'
-
+import Remote from '../device/Remote.vue'
 export default {
     name: 'app',
     components: {
         Button,
+        Modal,
+        Remote,
         Pagination
     },
     data() {
         return {
             jobs: [],
             groups: [],
+            devices: [],
+            currentDevice: null,
         }
     },
     methods: {
+        handleDeviceClose() {
+            this.currentDevice = null;
+        },
+        show_device(device) {
+            this.currentDevice = this.devices.find(d => d.serial === device)
+        },
+        get_devices() {
+            this.$service.get_devices().then(res => {
+                this.devices = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         get_publish_jobs() {
             this.currentJob = null
             this.$service.get_publish_jobs().then(res => {
@@ -131,7 +155,8 @@ export default {
         },
     },
     mounted() {
-        this.get_publish_jobs()
+        this.get_publish_jobs();
+        this.get_devices();
     }
 }
 </script>

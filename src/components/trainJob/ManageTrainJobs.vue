@@ -10,7 +10,6 @@
                         <tr>
                             <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('startTime') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('endTime') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('account') }}</th>
                             <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
@@ -23,7 +22,6 @@
                             :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
                             <td class="px-4 py-2 border">{{ train_job.id }}</td>
                             <td class="px-4 py-2 border">{{ train_job.start_time }}</td>
-                            <td class="px-4 py-2 border">{{ train_job.end_time }}</td>
                             <td class="px-4 py-2 border" :class="{
                                 'text-green-500': train_job.status === 2,
                                 'text-red-500': train_job.status === 3,

@@ -119,7 +119,15 @@ const data = {
     [api.license]: {
       "name": "Niostack",
       "expire": 1704601102,
-    }
+    },
+    [api.settings]: {
+      "proxy_url": "http://example.com",
+      "server_url": "http://example.com",
+      "country": "UK",
+      "wifi_name": "ExampleWiFi",
+      "wifi_password": "ExamplePassword",
+      "version": "1.0.0",
+    },
   },
 }
 

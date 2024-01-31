@@ -14,5 +14,6 @@ const api = {
     train_job: '/api/train_job',
     watcher: '/api/dialog_watcher',
     license: '/api/license',
+    settings: '/api/settings',
 }
 export default api

@@ -255,4 +255,10 @@ export function add_license({ code }) {
     data: { code }
   })
 }
+export function get_settings() {
+  return request({
+    method: 'get',
+    url: api.settings,
+  })
+}
 

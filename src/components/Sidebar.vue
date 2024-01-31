@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <p class="text-sm text-gray-400  p-3">{{ $t('version') + ': ' + version }}</p>
+            <p class="text-sm text-gray-400  p-3">{{ $t('version') + ': ' + settings.version }}</p>
         </div>
     </div>
 </template>
@@ -71,7 +71,7 @@ export default {
 
     data() {
         return {
-            version: '0.0.1',
+
             selectedItem: 0,
             menuItems: [
                 { name: 'devices', icon: 'laptop' },
@@ -87,7 +87,10 @@ export default {
             showDemoTip: false,
             license: null,
             editMode: false,
-            inputCode: ''
+            inputCode: '',
+            settings: {
+                version: '0.0.1',
+            }
         }
     },
     computed: {
@@ -131,12 +134,18 @@ export default {
                 this.license = res.data;
                 this.disableEditMode();
             });
+        },
+        get_settings() {
+            this.$service.get_settings().then((res) => {
+                this.settings = res.data;
+            });
         }
     },
     mounted() {
         this.selectItem(this.selectedItem, this.menuItems[this.selectedItem]);
         this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
         this.get_license();
+        this.get_settings();
     }
 }
 </script>

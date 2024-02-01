@@ -27,9 +27,14 @@ import Remote from './Remote.vue'
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
 import Pagination from '../Pagination.vue'
-
+import { inject } from 'vue';
 export default {
     name: 'app',
+    setup() {
+        const devices = inject('devices');
+
+        return { devices: devices.list };
+    },
     components: {
         Miniremote,
         Remote,
@@ -40,7 +45,6 @@ export default {
     },
     data() {
         return {
-            devices: [],
             currentDevice: null,
             currentShell: null,
         }
@@ -53,14 +57,7 @@ export default {
         handleShellClose() {
             this.currentShell = null;
         },
-        get_devices() {
-            this.$service.get_devices().then(res => {
-                this.devices = res.data
-                this.get_accounts();
-            }).catch(err => {
-                console.log(err)
-            })
-        },
+
         show_device(device) {
             this.currentDevice = device
 
@@ -95,9 +92,7 @@ export default {
             })
         },
     },
-    mounted() {
-        this.get_devices()
-    },
+
 
 
 }

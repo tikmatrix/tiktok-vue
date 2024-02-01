@@ -79,7 +79,7 @@ import Edit from './Edit.vue'
 import Add from './Add.vue'
 import Pagination from '../Pagination.vue'
 import Remote from '../device/Remote.vue'
-
+import { inject } from 'vue';
 export default {
     name: 'app',
     components: {
@@ -89,6 +89,10 @@ export default {
         Add,
         Pagination,
         Remote
+    },
+    setup() {
+        const devices = inject('devices');
+        return { devices: devices.list };
     },
     data() {
         return {
@@ -107,22 +111,15 @@ export default {
         show_device(device) {
             this.currentDevice = this.devices.find(d => d.serial === device)
         },
-        get_devices() {
-            this.$service.get_devices().then(res => {
-                this.devices = res.data
-                this.accounts.forEach(account => {
-                    account.online = this.devices.find(device => device.serial === account.device)
-                })
-            }).catch(err => {
-                console.log(err)
-            })
-        },
+
         get_accounts() {
             this.currentAccount = null
             this.$service.get_accounts().then(res => {
                 console.log(res)
                 this.accounts = res.data
-                this.get_devices();
+                this.accounts.forEach(account => {
+                    account.online = this.devices.find(device => device.serial === account.device)
+                })
                 this.get_groups();
             }).catch(err => {
                 console.log(err)

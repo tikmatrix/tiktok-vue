@@ -78,6 +78,7 @@ import Modal from '../Modal.vue'
 import Button from '../Button.vue'
 import Pagination from '../Pagination.vue'
 import Remote from '../device/Remote.vue'
+import { inject } from 'vue';
 export default {
     name: 'app',
     components: {
@@ -85,6 +86,10 @@ export default {
         Modal,
         Remote,
         Pagination
+    },
+    setup() {
+        const devices = inject('devices');
+        return { devices: devices.list };
     },
     data() {
         return {
@@ -100,13 +105,6 @@ export default {
         },
         show_device(device) {
             this.currentDevice = this.devices.find(d => d.serial === device)
-        },
-        get_devices() {
-            this.$service.get_devices().then(res => {
-                this.devices = res.data
-            }).catch(err => {
-                console.log(err)
-            })
         },
         get_publish_jobs() {
             this.currentJob = null
@@ -156,7 +154,6 @@ export default {
     },
     mounted() {
         this.get_publish_jobs();
-        this.get_devices();
     }
 }
 </script>

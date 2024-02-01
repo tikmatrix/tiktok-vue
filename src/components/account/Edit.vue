@@ -58,7 +58,12 @@
 </template>
 
 <script>
+import { inject } from 'vue';
 export default {
+    setup() {
+        const devices = inject('devices');
+        return { devices: devices.list };
+    },
     props: {
         account: {
             type: Object,
@@ -77,15 +82,7 @@ export default {
         update() {
             this.$emit('update', this.account);
         },
-        get_devices() {
-            this.$service.get_devices().then(res => {
-                //only need device.email is empty
-                res.data = res.data.filter(device => !device.email)
-                this.devices = res.data
-            }).catch(err => {
-                console.log(err)
-            })
-        },
+
         selectDevice(device) {
             this.account.device = device.serial;
             this.showDeviceList = false;
@@ -106,7 +103,6 @@ export default {
     },
     mounted() {
         this.account.group_name = this.account.group_id
-        this.get_devices();
         this.get_groups();
     }
 };

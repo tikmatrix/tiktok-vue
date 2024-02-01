@@ -59,8 +59,13 @@
 </template>
 
 <script>
+import { inject } from 'vue';
 export default {
+    setup() {
+        const devices = inject('devices');
 
+        return { devices: devices.list };
+    },
     data() {
         return {
             account: {
@@ -86,15 +91,7 @@ export default {
             this.account.device = device.serial;
             this.showDeviceList = false;
         },
-        get_devices() {
-            this.$service.get_devices().then(res => {
-                //only need device.email is empty
-                res.data = res.data.filter(device => !device.email)
-                this.devices = res.data
-            }).catch(err => {
-                console.log(err)
-            })
-        },
+
         get_groups() {
             this.$service.get_groups().then(res => {
                 this.groups = res.data
@@ -110,7 +107,6 @@ export default {
 
     },
     mounted() {
-        this.get_devices();
         this.get_groups();
     }
 };

@@ -3,6 +3,17 @@
         <h1 class="text-2xl p-3 mb-6">
             <font-awesome-icon icon="fa-brands fa-tiktok" /> {{ $t('siteName') }}
         </h1>
+        <div class="p-4 bg-gray-100 rounded-lg shadow-md">
+            <h2 class="text-lg text-gray-700 mb-2">{{ $t('connectionMode') }}</h2>
+            <div class="form-control">
+                <label class="label cursor-pointer">
+                    <span class="label-text">{{ settings.adb_mode }}</span>
+                    <input id="toggle" name="toggle" type="checkbox" class="toggle" v-model="settings.adb_mode"
+                        true-value="tcp" false-value="usb" />
+                </label>
+            </div>
+
+        </div>
         <div class="flex items-center p-3 space-x-2">
             <font-awesome-icon icon="fa-solid fa-key" class="text-xl" />
             <div class="ml-3">
@@ -90,6 +101,7 @@ export default {
             inputCode: '',
             settings: {
                 version: '0.0.1',
+                adb_mode: ''
             }
         }
     },
@@ -104,7 +116,33 @@ export default {
             return Math.ceil(remainingTime / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
         }
     },
+    watch: {
+        'settings.adb_mode': function (newVal, oldVal) {
+            console.log('adb_mode changed from', oldVal, 'to', newVal);
+
+            if (newVal === 'tcp' && oldVal === 'usb') {
+                this.$service.script({
+                    script: 'switch_tcp',
+                }).then(res => {
+                    console.log(res)
+                    this.update_setting()
+                }).catch(err => {
+                    console.log(err)
+                })
+            } else if (newVal === 'usb' && oldVal === 'tcp') {
+                this.$service.script({
+                    script: 'switch_usb',
+                }).then(res => {
+                    console.log(res)
+                    this.update_setting()
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+        }
+    },
     methods: {
+
         selectItem(index, item) {
             this.selectedItem = index;
             this.$emit('menu_selected', item);
@@ -139,6 +177,13 @@ export default {
             this.$service.get_settings().then((res) => {
                 this.settings = res.data;
             });
+        },
+        update_setting() {
+            this.$service.update_settings(this.settings).then((res) => {
+                console.log(res)
+            }).catch((err) => {
+                console.log(err)
+            })
         }
     },
     mounted() {

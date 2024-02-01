@@ -1,5 +1,7 @@
 <template>
     <div class="w-full p-4 bg-gray-200 border-b border-gray-300">
+
+
         <label class="text-gray-700  font-bold">{{ $t('batchAction') }}</label>
         <input id="app_install_input" type="file" v-on:change="on_app_install" hidden>
         <Button icon="fa fa-upload" @click="app_install" label="installApk" />
@@ -27,6 +29,7 @@
         <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo" />
         <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" />
         <Button @click="shell('reboot')" label="rebootAll" color="bg-red-500 text-white" />
+
     </div>
 </template>
 <script>
@@ -38,9 +41,11 @@ export default {
     },
     data() {
         return {
+
         }
     },
     methods: {
+
         shell(cmd) {
             this.$service.shell({
                 cmd: cmd

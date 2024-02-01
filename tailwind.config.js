@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
   variants: {
     extend: {
       opacity: ['responsive', 'hover', 'focus', 'active', 'group-hover'],

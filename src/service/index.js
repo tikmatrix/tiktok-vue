@@ -261,4 +261,11 @@ export function get_settings() {
     url: api.settings,
   })
 }
+export function update_settings({ proxy_url, server_url, country, wifi_name, wifi_password, adb_mode, version }) {
+  return request({
+    method: 'put',
+    url: api.settings,
+    data: { proxy_url, server_url, country, wifi_name, wifi_password, adb_mode, version }
+  })
+}
 

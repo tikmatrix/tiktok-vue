@@ -25,7 +25,7 @@ async function getDevices() {
     const res = await service.get_devices();
     devices.list.splice(0, devices.list.length, ...res.data);
 }
-
+getDevices();//get devices on page load
 setInterval(getDevices, 3000);
 
 const app = createApp(App)

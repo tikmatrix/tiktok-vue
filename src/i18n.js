@@ -107,6 +107,7 @@ export const i18n = createI18n({
             releaseName: 'Release Name',
             artistName: 'Artist Name',
             connectionMode: 'Connection Mode',
+            task_status: 'Task Status',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -212,6 +213,7 @@ export const i18n = createI18n({
             releaseName: '发行名称',
             artistName: '音乐名称',
             connectionMode: '连接模式',
+            task_status: '任务状态',
         }
     }
 })

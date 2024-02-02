@@ -2,11 +2,11 @@
     <div class="m-4">
         <div class="m-5">
             <span
-                class="bg-blue-500 text-white rounded-full w-6 h-6 inline-flex items-center justify-center whitespace-nowrap">{{
+                class="bg-blue-500 text-white text-sm rounded-full w-6 h-6 inline-flex items-center justify-center whitespace-nowrap">{{
                     device.id }}</span>
-            <span class="m-1" @click="copyToClipboard">{{ device.serial }}</span><br />
-            <span v-if="device.account" class="text-green-500 m-1">{{ device.account }}</span>
-            <span v-else class="text-red-500 m-1">{{ $t('unbinded') }}</span>
+            <span class="m-1 text-sm">{{ device.serial }}</span><br />
+            <!-- <span v-if="device.account" class="text-green-500 m-1">{{ device.account }}</span> -->
+            <!-- <span v-else class="text-red-500 m-1">{{ $t('unbinded') }}</span> -->
             <!-- <Button label="shell" :loadingTime=1 color="bg-gray-500 text-white" icon="fa-solid fa-terminal"
                 @click="$emit('show_shell', device)" /> -->
         </div>

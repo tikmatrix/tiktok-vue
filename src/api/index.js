@@ -15,5 +15,6 @@ const api = {
     watcher: '/api/dialog_watcher',
     license: '/api/license',
     settings: '/api/settings',
+    task_status: '/api/device/task_status',
 }
 export default api

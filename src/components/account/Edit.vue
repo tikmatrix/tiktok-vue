@@ -21,8 +21,8 @@
                     v-show="showDeviceList">
                     <div class="cursor-pointer p-2 hover:bg-gray-200" v-for="(device, index) in devices"
                         :key="device.serial" @click="selectDevice(device)">{{ device.id }} - {{ device.serial }}
-                        <span v-if="device.email" class="text-green-500 m-1">{{ device.email }}</span>
-                        <span v-else class="text-red-500 m-1">{{ $t('unbinded') }}</span>
+                        <!-- <span v-if="device.email" class="text-green-500 m-1">{{ device.email }}</span>
+                        <span v-else class="text-red-500 m-1">{{ $t('unbinded') }}</span> -->
                     </div>
                 </div>
             </div>
@@ -73,7 +73,6 @@ export default {
     data() {
         return {
             showDeviceList: false,
-            devices: [],
             showGroupList: false,
             groups: [],
         };

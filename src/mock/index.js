@@ -129,6 +129,7 @@ const data = {
       "version": "1.0.0",
       "adb_mode": "tcp",
     },
+    [api.task_status]: "running"
   },
 }
 

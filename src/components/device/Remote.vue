@@ -12,16 +12,11 @@
                 <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
             </p>
             <div class="flex items-center space-x-2" v-show="readonly">
-                <svg class="animate-spin h-5 w-5 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                    </path>
-                </svg>
+                <span class="loading loading-spinner text-primary"></span>
                 <p class="p-1 text-lg font-bold text-red-500">{{ $t('connecting') }}...</p>
             </div>
             <p class="p-1 text-green-500">fps: <span v-text="fps.toFixed(1)"></span></p>
+
             <div class="p-1">
                 <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
                 <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
@@ -41,6 +36,11 @@
 
             <div class="p-1">
                 <p class="text-lg font-bold">{{ $t('autoScripts') }}</p>
+                <p class="flex items-center space-x-2">
+                    <span class="text-lg font-bold">{{ $t('task_status') }}:</span>
+                    <span v-text="task_status"></span>
+                    <span class="loading loading-spinner text-primary" v-show="task_status == 'running'"></span>
+                </p>
                 <Button @click="script('info', device.serial)" label="infoCrawler" />
                 <Button @click="script('torch_on', device.serial)" label="torchOn" />
                 <Button @click="script('torch_off', device.serial)" label="torchOff" />
@@ -89,9 +89,21 @@ export default {
             minicap: null,
             minitouch: null,
             touch: false,
+            task_status: "idle",
+            timer_fps: null,
+            timer_task_status: null,
         }
     },
     methods: {
+        get_task_status() {
+            this.$service.get_task_status({
+                serial: this.device.serial
+            }).then(res => {
+                this.task_status = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         repair(serial) {
             this.$service.init({
                 serial: serial,
@@ -323,19 +335,23 @@ export default {
         this.killMinitouch()
 
         // calculate fps
-        setInterval(() => {
+        this.timer_fps = setInterval(() => {
             this.fps = this.periodImageCount / 0.5
             this.periodImageCount = 0
         }, 500)
+        this.timer_task_status = setInterval(() => {
+            this.get_task_status()
+        }, 1000)
     },
     unmounted() {
         console.log('remote unmounted')
         this.readonly = true
-        console.log(this.minicap)
         if (this.minicap)
             this.minicap.close()
         if (this.minitouch)
             this.minitouch.close()
+        clearInterval(this.timer_fps)
+        clearInterval(this.timer_task_status)
     },
 
 }

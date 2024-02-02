@@ -268,4 +268,11 @@ export function update_settings({ proxy_url, server_url, country, wifi_name, wif
     data: { proxy_url, server_url, country, wifi_name, wifi_password, adb_mode, version }
   })
 }
+export function get_task_status({ serial }) {
+  return request({
+    method: 'get',
+    url: api.task_status,
+    params: { serial }
+  })
+}
 

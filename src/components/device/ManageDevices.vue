@@ -65,21 +65,21 @@ export default {
         show_shell(device) {
             this.currentShell = device
         },
-        get_accounts() {
-            this.$service.get_accounts().then(res => {
-                this.accounts = res.data
-                this.devices.forEach(device => {
-                    device.account = this.accounts.find(account => account.device === device.serial)?.username || this.accounts.find(account => account.device === device.serial)?.email
-                })
-                //append group_id to device
-                this.devices.forEach(device => {
-                    device.group_id = this.accounts.find(account => account.device === device.serial)?.group_id
-                })
-                this.get_groups();
-            }).catch(err => {
-                console.log(err)
-            })
-        },
+        // get_accounts() {
+        //     this.$service.get_accounts().then(res => {
+        //         this.accounts = res.data
+        //         this.devices.forEach(device => {
+        //             device.account = this.accounts.find(account => account.device === device.serial)?.username || this.accounts.find(account => account.device === device.serial)?.email
+        //         })
+        //         //append group_id to device
+        //         this.devices.forEach(device => {
+        //             device.group_id = this.accounts.find(account => account.device === device.serial)?.group_id
+        //         })
+        //         this.get_groups();
+        //     }).catch(err => {
+        //         console.log(err)
+        //     })
+        // },
         get_groups() {
             this.$service.get_groups().then(res => {
                 this.groups = res.data
@@ -92,7 +92,9 @@ export default {
             })
         },
     },
-
+    mounted() {
+        // this.get_accounts();
+    }
 
 
 }

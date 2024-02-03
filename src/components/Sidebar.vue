@@ -14,23 +14,7 @@
             </div>
 
         </div>
-        <div class="flex items-center p-3 space-x-2">
-            <font-awesome-icon icon="fa-solid fa-key" class="text-xl" />
-            <div class="ml-3">
-                <!-- If in edit mode, show input field. -->
-                <input ref="licenseInput" v-if="editMode" @blur="add_license" @keyup.enter="disableEditMode"
-                    class="bg-gray-800 text-white" v-model="inputCode" />
 
-                <div v-else-if="license" class="text-sm font-medium leading-none text-gray-400">
-                    <span class=" text-white font-bold">{{ license.name }}</span>
-                    <span class=""> membership expires in <span class="text-green-500">{{ remainingDays }}</span>
-                        days.</span>
-                    <span class="text-red-500 font-bold" @click="enableEditMode">change</span>
-                </div>
-                <span v-else @click="enableEditMode">{{ $t('enterLicenseId') }}</span>
-
-            </div>
-        </div>
         <hr class="mb-6" />
         <ul>
             <li v-for="(item, index) in menuItems" :key="index">
@@ -96,24 +80,12 @@ export default {
             ]
             , open: false,
             showDemoTip: false,
-            license: null,
             editMode: false,
             inputCode: '',
             settings: {
                 version: '0.0.1',
                 adb_mode: ''
             }
-        }
-    },
-    computed: {
-        remainingDays() {
-            if (!this.license || !this.license.expire) {
-                return 0;
-            }
-            const now = Date.now();
-            const expireDate = new Date(this.license.expire * 1000); // Convert seconds to milliseconds
-            const remainingTime = expireDate - now;
-            return Math.ceil(remainingTime / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
         }
     },
     watch: {
@@ -160,19 +132,7 @@ export default {
         disableEditMode() {
             this.editMode = false;
         },
-        get_license() {
-            this.$service.get_license().then((res) => {
-                this.license = res.data;
-            });
-        },
-        add_license() {
-            this.$service.add_license({
-                code: this.inputCode
-            }).then((res) => {
-                this.license = res.data;
-                this.disableEditMode();
-            });
-        },
+
         get_settings() {
             this.$service.get_settings().then((res) => {
                 this.settings = res.data;
@@ -189,7 +149,6 @@ export default {
     mounted() {
         this.selectItem(this.selectedItem, this.menuItems[this.selectedItem]);
         this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
-        this.get_license();
         this.get_settings();
     }
 }

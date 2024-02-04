@@ -9,6 +9,7 @@
     <ManagePublishJobs v-if="selectedItem === 'autoPublish'" />
     <ManageTrainJobs v-if="selectedItem === 'autoTrain'" />
     <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
+    <ManageSettings v-if="selectedItem === 'settings'" />
   </div>
 </template>
 <script>
@@ -21,6 +22,7 @@ import ManageDialog from './components/dialog/ManageDialog.vue'
 import ManageTrainJobs from './components/trainJob/ManageTrainJobs.vue'
 import ManageGroups from './components/group/ManageGroups.vue'
 import ManageMusics from './components/music/ManageMusics.vue'
+import ManageSettings from './components/settings/ManageSettings.vue'
 
 
 export default {
@@ -34,7 +36,8 @@ export default {
     ManageDialog,
     ManageTrainJobs,
     ManageGroups,
-    ManageMusics
+    ManageMusics,
+    ManageSettings
   },
   data() {
     return {

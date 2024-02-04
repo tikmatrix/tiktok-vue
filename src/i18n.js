@@ -91,7 +91,7 @@ export const i18n = createI18n({
             action: 'Action',
             online: 'Online',
             offline: 'Offline',
-            setTimeAndLanguage: 'Set Time And Language',
+            setTimezone: 'Set Timezone',
             selfMade: 'Self Made',
             aiMade: 'AI Made',
             publishType: 'Publish Type',
@@ -108,6 +108,11 @@ export const i18n = createI18n({
             artistName: 'Artist Name',
             connectionMode: 'Connection Mode',
             task_status: 'Task Status',
+            settings: 'Settings',
+            proxyServerTips: 'Is it necessary to batch use proxy server for mobile phones?',
+            timezoneTips: 'Used for batch setting of time zone automatic script',
+            wifiTips: 'Used for batch connecting wifi automatic script',
+            save: 'Save',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -197,7 +202,7 @@ export const i18n = createI18n({
             action: '动作',
             online: '在线',
             offline: '离线',
-            setTimeAndLanguage: '设置时间和语言',
+            setTimezone: '设置时区',
             selfMade: '自制',
             aiMade: 'AI 制作',
             publishType: '发布类型',
@@ -214,6 +219,11 @@ export const i18n = createI18n({
             artistName: '音乐名称',
             connectionMode: '连接模式',
             task_status: '任务状态',
+            settings: '设置',
+            proxyServerTips: '是否需要批量给手机使用代理服务器?',
+            timezoneTips: '用于批量设置时区的自动脚本',
+            wifiTips: '用于批量连接wifi的自动脚本',
+            save: '保存',
         }
     }
 })

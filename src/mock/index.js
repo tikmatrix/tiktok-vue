@@ -121,9 +121,9 @@ const data = {
       "expire": 1704601102,
     },
     [api.settings]: {
-      "proxy_url": "http://example.com",
+      "proxy_url": "192.168.0.1:7890",
       "server_url": "http://example.com",
-      "country": "UK",
+      "timezone": "GMT+00:00",
       "wifi_name": "ExampleWiFi",
       "wifi_password": "ExamplePassword",
       "version": "1.0.0",

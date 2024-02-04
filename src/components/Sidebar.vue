@@ -69,7 +69,7 @@ export default {
 
             selectedItem: 0,
             menuItems: [
-                { name: 'devices', icon: 'laptop' },
+                { name: 'devices', icon: 'mobile-alt' },
                 { name: 'groups', icon: 'users' },
                 { name: 'accounts', icon: 'user' },
                 { name: 'materials', icon: 'images' },
@@ -77,6 +77,7 @@ export default {
                 { name: 'autoPublish', icon: 'robot' },
                 { name: 'autoTrain', icon: 'sync-alt' },
                 { name: 'dialogWatcher', icon: 'exclamation-circle' },
+                { name: 'settings', icon: 'cogs' },
             ]
             , open: false,
             showDemoTip: false,

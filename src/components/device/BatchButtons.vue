@@ -14,9 +14,9 @@
         <Button label="openTiktok" icon="fa-brands fa-tiktok"
             @click="shell('am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity')" />
         <Button label="stopTiktok" icon="fa-brands fa-tiktok" @click="shell('am force-stop com.zhiliaoapp.musically')" />
-        <Button @click="shell('settings put global http_proxy 192.168.0.100:7890')" label="enableProxy"
+        <Button @click="shell(`settings put global http_proxy ${settings.proxy_url}`)" label="enableProxy"
             icon="fa-solid fa-link" />
-        <!-- <Button @click="shell('settings put global http_proxy :0')" label="disableProxy" icon="fa-solid fa-unlink" /> -->
+        <Button @click="shell('settings put global http_proxy :0')" label="disableProxy" icon="fa-solid fa-unlink" />
 
         <Button @click="script('connect_wifi')" label="connectWifi" />
         <Button @click="script('disconnect_wifi')" label="disconnectWifi" />
@@ -24,7 +24,7 @@
         <Button @click="script('torch_off')" label="torchOff" />
         <!-- <Button @click="shell('settings put global auto_time 1')" label="openAutoDateTime" />
         <Button @click="shell('settings put global auto_time 0')" label="closeAutoDateTime" /> -->
-        <Button @click="script('datetime')" label="setTimeAndLanguage" />
+        <Button @click="script('datetime')" label="setTimezone" />
         <Button @click="script('info')" label="infoCrawler" />
         <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo" />
         <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" />
@@ -41,11 +41,10 @@ export default {
     },
     data() {
         return {
-
+            settings: {}
         }
     },
     methods: {
-
         shell(cmd) {
             this.$service.shell({
                 cmd: cmd
@@ -88,7 +87,14 @@ export default {
             })
 
         },
-
+        get_settings() {
+            this.$service.get_settings().then((res) => {
+                this.settings = res.data;
+            });
+        },
     },
+    mounted() {
+        this.get_settings()
+    }
 }
 </script>

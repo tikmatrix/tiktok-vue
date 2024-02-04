@@ -1,9 +1,17 @@
 # tiktok-vue
+
+[tiktok-server](https://github.com/niostack/tiktok-server) is the back end of this project
+
 ## Deployment
+
 ### one master node with multiple worker nodes
+
 ### support no limit android devices if you have enough pc and android devices
+
 ![](framework.png)
+
 ## get started
+
 ```shell
 # vue
 git clone https://github.com/niostack/tiktok-vue.git
@@ -14,12 +22,15 @@ npm run dev
 # for production
 npm run build
 ```
+
 ## for development
+
 ```shell
 # install tailwindcss
 npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
 npx tailwindcss init -p
 ```
+
 ### Pagination component
 
 ```vue

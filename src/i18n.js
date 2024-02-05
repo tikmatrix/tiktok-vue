@@ -114,7 +114,10 @@ export const i18n = createI18n({
             wifiTips: 'Used for batch connecting wifi automatic script',
             emailTips: 'Customize the registration email suffix',
             openaiTips: 'Is it necessary to customize the username and nickname with AI',
+            licenseTips: 'Enter the license key',
             save: 'Save',
+            setProfile: 'Set Profile',
+
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -227,7 +230,9 @@ export const i18n = createI18n({
             wifiTips: '用于批量连接wifi的自动脚本',
             emailTips: '自定义注册邮箱后缀',
             openaiTips: '是否需要AI定制用户名和昵称',
+            licenseTips: '输入授权码',
             save: '保存',
+            setProfile: '设置资料',
         }
     }
 })

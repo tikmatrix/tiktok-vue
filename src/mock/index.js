@@ -101,9 +101,7 @@ for (let i = 1; i <= 100; i++) {
 const data = {
   post: {
     [api.shell]: {},
-    [api.license]: {
-      "name": "Niostack",
-      "expire": 1704601102,
+    [api.add_license]: {
     }
   },
   get: {
@@ -116,9 +114,12 @@ const data = {
     [api.music]: musics,
     [api.material_count]: Math.floor(Math.random() * 100),
     [api.watcher]: watchers,
-    [api.license]: {
+    [api.get_license]: {
+      "uid": "12ab-34cd-56ef-78gh",
+      "key": "abcd-efgh-ijkl-mnop",
+      "left_days": 50,
       "name": "Niostack",
-      "expire": 1704601102,
+      "status": "pass",
     },
     [api.settings]: {
       "proxy_url": "192.168.0.1:7890",

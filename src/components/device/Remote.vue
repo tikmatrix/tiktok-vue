@@ -42,9 +42,10 @@
                     <span class="loading loading-spinner text-primary" v-show="task_status == 'running'"></span>
                 </p>
                 <Button @click="script('info', device.serial)" label="infoCrawler" />
+                <Button @click="script('profile', device.serial)" label="setProfile" />
                 <Button @click="script('torch_on', device.serial)" label="torchOn" />
                 <Button @click="script('torch_off', device.serial)" label="torchOff" />
-                <Button @click="script('datetime', device.serial)" label="setTimeAndLanguage" />
+                <Button @click="script('datetime', device.serial)" label="setTimezone" />
                 <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)" />
                 <Button label="login" icon="fa-solid fa-address-card" @click="script('login', device.serial)" />
                 <Button label="uploadAvatar" icon="fa-solid fa-user-plus" @click="script('upload_avatar', device.serial)" />

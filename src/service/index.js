@@ -242,30 +242,18 @@ export function delete_watcher({ id }) {
     params: { id }
   })
 }
-export function get_license() {
-  return request({
-    method: 'get',
-    url: api.license,
-  })
-}
-export function add_license({ code }) {
-  return request({
-    method: 'post',
-    url: api.license,
-    data: { code }
-  })
-}
+
 export function get_settings() {
   return request({
     method: 'get',
     url: api.settings,
   })
 }
-export function update_settings({ proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version }) {
+export function update_settings({ proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix }) {
   return request({
     method: 'put',
     url: api.settings,
-    data: { proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version }
+    data: { proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix }
   })
 }
 export function get_task_status({ serial }) {
@@ -273,6 +261,19 @@ export function get_task_status({ serial }) {
     method: 'get',
     url: api.task_status,
     params: { serial }
+  })
+}
+export function get_license() {
+  return request({
+    method: 'get',
+    url: api.get_license,
+  })
+}
+export function add_license({ key }) {
+  return request({
+    method: 'get',
+    url: api.add_license,
+    params: { key }
   })
 }
 

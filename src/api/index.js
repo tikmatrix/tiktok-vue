@@ -13,8 +13,9 @@ const api = {
     music: '/api/music',
     train_job: '/api/train_job',
     watcher: '/api/dialog_watcher',
-    license: '/api/license',
     settings: '/api/settings',
     task_status: '/api/device/task_status',
+    get_license: '/api/get_license',
+    add_license: '/api/add_license',
 }
 export default api

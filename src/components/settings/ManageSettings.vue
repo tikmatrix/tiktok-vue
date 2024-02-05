@@ -1,6 +1,37 @@
 <template>
     <div class="flex flex-col items-start p-12  w-full">
+        <div class="toast toast-top toast-center" v-if="showToast">
+            <div class="alert alert-success">
+                <span>Copied!</span>
+            </div>
+        </div>
         <h1 class="text-2xl mb-6">{{ $t('settings') }}</h1>
+        <label class="form-control w-full max-w-md">
+
+            <div class="join">
+                <input type="text" placeholder="uid" class="input input-primary w-full join-item" v-model="license.uid"
+                    disabled />
+                <button class="btn btn-success" @click="copyuid">{{ $t('copy') }}</button>
+            </div>
+
+            <div class="label">
+                <span class="label-text">{{ $t('licenseTips') }}</span>
+            </div>
+            <div class="join">
+                <input type="text" placeholder="license key" class="input input-primary w-full join-item"
+                    v-model="license.key" />
+                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+            </div>
+
+            <div class="label">
+                <label class="label-text-alt text-red-500 font-bold" v-if="license.status != 'pass'">{{
+                    license.status }}</label>
+                <label class="label-text-alt" v-if="license.status == 'pass'">
+                    For: <label class="text-green-500 font-bold">{{ license.name }}</label>
+                    Left: <label class="text-red-500 font-bold">{{ license.left_days }}</label> days.
+                </label>
+            </div>
+        </label>
         <label class="form-control w-full max-w-md">
             <div class="label">
                 <span class="label-text">{{ $t('proxyServerTips') }}</span>
@@ -88,6 +119,14 @@ export default {
     data() {
         return {
             settings: {},
+            license: {
+                uid: '',
+                key: '',
+                status: '',
+                name: '',
+                left_days: 0
+            },
+            showToast: false,
         }
     },
     methods: {
@@ -101,9 +140,34 @@ export default {
                 console.log(res);
             });
         },
+        copyuid() {
+            //copy uid to clipboard
+            navigator.clipboard.writeText(this.license.uid).then(() => {
+                console.log('Async: Copying to clipboard was successful!');
+                this.showToast = true;
+                setTimeout(() => {
+                    this.showToast = false;
+                }, 2000);
+            }, (err) => {
+                console.error('Async: Could not copy text: ', err);
+            });
+
+        },
+        get_license() {
+            this.$service.get_license().then((res) => {
+                this.license = res.data;
+            });
+        },
+        add_license() {
+            this.$service.add_license(this.license.key).then((res) => {
+                console.log(res);
+                this.get_license();
+            });
+        }
     },
     mounted() {
         this.get_settings()
+        this.get_license()
     }
 }
 </script>

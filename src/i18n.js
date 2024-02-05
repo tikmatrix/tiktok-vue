@@ -112,6 +112,8 @@ export const i18n = createI18n({
             proxyServerTips: 'Is it necessary to batch use proxy server for mobile phones?',
             timezoneTips: 'Used for batch setting of time zone automatic script',
             wifiTips: 'Used for batch connecting wifi automatic script',
+            emailTips: 'Customize the registration email suffix',
+            openaiTips: 'Is it necessary to customize the username and nickname with AI',
             save: 'Save',
         },
         'zh-CN': {
@@ -223,6 +225,8 @@ export const i18n = createI18n({
             proxyServerTips: '是否需要批量给手机使用代理服务器?',
             timezoneTips: '用于批量设置时区的自动脚本',
             wifiTips: '用于批量连接wifi的自动脚本',
+            emailTips: '自定义注册邮箱后缀',
+            openaiTips: '是否需要AI定制用户名和昵称',
             save: '保存',
         }
     }

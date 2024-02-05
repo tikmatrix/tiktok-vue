@@ -45,6 +45,36 @@
                 <span class="label-text-alt">your wifi ssid and password. </span>
             </div>
         </label>
+        <label class="form-control w-full max-w-md">
+            <div class="label">
+                <span class="label-text">{{ $t('emailTips') }}</span>
+            </div>
+            <div class="join">
+                <input type="text" placeholder="email suffix" class="input input-primary w-full max-w-md join-item"
+                    v-model="settings.email_suffix" />
+
+                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+            </div>
+
+            <div class="label">
+                <span class="label-text-alt">example: @niostack.com </span>
+            </div>
+        </label>
+        <label class="form-control w-full max-w-md">
+            <div class="label">
+                <span class="label-text">{{ $t('openaiTips') }}</span>
+            </div>
+            <div class="join">
+                <input type="text" placeholder="openai_api_key" class="input input-primary w-full max-w-md join-item"
+                    v-model="settings.openai_api_key" />
+
+                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+            </div>
+
+            <div class="label">
+                <span class="label-text-alt">example: sk-xxxxxxxxxxxxxxxx </span>
+            </div>
+        </label>
     </div>
 </template>
 <script>

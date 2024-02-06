@@ -5,27 +5,28 @@
                 <Button @click="add_music" label="add" />
             </template>
             <template v-slot:default="slotProps">
-                <div class="flex flex-wrap align-top">
-                    <table class="w-full text-left table-auto border-collapse">
+                <div class="overflow-x-auto">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('artistName') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('releaseName') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                                <th>{{ $t('id') }}</th>
+                                <th>{{ $t('artistName') }}</th>
+                                <th>{{ $t('releaseName') }}</th>
+                                <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(music, index) in slotProps.items" :key="index"
-                                :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                                <td class="px-4 py-2 border">{{ music.id }}</td>
-                                <td class="px-4 py-2 border">{{ music.artist_name }}</td>
-                                <td class="px-4 py-2 border">{{ music.release_name }}</td>
-                                <td class="px-4 py-2 border space-x-4">
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="editmusic(music)">{{ $t('edit') }}</button>
-                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="deletemusic(music)">{{ $t('delete') }}</button>
+                            <tr v-for="(music, index) in slotProps.items" :key="index">
+                                <td>{{ music.id }}</td>
+                                <td>{{ music.artist_name }}</td>
+                                <td>{{ music.release_name }}</td>
+                                <td>
+                                    <div class="space-x-4">
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="editmusic(music)">{{ $t('edit') }}</button>
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="deletemusic(music)">{{ $t('delete') }}</button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

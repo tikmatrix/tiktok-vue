@@ -5,47 +5,51 @@
                 <!-- <Button @click="create_material" label="add" /> -->
             </template>
             <template v-slot:default="slotProps">
-                <table class="w-full text-left table-auto border-collapse">
-                    <thead>
-                        <tr>
-                            <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('name') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('preview') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
-                            <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(material, index) in slotProps.items" :key="index"
-                            :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                            <td class="px-4 py-2 border">{{ material.id }}</td>
-                            <td class="px-4 py-2 border">{{ material.name }}</td>
-                            <td class="px-4 py-2 border" :class="{
-                                'text-green-500': material.used === 0,
-                                'text-red-500': material.used === 1,
-                            }">
-                                {{ {
-                                    0: $t('unused'), 1: $t('used')
-                                }[material.used] }}
-                            </td>
-                            <td class="px-4 py-2 border cursor-pointer" @click="show_material(material)">
-                                <template v-if="material.name.endsWith('.mp4') || material.name.endsWith('.webm')">
-                                    <video :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none">
-                                    </video>
-                                </template>
-                                <template v-else>
-                                    <img :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none" />
-                                </template>
-                            </td>
-                            <td class="px-4 py-2 border">{{ material.group_name }}</td>
-                            <td class="px-4 py-2 border space-x-4">
-                                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                    @click="delete_material(material)">{{ $t('delete') }}</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{{ $t('id') }}</th>
+                                <th>{{ $t('name') }}</th>
+                                <th>{{ $t('status') }}</th>
+                                <th>{{ $t('preview') }}</th>
+                                <th>{{ $t('group') }}</th>
+                                <th>{{ $t('actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(material, index) in slotProps.items" :key="index">
+                                <td>{{ material.id }}</td>
+                                <td>{{ material.name }}</td>
+                                <td>
+                                    <span :class="{
+                                        'text-green-500': material.used === 0,
+                                        'text-red-500': material.used === 1,
+                                    }">
+                                        {{ {
+                                            0: $t('unused'), 1: $t('used')
+                                        }[material.used] }}</span>
+                                </td>
+                                <td @click="show_material(material)">
+                                    <div class="cursor-pointer">
+                                        <template v-if="material.name.endsWith('.mp4') || material.name.endsWith('.webm')">
+                                            <video :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none">
+                                            </video>
+                                        </template>
+                                        <template v-else>
+                                            <img :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none" />
+                                        </template>
+                                    </div>
+                                </td>
+                                <td>{{ material.group_name }}</td>
+                                <td>
+                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                        @click="delete_material(material)">{{ $t('delete') }}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </template>
         </Pagination>
 

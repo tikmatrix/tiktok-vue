@@ -8,6 +8,10 @@
             <label class="font-bold text-right">{{ $t('password') }}:</label>
             <input class="border-2 border-gray-300 p-2 rounded w-full" v-model="account.pwd" />
         </div>
+        <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
+            <label class="font-bold text-right">{{ $t('username') }}:</label>
+            <input class="border-2 border-gray-300 p-2 rounded w-full" v-model="account.username" />
+        </div>
         <!-- <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right">{{ $t('fans') }}:</label>
             <input class="border-2 border-gray-300 p-2 rounded w-full" v-model="account.fans" type="number"/>

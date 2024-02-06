@@ -5,39 +5,41 @@
                 <Button @click="add_group" label="add" />
             </template>
             <template v-slot:default="slotProps">
-                <div class="flex flex-wrap align-top">
-                    <table class="w-full text-left table-auto border-collapse">
+                <div class="overflow-x-auto">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('name') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('autoPublish') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('autoTrain') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('publishType') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('productLink') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                                <th>{{ $t('id') }}</th>
+                                <th>{{ $t('name') }}</th>
+                                <th>{{ $t('autoPublish') }}</th>
+                                <th>{{ $t('autoTrain') }}</th>
+                                <th>{{ $t('publishType') }}</th>
+                                <th>{{ $t('productLink') }}</th>
+                                <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(group, index) in slotProps.items" :key="index"
-                                :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                                <td class="px-4 py-2 border">{{ group.id }}</td>
-                                <td class="px-4 py-2 border">{{ group.name }}</td>
-                                <td class="px-4 py-2 border">{{ parseInt(group.auto_publish) === 0 ? $t('disable') :
+                            <tr v-for="(group, index) in slotProps.items" :key="index">
+                                <td>{{ group.id }}</td>
+                                <td>{{ group.name }}</td>
+                                <td>{{ parseInt(group.auto_publish) === 0 ? $t('disable') :
                                     $t('enable') }}</td>
-                                <td class="px-4 py-2 border">{{ parseInt(group.auto_train) === 0 ? $t('disable') :
+                                <td>{{ parseInt(group.auto_train) === 0 ? $t('disable') :
                                     $t('enable') }}</td>
-                                <td class="px-4 py-2 border">{{ parseInt(group.publish_type) === 1 ? $t('selfMade') :
+                                <td>{{ parseInt(group.publish_type) === 1 ? $t('selfMade') :
                                     $t('aiMade') }}</td>
-                                <td class="px-4 py-2 border">{{ group.product_link }}</td>
-                                <td class="px-4 py-2 border space-x-4">
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="editgroup(group)">{{ $t('edit') }}</button>
-                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="deletegroup(group)">{{ $t('delete') }}</button>
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="addMaterial(group)">{{ $t('addMaterial') }}: {{ group.unused_material_count
-                                        }}</button>
+                                <td>{{ group.product_link }}</td>
+                                <td>
+                                    <div class="space-x-4">
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="editgroup(group)">{{ $t('edit') }}</button>
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="deletegroup(group)">{{ $t('delete') }}</button>
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="addMaterial(group)">{{ $t('addMaterial') }}: {{
+                                                group.unused_material_count
+                                            }}</button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

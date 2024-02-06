@@ -5,30 +5,29 @@
                 <Button @click="add_account" label="add" />
             </template>
             <template v-slot:default="slotProps">
-                <div class="flex flex-wrap align-top">
-                    <table class="w-full text-left table-auto border-collapse">
+                <div class="overflow-x-auto">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('email') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('password') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('shopCreator') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('username') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('fans') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('earnings') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('device') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('group') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                                <th>{{ $t('id') }}</th>
+                                <th>{{ $t('email') }}</th>
+                                <th>{{ $t('password') }}</th>
+                                <th>{{ $t('shopCreator') }}</th>
+                                <th>{{ $t('username') }}</th>
+                                <th>{{ $t('fans') }}</th>
+                                <th>{{ $t('earnings') }}</th>
+                                <th>{{ $t('device') }}</th>
+                                <th>{{ $t('status') }}</th>
+                                <th>{{ $t('group') }}</th>
+                                <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(account, index) in slotProps.items" :key="index"
-                                :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                                <td class="px-4 py-2 border">{{ account.id }}</td>
-                                <td class="px-4 py-2 border">{{ account.email }}</td>
-                                <td class="px-4 py-2 border">{{ account.pwd }}</td>
-                                <td class="px-4 py-2 border">
+                            <tr v-for="(account, index) in slotProps.items" :key="index">
+                                <td>{{ account.id }}</td>
+                                <td>{{ account.email }}</td>
+                                <td>{{ account.pwd }}</td>
+                                <td>
                                     <span v-if="parseInt(account.shop_creator) === 0" class=" m-1">{{
                                         $t('disable') }}</span>
                                     <span v-else-if="parseInt(account.shop_creator) === 1" class="text-green-500 m-1">{{
@@ -36,23 +35,25 @@
                                     <span v-else-if="parseInt(account.shop_creator) === 2" class="text-red-500 m-1">{{
                                         $t('block') }}</span>
                                 </td>
-                                <td class="px-4 py-2 border">{{ account.username }}</td>
-                                <td class="px-4 py-2 border">{{ account.fans }}</td>
-                                <td class="px-4 py-2 border">{{ account.earnings }}</td>
-                                <td class="px-4 py-2 border">
+                                <td>{{ account.username }}</td>
+                                <td>{{ account.fans }}</td>
+                                <td>{{ account.earnings }}</td>
+                                <td>
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(account.device)">{{ account.device }}</a>
                                 </td>
-                                <td class="px-4 py-2 border">
+                                <td>
                                     <span v-if="account.online" class="text-green-500 m-1">{{ $t('online') }}</span>
                                     <span v-else class="text-red-500 m-1">{{ $t('offline') }}</span>
                                 </td>
-                                <td class="px-4 py-2 border">{{ account.group_name }}</td>
-                                <td class="px-4 py-2 border space-x-4">
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="editAccount(account)">{{ $t('edit') }}</button>
-                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="deleteAccount(account)">{{ $t('delete') }}</button>
+                                <td>{{ account.group_name }}</td>
+                                <td>
+                                    <div class="space-x-4">
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="editAccount(account)">{{ $t('edit') }}</button>
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="deleteAccount(account)">{{ $t('delete') }}</button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

@@ -5,30 +5,31 @@
                 <Button @click="add_watcher" label="add" />
             </template>
             <template v-slot:default="slotProps">
-                <div class="flex flex-wrap align-top">
-                    <table class="w-full text-left table-auto border-collapse">
+                <div class="overflow-x-auto">
+                    <table class="table">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 border font-bold">{{ $t('id') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('conditions') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('action') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('status') }}</th>
-                                <th class="px-4 py-2 border font-bold">{{ $t('actions') }}</th>
+                                <th>{{ $t('id') }}</th>
+                                <th>{{ $t('conditions') }}</th>
+                                <th>{{ $t('action') }}</th>
+                                <th>{{ $t('status') }}</th>
+                                <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(watcher, index) in slotProps.items" :key="index"
-                                :class="{ 'bg-gray-100': index % 2, 'hover:bg-gray-200': true }">
-                                <td class="px-4 py-2 border">{{ watcher.id }}</td>
-                                <td class="px-4 py-2 border">{{ watcher.conditions }}</td>
-                                <td class="px-4 py-2 border">{{ watcher.action }}</td>
-                                <td class="px-4 py-2 border">{{ parseInt(watcher.status) === 0 ? $t('disable') :
+                            <tr v-for="(watcher, index) in slotProps.items" :key="index">
+                                <td>{{ watcher.id }}</td>
+                                <td>{{ watcher.conditions }}</td>
+                                <td>{{ watcher.action }}</td>
+                                <td>{{ parseInt(watcher.status) === 0 ? $t('disable') :
                                     $t('enable') }}</td>
-                                <td class="px-4 py-2 border space-x-4">
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="editWatcher(watcher)">{{ $t('edit') }}</button>
-                                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                        @click="deleteWatcher(watcher)">{{ $t('delete') }}</button>
+                                <td>
+                                    <div class="space-x-4">
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="editWatcher(watcher)">{{ $t('edit') }}</button>
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="deleteWatcher(watcher)">{{ $t('delete') }}</button>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>

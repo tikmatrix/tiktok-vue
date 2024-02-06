@@ -276,4 +276,28 @@ export function add_license({ key }) {
     params: { key }
   })
 }
+export function get_avatars() {
+  return request({
+    method: 'get',
+    url: api.avatar,
+  })
+}
+export function upload_avatar(formData) {
+  return post({
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    url: api.avatar,
+    data: formData
+  })
+}
+export function delete_avatar({ id }) {
+  return request({
+    method: 'delete',
+    url: api.avatar,
+
+    params: { id }
+  })
+}
+
 

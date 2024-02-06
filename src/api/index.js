@@ -17,5 +17,7 @@ const api = {
     task_status: '/api/device/task_status',
     get_license: '/api/get_license',
     add_license: '/api/add_license',
+    avatar: '/api/avatar',
+
 }
 export default api

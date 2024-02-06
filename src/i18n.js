@@ -117,6 +117,7 @@ export const i18n = createI18n({
             licenseTips: 'Enter the license key',
             save: 'Save',
             setProfile: 'Set Profile',
+            avatars: 'Avatars',
 
         },
         'zh-CN': {
@@ -233,6 +234,7 @@ export const i18n = createI18n({
             licenseTips: '输入授权码',
             save: '保存',
             setProfile: '设置资料',
+            avatars: '头像',
         }
     }
 })

@@ -74,6 +74,7 @@ export default {
                 { name: 'accounts', icon: 'user' },
                 { name: 'materials', icon: 'images' },
                 { name: 'musics', icon: 'music' },
+                { name: 'avatars', icon: 'user-circle' },
                 { name: 'autoPublish', icon: 'robot' },
                 { name: 'autoTrain', icon: 'sync-alt' },
                 { name: 'dialogWatcher', icon: 'exclamation-circle' },

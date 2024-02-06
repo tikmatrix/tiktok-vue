@@ -6,6 +6,7 @@
     <ManageAccounts v-if="selectedItem === 'accounts'" />
     <ManageMaterials v-if="selectedItem === 'materials'" />
     <ManageMusics v-if="selectedItem === 'musics'" />
+    <ManageAvatars v-if="selectedItem === 'avatars'" />
     <ManagePublishJobs v-if="selectedItem === 'autoPublish'" />
     <ManageTrainJobs v-if="selectedItem === 'autoTrain'" />
     <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
@@ -23,6 +24,7 @@ import ManageTrainJobs from './components/trainJob/ManageTrainJobs.vue'
 import ManageGroups from './components/group/ManageGroups.vue'
 import ManageMusics from './components/music/ManageMusics.vue'
 import ManageSettings from './components/settings/ManageSettings.vue'
+import ManageAvatars from './components/avatar/ManageAvatars.vue'
 
 
 export default {
@@ -37,7 +39,8 @@ export default {
     ManageTrainJobs,
     ManageGroups,
     ManageMusics,
-    ManageSettings
+    ManageSettings,
+    ManageAvatars
   },
   data() {
     return {

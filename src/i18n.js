@@ -1,7 +1,7 @@
 import { createI18n } from 'vue-i18n'
 
 export const i18n = createI18n({
-    locale: navigator.language || 'en', // 设置默认语言
+    locale: 'en', // 设置默认语言
     messages: {
         en: {
             siteName: 'TikTok Matrix',

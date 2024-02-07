@@ -1,5 +1,11 @@
 <template>
     <div>
+        <div v-show="showDemoTip">
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
+                <p class="font-bold">{{ $t('demoTip', { email: 'admin@niostack.com' }) }}</p>
+                <a href="https://t.me/+iGhozoBfAbI5YmE1">Join Telegram Group</a>
+            </div>
+        </div>
         <div class="w-full bg-gray-200 border-b border-gray-300 sticky top-0 z-10">
             <slot name="buttons"></slot>
             <span class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</span>
@@ -51,6 +57,7 @@ export default {
             currentPage: 1,
             searchTerm: '',
             searchGroup: '',
+            showDemoTip: false,
         }
     },
     computed: {
@@ -97,5 +104,8 @@ export default {
             }
         }
     },
+    mounted() {
+        this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
+    }
 }
 </script>

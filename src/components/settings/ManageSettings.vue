@@ -20,7 +20,7 @@
             <div class="join">
                 <input type="text" placeholder="license key" class="input input-primary w-full join-item"
                     v-model="license.key" />
-                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+                <Button @click="set_settings" label="save" :loading-time=2000 />
             </div>
 
             <div class="label">
@@ -39,7 +39,7 @@
             <div class="join">
                 <input type="text" placeholder="Proxy Server" class="input input-primary w-full join-item"
                     v-model="settings.proxy_url" />
-                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+                <Button @click="set_settings" label="save" :loading-time=2000 />
             </div>
 
             <div class="label">
@@ -53,7 +53,7 @@
             <div class="join">
                 <input type="text" placeholder="TimeZone" class="input input-primary w-full max-w-md join-item"
                     v-model="settings.timezone" />
-                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+                <Button @click="set_settings" label="save" :loading-time=2000 />
             </div>
 
             <div class="label">
@@ -69,7 +69,7 @@
                     v-model="settings.wifi_name" />
                 <input type="text" placeholder="Wifi password" class="input input-primary w-full max-w-md join-item"
                     v-model="settings.wifi_password" />
-                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+                <Button @click="set_settings" label="save" :loading-time=2000 />
             </div>
 
             <div class="label">
@@ -84,7 +84,7 @@
                 <input type="text" placeholder="email suffix" class="input input-primary w-full max-w-md join-item"
                     v-model="settings.email_suffix" />
 
-                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+                <Button @click="set_settings" label="save" :loading-time=2000 />
             </div>
 
             <div class="label">
@@ -99,7 +99,7 @@
                 <input type="text" placeholder="openai_api_key" class="input input-primary w-full max-w-md join-item"
                     v-model="settings.openai_api_key" />
 
-                <button class="btn btn-primary join-item" @click="set_settings">{{ $t('save') }}</button>
+                <Button @click="set_settings" label="save" :loading-time=2000 />
             </div>
 
             <div class="label">

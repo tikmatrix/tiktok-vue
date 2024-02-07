@@ -155,7 +155,7 @@ export default {
         },
         get_license() {
             this.$service.get_license().then((res) => {
-                this.license = res;
+                this.license = res.data;
             });
         },
         add_license() {

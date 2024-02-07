@@ -271,9 +271,9 @@ export function get_license() {
 }
 export function add_license({ key }) {
   return request({
-    method: 'get',
+    method: 'post',
     url: api.add_license,
-    params: { key }
+    data: { key }
   })
 }
 export function get_avatars() {

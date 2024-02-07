@@ -20,7 +20,7 @@
             <div class="join">
                 <input type="text" placeholder="license key" class="input input-primary w-full join-item"
                     v-model="license.key" />
-                <Button @click="set_settings" label="save" :loading-time=2000 />
+                <Button @click="add_license" label="save" :loading-time=2000 />
             </div>
 
             <div class="label">
@@ -159,7 +159,9 @@ export default {
             });
         },
         add_license() {
-            this.$service.add_license(this.license.key).then((res) => {
+            this.$service.add_license({
+                key: this.license.key
+            }).then((res) => {
                 console.log(res);
                 this.get_license();
             });

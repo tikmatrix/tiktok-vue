@@ -66,7 +66,6 @@ for (let i = 1; i <= 100; i++) {
     "account": "admin@niostack.com",
     "title": "title",
     "device": "device" + i,
-    "tags": "tag1 tag2 tag3",
     'publish_type': 1,
     'product_link': 'https://vm.tiktok.com/ZGe2xRC8t/',
     "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数

@@ -107,7 +107,6 @@ export default {
                 publish_start_time: group.publish_start_time,
                 train_start_time: group.train_start_time,
                 title: group.title,
-                tags: group.tags,
                 publish_type: Number(group.publish_type),
                 product_link: group.product_link,
             }).then(res => {
@@ -132,7 +131,6 @@ export default {
                 publish_start_time: group.publish_start_time,
                 train_start_time: group.train_start_time,
                 title: group.title,
-                tags: group.tags,
                 publish_type: Number(group.publish_type),
                 product_link: group.product_link,
 

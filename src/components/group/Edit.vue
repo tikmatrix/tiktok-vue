@@ -47,18 +47,15 @@
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('title') }}</label>
-            <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.title" />
-        </div>
-        <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
-            <label class="font-bold text-right col-span-1">{{ $t('tags') }}</label>
-            <div class="border-2 border-gray-300 p-2 rounded col-span-2 flex flex-wrap">
-                <span class="bg-blue-200 text-blue-800 m-1 p-1 rounded cursor-pointer" v-for="(tag, index) in tags"
-                    :key="tag" @click="removeTag(index)" v-if="tags">
-                    {{ tag }}
-                </span>
-                <input class="flex-grow" @input="addTag" v-model="newTag" />
+            <textarea class="textarea textarea-success w-full max-w-xs" placeholder="Titles" autocomplete="off"
+                v-model="group.title">
+            </textarea>
+            <div class="label">
+                <span class="label-text">Number: {{ group.title.split('\n').filter(line => line.trim() !== '').length
+                }}</span>
             </div>
         </div>
+
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('productLink') }}</label>
             <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.product_link" />
@@ -83,8 +80,6 @@ export default {
     },
     data() {
         return {
-            newTag: '',
-            tags: []
         };
     },
     emits: ['update'],
@@ -99,24 +94,12 @@ export default {
                 alert('publish_start_time format error')
                 return
             }
-            this.group.tags = this.tags.join(' ');
             this.$emit('update', this.group);
         },
-        addTag(event) {
-            let value = event.target.value;
-            //value中包含空格和其他内容
-            if (value.includes(' ') && value.trim() !== '') {
-                this.newTag = '';
-                this.tags.push('#' + value.trim());
-            }
-        },
-        removeTag(index) {
-            this.tags.splice(index, 1);
-        },
+
 
     },
     mounted() {
-        this.tags = this.group.tags.split(' ');
     }
 };
 </script>

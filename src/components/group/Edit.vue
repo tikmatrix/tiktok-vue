@@ -51,8 +51,8 @@
                 v-model="group.title">
             </textarea>
             <div class="label">
-                <span class="label-text">Number: {{ group.title.split('\n').filter(line => line.trim() !== '').length
-                }}</span>
+                <span class="label-text">Number: {{ group.title ? group.title.split('\n').filter(line => line.trim() !==
+                    '').length : 0 }}</span>
             </div>
         </div>
 

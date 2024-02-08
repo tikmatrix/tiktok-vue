@@ -4,7 +4,7 @@
             <font-awesome-icon icon="fa-brands fa-tiktok" /> {{ $t('siteName') }}
         </h1>
 
-        <div class="p-4 bg-gray-100 rounded-lg shadow-md">
+        <!-- <div class="p-4 bg-gray-100 rounded-lg shadow-md">
             <h2 class="text-lg text-gray-700 mb-2">{{ $t('connectionMode') }}</h2>
             <div class="form-control">
                 <label class="label cursor-pointer">
@@ -14,7 +14,7 @@
                 </label>
             </div>
 
-        </div>
+        </div> -->
 
         <hr class="mb-6" />
         <ul>
@@ -89,22 +89,11 @@ export default {
     watch: {
         'settings.adb_mode': function (newVal, oldVal) {
             console.log('adb_mode changed from', oldVal, 'to', newVal);
-
+            this.update_setting()
             if (newVal === 'tcp' && oldVal === 'usb') {
                 this.$service.script({
                     script: 'switch_tcp',
                 }).then(res => {
-                    console.log(res)
-                    this.update_setting()
-                }).catch(err => {
-                    console.log(err)
-                })
-            } else if (newVal === 'usb' && oldVal === 'tcp') {
-                this.$service.script({
-                    script: 'switch_usb',
-                }).then(res => {
-                    console.log(res)
-                    this.update_setting()
                 }).catch(err => {
                     console.log(err)
                 })

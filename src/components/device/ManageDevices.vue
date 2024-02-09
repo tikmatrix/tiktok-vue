@@ -1,12 +1,12 @@
 <template>
     <div class=" w-full">
-        <Pagination :items="devices" :pageSize="5" :searchKeys="['serial', 'account']" @refresh="get_devices">
+        <Pagination :items="devices" :pageSize="16" :searchKeys="['serial', 'account']" @refresh="get_devices">
             <template v-slot:buttons>
                 <BatchButtons />
             </template>
             <template v-slot:default="slotProps">
-                <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                    <Miniremote v-for="(device, index) in slotProps.items" :device="device" :index="device.id"
+                <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 p-4">
+                    <Miniremote v-for="(device, index) in slotProps.items" :device="device" :index="index"
                         :key="device.serial" @show_device="show_device" @show_shell="show_shell" />
                 </div>
             </template>
@@ -65,25 +65,10 @@ export default {
         show_shell(device) {
             this.currentShell = device
         },
-        // get_accounts() {
-        //     this.$service.get_accounts().then(res => {
-        //         this.accounts = res.data
-        //         this.devices.forEach(device => {
-        //             device.account = this.accounts.find(account => account.device === device.serial)?.username || this.accounts.find(account => account.device === device.serial)?.email
-        //         })
-        //         //append group_id to device
-        //         this.devices.forEach(device => {
-        //             device.group_id = this.accounts.find(account => account.device === device.serial)?.group_id
-        //         })
-        //         this.get_groups();
-        //     }).catch(err => {
-        //         console.log(err)
-        //     })
-        // },
+
         get_groups() {
             this.$service.get_groups().then(res => {
                 this.groups = res.data
-                //append group_name to device
                 this.devices.forEach(device => {
                     device.group_name = this.groups.find(group => group.id === device.group_id)?.name
                 })
@@ -93,7 +78,6 @@ export default {
         },
     },
     mounted() {
-        // this.get_accounts();
     }
 
 

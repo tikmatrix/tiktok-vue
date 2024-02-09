@@ -8,11 +8,9 @@
 
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('autoTrain') }}:</label>
-            <select class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.auto_train">
-                <option value="0" selected>{{ $t('disable') }}</option>
-                <option value="1">{{ $t('enable') }}</option>
-            </select>
+            <input type="checkbox" class="toggle toggle-accent" v-model="group.auto_train" true-value="1" false-value="0" />
         </div>
+
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('startTime') }}</label>
             <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.train_start_time"
@@ -20,10 +18,8 @@
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('autoPublish') }}:</label>
-            <select class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.auto_publish">
-                <option value="0" selected>{{ $t('disable') }}</option>
-                <option value="1">{{ $t('enable') }}</option>
-            </select>
+            <input type="checkbox" class="toggle toggle-accent" v-model="group.auto_publish" true-value="1"
+                false-value="0" />
         </div>
         <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('publishType') }}:</label>

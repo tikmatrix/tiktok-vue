@@ -3,7 +3,7 @@ let devices = [];
 for (let i = 1; i <= 200; i++) {
   devices.push({
     'id': i,
-    'serial': 'device' + i,
+    'serial': 'deviceabcdadsfsfsdfsd' + i,
     'forward_port': '10800',
     'ip': '192.168.0.' + i,
   });

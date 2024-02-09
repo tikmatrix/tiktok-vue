@@ -17,10 +17,9 @@
         </div> -->
 
         <hr class="mb-6" />
-        <ul>
+        <ul class="menu menu-md w-56 rounded-box">
             <li v-for="(item, index) in menuItems" :key="index">
-                <a href="#" class="m-1 p-3 block rounded hover:bg-gray-700"
-                    :class="{ 'bg-gray-700': selectedItem === index }" @click="selectItem(index, item)">
+                <a :class="{ 'active': selectedItem === index }" @click="selectItem(index, item)">
                     <font-awesome-icon :icon="item.icon" /> {{ $t(`${item.name}`) }}
                 </a>
             </li>

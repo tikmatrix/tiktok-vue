@@ -14,7 +14,6 @@
                                 <th>{{ $t('autoPublish') }}</th>
                                 <th>{{ $t('autoTrain') }}</th>
                                 <th>{{ $t('publishType') }}</th>
-                                <th>{{ $t('productLink') }}</th>
                                 <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -28,17 +27,16 @@
                                     $t('enable') }}</td>
                                 <td>{{ parseInt(group.publish_type) === 1 ? $t('selfMade') :
                                     $t('aiMade') }}</td>
-                                <td>{{ group.product_link }}</td>
                                 <td>
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             @click="editgroup(group)">{{ $t('edit') }}</button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                            @click="deletegroup(group)">{{ $t('delete') }}</button>
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             @click="addMaterial(group)">{{ $t('addMaterial') }}: {{
                                                 group.unused_material_count
                                             }}</button>
+                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="deletegroup(group)">{{ $t('delete') }}</button>
                                     </div>
                                 </td>
                             </tr>

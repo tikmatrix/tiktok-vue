@@ -11,13 +11,11 @@
                             <tr>
                                 <th>{{ $t('id') }}</th>
                                 <th>{{ $t('email') }}</th>
-                                <th>{{ $t('password') }}</th>
-                                <th>{{ $t('shopCreator') }}</th>
                                 <th>{{ $t('username') }}</th>
                                 <th>{{ $t('fans') }}</th>
+                                <th>{{ $t('shopCreator') }}</th>
                                 <th>{{ $t('earnings') }}</th>
                                 <th>{{ $t('device') }}</th>
-                                <th>{{ $t('status') }}</th>
                                 <th>{{ $t('group') }}</th>
                                 <th>{{ $t('actions') }}</th>
                             </tr>
@@ -26,7 +24,8 @@
                             <tr v-for="(account, index) in slotProps.items" :key="index">
                                 <td>{{ account.id }}</td>
                                 <td>{{ account.email }}</td>
-                                <td>{{ account.pwd }}</td>
+                                <td>{{ account.username }}</td>
+                                <td>{{ account.fans }}</td>
                                 <td>
                                     <span v-if="parseInt(account.shop_creator) === 0" class=" m-1">{{
                                         $t('disable') }}</span>
@@ -35,17 +34,12 @@
                                     <span v-else-if="parseInt(account.shop_creator) === 2" class="text-red-500 m-1">{{
                                         $t('block') }}</span>
                                 </td>
-                                <td>{{ account.username }}</td>
-                                <td>{{ account.fans }}</td>
                                 <td>{{ account.earnings }}</td>
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(account.device)">{{ account.device }}</a>
                                 </td>
-                                <td>
-                                    <span v-if="account.online" class="text-green-500 m-1">{{ $t('online') }}</span>
-                                    <span v-else class="text-red-500 m-1">{{ $t('offline') }}</span>
-                                </td>
+
                                 <td>{{ account.group_name }}</td>
                                 <td>
                                     <div class="space-x-4">
@@ -118,9 +112,9 @@ export default {
             this.$service.get_accounts().then(res => {
                 console.log(res)
                 this.accounts = res.data
-                this.accounts.forEach(account => {
-                    account.online = this.devices.find(device => device.serial === account.device)
-                })
+                // this.accounts.forEach(account => {
+                //     account.online = this.devices.find(device => device.serial === account.device)
+                // })
                 this.get_groups();
             }).catch(err => {
                 console.log(err)

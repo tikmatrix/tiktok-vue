@@ -26,7 +26,6 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{ avatar.group_name }}</td>
                                 <td>
                                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                         @click="delete_avatar(avatar)">{{ $t('delete') }}</button>

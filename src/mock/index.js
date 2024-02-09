@@ -43,11 +43,13 @@ for (let i = 1; i <= 10; i++) {
   accounts.push({
     "id": i,
     "email": "admin" + i + "@niostack.com",
+    "username": "@admin" + i,
     "pwd": "123qwe...",
     "register_time": "2023-11-13 13:43:49",
     "last_login_time": "2023-11-13 13:43:49",
     "fans": 0,
     "shop_creator": 0,
+    "earnings": 9999,
     "device": "device" + i,
     "automated": 0,
     "online": 1,
@@ -63,7 +65,7 @@ for (let i = 1; i <= 100; i++) {
     "end_time": "2023-11-13 13:43:49",
     "status": Math.floor(Math.random() * 4), // 生成0到3之间的随机整数
     "material": "/preview.jpg",
-    "account": "admin@niostack.com",
+    "account": "@admin" + i,
     "title": "title",
     "device": "device" + i,
     'publish_type': 1,
@@ -82,7 +84,7 @@ for (let i = 1; i <= 100; i++) {
     "click": 1,
     "favorites": 1,
     "follow": 1,
-    "account": "admin@niostack.com",
+    "account": "@admin" + i,
     "device": "deviceid" + i,
     "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数
   });
@@ -95,6 +97,13 @@ for (let i = 1; i <= 100; i++) {
     "conditions": "hello,ok",
     "action": "click",
     "status": Math.floor(Math.random() * 4), // 生成0到3之间的随机整数
+  });
+}
+let avatars = [];
+for (let i = 1; i <= 100; i++) {
+  avatars.push({
+    "id": i.toString(),
+    "name": "/tx.png",
   });
 }
 const data = {
@@ -129,7 +138,8 @@ const data = {
       "version": "1.0.0",
       "adb_mode": "tcp",
     },
-    [api.task_status]: "running"
+    [api.task_status]: "running",
+    [api.avatar]: avatars,
   },
 }
 

@@ -84,7 +84,6 @@ export default {
         get_materials() {
             this.currentMaterial = null
             this.$service.get_materials().then(res => {
-                console.log(res)
                 this.materials = res.data
                 this.get_groups();
             }).catch(err => {
@@ -100,8 +99,7 @@ export default {
             this.$service.delete_material({
                 id: material.id
             }).then(res => {
-                console.log(res)
-                this.$emit('delete')
+                this.get_materials()
             }).catch(err => {
                 console.log(err)
             })

@@ -33,7 +33,11 @@
                                         }[train_job.status] }}</span>
                                 </td>
                                 <td>{{ train_job.account }}</td>
-                                <td>{{ train_job.device || 'N/A' }}</td>
+                                <td>
+                                    <a class="cursor-pointer underline text-blue-500"
+                                        @click="show_device(train_job.device)">{{
+                                            train_job.device }}</a>
+                                </td>
                                 <td>{{ train_job.group_name || 'N/A' }}</td>
                                 <td>
                                     <div class="space-x-4">
@@ -55,6 +59,7 @@
 <script>
 import Button from '../Button.vue'
 import Pagination from '../Pagination.vue'
+import { inject } from 'vue';
 
 export default {
     name: 'app',
@@ -62,13 +67,25 @@ export default {
         Button,
         Pagination
     },
+    setup() {
+        const devices = inject('devices');
+        return { devices: devices.list };
+    },
     data() {
         return {
             jobs: [],
             groups: [],
+            devices: [],
+            currentDevice: null,
         }
     },
     methods: {
+        handleDeviceClose() {
+            this.currentDevice = null;
+        },
+        show_device(device) {
+            this.currentDevice = this.devices.find(d => d.serial === device)
+        },
         get_train_jobs() {
             this.currentJob = null
             this.$service.get_train_jobs().then(res => {

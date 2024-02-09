@@ -11,5 +11,8 @@ module.exports = {
       opacity: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
     },
   },
+  daisyui: {
+    themes: ["light"],
+  },
 }
 

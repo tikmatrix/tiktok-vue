@@ -6,6 +6,7 @@
                 device.id }}</h2>
             <!-- <p class="whitespace-normal w-10">{{ device.serial }}</p> -->
         </div>
+
         <figure><img v-bind:src="img" /></figure>
     </div>
 </template>

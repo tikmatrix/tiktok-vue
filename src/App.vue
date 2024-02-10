@@ -48,6 +48,7 @@
         <span class="font-bold">{{ $t('demoTip', { email: 'admin@niostack.com' }) }}</span>
         <a class="link link-primary" href="https://t.me/+iGhozoBfAbI5YmE1">Join Telegram Group</a>
       </div>
+      <ManageDashboard v-if="selectedItem === 'dashboard'" />
       <ManageDevices v-if="selectedItem === 'devices'" />
       <ManageGroups v-if="selectedItem === 'groups'" />
       <ManageAccounts v-if="selectedItem === 'accounts'" />
@@ -74,6 +75,7 @@
 </template>
 <script>
 import Sidebar from './components/Sidebar.vue'
+import ManageDashboard from './components/dashboard/ManageDashboard.vue'
 import ManageDevices from './components/device/ManageDevices.vue'
 import ManageAccounts from './components/account/ManageAccounts.vue'
 import ManageMaterials from './components/material/ManageMaterials.vue'
@@ -90,6 +92,7 @@ export default {
   name: 'app',
   components: {
     Sidebar,
+    ManageDashboard,
     ManageDevices,
     ManageAccounts,
     ManageMaterials,
@@ -99,7 +102,7 @@ export default {
     ManageGroups,
     ManageMusics,
     ManageSettings,
-    ManageAvatars
+    ManageAvatars,
   },
   data() {
     return {

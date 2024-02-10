@@ -39,6 +39,7 @@ export default {
 
             selectedItem: 0,
             menuItems: [
+                { name: 'dashboard', icon: 'tachometer-alt' },
                 { name: 'devices', icon: 'mobile-alt' },
                 { name: 'groups', icon: 'users' },
                 { name: 'accounts', icon: 'user' },

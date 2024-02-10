@@ -123,6 +123,7 @@ export const i18n = createI18n({
             publishJobs: 'Publish Jobs',
             trainTimeTips: 'Train time, up to 6 time points can be configured',
             publishTimeTips: 'Publish time, up to 6 time points can be configured',
+            dashboard: 'Dashboard',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -244,6 +245,7 @@ export const i18n = createI18n({
             publishJobs: '发布任务',
             trainTimeTips: '养号时间，最多配置6个时间点',
             publishTimeTips: '发布时间，最多配置6个时间点',
+            dashboard: '仪表盘',
         }
     }
 })

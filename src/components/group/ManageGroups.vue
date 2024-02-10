@@ -55,18 +55,14 @@
             </template>
         </Pagination>
         <input id="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden>
-        <Modal :show="showEditGroup" @close="showEditGroup = false">
-            <Edit :group="currentGroup" @update="updateGroup" />
-        </Modal>
-        <Modal :show="showAddGroup" @close="showAddGroup = false">
-            <Add @add="addgroup" />
+        <Modal :show="showMoal" @close="showMoal = false">
+            <Add :group="currentGroup || defaultGroup" @update="updateGroup" @add="addgroup" />
         </Modal>
     </div>
 </template>
 <script>
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
-import Edit from './Edit.vue'
 import Add from './Add.vue'
 import Pagination from '../Pagination.vue'
 
@@ -75,7 +71,6 @@ export default {
     components: {
         Modal,
         Button,
-        Edit,
         Add,
         Pagination
     },
@@ -83,14 +78,22 @@ export default {
         return {
             groups: [],
             currentGroup: null,
-            showAddGroup: false,
-            showEditGroup: false,
+            showMoal: false,
+            defaultGroup: {
+                name: '',
+                auto_train: 0,
+                train_start_time: '',
+                auto_publish: 0,
+                publish_start_time: '',
+                publish_type: 0,
+                title: '',
+                product_link: '',
+            },
         }
     },
     methods: {
         get_groups() {
-            this.showEditGroup = false
-            this.showAddGroup = false
+            this.showMoal = false
             this.currentGroup = null
             this.$service.get_groups().then(res => {
                 console.log(res)
@@ -103,7 +106,7 @@ export default {
             })
         },
         add_group() {
-            this.showAddGroup = true
+            this.showMoal = true
         },
         addgroup(group) {
 
@@ -118,14 +121,14 @@ export default {
                 product_link: group.product_link,
             }).then(res => {
                 console.log(res)
-                this.showAddGroup = false
+                this.showMoal = false
                 this.get_groups()
             }).catch(err => {
                 console.log(err)
             })
         },
         editgroup(group) {
-            this.showEditGroup = true;
+            this.showMoal = true;
             this.currentGroup = group
         },
         updateGroup(group) {

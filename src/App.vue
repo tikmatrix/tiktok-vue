@@ -54,8 +54,8 @@
       <ManageMaterials v-if="selectedItem === 'materials'" />
       <ManageMusics v-if="selectedItem === 'musics'" />
       <ManageAvatars v-if="selectedItem === 'avatars'" />
-      <ManagePublishJobs v-if="selectedItem === 'autoPublish'" />
-      <ManageTrainJobs v-if="selectedItem === 'autoTrain'" />
+      <ManagePublishJobs v-if="selectedItem === 'publishJobs'" />
+      <ManageTrainJobs v-if="selectedItem === 'trainJobs'" />
       <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
       <ManageSettings v-if="selectedItem === 'settings'" />
       <footer class="footer footer-center p-4 bg-base-300 text-base-content">

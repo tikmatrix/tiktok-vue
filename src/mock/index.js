@@ -15,7 +15,7 @@ for (let i = 1; i <= 20; i++) {
     'name': 'Group' + i,
     'auto_train': Math.round(Math.random()), // 生成0或1的随机整数
     'auto_publish': Math.round(Math.random()), // 生成0或1的随机整数
-    'publish_type': Math.round(Math.random()), // 生成0或1的随机整数
+    'publish_type': Math.round(Math.random()) + 1, // 生成0或1的随机整数
     'product_link': 'https://vm.tiktok.com/ZGe2xRC8t/',
   });
 }

@@ -45,8 +45,8 @@ export default {
                 { name: 'materials', icon: 'images' },
                 { name: 'musics', icon: 'music' },
                 { name: 'avatars', icon: 'user-circle' },
-                { name: 'autoPublish', icon: 'robot' },
-                { name: 'autoTrain', icon: 'sync-alt' },
+                { name: 'publishJobs', icon: 'robot' },
+                { name: 'trainJobs', icon: 'sync-alt' },
                 { name: 'dialogWatcher', icon: 'exclamation-circle' },
                 { name: 'settings', icon: 'cogs' },
             ]

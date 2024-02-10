@@ -63,7 +63,7 @@ export const i18n = createI18n({
             id: 'ID',
             demoTip: 'This is a demo site, the data is not real. If you want to experience the real data, please contact us: {email}',
             repair: 'Repair',
-            groups: 'Group',
+            groups: 'Groups',
             title: 'Title',
             name: 'Name',
             addAccount: 'Add Account',
@@ -117,7 +117,12 @@ export const i18n = createI18n({
             save: 'Save',
             setProfile: 'Set Profile',
             avatars: 'Avatars',
-
+            trainTimes: 'Train Times',
+            publishTimes: 'Publish Times',
+            trainJobs: 'Train Jobs',
+            publishJobs: 'Publish Jobs',
+            trainTimeTips: 'Train time, up to 6 time points can be configured',
+            publishTimeTips: 'Publish time, up to 6 time points can be configured',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -233,6 +238,12 @@ export const i18n = createI18n({
             save: '保存',
             setProfile: '设置资料',
             avatars: '头像',
+            trainTimes: '养号时间',
+            publishTimes: '发布时间',
+            trainJobs: '养号任务',
+            publishJobs: '发布任务',
+            trainTimeTips: '养号时间，最多配置6个时间点',
+            publishTimeTips: '发布时间，最多配置6个时间点',
         }
     }
 })

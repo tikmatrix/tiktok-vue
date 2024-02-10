@@ -2,7 +2,7 @@
     <div class="w-full">
         <Pagination :items="watchers" :pageSize="10" :searchKeys="['conditions']" @refresh="get_watchers">
             <template v-slot:buttons>
-                <Button @click="add_watcher" label="add" />
+                <Button @click="add_watcher" label="add" icon="fa fa-add" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">

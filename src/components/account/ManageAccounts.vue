@@ -2,7 +2,7 @@
     <div class="w-full">
         <Pagination :items="accounts" :pageSize="10" :searchKeys="['email', 'username', 'device']" @refresh="get_accounts">
             <template v-slot:buttons>
-                <Button @click="add_account" label="add" />
+                <Button @click="add_account" label="add" icon="fa fa-add" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -62,7 +62,7 @@
         <Modal :show="showAddAccount" @close="showAddAccount = false">
             <Add @add="addAccount" />
         </Modal>
-        <Modal :show="currentDevice" @close="handleDeviceClose">
+        <Modal @close="handleDeviceClose">
             <Remote :device="currentDevice" />
         </Modal>
     </div>

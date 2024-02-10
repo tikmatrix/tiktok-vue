@@ -2,7 +2,7 @@
     <div class=" w-full">
         <Pagination :items="avatars" :pageSize="10" :searchKeys="['name']" @refresh="get_avatars">
             <template v-slot:buttons>
-                <Button @click="add_avatar" label="add" />
+                <Button @click="add_avatar" label="add" icon="fa fa-add" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">

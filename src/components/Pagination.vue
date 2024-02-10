@@ -2,7 +2,7 @@
     <div>
 
         <div class="w-full flex items-center">
-            <slot name="buttons"></slot>
+
             <span class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</span>
             <div class="join">
                 <button class="join-item btn" @click="prevPage" :disabled="currentPage === 1">{{ $t('prev') }}</button>
@@ -10,6 +10,7 @@
                 <button class="join-item btn" @click="nextPage" :disabled="currentPage === pageCount">{{ $t('next')
                 }}</button>
             </div>
+            <slot name="buttons"></slot>
             <Button icon="fa fa-refresh" @click="$emit('refresh')" label="refresh" />
             {{ $t('search') }}：
             <input type="text" v-model="searchTerm" :placeholder="$t('enterTips')"

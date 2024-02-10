@@ -2,7 +2,7 @@
     <div class="w-full">
         <Pagination :items="groups" :pageSize="10" :searchKeys="['name']" @refresh="get_groups">
             <template v-slot:buttons>
-                <Button @click="add_group" label="add" />
+                <Button @click="add_group" label="add" icon="fa fa-add" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">

@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-start p-12 w-full">
-        <div class="toast toast-top toast-center" v-if="showToast">
+        <div class="toast toast-top toast-center z-50" v-if="showToast">
             <div class="alert alert-success">
                 <span>Copied!</span>
             </div>
@@ -11,7 +11,7 @@
             <div class="join">
                 <input type="text" placeholder="uid" class="input input-primary w-full join-item" v-model="license.uid"
                     disabled />
-                <button class="btn btn-success" @click="copyuid">{{ $t('copy') }}</button>
+                <Button @click="copyuid" label="copy" :loading-time="1" />
             </div>
 
             <div class="label">

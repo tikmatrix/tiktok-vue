@@ -107,10 +107,19 @@ for (let i = 1; i <= 100; i++) {
   });
 }
 const data = {
+  put: {
+    [api.shell]: {},
+    [api.add_license]: {
+    },
+    [api.settings]: {
+    },
+  },
   post: {
     [api.shell]: {},
     [api.add_license]: {
-    }
+    },
+    [api.settings]: {
+    },
   },
   get: {
     [api.device]: devices,

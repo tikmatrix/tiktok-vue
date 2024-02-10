@@ -3,7 +3,7 @@
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex-grow">
       <div
-        class="bg-base-100 text-base-content sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] ">
+        class="bg-base-100 text-base-content sticky top-0 z-3 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] ">
         <div class="navbar bg-base-100">
           <div class="flex-1 lg:hidden">
             <label for="my-drawer" class="btn btn-square btn-ghost">
@@ -58,10 +58,15 @@
       <ManageTrainJobs v-if="selectedItem === 'autoTrain'" />
       <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
       <ManageSettings v-if="selectedItem === 'settings'" />
+      <footer class="footer footer-center p-4 bg-base-300 text-base-content">
+        <aside>
+          <p>Copyright © 2024 - All right reserved by niostack.com</p>
+        </aside>
+      </footer>
     </div>
 
 
-    <div class="drawer-side z-40">
+    <div class="drawer-side z-4">
       <Sidebar @menu_selected="menu_selected" />
     </div>
 

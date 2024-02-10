@@ -20,7 +20,7 @@
         </div> -->
         <li v-for="(item, index) in menuItems" :key="index">
             <a :class="{ 'active': selectedItem === index }" @click="selectItem(index, item)">
-                <font-awesome-icon :icon="item.icon" /> {{ $t(`${item.name}`) }}
+                <font-awesome-icon :icon="item.icon" class="w-4 h-4" /> {{ $t(`${item.name}`) }}
             </a>
         </li>
 

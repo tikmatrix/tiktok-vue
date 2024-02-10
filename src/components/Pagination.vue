@@ -1,8 +1,6 @@
 <template>
     <div>
-
         <div class="w-full flex items-center">
-
             <span class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</span>
             <div class="join">
                 <button class="join-item btn" @click="prevPage" :disabled="currentPage === 1">{{ $t('prev') }}</button>
@@ -12,13 +10,14 @@
             </div>
             <slot name="buttons"></slot>
             <Button icon="fa fa-refresh" @click="$emit('refresh')" label="refresh" />
-            {{ $t('search') }}：
-            <input type="text" v-model="searchTerm" :placeholder="$t('enterTips')"
-                class="input input-bordered w-full max-w-xs" />
+            <div class="relative ml-2">
+                <font-awesome-icon :icon="['fas', 'search']" class="absolute left-3 top-1/2 transform -translate-y-1/2" />
+                <input type="search" v-model="searchTerm" :placeholder="$t('enterTips')"
+                    class="input input-bordered w-full max-w-xs pl-8" />
+            </div>
             <template v-if="uniqueGroupNames.length > 0">
-                {{ $t('group') }}：
-                <select v-model="searchGroup" class=" m-3 p-3 my-2 border-2 border-gray-300 rounded">
-                    <option value="">{{ $t('all') }}</option>
+                <select v-model="searchGroup" class="select select-bordered max-w-xs ml-2">
+                    <option value="">{{ $t('allGroups') }}</option>
                     <option v-for="item in uniqueGroupNames" :key="item.group_name" :value="item.group_name">
                         {{ item.group_name }}
                     </option>

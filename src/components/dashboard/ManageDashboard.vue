@@ -6,6 +6,7 @@
             </div>
         </div>
         <h1 class="text-2xl mb-6">{{ $t('dashboard') }}</h1>
+        <div class="divider">Quick Start</div>
         <ul class="steps">
             <li class="step step-primary">Download TikTok Matrix</li>
             <li class="step step-primary">Open TikTok Matrix</li>
@@ -15,7 +16,7 @@
             <li class="step step-primary">Auto Train</li>
             <li class="step step-primary">Auto Publish</li>
         </ul>
-        <div class="divider"></div>
+        <div class="divider">Overview</div>
         <div class="stats shadow">
 
             <div class="stat">
@@ -69,46 +70,38 @@
 
 
         </div>
-        <div class="divider"></div>
-        <div class="stats bg-secondary text-secondary-content">
-            <div class="stat">
-                <div class="stat-title">Matrix Group A</div>
-                <div class="stat-value">30k views</div>
+        <div class="divider">Matrix Groups</div>
+        <div class="stats bg-primary text-primary-content carousel carousel-center rounded-box w-full">
+            <div class="stat carousel-item">
+                <div class="stat-value">Matrix Group A</div>
                 <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos</button>
-                    <button class="btn btn-sm btn-primary ml-2">Accounts</button>
+                    <button class="btn btn-sm btn-success">Videos:99</button>
+                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
+
                 </div>
             </div>
-            <div class="stat">
-                <div class="stat-title">Matrix Group B</div>
-                <div class="stat-value">33k views</div>
+            <div class="divider lg:divider-horizontal"></div>
+            <div class="stat carousel-item">
+                <div class="stat-value">Matrix Group B</div>
                 <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos</button>
-                    <button class="btn btn-sm btn-primary ml-2">Accounts</button>
+                    <button class="btn btn-sm btn-success">Videos:99</button>
+                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
                 </div>
             </div>
-            <div class="stat">
-                <div class="stat-title">Matrix Group C</div>
-                <div class="stat-value">35k views</div>
+            <div class="divider lg:divider-horizontal"></div>
+            <div class="stat carousel-item">
+                <div class="stat-value">Matrix Group C</div>
                 <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos</button>
-                    <button class="btn btn-sm btn-primary ml-2">Accounts</button>
+                    <button class="btn btn-sm btn-success">Videos:99</button>
+                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
                 </div>
             </div>
-            <div class="stat">
-                <div class="stat-title">Matrix Group C</div>
-                <div class="stat-value">35k views</div>
+            <div class="divider lg:divider-horizontal"></div>
+            <div class="stat carousel-item">
+                <div class="stat-value">Matrix Group D</div>
                 <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos</button>
-                    <button class="btn btn-sm btn-primary ml-2">Accounts</button>
-                </div>
-            </div>
-            <div class="stat">
-                <div class="stat-title">Matrix Group C</div>
-                <div class="stat-value">35k views</div>
-                <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos</button>
-                    <button class="btn btn-sm btn-primary ml-2">Accounts</button>
+                    <button class="btn btn-sm btn-success">Videos:99</button>
+                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
                 </div>
             </div>
         </div>

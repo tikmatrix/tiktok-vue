@@ -6,24 +6,24 @@
             </div>
         </div>
         <h1 class="text-2xl mb-6">{{ $t('dashboard') }}</h1>
-        <div class="divider">Quick Start</div>
+        <div class="divider">{{ $t('quickStart') }}</div>
         <ul class="steps">
-            <li class="step step-primary">Download TikTok Matrix</li>
-            <li class="step step-primary">Open TikTok Matrix</li>
-            <li class="step step-primary">Create Matrix Group</li>
-            <li class="step step-primary">Config Matrix Group</li>
-            <li class="step step-primary">Auto Register Accounts</li>
-            <li class="step step-primary">Auto Train</li>
-            <li class="step step-primary">Auto Publish</li>
+            <li class="step step-primary">{{ $t('step.step1') }}</li>
+            <li class="step step-primary">{{ $t('step.step2') }}</li>
+            <li class="step step-primary">{{ $t('step.step3') }}</li>
+            <li class="step step-primary">{{ $t('step.step4') }}</li>
+            <li class="step step-primary">{{ $t('step.step5') }}</li>
+            <li class="step step-primary">{{ $t('step.step6') }}</li>
+            <li class="step step-primary">{{ $t('step.step7') }}</li>
         </ul>
-        <div class="divider">Overview</div>
+        <div class="divider">{{ $t('overview') }}</div>
         <div class="stats shadow">
 
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'mobile-alt']" />
                 </div>
-                <div class="stat-title">Device Count</div>
+                <div class="stat-title">{{ $t('deviceCount') }}</div>
                 <div class="stat-value">2000</div>
                 <div class="stat-desc">100% active</div>
             </div>
@@ -31,7 +31,7 @@
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'users']" />
                 </div>
-                <div class="stat-title">Account Count</div>
+                <div class="stat-title">{{ $t('accountCount') }}</div>
                 <div class="stat-value">16000</div>
                 <div class="stat-desc">100% active</div>
             </div>
@@ -39,7 +39,7 @@
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
-                <div class="stat-title">Train Jobs</div>
+                <div class="stat-title">{{ $t('trainJobCount') }}</div>
                 <div class="stat-value">20.3k</div>
                 <div class="stat-desc">success rate 98%</div>
             </div>
@@ -47,7 +47,7 @@
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
-                <div class="stat-title">Publish Jobs</div>
+                <div class="stat-title">{{ $t('publishJobCount') }}</div>
                 <div class="stat-value">21.3k</div>
                 <div class="stat-desc">success rate 99%</div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="stat-figure text-primary">
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
-                <div class="stat-title">Train Queue</div>
+                <div class="stat-title">{{ $t('trainJobQueue') }}</div>
                 <div class="stat-value">200</div>
                 <div class="stat-desc">in queue</div>
             </div>
@@ -63,14 +63,14 @@
                 <div class="stat-figure text-primary">
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
-                <div class="stat-title">Publish Queue</div>
+                <div class="stat-title">{{ $t('publishJobQueue') }}</div>
                 <div class="stat-value">300</div>
                 <div class="stat-desc">in queue</div>
             </div>
 
 
         </div>
-        <div class="divider">Matrix Groups</div>
+        <div class="divider">{{ $t('matrixGroup') }}</div>
         <div class="stats bg-primary text-primary-content carousel carousel-center rounded-box w-full">
             <div class="stat carousel-item">
                 <div class="stat-value">Matrix Group A</div>

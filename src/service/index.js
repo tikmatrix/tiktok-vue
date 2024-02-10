@@ -299,5 +299,37 @@ export function delete_avatar({ id }) {
     params: { id }
   })
 }
+export function count_train_job_by_status() {
+  return request({
+    method: 'get',
+    url: api.count_train_job_by_status,
+  })
+}
+export function count_publish_job_by_status() {
+  return request({
+    method: 'get',
+    url: api.count_publish_job_by_status,
+  })
+}
+export function count_online_device() {
+  return request({
+    method: 'get',
+    url: api.count_online_device,
+  })
+}
+export function count_all_account() {
+  return request({
+    method: 'get',
+    url: api.count_all_account,
+  })
+}
+export function count_account_by_group_id({ group_id }) {
+  return request({
+    method: 'get',
+    url: api.count_account_by_group_id,
+    params: { group_id }
+  })
+}
+
 
 

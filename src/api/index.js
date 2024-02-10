@@ -18,6 +18,11 @@ const api = {
     get_license: '/api/get_license',
     add_license: '/api/add_license',
     avatar: '/api/avatar',
+    count_train_job_by_status: '/api/train_job/count_by_status',
+    count_publish_job_by_status: '/api/publish_job/count_by_status',
+    count_online_device: '/api/device/count_online',
+    count_all_account: '/api/account/count_all',
+    count_account_by_group_id: '/api/account/count_by_group_id',
 
 }
 export default api

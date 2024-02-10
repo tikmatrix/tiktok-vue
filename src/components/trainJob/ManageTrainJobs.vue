@@ -22,15 +22,15 @@
                             <tr v-for="(train_job, index) in slotProps.items" :key="index">
                                 <td>{{ train_job.id }}</td>
                                 <td>{{ train_job.start_time }}</td>
-                                <td> <span :class="{
-                                    'text-green-500': train_job.status === 2,
-                                    'text-red-500': train_job.status === 3,
-                                    'text-yellow-500': train_job.status === 1,
-                                    'text-gray-500': train_job.status === 0
-                                }">
-                                        {{ {
-                                            0: $t('waiting'), 1: $t('execing'), 2: $t('success'), 3: $t('failed')
-                                        }[train_job.status] }}</span>
+                                <td>
+                                    <div class="badge badge-neutral" v-if="train_job.status == '0'"> {{ $t('waiting') }}
+                                    </div>
+                                    <div class="badge badge-primary" v-else-if="train_job.status == '1'"> {{
+                                        $t('execing') }} </div>
+                                    <div class="badge badge-success" v-else-if="train_job.status == '2'"> {{
+                                        $t('success') }} </div>
+                                    <div class="badge badge-error" v-else-if="train_job.status == '3'"> {{
+                                        $t('failed') }} </div>
                                 </td>
                                 <td>{{ train_job.account }}</td>
                                 <td>

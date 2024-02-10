@@ -21,12 +21,21 @@
                             <tr v-for="(group, index) in slotProps.items" :key="index">
                                 <td>{{ group.id }}</td>
                                 <td>{{ group.name }}</td>
-                                <td>{{ parseInt(group.auto_publish) === 0 ? $t('disable') :
-                                    $t('enable') }}</td>
-                                <td>{{ parseInt(group.auto_train) === 0 ? $t('disable') :
-                                    $t('enable') }}</td>
-                                <td>{{ parseInt(group.publish_type) === 1 ? $t('selfMade') :
-                                    $t('aiMade') }}</td>
+                                <td>
+                                    <div class="badge badge-success" v-if="group.auto_train == '1'"> {{ $t('enable') }}
+                                    </div>
+                                    <div class="badge badge-error" v-else> {{ $t('disable') }} </div>
+                                </td>
+                                <td>
+                                    <div class="badge badge-success" v-if="group.auto_publish == '1'"> {{ $t('enable') }}
+                                    </div>
+                                    <div class="badge badge-error" v-else> {{ $t('disable') }} </div>
+                                </td>
+                                <td>
+                                    <div class="badge badge-primary" v-if="group.publish_type == '1'"> {{ $t('selfMade') }}
+                                    </div>
+                                    <div class="badge badge-accent" v-else> {{ $t('aiMade') }} </div>
+                                </td>
                                 <td>
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

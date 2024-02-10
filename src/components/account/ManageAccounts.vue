@@ -27,12 +27,13 @@
                                 <td>{{ account.username }}</td>
                                 <td>{{ account.fans }}</td>
                                 <td>
-                                    <span v-if="parseInt(account.shop_creator) === 0" class=" m-1">{{
-                                        $t('disable') }}</span>
-                                    <span v-else-if="parseInt(account.shop_creator) === 1" class="text-green-500 m-1">{{
-                                        $t('enable') }}</span>
-                                    <span v-else-if="parseInt(account.shop_creator) === 2" class="text-red-500 m-1">{{
-                                        $t('block') }}</span>
+                                    <div class="badge badge-success" v-if="account.shop_creator == '1'"> {{ $t('enable') }}
+                                    </div>
+                                    <div class="badge badge-warning" v-else-if="account.shop_creator == '0'"> {{
+                                        $t('disable') }} </div>
+                                    <div class="badge badge-error" v-else-if="account.shop_creator == '2'"> {{
+                                        $t('block') }} </div>
+
                                 </td>
                                 <td>{{ account.earnings }}</td>
                                 <td>

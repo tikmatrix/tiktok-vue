@@ -27,15 +27,15 @@
                                 <td>{{ publish_job.id }}</td>
                                 <td>{{ publish_job.start_time }}</td>
                                 <!-- <td>{{ publish_job.end_time }}</td> -->
-                                <td> <span :class="{
-                                    'text-green-500': publish_job.status === 2,
-                                    'text-red-500': publish_job.status === 3,
-                                    'text-yellow-500': publish_job.status === 1,
-                                    'text-gray-500': publish_job.status === 0
-                                }">
-                                        {{ {
-                                            0: $t('waiting'), 1: $t('execing'), 2: $t('success'), 3: $t('failed')
-                                        }[publish_job.status] }}</span>
+                                <td>
+                                    <div class="badge badge-neutral" v-if="publish_job.status == '0'"> {{ $t('waiting') }}
+                                    </div>
+                                    <div class="badge badge-primary" v-else-if="publish_job.status == '1'"> {{
+                                        $t('execing') }} </div>
+                                    <div class="badge badge-success" v-else-if="publish_job.status == '2'"> {{
+                                        $t('success') }} </div>
+                                    <div class="badge badge-error" v-else-if="publish_job.status == '3'"> {{
+                                        $t('failed') }} </div>
                                 </td>
                                 <td>
                                     <template

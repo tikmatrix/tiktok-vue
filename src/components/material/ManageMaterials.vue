@@ -22,13 +22,9 @@
                                 <td>{{ material.id }}</td>
                                 <td>{{ material.name }}</td>
                                 <td>
-                                    <span :class="{
-                                        'text-green-500': material.used === 0,
-                                        'text-red-500': material.used === 1,
-                                    }">
-                                        {{ {
-                                            0: $t('unused'), 1: $t('used')
-                                        }[material.used] }}</span>
+                                    <div class="badge badge-success" v-if="material.used == '0'"> {{ $t('unused') }}
+                                    </div>
+                                    <div class="badge badge-error" v-else> {{ $t('used') }} </div>
                                 </td>
                                 <td @click="show_material(material)">
                                     <div class="cursor-pointer">

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-start p-12  w-full">
+    <div class="flex flex-col items-start p-12 w-full">
         <div class="toast toast-top toast-center" v-if="showToast">
             <div class="alert alert-success">
                 <span>Copied!</span>
@@ -40,6 +40,7 @@
                 <input type="text" placeholder="Proxy Server" class="input input-primary w-full join-item"
                     v-model="settings.proxy_url" />
                 <Button @click="set_settings" label="save" :loading-time=2000 />
+
             </div>
 
             <div class="label">

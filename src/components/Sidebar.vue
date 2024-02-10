@@ -1,8 +1,11 @@
 <template>
-    <div class="min-h-screen bg-gray-800 text-white flex flex-col">
-        <h1 class="text-2xl p-3 mb-6">
-            <font-awesome-icon icon="fa-brands fa-tiktok" /> {{ $t('siteName') }}
-        </h1>
+    <label for="my-drawer" aria-label="close Menu" class="drawer-overlay"></label>
+    <div class="flex-1 hidden lg:block p-4">
+        <font-awesome-icon icon="fa-brands fa-tiktok" />
+        <a class="btn btn-ghost text-xl">{{ $t('siteName') }}</a>
+    </div>
+    <ul class="menu p-4 w-60 min-h-full bg-base-200 text-base-content">
+
 
         <!-- <div class="p-4 bg-gray-100 rounded-lg shadow-md">
             <h2 class="text-lg text-gray-700 mb-2">{{ $t('connectionMode') }}</h2>
@@ -15,44 +18,16 @@
             </div>
 
         </div> -->
+        <li v-for="(item, index) in menuItems" :key="index">
+            <a :class="{ 'active': selectedItem === index }" @click="selectItem(index, item)">
+                <font-awesome-icon :icon="item.icon" /> {{ $t(`${item.name}`) }}
+            </a>
+        </li>
 
-        <hr class="mb-6" />
-        <ul class="menu menu-md w-56 rounded-box">
-            <li v-for="(item, index) in menuItems" :key="index">
-                <a :class="{ 'active': selectedItem === index }" @click="selectItem(index, item)">
-                    <font-awesome-icon :icon="item.icon" /> {{ $t(`${item.name}`) }}
-                </a>
-            </li>
-        </ul>
-        <div class="mt-auto">
-
-            <div class="relative inline-flex items-center bg-gray-800 rounded-full p-2 border border-white">
-                <font-awesome-icon icon="globe" class="text-white" />
-                <div class="relative">
-                    <div @click="open = !open"
-                        class="appearance-none bg-transparent border-0 text-white pl-2 pr-8 rounded-full cursor-pointer">
-                        {{ $i18n.locale === 'en' ? 'English' : '中文' }}
-                    </div>
-                    <div v-show="open"
-                        class="absolute z-10 mb-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 bottom-full">
-                        <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                            <div @click="changeLocale('en')"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                                role="menuitem">
-                                English
-                            </div>
-                            <div @click="changeLocale('zh-CN')"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
-                                role="menuitem">
-                                中文
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <li>
             <p class="text-sm text-gray-400  p-3">{{ $t('version') + ': ' + settings.version }}</p>
-        </div>
-    </div>
+        </li>
+    </ul>
 </template>
 
 <script>
@@ -105,10 +80,7 @@ export default {
             this.selectedItem = index;
             this.$emit('menu_selected', item);
         },
-        changeLocale(locale) {
-            this.$i18n.locale = locale;
-            this.open = false;
-        },
+
         enableEditMode() {
             this.editMode = true;
             this.$nextTick(() => {

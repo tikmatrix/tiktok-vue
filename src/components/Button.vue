@@ -1,9 +1,8 @@
 <template>
-    <button
-        :class="`lg:px-4 lg:py-2 rounded lg:m-1 px-2 py-1 m-0.5 ${color} ${disabled || isLoading ? 'opacity-50 cursor-not-allowed' : 'hover:' + hoverColor}`"
-        :disabled="disabled || isLoading" @click="handleClick">
-        <font-awesome-icon v-if="icon" :icon="icon" />
-        <span class="lg:m-1 m-0.5">{{ isLoading ? $t('execing') + '...' : $t(`${label}`) }}</span>
+    <button :class="`btn btn-sm ${color} ml-2 mb-1 mt-1`" :disabled="disabled || isLoading" @click="handleClick">
+        <span class="loading loading-spinner" v-if="isLoading"></span>
+        <font-awesome-icon v-if="icon && !isLoading" :icon="icon" class="h-4 w-4" />
+        {{ isLoading ? $t('execing') : $t(`${label}`) }}
     </button>
 </template>
 
@@ -24,7 +23,7 @@ export default {
         },
         color: {
             type: String,
-            default: 'bg-blue-500 text-white'
+            default: 'btn-success'
         },
         loadingTime: {
             type: Number,
@@ -36,11 +35,7 @@ export default {
             isLoading: false
         }
     },
-    computed: {
-        hoverColor() {
-            return this.color.replace('500', '700');
-        }
-    },
+
     methods: {
         handleClick() {
             this.isLoading = true

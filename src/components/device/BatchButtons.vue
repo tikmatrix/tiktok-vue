@@ -1,12 +1,10 @@
 <template>
-    <div class="w-full p-4 bg-gray-200 border-b border-gray-300">
-
-
+    <div class="w-full p-4 ">
         <label class="text-gray-700  font-bold">{{ $t('batchAction') }}</label>
         <input id="app_install_input" type="file" v-on:change="on_app_install" hidden>
         <Button icon="fa fa-upload" @click="app_install" label="installApk" />
         <Button icon="fa fa-trash" @click="app_uninstall" label="uninstallApk" />
-        <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
+        <!-- <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" /> -->
         <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
         <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />
         <Button label="wakeup" icon="fa-solid fa-mobile-screen" @click="shell('input keyevent KEYCODE_WAKEUP')" />
@@ -27,7 +25,7 @@
         <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo"
             icon="fa-solid fa-sim-card" />
         <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" icon="fa-solid fa-bell" />
-        <Button @click="shell('reboot')" label="rebootAll" color="bg-red-500 text-white" icon="fa-solid fa-power-off" />
+        <Button @click="shell('reboot')" label="rebootAll" color="btn-error" icon="fa-solid fa-power-off" />
 
     </div>
 </template>

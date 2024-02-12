@@ -149,7 +149,47 @@ const data = {
     },
     [api.task_status]: "running",
     [api.avatar]: avatars,
-  },
+    [api.count_online_device]: 2000,
+    [api.count_all_account]: 16000,
+    [api.count_train_job_by_status]:
+      [
+        {
+          "status": 0,
+          "count": 232,
+        },
+        {
+          "status": 1,
+          "count": 32,
+        },
+        {
+          "status": 2,
+          "count": 23232,
+        },
+        {
+          "status": 3,
+          "count": 232,
+        },
+      ],
+    [api.count_publish_job_by_status]:
+      [
+        {
+          "status": 0,
+          "count": 232,
+        },
+        {
+          "status": 1,
+          "count": 32,
+        },
+        {
+          "status": 2,
+          "count": 23232,
+        },
+        {
+          "status": 3,
+          "count": 232,
+        },
+      ]
+  }
 }
 
 const mock = (url, method) => {

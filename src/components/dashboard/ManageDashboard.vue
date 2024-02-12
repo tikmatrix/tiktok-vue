@@ -1,10 +1,6 @@
 <template>
     <div class="flex flex-col items-start p-12 w-full">
-        <div class="toast toast-top toast-center z-50" v-if="showToast">
-            <div class="alert alert-success">
-                <span>Copied!</span>
-            </div>
-        </div>
+
         <h1 class="text-2xl mb-6">{{ $t('dashboard') }}</h1>
         <div class="divider">{{ $t('quickStart') }}</div>
         <ul class="steps">
@@ -18,57 +14,56 @@
         </ul>
         <div class="divider">{{ $t('overview') }}</div>
         <div class="stats shadow">
-
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'mobile-alt']" />
                 </div>
                 <div class="stat-title">{{ $t('deviceCount') }}</div>
-                <div class="stat-value">2000</div>
-                <div class="stat-desc">100% active</div>
+                <div class="stat-value">{{ device_count }}</div>
             </div>
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'users']" />
                 </div>
                 <div class="stat-title">{{ $t('accountCount') }}</div>
-                <div class="stat-value">16000</div>
-                <div class="stat-desc">100% active</div>
+                <div class="stat-value">{{ account_count }}</div>
             </div>
+        </div>
+        <div class="divider">{{ $t('overview') }}</div>
+        <div class="stats shadow">
+
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
                 <div class="stat-title">{{ $t('trainJobCount') }}</div>
-                <div class="stat-value">20.3k</div>
-                <div class="stat-desc">success rate 98%</div>
+                <div class="stat-value">{{ train_job_count }}</div>
+                <div class="stat-desc">success rate {{ train_job_sucess_rate * 100 }}%</div>
             </div>
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
                 <div class="stat-title">{{ $t('publishJobCount') }}</div>
-                <div class="stat-value">21.3k</div>
-                <div class="stat-desc">success rate 99%</div>
+                <div class="stat-value">{{ publish_job_count }}</div>
+                <div class="stat-desc">success rate {{ publish_job_sucess_rate * 100 }}%</div>
             </div>
             <div class="stat">
                 <div class="stat-figure text-primary">
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
                 <div class="stat-title">{{ $t('trainJobQueue') }}</div>
-                <div class="stat-value">200</div>
-                <div class="stat-desc">in queue</div>
+                <div class="stat-value">{{ train_job_queue }}</div>
+                <div class="stat-desc">{{ running_train_job_count }} is running</div>
             </div>
             <div class="stat">
                 <div class="stat-figure text-primary">
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
                 <div class="stat-title">{{ $t('publishJobQueue') }}</div>
-                <div class="stat-value">300</div>
-                <div class="stat-desc">in queue</div>
+                <div class="stat-value">{{ publish_job_queue }}</div>
+                <div class="stat-desc">{{ running_publish_job_count }} is running</div>
             </div>
-
-
         </div>
         <div class="divider">{{ $t('matrixGroup') }}</div>
         <div class="stats bg-primary text-primary-content carousel carousel-center rounded-box w-full">
@@ -117,58 +112,98 @@ export default {
     },
     data() {
         return {
-            settings: {},
-            license: {
-                uid: '',
-                key: '',
-                status: '',
-                name: '',
-                left_days: 0
-            },
-            showToast: false,
+            device_count: 0,
+            account_count: 0,
+            train_job_count: 0,
+            train_job_sucess_rate: 0,
+            running_train_job_count: 0,
+            publish_job_count: 0,
+            publish_job_sucess_rate: 0,
+            running_publish_job_count: 0,
+            train_job_queue: 0,
+            publish_job_queue: 0,
+            groups: []
         }
     },
     methods: {
-        get_settings() {
-            this.$service.get_settings().then((res) => {
-                this.settings = res.data;
-            });
+        count_online_device() {
+            this.$service.count_online_device().then(res => {
+                this.device_count = res.data
+            }).catch(err => {
+                console.log(err)
+            })
         },
-        set_settings() {
-            this.$service.update_settings(this.settings).then((res) => {
-                console.log(res);
-            });
+        count_all_account() {
+            this.$service.count_all_account().then(res => {
+                this.account_count = res.data
+            }).catch(err => {
+                console.log(err)
+            })
         },
-        copyuid() {
-            //copy uid to clipboard
-            navigator.clipboard.writeText(this.license.uid).then(() => {
-                console.log('Async: Copying to clipboard was successful!');
-                this.showToast = true;
-                setTimeout(() => {
-                    this.showToast = false;
-                }, 2000);
-            }, (err) => {
-                console.error('Async: Could not copy text: ', err);
-            });
+        count_train_job_by_status() {
+            this.$service.count_train_job_by_status().then(res => {
+                const status_count_list = res.data;
+                const { all_count, success_count, queue_count, running_count } = status_count_list.reduce((acc, item) => {
+                    acc.all_count += item.count;
+                    if (item.status === 2) {
+                        acc.success_count = item.count;
+                    }
+                    if (item.status === 1) {
+                        acc.running_count = item.count;
+                    }
+                    if (item.status === 0) {
+                        acc.queue_count = item.count;
+                    }
+                    return acc;
+                }, { all_count: 0, success_count: 0, queue_count: 0 });
 
-        },
-        get_license() {
-            this.$service.get_license().then((res) => {
-                this.license = res.data;
+                this.train_job_count = all_count;
+                this.train_job_sucess_rate = (success_count / all_count).toFixed(4);
+                this.train_job_queue = queue_count;
+                this.running_train_job_count = running_count;
+            }).catch(err => {
+                console.log(err);
             });
         },
-        add_license() {
-            this.$service.add_license({
-                key: this.license.key
-            }).then((res) => {
-                console.log(res);
-                this.get_license();
+        count_publish_job_by_status() {
+            this.$service.count_publish_job_by_status().then(res => {
+                const status_count_list = res.data;
+                const { all_count, success_count, queue_count, running_count } = status_count_list.reduce((acc, item) => {
+                    acc.all_count += item.count;
+                    if (item.status === 2) {
+                        acc.success_count = item.count;
+                    }
+                    if (item.status === 1) {
+                        acc.running_count = item.count;
+                    }
+                    if (item.status === 0) {
+                        acc.queue_count = item.count;
+                    }
+                    return acc;
+                }, { all_count: 0, success_count: 0, queue_count: 0 });
+
+                this.publish_job_count = all_count;
+                this.publish_job_sucess_rate = (success_count / all_count).toFixed(4);
+                this.publish_job_queue = queue_count;
+                this.running_publish_job_count = running_count;
+            }).catch(err => {
+                console.log(err);
             });
-        }
+        },
+        get_groups() {
+            this.$service.get_groups().then(res => {
+                this.groups = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
     },
     mounted() {
-        this.get_settings()
-        this.get_license()
+        this.count_online_device()
+        this.count_all_account()
+        this.count_train_job_by_status()
+        this.count_publish_job_by_status()
+        this.get_groups()
     }
 }
 </script>

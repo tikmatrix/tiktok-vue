@@ -144,6 +144,7 @@ export const i18n = createI18n({
             publishJobQueue: 'PublishJob Queue',
             matrixGroup: 'Matrix Group',
             accountCount: 'Account Count',
+            retryAllFaied: 'Retry All Failed',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -286,6 +287,7 @@ export const i18n = createI18n({
             publishJobQueue: '发布任务队列',
             matrixGroup: '矩阵分组',
             accountCount: '帐号数量',
+            retryAllFaied: '重试所有失败',
 
         }
     }

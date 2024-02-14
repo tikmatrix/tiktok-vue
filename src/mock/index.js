@@ -85,7 +85,7 @@ for (let i = 1; i <= 100; i++) {
     "favorites": 1,
     "follow": 1,
     "account": "@admin" + i,
-    "device": "deviceid" + i,
+    "device": "device" + i,
     "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数
   });
 }

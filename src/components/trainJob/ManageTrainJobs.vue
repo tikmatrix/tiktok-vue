@@ -53,10 +53,14 @@
                 </div>
             </template>
         </Pagination>
-
+        <Modal :show="currentDevice" @close="handleDeviceClose">
+            <Remote :device="currentDevice" />
+        </Modal>
     </div>
 </template>
 <script>
+import Modal from '../Modal.vue'
+import Remote from '../device/Remote.vue'
 import Button from '../Button.vue'
 import Pagination from '../Pagination.vue'
 import { inject } from 'vue';
@@ -64,6 +68,8 @@ import { inject } from 'vue';
 export default {
     name: 'app',
     components: {
+        Modal,
+        Remote,
         Button,
         Pagination
     },

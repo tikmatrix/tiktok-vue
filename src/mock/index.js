@@ -65,7 +65,7 @@ for (let i = 1; i <= 100; i++) {
     "end_time": "2023-11-13 13:43:49",
     "status": Math.floor(Math.random() * 4), // 生成0到3之间的随机整数
     "material": "/preview.jpg",
-    "account": "@admin" + i,
+    "username": "@admin" + i,
     "title": "title",
     "device": "device" + i,
     'publish_type': 1,
@@ -84,7 +84,7 @@ for (let i = 1; i <= 100; i++) {
     "click": 1,
     "favorites": 1,
     "follow": 1,
-    "account": "@admin" + i,
+    "username": "@admin" + i,
     "device": "device" + i,
     "group_id": Math.floor(Math.random() * 10) + 1, // 生成1到10之间的随机整数
   });

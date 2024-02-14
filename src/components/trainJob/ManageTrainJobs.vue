@@ -12,7 +12,7 @@
                                 <th>{{ $t('id') }}</th>
                                 <th>{{ $t('startTime') }}</th>
                                 <th>{{ $t('status') }}</th>
-                                <th>{{ $t('account') }}</th>
+                                <th>{{ $t('username') }}</th>
                                 <th>{{ $t('device') }}</th>
                                 <th>{{ $t('group') }}</th>
                                 <th>{{ $t('actions') }}</th>
@@ -32,7 +32,7 @@
                                     <div class="badge badge-error" v-else-if="train_job.status == '3'"> {{
                                         $t('failed') }} </div>
                                 </td>
-                                <td>{{ train_job.account }}</td>
+                                <td>{{ train_job.username }}</td>
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(train_job.device)">{{

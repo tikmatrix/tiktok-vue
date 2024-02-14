@@ -14,7 +14,7 @@
                                 <!-- <th>{{ $t('endTime') }}</th> -->
                                 <th>{{ $t('status') }}</th>
                                 <th>{{ $t('material') }}</th>
-                                <th>{{ $t('account') }}</th>
+                                <th>{{ $t('username') }}</th>
                                 <th>{{ $t('device') }}</th>
                                 <th>{{ $t('group') }}</th>
                                 <th>{{ $t('publishType') }}</th>
@@ -47,7 +47,7 @@
                                         <img :src="`${publish_job.material}`" class="w-[100px] h-[100px] max-w-none" />
                                     </template>
                                 </td>
-                                <td>{{ publish_job.account }}</td>
+                                <td>{{ publish_job.username }}</td>
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(publish_job.device)">{{

@@ -2,16 +2,23 @@
     <div class="flex flex-col items-start p-12 w-full">
 
         <h1 class="text-2xl mb-6">{{ $t('dashboard') }}</h1>
-        <div class="divider">{{ $t('quickStart') }}</div>
-        <ul class="steps">
-            <li class="step step-primary">{{ $t('step.step1') }}</li>
-            <li class="step step-primary">{{ $t('step.step2') }}</li>
-            <li class="step step-primary">{{ $t('step.step3') }}</li>
-            <li class="step step-primary">{{ $t('step.step4') }}</li>
-            <li class="step step-primary">{{ $t('step.step5') }}</li>
-            <li class="step step-primary">{{ $t('step.step6') }}</li>
-            <li class="step step-primary">{{ $t('step.step7') }}</li>
-        </ul>
+        <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-200">
+            <div class="collapse-title text-xl font-medium">
+                {{ $t('quickStart') }}
+            </div>
+            <div class="collapse-content">
+                <ul class="steps">
+                    <li class="step step-primary">{{ $t('step.step1') }}</li>
+                    <li class="step step-primary">{{ $t('step.step2') }}</li>
+                    <li class="step step-primary">{{ $t('step.step3') }}</li>
+                    <li class="step step-primary">{{ $t('step.step4') }}</li>
+                    <li class="step step-primary">{{ $t('step.step5') }}</li>
+                    <li class="step step-primary">{{ $t('step.step6') }}</li>
+                    <li class="step step-primary">{{ $t('step.step7') }}</li>
+                </ul>
+            </div>
+        </div>
+
         <div class="divider">{{ $t('overview') }}</div>
         <div class="stats shadow">
             <div class="stat">
@@ -66,41 +73,21 @@
             </div>
         </div>
         <div class="divider">{{ $t('matrixGroup') }}</div>
-        <div class="stats bg-primary text-primary-content carousel carousel-center rounded-box w-full">
-            <div class="stat carousel-item">
-                <div class="stat-value">Matrix Group A</div>
-                <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos:99</button>
-                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
-
+        <div class="stats bg-primary text-primary-content carousel carousel-center rounded-box max-w-full">
+            <div v-for="group in groups" :key="group.id">
+                <div class="stat carousel-item">
+                    <div class="stat-value">{{ group.name }}</div>
+                    <div class="stat-title text-primary-content">{{ $t('accountCount') }}: {{ group.account_count }}</div>
+                    <div class="stat-actions">
+                        <button class="btn btn-sm btn-success" @click="addMaterial(group)">{{ $t('addMaterial') }}:{{
+                            group.unused_material_count }}</button>
+                    </div>
                 </div>
-            </div>
-            <div class="divider lg:divider-horizontal"></div>
-            <div class="stat carousel-item">
-                <div class="stat-value">Matrix Group B</div>
-                <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos:99</button>
-                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
-                </div>
-            </div>
-            <div class="divider lg:divider-horizontal"></div>
-            <div class="stat carousel-item">
-                <div class="stat-value">Matrix Group C</div>
-                <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos:99</button>
-                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
-                </div>
-            </div>
-            <div class="divider lg:divider-horizontal"></div>
-            <div class="stat carousel-item">
-                <div class="stat-value">Matrix Group D</div>
-                <div class="stat-actions">
-                    <button class="btn btn-sm btn-success">Videos:99</button>
-                    <button class="btn btn-sm btn-info ml-2">Accounts:100</button>
-                </div>
+                <div class="divider lg:divider-horizontal"></div>
             </div>
         </div>
     </div>
+    <input id="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden>
 </template>
 <script>
 import Button from '../Button.vue'
@@ -122,7 +109,8 @@ export default {
             running_publish_job_count: 0,
             train_job_queue: 0,
             publish_job_queue: 0,
-            groups: []
+            groups: [],
+            currentGroup: null,
         }
     },
     methods: {
@@ -143,8 +131,11 @@ export default {
         count_train_job_by_status() {
             this.$service.count_train_job_by_status().then(res => {
                 const status_count_list = res.data;
-                const { all_count, success_count, queue_count, running_count } = status_count_list.reduce((acc, item) => {
+                const { all_count, success_count, failed_count, queue_count, running_count } = status_count_list.reduce((acc, item) => {
                     acc.all_count += item.count;
+                    if (item.status === 3) {
+                        acc.failed_count = item.count;
+                    }
                     if (item.status === 2) {
                         acc.success_count = item.count;
                     }
@@ -155,10 +146,10 @@ export default {
                         acc.queue_count = item.count;
                     }
                     return acc;
-                }, { all_count: 0, success_count: 0, queue_count: 0 });
+                }, { all_count: 0, success_count: 0, failed_count: 0, queue_count: 0, running_count: 0 });
 
                 this.train_job_count = all_count;
-                this.train_job_sucess_rate = (success_count / all_count).toFixed(4);
+                this.train_job_sucess_rate = (1 - failed_count / all_count).toFixed(4);
                 this.train_job_queue = queue_count;
                 this.running_train_job_count = running_count;
             }).catch(err => {
@@ -168,8 +159,11 @@ export default {
         count_publish_job_by_status() {
             this.$service.count_publish_job_by_status().then(res => {
                 const status_count_list = res.data;
-                const { all_count, success_count, queue_count, running_count } = status_count_list.reduce((acc, item) => {
+                const { all_count, success_count, failed_count, queue_count, running_count } = status_count_list.reduce((acc, item) => {
                     acc.all_count += item.count;
+                    if (item.status === 3) {
+                        acc.failed_count = item.count;
+                    }
                     if (item.status === 2) {
                         acc.success_count = item.count;
                     }
@@ -180,10 +174,10 @@ export default {
                         acc.queue_count = item.count;
                     }
                     return acc;
-                }, { all_count: 0, success_count: 0, queue_count: 0 });
+                }, { all_count: 0, success_count: 0, failed_count: 0, queue_count: 0, running_count: 0 });
 
                 this.publish_job_count = all_count;
-                this.publish_job_sucess_rate = (success_count / all_count).toFixed(4);
+                this.publish_job_sucess_rate = (1 - failed_count / all_count).toFixed(4);
                 this.publish_job_queue = queue_count;
                 this.running_publish_job_count = running_count;
             }).catch(err => {
@@ -193,6 +187,46 @@ export default {
         get_groups() {
             this.$service.get_groups().then(res => {
                 this.groups = res.data
+                for (let i = 0; i < this.groups.length; i++) {
+                    this.get_unused_material_count(this.groups[i])
+                    this.count_account_by_group_id(this.groups[i])
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        get_unused_material_count(group) {
+            this.$service.get_material_count({
+                group_id: group.id,
+                used: 0
+            }).then(res => {
+                group.unused_material_count = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        count_account_by_group_id(group) {
+            this.$service.count_account_by_group_id({
+                group_id: group.id
+            }).then(res => {
+                group.account_count = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        addMaterial(group) {
+            this.currentGroup = group
+            document.getElementById('upload_material_input').click()
+        },
+        on_upload_material(e) {
+            const formData = new FormData()
+            formData.append('group_id', this.currentGroup.id)
+            for (let i = 0; i < e.target.files.length; i++) {
+                formData.append('files', e.target.files[i])
+            }
+            this.$service.upload_material(formData).then(res => {
+                console.log(res)
+                this.get_unused_material_count(this.currentGroup)
             }).catch(err => {
                 console.log(err)
             })

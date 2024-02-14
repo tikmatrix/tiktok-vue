@@ -2,7 +2,7 @@
     <div class="w-full">
         <Pagination :items="jobs" :pageSize="10" :searchKeys="['device', 'id', 'account']" @refresh="get_publish_jobs">
             <template v-slot:buttons>
-                <!-- <Button @click="create_job" label="add" /> -->
+                <Button @click="retry_all_failed" label="retryAllFaied" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -154,6 +154,13 @@ export default {
                 console.log(err)
             })
         },
+        retry_all_failed() {
+            this.$service.retry_all_failed_publish_job().then(res => {
+                this.get_publish_jobs()
+            }).catch(err => {
+                console.log(err)
+            })
+        }
     },
     mounted() {
         this.get_publish_jobs();

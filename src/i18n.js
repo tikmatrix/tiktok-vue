@@ -126,11 +126,11 @@ export const i18n = createI18n({
             dashboard: 'Dashboard',
             allGroups: 'All Groups',
             step: {
-                step1: 'Download TikTok Matrix',
-                step2: 'Open TikTok Matrix',
-                step3: 'Create Matrix Group',
-                step4: 'Config Matrix Group',
-                step5: 'Auto Register Accounts',
+                step1: 'Download/Install',
+                step2: 'Open Server&Agent',
+                step3: 'Create Group',
+                step4: 'Add Settings',
+                step5: 'Auto Register',
                 step6: 'Auto Train',
                 step7: 'Auto Publish',
             },
@@ -143,6 +143,7 @@ export const i18n = createI18n({
             trainJobQueue: 'TrainJob Queue',
             publishJobQueue: 'PublishJob Queue',
             matrixGroup: 'Matrix Group',
+            accountCount: 'Account Count',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -267,11 +268,11 @@ export const i18n = createI18n({
             dashboard: '仪表盘',
             allGroups: '全部分组',
             step: {
-                step1: '下载 TikTok 矩阵',
-                step2: '打开 TikTok 矩阵',
-                step3: '创建矩阵分组',
-                step4: '配置矩阵分组',
-                step5: '自动注册帐号',
+                step1: '下载/安装',
+                step2: '打开Server&Agent',
+                step3: '创建分组',
+                step4: '添加设置',
+                step5: '自动注册',
                 step6: '自动养号',
                 step7: '自动发布',
             },
@@ -284,6 +285,7 @@ export const i18n = createI18n({
             trainJobQueue: '养号任务队列',
             publishJobQueue: '发布任务队列',
             matrixGroup: '矩阵分组',
+            accountCount: '帐号数量',
 
         }
     }

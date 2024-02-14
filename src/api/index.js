@@ -23,6 +23,8 @@ const api = {
     count_online_device: '/api/device/count_online',
     count_all_account: '/api/account/count_all',
     count_account_by_group_id: '/api/account/count_by_group_id',
+    retry_all_failed_train_job: '/api/train_job/retry_all',
+    retry_all_failed_publish_job: '/api/publish_job/retry_all',
 
 }
 export default api

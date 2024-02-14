@@ -188,7 +188,8 @@ const data = {
           "status": 3,
           "count": 232,
         },
-      ]
+      ],
+    [api.count_account_by_group_id]: Math.floor(Math.random() * 100),
   }
 }
 

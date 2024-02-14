@@ -330,6 +330,18 @@ export function count_account_by_group_id({ group_id }) {
     params: { group_id }
   })
 }
+export function retry_all_failed_train_job() {
+  return request({
+    method: 'get',
+    url: api.retry_all_failed_train_job,
+  })
+}
+export function retry_all_failed_publish_job() {
+  return request({
+    method: 'get',
+    url: api.retry_all_failed_publish_job,
+  })
+}
 
 
 

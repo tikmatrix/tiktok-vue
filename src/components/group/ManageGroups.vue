@@ -13,7 +13,6 @@
                                 <th>{{ $t('name') }}</th>
                                 <th>{{ $t('autoPublish') }}</th>
                                 <th>{{ $t('autoTrain') }}</th>
-                                <th>{{ $t('publishType') }}</th>
                                 <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -31,11 +30,7 @@
                                     </div>
                                     <div class="badge badge-error" v-else> {{ $t('disable') }} </div>
                                 </td>
-                                <td>
-                                    <div class="badge badge-primary" v-if="group.publish_type == '1'"> {{ $t('selfMade') }}
-                                    </div>
-                                    <div class="badge badge-accent" v-else> {{ $t('aiMade') }} </div>
-                                </td>
+
                                 <td>
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -88,6 +83,9 @@ export default {
                 publish_type: 0,
                 title: '',
                 product_link: '',
+                floow_probable: 50,
+                like_probable: 50,
+                collect_probable: 50,
             },
         }
     },

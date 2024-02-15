@@ -145,6 +145,10 @@ export const i18n = createI18n({
             matrixGroup: 'Matrix Group',
             accountCount: 'Account Count',
             retryAllFaied: 'Retry All Failed',
+            likeProbable: 'Like Probable',
+            floowProbable: 'Floow Probable',
+            collectProbable: 'Collect Probable',
+            interact: 'Interact',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -288,6 +292,10 @@ export const i18n = createI18n({
             matrixGroup: '矩阵分组',
             accountCount: '帐号数量',
             retryAllFaied: '重试所有失败',
+            likeProbable: '点赞概率',
+            floowProbable: '关注概率',
+            collectProbable: '收藏概率',
+            interact: '互动',
 
         }
     }

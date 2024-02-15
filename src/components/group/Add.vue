@@ -5,7 +5,6 @@
             <label class="font-bold text-right col-span-1">{{ $t('name') }}</label>
             <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.name" />
         </div>
-
         <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-2">{{ $t('autoTrain') }}:</label>
             <input type="checkbox" class="toggle toggle-accent col-span-1" v-model="group.auto_train" true-value="1"
@@ -29,6 +28,28 @@
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time4" placeholder="00:00" />
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time5" placeholder="00:00" />
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time6" placeholder="00:00" />
+        </div>
+        <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
+            <label class="font-bold text-right col-span-2">{{ $t('interact') }}:</label>
+
+            <div class="col-span-2 grid grid-cols-6 items-center">
+                <label class="text-sm text-right col-span-3">{{ $t('floowProbable') }}: </label>
+                <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.floow_probable"
+                    placeholder="0" />
+                <label class="text-sm  text-left col-span-1 ">%</label>
+            </div>
+            <div class="col-span-2 grid grid-cols-6 items-center">
+                <label class="text-sm text-right col-span-3">{{ $t('likeProbable') }}: </label>
+                <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.like_probable"
+                    placeholder="0" />
+                <label class="text-sm text-left col-span-1 ">%</label>
+            </div>
+            <div class="col-span-2 grid grid-cols-6 items-center">
+                <label class="text-sm text-right col-span-3">{{ $t('collectProbable') }}: </label>
+                <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2"
+                    v-model="group.collect_probable" placeholder="0" />
+                <label class="text-sm text-left col-span-1 ">%</label>
+            </div>
         </div>
         <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-2">{{ $t('autoPublish') }}:</label>

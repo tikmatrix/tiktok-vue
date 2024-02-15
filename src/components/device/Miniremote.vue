@@ -1,13 +1,11 @@
 <template>
     <div @click="$emit('show_device', device)"
-        class="card bg-base-100 shadow-xl image-full cursor-pointer transform hover:scale-105 transition-transform duration-200">
-        <div class="card-body">
-            <h2 class="card-title">{{
-                device.id }}</h2>
-            <!-- <p class="whitespace-normal w-10">{{ device.serial }}</p> -->
-        </div>
+        class="relative rounded-lg border-4 border-black shadow-xl cursor-pointer transform hover:scale-105 transition-transform duration-100">
+        <img v-bind:src="img" />
 
-        <figure><img v-bind:src="img" /></figure>
+        <div class="absolute top-0 left-0 text-white">
+            <h1 class=" font-bold text-lg p-2">{{ index + 1 }}</h1>
+        </div>
     </div>
 </template>
 <script>

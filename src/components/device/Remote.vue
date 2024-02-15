@@ -1,62 +1,78 @@
 <template>
-    <div class="m-4 flex">
-        <div class="relative">
-            <img ref="screen" v-bind:src="img" class="w-[800px] rounded-lg border-4  border-black shadow-lg cursor-pointer"
+    <div class="p-4 grid grid-cols-10">
+        <div class="relative col-span-4 ">
+            <img ref="screen" v-bind:src="img" class=" rounded-lg border-4  border-black shadow-lg cursor-pointer"
                 @mousedown="mouseDownListener" @mouseup="mouseUpListener" @mouseleave="mouseLeaveListener"
                 @mousemove="mouseMoveListener" />
             <div v-if="showEffect" class="absolute rounded-full w-12 h-12 bg-white opacity-50 pointer-events-none"
                 :style="{ top: `${effectY}px`, left: `${effectX}px` }"></div>
+            <!-- add a tast running tips -->
+            <div class="absolute top-0 p-1 bg-red-500 text-white rounded-lg w-full text-left"
+                v-show="task_status == 'running'">
+                <span class="">
+                    Auto Task Running
+                </span>
+                <span class=" font-bold">{{ loading_text }}</span>
+            </div>
         </div>
-        <div class="m-1">
+        <div class="p-1 col-span-6">
             <p class="p-1 text-lg font-bold">{{ device.serial }}
                 <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
             </p>
-            <div class="flex items-center space-x-2" v-show="readonly">
-                <span class="loading loading-spinner text-primary"></span>
-                <p class="p-1 text-lg font-bold text-red-500">{{ $t('connecting') }}...</p>
-            </div>
-            <p class="p-1 text-green-500">fps: <span v-text="fps.toFixed(1)"></span></p>
-
+            <p class="p-1 ">FPS: <span class="text-green-500" v-text="fps.toFixed(1)"></span></p>
+            <details class="collapse collapse-arrow bg-base-200">
+                <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
+                <div class="collapse-content">
+                    <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
+                    <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
+                    <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />
+                    <Button label="wakeup" icon="fa-solid fa-mobile-screen"
+                        @click="shell('input keyevent KEYCODE_WAKEUP')" />
+                    <Button label="sleep" icon="fa-solid fa-mobile" @click="shell('input keyevent KEYCODE_SLEEP')" />
+                    <Button label="openTiktok" icon="fa-brands fa-tiktok"
+                        @click="shell('am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity')" />
+                    <Button label="stopTiktok" icon="fa-brands fa-tiktok"
+                        @click="shell('am force-stop com.zhiliaoapp.musically')" />
+                    <Button label="clearTiktok" icon="fa-solid fa-trash"
+                        @click="shell('pm clear com.zhiliaoapp.musically')" />
+                    <Button label="openWhoer" icon="fa-brands fa-wikipedia-w"
+                        @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
+                    <Button label="reboot" icon="fa-solid fa-sync" @click="shell('reboot')" />
+                </div>
+            </details>
+            <details class="collapse collapse-arrow bg-base-200">
+                <summary class="collapse-title text-xl font-medium">{{ $t('autoScripts') }}</summary>
+                <div class="collapse-content">
+                    <Button @click="script('info', device.serial)" label="infoCrawler"
+                        :disabled="task_status == 'running'" />
+                    <Button @click="script('profile', device.serial)" label="setProfile"
+                        :disabled="task_status == 'running'" />
+                    <Button @click="script('torch_on', device.serial)" label="torchOn"
+                        :disabled="task_status == 'running'" />
+                    <Button @click="script('torch_off', device.serial)" label="torchOff"
+                        :disabled="task_status == 'running'" />
+                    <Button @click="script('datetime', device.serial)" label="setTimezone"
+                        :disabled="task_status == 'running'" />
+                    <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)"
+                        :disabled="task_status == 'running'" />
+                    <Button label="login" icon="fa-solid fa-address-card" @click="script('login', device.serial)"
+                        :disabled="task_status == 'running'" />
+                </div>
+            </details>
+            <details class="collapse collapse-arrow bg-base-200">
+                <summary class="collapse-title text-xl font-medium">{{ $t('keyboard') }}</summary>
+                <div class="collapse-content">
+                    <input v-model="text" :placeholder="$t('inputText')" v-on:keyup.enter="inputText"
+                        class="w-full p-2 my-2 border-2 border-gray-300 rounded">
+                </div>
+            </details>
+            <div class="divider divider-info">{{ $t('logs') }}</div>
             <div class="p-1">
-                <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
-                <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
-                <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />
-                <Button label="wakeup" icon="fa-solid fa-mobile-screen" @click="shell('input keyevent KEYCODE_WAKEUP')" />
-                <Button label="sleep" icon="fa-solid fa-mobile" @click="shell('input keyevent KEYCODE_SLEEP')" />
-                <Button label="openTiktok" icon="fa-brands fa-tiktok"
-                    @click="shell('am start -n com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity')" />
-                <Button label="stopTiktok" icon="fa-brands fa-tiktok"
-                    @click="shell('am force-stop com.zhiliaoapp.musically')" />
-                <Button label="clearTiktok" icon="fa-solid fa-trash" @click="clearTiktok" />
-                <Button label="openWhoer" icon="fa-brands fa-wikipedia-w"
-                    @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
-                <Button label="reboot" icon="fa-solid fa-sync" @click="shell('reboot')" />
+                <div class="mockup-code">
+                    <pre data-prefix=">"
+                        v-for="detail in connect_details"><code class="text-success">{{ detail }}</code></pre>
+                </div>
             </div>
-
-
-            <div class="p-1">
-                <p class="text-lg font-bold">{{ $t('autoScripts') }}</p>
-                <p class="flex items-center space-x-2">
-                    <span class="text-lg font-bold">{{ $t('task_status') }}:</span>
-                    <span v-text="task_status"></span>
-                    <span class="loading loading-spinner text-primary" v-show="task_status == 'running'"></span>
-                </p>
-                <Button @click="script('info', device.serial)" label="infoCrawler" />
-                <Button @click="script('profile', device.serial)" label="setProfile" />
-                <Button @click="script('torch_on', device.serial)" label="torchOn" />
-                <Button @click="script('torch_off', device.serial)" label="torchOff" />
-                <Button @click="script('datetime', device.serial)" label="setTimezone" />
-                <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)" />
-                <Button label="login" icon="fa-solid fa-address-card" @click="script('login', device.serial)" />
-            </div>
-
-
-            <div class="p-1">
-                <p class="text-lg font-bold">{{ $t('keyboard') }}</p>
-                <input v-model="text" :placeholder="$t('inputText')" v-on:keyup.enter="inputText"
-                    class="w-full p-3 my-2 border-2 border-gray-300 rounded">
-            </div>
-
         </div>
     </div>
 </template>
@@ -92,6 +108,9 @@ export default {
             task_status: "idle",
             timer_fps: null,
             timer_task_status: null,
+            loading_text: "",
+            timer_loading: null,
+            connect_details: [],
         }
     },
     methods: {
@@ -140,30 +159,6 @@ export default {
                 console.log(err)
             })
 
-        },
-        clearTiktok() {
-            //弹窗二次确认
-            if (confirm("确定要清除Tiktok缓存吗,会退出账号？")) {
-                this.shell('pm clear com.zhiliaoapp.musically')
-            }
-        },
-        upload_material() {
-            //触发选择文件
-            document.getElementById('upload_material_input').click();
-
-        },
-        onFileSelected(e) {
-            //拼接FormData
-            const formData = new FormData()
-            for (let i = 0; i < e.target.files.length; i++) {
-                formData.append('files', e.target.files[i])
-            }
-            formData.append('serial', this.device.serial)
-            this.$service.upload_material(formData).then(res => {
-                console.log(res)
-            }).catch(err => {
-                console.log(err)
-            })
         },
 
         killMinitouch() {
@@ -274,8 +269,8 @@ export default {
             this.effectY = y - 25;
         },
         syncTouchpad() {
+            this.connect_details.push("try to connect minitouch...")
             this.minitouch = this.$service.connect_ws("minitouch", this.device.agent_ip, this.device.forward_port)
-
             this.minitouch.onopen = (ret) => {
                 this.readonly = false
                 console.log("minitouch connected")
@@ -283,24 +278,35 @@ export default {
                 this.minitouch.send(JSON.stringify({ // touch reset, fix when device is outof control
                     operation: "r",
                 }))
+                this.connect_details.push("minitouch connected!")
             }
             this.minitouch.onmessage = (message) => {
                 console.log("minitouch recv", message)
-            }
 
+            }
             this.minitouch.onclose = () => {
                 this.readonly = true
                 console.log("minitouch closed")
+                this.connect_details.push("minitouch closed!")
+            }
+            this.minitouch.onerror = () => {
+                this.readonly = true
+                console.log("minitouch error")
+                this.connect_details.push("minitouch error!")
             }
         },
         syncDisplay() {
+            this.connect_details.push("try to connect minicap...")
             this.minicap = this.$service.connect_ws("minicap", this.device.agent_ip, this.device.forward_port)
             this.minicap.onclose = () => {
                 console.log('minicap onclose', arguments)
                 this.img = 'preview.jpg'
+                this.connect_details.push("minicap closed!")
             }
             this.minicap.onerror = () => {
                 console.log('minicap onerror', arguments)
+                this.img = 'preview.jpg'
+                this.connect_details.push("minicap error!")
             }
             this.minicap.onmessage = (message) => {
                 if (message.data instanceof Blob) {
@@ -326,6 +332,7 @@ export default {
             this.minicap.onopen = () => {
                 console.log('minicap connected')
                 this.minicap.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
+                this.connect_details.push("minicap connected!")
             }
         },
     },
@@ -342,6 +349,13 @@ export default {
         this.timer_task_status = setInterval(() => {
             this.get_task_status()
         }, 1000)
+        this.timer_loading = setInterval(() => {
+            if (this.loading_text.length > 5) {
+                this.loading_text = ""
+            } else {
+                this.loading_text += "."
+            }
+        }, 500)
     },
     unmounted() {
         console.log('remote unmounted')
@@ -352,6 +366,7 @@ export default {
             this.minitouch.close()
         clearInterval(this.timer_fps)
         clearInterval(this.timer_task_status)
+        clearInterval(this.timer_loading)
     },
 
 }

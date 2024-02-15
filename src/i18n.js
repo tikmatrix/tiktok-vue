@@ -149,6 +149,8 @@ export const i18n = createI18n({
             floowProbable: 'Floow Probable',
             collectProbable: 'Collect Probable',
             interact: 'Interact',
+            logs: 'Logs',
+            quickOperation: 'Quick Operation',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',
@@ -296,7 +298,8 @@ export const i18n = createI18n({
             floowProbable: '关注概率',
             collectProbable: '收藏概率',
             interact: '互动',
-
+            logs: '日志',
+            quickOperation: '快速操作',
         }
     }
 })

@@ -148,8 +148,8 @@ export default {
     emits: ['add'],
     methods: {
         add() {
-            this.group.train_start_time = [this.train_time1, this.train_time2, this.train_time3, this.train_time4, this.train_time5, this.train_time6].join(',');
-            this.group.publish_start_time = [this.publish_time1, this.publish_time2, this.publish_time3, this.publish_time4, this.publish_time5, this.publish_time6].join(',');
+            this.group.train_start_time = [this.train_time1, this.train_time2, this.train_time3, this.train_time4, this.train_time5, this.train_time6].filter(Boolean).join(',');
+            this.group.publish_start_time = [this.publish_time1, this.publish_time2, this.publish_time3, this.publish_time4, this.publish_time5, this.publish_time6].filter(Boolean).join(',');
             // Check publish_start_time format 00:00,01:00,02:00,...
             if (!this.group.train_start_time.match(/^(\d{2}:\d{2},)*\d{2}:\d{2}$/)) {
                 alert('train_start_time format error')
@@ -169,18 +169,23 @@ export default {
     },
     mounted() {
         if (this.group.train_start_time) {
-            const [train_time1, train_time2, train_time3, train_time4] = this.group.train_start_time.split(',');
+            const [train_time1, train_time2, train_time3, train_time4, train_time5, train_time6] = this.group.train_start_time.split(',');
             this.train_time1 = train_time1;
             this.train_time2 = train_time2;
             this.train_time3 = train_time3;
             this.train_time4 = train_time4;
+            this.train_time5 = train_time5;
+            this.train_time6 = train_time6;
+
         }
         if (this.group.publish_start_time) {
-            const [publish_time1, publish_time2, publish_time3, publish_time4] = this.group.publish_start_time.split(',');
+            const [publish_time1, publish_time2, publish_time3, publish_time4, publish_time5, publish_time6] = this.group.publish_start_time.split(',');
             this.publish_time1 = publish_time1;
             this.publish_time2 = publish_time2;
             this.publish_time3 = publish_time3;
             this.publish_time4 = publish_time4;
+            this.publish_time5 = publish_time5;
+            this.publish_time6 = publish_time6;
         }
     }
 };

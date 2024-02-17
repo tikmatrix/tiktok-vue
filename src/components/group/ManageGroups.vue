@@ -117,6 +117,10 @@ export default {
                 title: group.title,
                 publish_type: Number(group.publish_type),
                 product_link: group.product_link,
+                floow_probable: Number(group.floow_probable),
+                like_probable: Number(group.like_probable),
+                collect_probable: Number(group.collect_probable),
+
             }).then(res => {
                 console.log(res)
                 this.showMoal = false
@@ -141,6 +145,9 @@ export default {
                 title: group.title,
                 publish_type: Number(group.publish_type),
                 product_link: group.product_link,
+                floow_probable: Number(group.floow_probable),
+                like_probable: Number(group.like_probable),
+                collect_probable: Number(group.collect_probable),
 
             }).then(res => {
                 console.log(res)

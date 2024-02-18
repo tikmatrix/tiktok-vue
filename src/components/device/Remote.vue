@@ -296,17 +296,18 @@ export default {
             }
         },
         syncDisplay() {
-            this.connect_details.push("try to connect minicap...")
-            this.minicap = this.$service.connect_ws("minicap", this.device.agent_ip, this.device.forward_port)
+            this.connect_details.push("try to connect device...")
+            // this.minicap = this.$service.connect_ws("minicap", this.device.agent_ip, this.device.forward_port)
+            this.minicap = new WebSocket(`ws://${this.device.agent_ip}:8092`);
             this.minicap.onclose = () => {
                 console.log('minicap onclose', arguments)
                 this.img = 'preview.jpg'
-                this.connect_details.push("minicap closed!")
+                this.connect_details.push("connect closed!")
             }
             this.minicap.onerror = () => {
                 console.log('minicap onerror', arguments)
                 this.img = 'preview.jpg'
-                this.connect_details.push("minicap error!")
+                this.connect_details.push("connect error!")
             }
             this.minicap.onmessage = (message) => {
                 if (message.data instanceof Blob) {
@@ -331,15 +332,18 @@ export default {
             }
             this.minicap.onopen = () => {
                 console.log('minicap connected')
-                this.minicap.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
-                this.connect_details.push("minicap connected!")
+                // this.minicap.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
+                // this.minicap.send(`${this.device.serial}`)
+                this.minicap.send(`emulator-5554`)
+                this.connect_details.push("device connected!")
+                this.connect_details.push("ready to receive image...")
             }
         },
     },
     mounted() {
         this.syncDisplay()
         // this.syncTouchpad()
-        this.killMinitouch()
+        // this.killMinitouch()
 
         // calculate fps
         this.timer_fps = setInterval(() => {

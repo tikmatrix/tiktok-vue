@@ -102,7 +102,7 @@ export default {
             showEffect: false,
             effectX: 0,
             effectY: 0,
-            minicap: null,
+            scrcpy: null,
             minitouch: null,
             touch: false,
             task_status: "idle",
@@ -297,19 +297,25 @@ export default {
         },
         syncDisplay() {
             this.connect_details.push("try to connect device...")
-            // this.minicap = this.$service.connect_ws("minicap", this.device.agent_ip, this.device.forward_port)
-            this.minicap = new WebSocket(`ws://${this.device.agent_ip}:8092`);
-            this.minicap.onclose = () => {
-                console.log('minicap onclose', arguments)
+            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:8093`);
+            this.scrcpy.onopen = () => {
+                this.readonly = false
+                // this.scrcpy.send(`${this.device.serial}`)
+                this.scrcpy.send(`394b4d4d37313098`)
+                this.connect_details.push("device connected!")
+                this.connect_details.push("ready to receive image...")
+            }
+            this.scrcpy.onclose = () => {
+                this.readonly = true
                 this.img = 'preview.jpg'
                 this.connect_details.push("connect closed!")
             }
-            this.minicap.onerror = () => {
-                console.log('minicap onerror', arguments)
+            this.scrcpy.onerror = () => {
+                this.readonly = true
                 this.img = 'preview.jpg'
                 this.connect_details.push("connect error!")
             }
-            this.minicap.onmessage = (message) => {
+            this.scrcpy.onmessage = (message) => {
                 if (message.data instanceof Blob) {
                     this.periodImageCount += 1 // help for calculate fps
                     let blob = new Blob([message.data], {
@@ -325,19 +331,10 @@ export default {
                 } else if (/data size: /.test(message.data)) {
                 } else if (/^rotation/.test(message.data)) {
                     this.rotation = parseInt(message.data.substr('rotation '.length), 10);
-                    console.log("minicap rotation:", this.rotation)
-                } else {
-                    console.log("minicap receive message:", message.data)
+                    console.log("rotation:", this.rotation)
                 }
             }
-            this.minicap.onopen = () => {
-                console.log('minicap connected')
-                // this.minicap.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
-                // this.minicap.send(`${this.device.serial}`)
-                this.minicap.send(`emulator-5554`)
-                this.connect_details.push("device connected!")
-                this.connect_details.push("ready to receive image...")
-            }
+
         },
     },
     mounted() {
@@ -364,8 +361,8 @@ export default {
     unmounted() {
         console.log('remote unmounted')
         this.readonly = true
-        if (this.minicap)
-            this.minicap.close()
+        if (this.scrcpy)
+            this.scrcpy.close()
         if (this.minitouch)
             this.minitouch.close()
         clearInterval(this.timer_fps)

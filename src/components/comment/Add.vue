@@ -11,7 +11,8 @@
                     readonly />
             </label>
             <!-- gen comments btn -->
-            <Button class="btn-primary" @click="genComments" label="Gen Comments" />
+            <Button class="btn-primary" @click="genComments" label="parse" />
+            <Button class="btn-primary" @click="add" label="save" />
         </div>
         <div class="divider">comments</div>
         <!-- comments -->
@@ -33,12 +34,7 @@
 
         </div>
 
-        <!-- other fields... -->
-        <div class=" mt-32 w-full flex justify-end">
-            <button
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                @click="add">{{ $t('add') }}</button>
-        </div>
+
     </div>
 </template>
 

@@ -106,6 +106,17 @@ for (let i = 1; i <= 100; i++) {
     "name": "/tx.png",
   });
 }
+let post_comments = [];
+for (let i = 1; i <= 100; i++) {
+  post_comments.push({
+    "id": i.toString(),
+    "create_time": "2023-11-13 13:43:49",
+    "post_url": "https://www.tiktok.com/@ferchugimenez/video/7312216650374188294",
+    "topic_count": 3,
+    "comment_count": 20,
+    "account_count": 8,
+  });
+}
 const data = {
   put: {
     [api.shell]: {},
@@ -120,6 +131,26 @@ const data = {
     },
     [api.settings]: {
     },
+    [api.gen_topic_comments]: [
+      {
+        no: 1,
+        account_id: 1,
+        content: 'You were the Chosen One!',
+        parent_no: 0
+      },
+      {
+        no: 2,
+        account_id: 2,
+        content: 'I hate sand. It’s coarse and rough and irritating and it gets everywhere.',
+        parent_no: 1
+      },
+      {
+        no: 3,
+        account_id: 3,
+        content: 'I don’t like sand. It’s coarse and rough and irritating and it gets everywhere.',
+        parent_no: 2
+      }
+    ],
   },
   get: {
     [api.device]: devices,
@@ -190,6 +221,7 @@ const data = {
         },
       ],
     [api.count_account_by_group_id]: Math.floor(Math.random() * 100),
+    [api.post_comment]: post_comments,
   }
 }
 

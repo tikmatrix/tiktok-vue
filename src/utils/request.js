@@ -58,7 +58,7 @@ const request = function request(config) {
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
   !config.params && (config.params = {})
-  config.baseURL = `http://${window.location.hostname}:8090`
+  config.baseURL = `http://${window.location.hostname}:18090`
   const { method, url, data, params, headers } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {

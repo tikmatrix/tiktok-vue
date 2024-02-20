@@ -25,6 +25,9 @@ const api = {
     count_account_by_group_id: '/api/account/count_account_by_group_id',
     retry_all_failed_train_job: '/api/train_job/retry_all',
     retry_all_failed_publish_job: '/api/publish_job/retry_all',
+    post_comment: '/api/post_comment',
+    post_comment_topic: '/api/post_comment_topic',
+    gen_topic_comments: '/api/gen_topic_comments',
 
 }
 export default api

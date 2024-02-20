@@ -44,12 +44,14 @@ export default {
                 { name: 'groups', icon: 'users' },
                 { name: 'accounts', icon: 'user' },
                 { name: 'materials', icon: 'images' },
+                { name: 'comments', icon: 'comment' },
                 { name: 'musics', icon: 'music' },
                 { name: 'avatars', icon: 'user-circle' },
                 { name: 'publishJobs', icon: 'robot' },
                 { name: 'trainJobs', icon: 'sync-alt' },
                 { name: 'dialogWatcher', icon: 'exclamation-circle' },
                 { name: 'settings', icon: 'cogs' },
+
             ]
             , open: false,
 

@@ -342,6 +342,40 @@ export function retry_all_failed_publish_job() {
     url: api.retry_all_failed_publish_job,
   })
 }
+export function add_post_comment({ post_url }) {
+  return request({
+    method: 'post',
+    url: api.post_comment,
+    data: { post_url }
+  })
+}
+export function get_post_comments() {
+  return request({
+    method: 'get',
+    url: api.post_comment,
+  })
+}
+export function gen_topic_comments({ content, account_count }) {
+  return request({
+    method: 'post',
+    url: api.gen_topic_comments,
+    data: { content, account_count }
+  })
+}
+export function add_post_comment_topic(post_comment_topic) {
+  return request({
+    method: 'post',
+    url: api.post_comment_topic,
+    data: post_comment_topic
+  })
+}
+export function add_comment({ account_id, content, no, parent_no }) {
+  return request({
+    method: 'post',
+    url: api.comment,
+    data: { account_id, content, no, parent_no }
+  })
+}
 
 
 

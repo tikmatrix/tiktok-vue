@@ -151,6 +151,10 @@ export const i18n = createI18n({
             interact: 'Interact',
             logs: 'Logs',
             quickOperation: 'Quick Operation',
+            postUrl: 'Post Url',
+            topicCount: 'Topic Count',
+            commentCount: 'Comment Count',
+            accountCount: 'Account Count',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

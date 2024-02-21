@@ -64,7 +64,9 @@
                 <div class="collapse-content">
                     <input v-model="text" :placeholder="$t('inputText')" v-on:keyup.enter="inputText"
                         class="w-full p-2 my-2 border-2 border-gray-300 rounded">
+                    <Button label="readClipboard" icon="fa-solid fa-clipboard" @click="readClipboard" />
                 </div>
+
             </details>
             <div class="divider divider-info">{{ $t('logs') }}</div>
             <div class="p-1">
@@ -114,6 +116,16 @@ export default {
         }
     },
     methods: {
+        readClipboard() {
+            this.$service.read_clipboard({
+                baseURL: `http://${this.device.agent_ip}:8091`,
+                serial: this.device.serial
+            }).then(res => {
+                this.text = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         get_task_status() {
             this.$service.get_task_status({
                 serial: this.device.serial

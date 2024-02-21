@@ -376,6 +376,14 @@ export function add_comment({ account_id, content, no, parent_no }) {
     data: { account_id, content, no, parent_no }
   })
 }
+export function read_clipboard({ baseURL, serial }) {
+  return request({
+    baseURL,
+    method: 'get',
+    url: api.read_clipboard,
+    params: { serial }
+  })
+}
 
 
 

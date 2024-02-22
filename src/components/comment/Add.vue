@@ -109,24 +109,31 @@ export default {
                 }
             })
             this.post_comment_topic.account_count = usernames.length
-            //replace random username from accounts for each username
-            var random_usernames = []
             if (this.accounts.length < usernames.length) {
                 this.error_msg = 'account not enough'
                 return
             }
             this.error_msg = ''
+            //copy accounts
+            var temp_accounts = this.accounts.slice()
+            var random_account_map = {}
             this.post_comment_topic.comments.forEach(comment => {
-                var account = null
-                while (true) {
-                    account = this.accounts[Math.floor(Math.random() * this.accounts.length)]
-                    if (!random_usernames.includes(account.username)) {
-                        random_usernames.push(account.username)
-                        break
-                    }
+                if (random_account_map[comment.username]) {
+                    // console.log('random_account_map[comment.username]:', random_account_map[comment.username])
+                    var account = random_account_map[comment.username]
+                    comment.username = account.username
+                    comment.account_id = account.id
+
+                } else {
+                    //random pop account
+                    // console.log('random pop account, temp_accounts.length:', temp_accounts.length, 'temp_accounts:', temp_accounts)
+                    var account = temp_accounts.splice(Math.floor(Math.random() * temp_accounts.length), 1)[0]
+                    // console.log('random pop account, account:', account)
+                    random_account_map[comment.username] = account
+                    comment.username = account.username
+                    comment.account_id = account.id
+                    // console.log('random pop account, comment:', comment)
                 }
-                comment.username = account.username
-                comment.account_id = account.id
             })
         }
     },

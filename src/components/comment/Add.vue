@@ -85,7 +85,8 @@ export default {
             //split by line and add to comments
             this.account_count = 0
             var usernames = []
-            this.post_comment_topic.comments = this.post_comment_topic.content.split('\n').map((comment, index) => {
+
+            this.post_comment_topic.content.split('\n').map((comment, index) => {
                 //fileter head and tail space
                 comment = comment.replace(/^\s+|\s+$/g, '')
                 var no = index + 1
@@ -95,18 +96,24 @@ export default {
                     usernames.push(username)
                 }
                 if (comment.includes('(replying to')) {
-                    parent_no = no - 1
+                    var replying_to_username = comment.split('replying to ')[1].split(')')[0]
+                    console.log('replying_to_username:', replying_to_username)
+                    //find parent_no
+                    var parent_comment = this.post_comment_topic.comments.find(comment => comment.username === replying_to_username)
+                    if (parent_comment) {
+                        parent_no = parent_comment.no
+                    }
                 }
                 //remove head and tail 
                 var content = comment.split(':')[1].replace(/^\s+|\s+$/g, '').replace(/^"|"$/g, '')
-
-                return {
-                    no: index + 1,
+                this.post_comment_topic.comments.push({
+                    no: no,
                     content: content,
                     username: username,
                     parent_no: parent_no,
                     status: 0
-                }
+                })
+
             })
             this.post_comment_topic.account_count = usernames.length
             if (this.accounts.length < usernames.length) {

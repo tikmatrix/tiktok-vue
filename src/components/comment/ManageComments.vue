@@ -22,7 +22,13 @@
                                 <td>{{ post_comment.id }}</td>
                                 <td>{{ post_comment.post_url }}</td>
                                 <td>{{ post_comment.topic_count }}</td>
-                                <td>{{ post_comment.comment_count }}</td>
+                                <td>
+                                    <span class="text-success">{{ post_comment.success_comment_count }}</span>
+                                    /
+                                    <span class="text-error">{{ post_comment.fail_comment_count }}</span>
+                                    /
+                                    {{ post_comment.comment_count }}
+                                </td>
                                 <td>{{ post_comment.account_count }}</td>
                                 <td>
                                     <div class="space-x-4">

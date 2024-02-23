@@ -29,6 +29,7 @@ const api = {
     post_comment_topic: '/api/post_comment_topic',
     gen_topic_comments: '/api/gen_topic_comments',
     read_clipboard: '/api/get_clipboard',
+    count_comment_job_by_status: '/api/comment_job/count_by_status',
 
 }
 export default api

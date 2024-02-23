@@ -384,6 +384,12 @@ export function read_clipboard({ baseURL, serial }) {
     params: { serial }
   })
 }
+export function count_comment_job_by_status() {
+  return request({
+    method: 'get',
+    url: api.count_comment_job_by_status,
+  })
+}
 
 
 

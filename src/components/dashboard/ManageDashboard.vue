@@ -35,10 +35,6 @@
                 <div class="stat-title">{{ $t('accountCount') }}</div>
                 <div class="stat-value">{{ account_count }}</div>
             </div>
-        </div>
-        <div class="divider">{{ $t('overview') }}</div>
-        <div class="stats shadow">
-
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'robot']" />
@@ -56,6 +52,19 @@
                 <div class="stat-desc">success rate {{ publish_job_sucess_rate * 100 }}%</div>
             </div>
             <div class="stat">
+                <div class="stat-figure text-secondary">
+                    <font-awesome-icon :icon="['fas', 'robot']" />
+                </div>
+                <div class="stat-title">{{ $t('commentJobCount') }}</div>
+                <div class="stat-value">{{ comment_job_count }}</div>
+                <div class="stat-desc">success rate {{ comment_job_sucess_rate * 100 }}%</div>
+            </div>
+        </div>
+        <div class="divider">{{ $t('overview') }}</div>
+        <div class="stats shadow">
+
+
+            <div class="stat">
                 <div class="stat-figure text-primary">
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
@@ -70,6 +79,14 @@
                 <div class="stat-title">{{ $t('publishJobQueue') }}</div>
                 <div class="stat-value">{{ publish_job_queue }}</div>
                 <div class="stat-desc">{{ running_publish_job_count }} is running</div>
+            </div>
+            <div class="stat">
+                <div class="stat-figure text-primary">
+                    <font-awesome-icon :icon="['fas', 'cogs']" />
+                </div>
+                <div class="stat-title">{{ $t('commentJobQueue') }}</div>
+                <div class="stat-value">{{ comment_job_queue }}</div>
+                <div class="stat-desc">{{ running_comment_job_count }} is running</div>
             </div>
         </div>
         <div class="divider">{{ $t('matrixGroup') }}</div>
@@ -109,6 +126,10 @@ export default {
             running_publish_job_count: 0,
             train_job_queue: 0,
             publish_job_queue: 0,
+            comment_job_count: 0,
+            comment_job_sucess_rate: 0,
+            running_comment_job_count: 0,
+            comment_job_queue: 0,
             groups: [],
             currentGroup: null,
         }
@@ -180,6 +201,34 @@ export default {
                 this.publish_job_sucess_rate = (1 - failed_count / all_count).toFixed(4);
                 this.publish_job_queue = queue_count;
                 this.running_publish_job_count = running_count;
+            }).catch(err => {
+                console.log(err);
+            });
+        },
+        count_comment_job_by_status() {
+            this.$service.count_comment_job_by_status().then(res => {
+                const status_count_list = res.data;
+                const { all_count, success_count, failed_count, queue_count, running_count } = status_count_list.reduce((acc, item) => {
+                    acc.all_count += item.count;
+                    if (item.status === 3) {
+                        acc.failed_count = item.count;
+                    }
+                    if (item.status === 2) {
+                        acc.success_count = item.count;
+                    }
+                    if (item.status === 1) {
+                        acc.running_count = item.count;
+                    }
+                    if (item.status === 0) {
+                        acc.queue_count = item.count;
+                    }
+                    return acc;
+                }, { all_count: 0, success_count: 0, failed_count: 0, queue_count: 0, running_count: 0 });
+
+                this.comment_job_count = all_count;
+                this.comment_job_sucess_rate = (1 - failed_count / all_count).toFixed(4);
+                this.comment_job_queue = queue_count;
+                this.running_comment_job_count = running_count;
             }).catch(err => {
                 console.log(err);
             });

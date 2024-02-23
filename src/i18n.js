@@ -155,6 +155,8 @@ export const i18n = createI18n({
             topicCount: 'Topic Count',
             commentCount: 'Comment Count',
             accountCount: 'Account Count',
+            commentJobCount: 'CommentJob Count',
+            commentJobQueue: 'CommentJob Queue',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

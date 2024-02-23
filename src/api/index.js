@@ -30,6 +30,9 @@ const api = {
     gen_topic_comments: '/api/gen_topic_comments',
     read_clipboard: '/api/get_clipboard',
     count_comment_job_by_status: '/api/comment_job/count_by_status',
+    delete_all_materials: '/api/material/delete_all',
+    delete_all_train_jobs: '/api/train_job/delete_all',
+    delete_all_publish_jobs: '/api/publish_job/delete_all',
 
 }
 export default api

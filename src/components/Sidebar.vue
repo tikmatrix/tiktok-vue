@@ -45,7 +45,7 @@ export default {
                 { name: 'accounts', icon: 'user' },
                 { name: 'materials', icon: 'images' },
                 { name: 'comments', icon: 'comment' },
-                { name: 'musics', icon: 'music' },
+                // { name: 'musics', icon: 'music' },
                 { name: 'avatars', icon: 'user-circle' },
                 { name: 'publishJobs', icon: 'robot' },
                 { name: 'trainJobs', icon: 'sync-alt' },

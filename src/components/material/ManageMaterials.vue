@@ -2,7 +2,7 @@
     <div class=" w-full">
         <Pagination :items="materials" :pageSize="10" :searchKeys="['name']" @refresh="get_materials">
             <template v-slot:buttons>
-                <!-- <Button @click="create_material" label="add" /> -->
+                <Button onclick="confirm_modal.showModal()" label="clearAll" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -52,6 +52,19 @@
         <Modal :show="showDetailView" @close="showDetailView = false">
             <Detail :material="currentMaterial" />
         </Modal>
+        <dialog id="confirm_modal" class="modal">
+            <div class="modal-box">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <h3 class="font-bold text-lg">Confirm Clear All?</h3>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="btn btn-primary" @click="delete_all">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
     </div>
 </template>
 <script>
@@ -77,6 +90,13 @@ export default {
         }
     },
     methods: {
+        delete_all() {
+            this.$service.delete_all_materials().then(res => {
+                this.get_materials()
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         get_materials() {
             this.currentMaterial = null
             this.$service.get_materials().then(res => {

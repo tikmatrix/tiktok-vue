@@ -390,6 +390,22 @@ export function count_comment_job_by_status() {
     url: api.count_comment_job_by_status,
   })
 }
-
-
+export function delete_all_materials() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_materials,
+  })
+}
+export function delete_all_train_jobs() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_train_jobs,
+  })
+}
+export function delete_all_publish_jobs() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_publish_jobs,
+  })
+}
 

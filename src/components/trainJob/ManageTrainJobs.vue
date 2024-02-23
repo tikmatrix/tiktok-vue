@@ -3,6 +3,7 @@
         <Pagination :items="jobs" :pageSize="10" :searchKeys="['device', 'id', 'account']" @refresh="get_train_jobs">
             <template v-slot:buttons>
                 <Button @click="retry_all_failed" label="retryAllFaied" />
+                <Button onclick="confirm_modal.showModal()" label="clearAll" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -56,6 +57,19 @@
         <Modal :show="currentDevice" @close="handleDeviceClose">
             <Remote :device="currentDevice" />
         </Modal>
+        <dialog id="confirm_modal" class="modal">
+            <div class="modal-box">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <h3 class="font-bold text-lg">Confirm Clear All?</h3>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="btn btn-primary" @click="delete_all">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
     </div>
 </template>
 <script>
@@ -86,6 +100,13 @@ export default {
         }
     },
     methods: {
+        delete_all() {
+            this.$service.delete_all_train_jobs().then(res => {
+                this.get_train_jobs()
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         handleDeviceClose() {
             this.currentDevice = null;
         },

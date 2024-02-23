@@ -7,7 +7,7 @@ export const i18n = createI18n({
             siteName: 'TikTok Matrix',
             devices: 'Devices',
             accounts: 'Accounts',
-            materials: 'Materials',
+            materials: 'Videos',
             autoPublish: 'Auto Publishing',
             autoTrain: 'Auto Train',
             dialogWatcher: 'Dialog Watcher',
@@ -157,6 +157,7 @@ export const i18n = createI18n({
             accountCount: 'Account Count',
             commentJobCount: 'CommentJob Count',
             commentJobQueue: 'CommentJob Queue',
+            clearAll: 'Clear All',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

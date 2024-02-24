@@ -408,4 +408,10 @@ export function delete_all_publish_jobs() {
     url: api.delete_all_publish_jobs,
   })
 }
+export function delete_all_post_comments() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_post_comments,
+  })
+}
 

@@ -67,7 +67,7 @@ export const i18n = createI18n({
             title: 'Title',
             name: 'Name',
             addAccount: 'Add Account',
-            addMaterial: 'Add Material',
+            addMaterial: 'Add Videos',
             group: 'Group',
             defaultGroup: 'Default Group',
             retry: 'Retry',
@@ -158,6 +158,9 @@ export const i18n = createI18n({
             commentJobCount: 'CommentJob Count',
             commentJobQueue: 'CommentJob Queue',
             clearAll: 'Clear All',
+            registerAll: 'Register All',
+            comments: 'Comments',
+            registerAll: 'Register All',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

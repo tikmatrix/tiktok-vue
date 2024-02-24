@@ -55,6 +55,8 @@
                         :disabled="task_status == 'running'" />
                     <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)"
                         :disabled="task_status == 'running'" />
+                    <Button label="registerAll" icon="fa-solid fa-address-card"
+                        @click="script('register', device.serial, ['8'])" :disabled="task_status == 'running'" />
                     <Button label="login" icon="fa-solid fa-address-card" @click="script('login', device.serial)"
                         :disabled="task_status == 'running'" />
                 </div>

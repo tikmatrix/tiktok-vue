@@ -3,6 +3,7 @@
         <Pagination :items="post_comments" :pageSize="10" :searchKeys="['name']" @refresh="get_post_comments">
             <template v-slot:buttons>
                 <Button onclick="add_post_comment_dialog.showModal()" label="add" icon="fa fa-add" />
+                <Button onclick="confirm_modal.showModal()" label="clearAll" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -62,7 +63,19 @@
                 </div>
             </div>
         </dialog>
-
+        <dialog id="confirm_modal" class="modal">
+            <div class="modal-box">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
+                <h3 class="font-bold text-lg">Confirm Clear All?</h3>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <button class="btn btn-primary" @click="delete_all">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
         <Modal :show="showMoal" @close="showMoal = false">
             <Add :post_comment="current_post_comment || default_post_comment" @add="add_post_comment_topic" />
         </Modal>
@@ -94,6 +107,13 @@ export default {
         }
     },
     methods: {
+        delete_all() {
+            this.$service.delete_all_post_comments().then(res => {
+                this.get_post_comments()
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         get_post_comments() {
             this.showMoal = false
             this.current_post_comment = null

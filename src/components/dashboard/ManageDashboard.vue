@@ -286,6 +286,7 @@ export default {
         this.count_all_account()
         this.count_train_job_by_status()
         this.count_publish_job_by_status()
+        this.count_comment_job_by_status()
         this.get_groups()
     }
 }

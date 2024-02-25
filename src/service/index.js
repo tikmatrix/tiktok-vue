@@ -96,11 +96,11 @@ export function add_account({ email, pwd, fans, device, shop_creator, group_id }
     data: { email, pwd, fans, device, shop_creator, group_id }
   })
 }
-export function update_account({ id, email, pwd, fans, device, shop_creator, group_id }) {
+export function update_account({ id, email, pwd, fans, device, shop_creator, group_id, username }) {
   return request({
     method: 'put',
     url: api.account,
-    data: { id, email, pwd, fans, device, shop_creator, group_id }
+    data: { id, email, pwd, fans, device, shop_creator, group_id, username }
   })
 }
 export function delete_account({ id }) {

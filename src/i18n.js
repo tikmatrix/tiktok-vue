@@ -161,6 +161,7 @@ export const i18n = createI18n({
             registerAll: 'Register All',
             comments: 'Comments',
             registerAll: 'Register All',
+            proxy: 'Proxy',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

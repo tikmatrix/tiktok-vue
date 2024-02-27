@@ -55,6 +55,7 @@
       <ManageAccounts v-if="selectedItem === 'accounts'" />
       <ManageMaterials v-if="selectedItem === 'materials'" />
       <ManageComments v-if="selectedItem === 'comments'" />
+      <ManageProxys v-if="selectedItem === 'proxys'" />
       <ManageMusics v-if="selectedItem === 'musics'" />
       <ManageAvatars v-if="selectedItem === 'avatars'" />
       <ManagePublishJobs v-if="selectedItem === 'publishJobs'" />
@@ -89,6 +90,7 @@ import ManageMusics from './components/music/ManageMusics.vue'
 import ManageSettings from './components/settings/ManageSettings.vue'
 import ManageAvatars from './components/avatar/ManageAvatars.vue'
 import ManageComments from './components/comment/ManageComments.vue'
+import ManageProxys from './components/proxy/ManageProxys.vue'
 
 
 export default {
@@ -106,7 +108,8 @@ export default {
     ManageMusics,
     ManageSettings,
     ManageAvatars,
-    ManageComments
+    ManageComments,
+    ManageProxys
   },
   data() {
     return {

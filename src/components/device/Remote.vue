@@ -35,6 +35,10 @@
                         @click="shell('am force-stop com.zhiliaoapp.musically')" />
                     <Button label="clearTiktok" icon="fa-solid fa-trash"
                         @click="shell('pm clear com.zhiliaoapp.musically')" />
+                    <Button @click="shell(`settings put global http_proxy ${settings.proxy_url}`)" label="enableProxy"
+                        icon="fa-solid fa-link" />
+                    <Button @click="shell('settings put global http_proxy :0')" label="disableProxy"
+                        icon="fa-solid fa-unlink" />
                     <Button label="openWhoer" icon="fa-brands fa-wikipedia-w"
                         @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
                     <Button label="reboot" icon="fa-solid fa-sync" @click="shell('reboot')" />
@@ -115,6 +119,7 @@ export default {
             loading_text: "",
             timer_loading: null,
             connect_details: [],
+            settings: {}
         }
     },
     methods: {
@@ -349,6 +354,11 @@ export default {
                 this.connect_details.push("minicap connected!")
             }
         },
+        get_settings() {
+            this.$service.get_settings().then((res) => {
+                this.settings = res.data;
+            });
+        },
     },
     mounted() {
         this.syncDisplay()
@@ -370,6 +380,7 @@ export default {
                 this.loading_text += "."
             }
         }, 500)
+        this.get_settings()
     },
     unmounted() {
         console.log('remote unmounted')

@@ -132,6 +132,7 @@ export default {
                 device: account.device,
                 shop_creator: Number(account.shop_creator),
                 group_id: account.group_id,
+                username: account.username,
             }).then(res => {
                 console.log(res)
                 this.showAddAccount = false
@@ -152,6 +153,7 @@ export default {
                 device: account.device,
                 shop_creator: Number(account.shop_creator),
                 group_id: account.group_id,
+                username: account.username,
             }).then(res => {
                 console.log(res)
                 this.get_accounts()

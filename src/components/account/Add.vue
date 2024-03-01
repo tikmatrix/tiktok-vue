@@ -25,7 +25,7 @@
                 <div class="absolute z-10 bg-white border border-gray-300 rounded mt-2 w-full overflow-y-auto max-h-32"
                     v-show="showDeviceList">
                     <div class="cursor-pointer p-2 hover:bg-gray-200" v-for="(device, index) in devices"
-                        :key="device.serial" @click="selectDevice(device)">{{ device.id }} - {{ device.serial }}
+                        :key="device.serial" @click="selectDevice(device)">{{ index + 1 }} - {{ device.serial }}
                         <!-- <span v-if="device.email" class="text-green-500 m-1">{{ device.email }}</span>
                         <span v-else class="text-red-500 m-1">{{ $t('unbinded') }}</span> -->
                     </div>

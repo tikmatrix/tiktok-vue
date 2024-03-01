@@ -96,11 +96,11 @@ export function add_account({ email, pwd, fans, device, shop_creator, group_id }
     data: { email, pwd, fans, device, shop_creator, group_id }
   })
 }
-export function update_account({ id, email, pwd, fans, device, shop_creator, group_id }) {
+export function update_account({ id, email, pwd, fans, device, shop_creator, group_id, username }) {
   return request({
     method: 'put',
     url: api.account,
-    data: { id, email, pwd, fans, device, shop_creator, group_id }
+    data: { id, email, pwd, fans, device, shop_creator, group_id, username }
   })
 }
 export function delete_account({ id }) {
@@ -108,6 +108,12 @@ export function delete_account({ id }) {
     method: 'delete',
     url: api.account,
     params: { id }
+  })
+}
+export function get_proxys() {
+  return request({
+    method: 'get',
+    url: api.get_proxys,
   })
 }
 
@@ -342,6 +348,76 @@ export function retry_all_failed_publish_job() {
     url: api.retry_all_failed_publish_job,
   })
 }
-
-
+export function add_post_comment({ post_url }) {
+  return request({
+    method: 'post',
+    url: api.post_comment,
+    data: { post_url }
+  })
+}
+export function get_post_comments() {
+  return request({
+    method: 'get',
+    url: api.post_comment,
+  })
+}
+export function gen_topic_comments({ content, account_count }) {
+  return request({
+    method: 'post',
+    url: api.gen_topic_comments,
+    data: { content, account_count }
+  })
+}
+export function add_post_comment_topic(post_comment_topic) {
+  return request({
+    method: 'post',
+    url: api.post_comment_topic,
+    data: post_comment_topic
+  })
+}
+export function add_comment({ account_id, content, no, parent_no }) {
+  return request({
+    method: 'post',
+    url: api.comment,
+    data: { account_id, content, no, parent_no }
+  })
+}
+export function read_clipboard({ baseURL, serial }) {
+  return request({
+    baseURL,
+    method: 'get',
+    url: api.read_clipboard,
+    params: { serial }
+  })
+}
+export function count_comment_job_by_status() {
+  return request({
+    method: 'get',
+    url: api.count_comment_job_by_status,
+  })
+}
+export function delete_all_materials() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_materials,
+  })
+}
+export function delete_all_train_jobs() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_train_jobs,
+  })
+}
+export function delete_all_publish_jobs() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_publish_jobs,
+  })
+}
+export function delete_all_post_comments() {
+  return request({
+    method: 'delete',
+    url: api.delete_all_post_comments,
+  })
+}
 

@@ -11,10 +11,10 @@
                         <thead>``
                             <tr>
                                 <th>{{ $t('id') }}</th>
-                                <th>{{ $t('postUrl') }}</th>
-                                <th>{{ $t('topicCount') }}</th>
-                                <th>{{ $t('commentCount') }}</th>
-                                <th>{{ $t('accountCount') }}</th>
+                                <th>{{ $t('host') }}</th>
+                                <th>{{ $t('port') }}</th>
+                                <th>{{ $t('username') }}</th>
+                                <th>{{ $t('password') }}</th>
                                 <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -98,6 +98,7 @@ export default {
     data() {
         return {
             new_post_url: '',
+            proxy_data: {},
             post_comments: [],
             current_post_comment: null,
             showMoal: false,
@@ -114,11 +115,11 @@ export default {
                 console.log(err)
             })
         },
-        get_post_comments() {
+        get_proxys() {
             this.showMoal = false
             this.current_post_comment = null
-            this.$service.get_post_comments().then(res => {
-                this.post_comments = res.data
+            this.$service.get_proxys().then(res => {
+                this.proxy_data = res.data
             }).catch(err => {
                 console.log(err)
             })

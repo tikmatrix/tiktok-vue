@@ -11,8 +11,8 @@
                             <tr>
                                 <th>{{ $t('id') }}</th>
                                 <th>{{ $t('name') }}</th>
-                                <th>{{ $t('autoPublish') }}</th>
                                 <th>{{ $t('autoTrain') }}</th>
+                                <th>{{ $t('autoPublish') }}</th>
                                 <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>

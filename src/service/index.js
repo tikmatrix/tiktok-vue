@@ -110,6 +110,12 @@ export function delete_account({ id }) {
     params: { id }
   })
 }
+export function get_proxys() {
+  return request({
+    method: 'get',
+    url: api.get_proxys,
+  })
+}
 
 export function get_train_jobs() {
   return request({

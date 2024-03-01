@@ -51,14 +51,14 @@
                 <div class="stat-value">{{ publish_job_count }}</div>
                 <div class="stat-desc">success rate {{ publish_job_sucess_rate * 100 }}%</div>
             </div>
-            <div class="stat">
+            <!-- <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
                 <div class="stat-title">{{ $t('commentJobCount') }}</div>
                 <div class="stat-value">{{ comment_job_count }}</div>
                 <div class="stat-desc">success rate {{ comment_job_sucess_rate * 100 }}%</div>
-            </div>
+            </div> -->
         </div>
         <div class="divider">{{ $t('overview') }}</div>
         <div class="stats shadow">
@@ -80,14 +80,14 @@
                 <div class="stat-value">{{ publish_job_queue }}</div>
                 <div class="stat-desc">{{ running_publish_job_count }} is running</div>
             </div>
-            <div class="stat">
+            <!-- <div class="stat">
                 <div class="stat-figure text-primary">
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
                 <div class="stat-title">{{ $t('commentJobQueue') }}</div>
                 <div class="stat-value">{{ comment_job_queue }}</div>
                 <div class="stat-desc">{{ running_comment_job_count }} is running</div>
-            </div>
+            </div> -->
         </div>
         <div class="divider">{{ $t('matrixGroup') }}</div>
         <div class="stats bg-primary text-primary-content carousel carousel-center rounded-box max-w-full">

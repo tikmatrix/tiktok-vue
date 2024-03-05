@@ -1,9 +1,8 @@
 <template>
     <div class="w-full">
-        <Pagination :items="post_comments" :pageSize="10" :searchKeys="['name']" @refresh="get_post_comments">
+        <Pagination :items="proxy_data.proxies" :pageSize="10" :searchKeys="['name']" @refresh="get_proxys">
             <template v-slot:buttons>
-                <Button onclick="add_post_comment_dialog.showModal()" label="add" icon="fa fa-add" />
-                <Button onclick="confirm_modal.showModal()" label="clearAll" />
+                <Button onclick="add_proxys_dialog.showModal()" label="add" icon="fa fa-add" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -11,31 +10,28 @@
                         <thead>``
                             <tr>
                                 <th>{{ $t('id') }}</th>
-                                <th>{{ $t('host') }}</th>
+                                <th>{{ $t('server') }}</th>
                                 <th>{{ $t('port') }}</th>
                                 <th>{{ $t('username') }}</th>
                                 <th>{{ $t('password') }}</th>
+                                <th>{{ $t('delay') }}</th>
                                 <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(post_comment, index) in slotProps.items" :key="index">
-                                <td>{{ post_comment.id }}</td>
-                                <td>{{ post_comment.post_url }}</td>
-                                <td>{{ post_comment.topic_count }}</td>
+                            <tr v-for="(item, index) in slotProps.items" :key="index">
+                                <td>{{ index+1 }}</td>
+                                <td>{{ item.server }}</td>
+                                <td>{{ item.port }}</td>
                                 <td>
-                                    <span class="text-success">{{ post_comment.success_comment_count }}</span>
-                                    /
-                                    <span class="text-error">{{ post_comment.fail_comment_count }}</span>
-                                    /
-                                    {{ post_comment.comment_count }}
+                                    {{ item.username }}
                                 </td>
-                                <td>{{ post_comment.account_count }}</td>
+                                <td>{{ item.password }}</td>
+                                <td>{{ item.delay }}</td>
                                 <td>
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                            @click="add_topic(post_comment)">{{ $t('addTopic') }}</button>
-
+                                            @click="test_speed(item)">{{ $t('test') }}</button>
                                     </div>
                                 </td>
                             </tr>
@@ -45,110 +41,80 @@
             </template>
         </Pagination>
         <!-- Open the modal using ID.showModal() method -->
-        <dialog id="add_post_comment_dialog" class="modal">
+        <dialog id="add_proxys_dialog" class="modal">
             <div class="modal-box">
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <h3 class="font-bold text-lg">Add Post Comments!</h3>
-                <label class="input input-bordered flex items-center gap-2 my-4">
-                    Post Url
-                    <input type="text" class="grow" placeholder="https://www.tiktok.com/@ferchugimenez/video/"
-                        v-model="new_post_url" />
-                </label>
+                <h3 class="font-bold text-lg">Add new Proxies!</h3>
+               
+                <div class="flex flex-row items-center gap-2 mb-2 w-full">
+                    <textarea class="textarea textarea-success w-full max-w-xs" placeholder="paste proxies here..."
+                        autocomplete="off" v-model="new_urls">
+                    </textarea>
+                </div>
                 <div class="modal-action">
                     <form method="dialog">
-                        <button class="btn btn-primary" @click="add_post_comment">Save</button>
+                        <button class="btn btn-primary" @click="add_proxys">Save</button>
                     </form>
                 </div>
             </div>
         </dialog>
-        <dialog id="confirm_modal" class="modal">
-            <div class="modal-box">
-                <form method="dialog">
-                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                </form>
-                <h3 class="font-bold text-lg">Confirm Clear All?</h3>
-                <div class="modal-action">
-                    <form method="dialog">
-                        <button class="btn btn-primary" @click="delete_all">Confirm</button>
-                    </form>
-                </div>
-            </div>
-        </dialog>
-        <Modal :show="showMoal" @close="showMoal = false">
-            <Add :post_comment="current_post_comment || default_post_comment" @add="add_post_comment_topic" />
-        </Modal>
+        
+       
     </div>
 </template>
 <script>
-import Modal from '../Modal.vue'
 import Button from '../Button.vue'
-import Add from './Add.vue'
 import Pagination from '../Pagination.vue'
 
 export default {
     name: 'app',
     components: {
-        Modal,
         Button,
-        Add,
         Pagination
     },
     data() {
         return {
-            new_post_url: '',
-            proxy_data: {},
-            post_comments: [],
-            current_post_comment: null,
-            showMoal: false,
-            default_post_comment: {
-
+            new_urls: '',
+            proxy_data: {
+                proxies: []
             },
         }
     },
     methods: {
-        delete_all() {
-            this.$service.delete_all_post_comments().then(res => {
-                this.get_post_comments()
-            }).catch(err => {
-                console.log(err)
-            })
-        },
         get_proxys() {
-            this.showMoal = false
-            this.current_post_comment = null
             this.$service.get_proxys().then(res => {
                 this.proxy_data = res.data
             }).catch(err => {
                 console.log(err)
             })
         },
-        add_post_comment() {
-            this.$service.add_post_comment({
-                post_url: this.new_post_url
+        add_proxys() {
+            this.$service.add_proxys({
+                urls: this.new_urls
             }).then(res => {
-                this.get_post_comments()
+                this.get_proxys()
             }).catch(err => {
                 console.log(err)
             })
         },
+        test_speed(item) {
+            this.$service.test_speed({
+                name: item.name,
+            }).then(res => {
+                item.delay = res.data.delay
+            }).catch(err => {
+                console.log(err)
+            })
 
-        add_topic(post_comment) {
-            this.showMoal = true;
-            this.current_post_comment = post_comment
-        },
-        add_post_comment_topic(post_comment_topic) {
-            this.$service.add_post_comment_topic(post_comment_topic).then(res => {
-                this.get_post_comments()
-            }).catch(err => {
-                console.log(err)
-            })
-        },
+
+        }
+
 
     },
     mounted() {
-        this.get_post_comments()
+        this.get_proxys()
     }
 
 }

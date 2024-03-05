@@ -34,7 +34,8 @@ const api = {
     delete_all_train_jobs: '/api/train_job/delete_all',
     delete_all_publish_jobs: '/api/publish_job/delete_all',
     delete_all_post_comments: '/api/post_comment/delete_all',
-    get_proxys: '/api/get_proxys',
+    proxy: '/api/proxy',
+    proxy_delay: '/api/proxy/delay',
 
 }
 export default api

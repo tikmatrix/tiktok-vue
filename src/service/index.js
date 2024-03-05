@@ -113,7 +113,21 @@ export function delete_account({ id }) {
 export function get_proxys() {
   return request({
     method: 'get',
-    url: api.get_proxys,
+    url: api.proxy,
+  })
+}
+export function add_proxys({ urls }) {
+  return request({
+    method: 'post',
+    url: api.proxy,
+    data: { urls }
+  })
+}
+export function test_speed({ name }) {
+  return request({
+    method: 'get',
+    url: api.proxy_delay,
+    params: { name }
   })
 }
 

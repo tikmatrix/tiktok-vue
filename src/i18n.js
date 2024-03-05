@@ -162,6 +162,9 @@ export const i18n = createI18n({
             comments: 'Comments',
             registerAll: 'Register All',
             proxys: 'Proxys',
+            server: 'Server',
+            port: 'Port',
+            test: 'Test',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

@@ -17,9 +17,10 @@
         </div>
         <div class="p-1 col-span-6">
             <p class="p-1 text-lg font-bold">{{ device.serial }}
-                <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
+                <!-- <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" /> -->
             </p>
             <p class="p-1 ">FPS: <span class="text-green-500" v-text="fps.toFixed(1)"></span></p>
+            <p class="p-1 ">IP: <span class="text-red-500" v-text="ip"></span></p>
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
                 <div class="collapse-content">
@@ -35,7 +36,7 @@
                         @click="shell('am force-stop com.zhiliaoapp.musically')" />
                     <Button label="clearTiktok" icon="fa-solid fa-trash"
                         @click="shell('pm clear com.zhiliaoapp.musically')" />
-                    <Button @click="shell(`settings put global http_proxy ${settings.proxy_url}`)" label="enableProxy"
+                    <Button @click="enable_proxy" label="enableProxy"
                         icon="fa-solid fa-link" />
                     <Button @click="shell('settings put global http_proxy :0')" label="disableProxy"
                         icon="fa-solid fa-unlink" />
@@ -119,10 +120,32 @@ export default {
             loading_text: "",
             timer_loading: null,
             connect_details: [],
-            settings: {}
+            settings: {},
+            ip: "0.0.0.0",
         }
     },
     methods: {
+        enable_proxy() {
+            this.shell(`settings put global http_proxy ${this.settings.proxy_url}`)
+            this.$service.enable_proxy_rule({
+                serial: this.device.serial,
+                ip: this.ip
+            }).then(res => {
+                console.log(res)
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        get_ip() {
+            this.$service.get_ip({
+                baseURL: `http://${this.device.agent_ip}:8091`,
+                serial: this.device.serial
+            }).then(res => {
+                this.ip = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         readClipboard() {
             this.$service.read_clipboard({
                 baseURL: `http://${this.device.agent_ip}:8091`,
@@ -361,6 +384,7 @@ export default {
         },
     },
     mounted() {
+        this.get_ip()
         this.syncDisplay()
         // this.syncTouchpad()
         this.killMinitouch()

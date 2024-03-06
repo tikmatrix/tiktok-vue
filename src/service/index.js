@@ -434,4 +434,18 @@ export function delete_all_post_comments() {
     url: api.delete_all_post_comments,
   })
 }
-
+export function get_ip({ baseURL, serial }) {
+  return request({
+    method: 'get',
+    baseURL,
+    url: api.get_ip,
+    params: { serial }
+  })
+}
+export function enable_proxy_rule({ serial, ip }) {
+  return request({
+    method: 'put',
+    url: api.proxy_rule,
+    data: { serial, ip }
+  })
+}

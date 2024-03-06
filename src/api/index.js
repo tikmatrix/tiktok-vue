@@ -35,7 +35,9 @@ const api = {
     delete_all_publish_jobs: '/api/publish_job/delete_all',
     delete_all_post_comments: '/api/post_comment/delete_all',
     proxy: '/api/proxy',
+    proxy_rule: '/api/proxy_rule',
     proxy_delay: '/api/proxy/delay',
+    get_ip: '/api/get_ip',
 
 }
 export default api

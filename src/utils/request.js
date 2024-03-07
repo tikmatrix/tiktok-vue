@@ -27,14 +27,14 @@ export function wsFetch(uri, host, forward_port) {
   // }
   // 创建 WebSocket 连接
   // const socket = new WebSocket(`ws://${host}:${forward_port}/${uri}`);
-  const socket = new WebSocket(`ws://${host}:8092`);
+  const socket = new WebSocket(`ws://${host}:7092`);
   return socket
 }
 export function post(config) {
   !config && (config = { headers: {} })
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
-  config.baseURL = `http://${window.location.hostname}:8090`
+  config.baseURL = `http://${window.location.hostname}:7090`
   const { method, url, data, params, headers } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {
@@ -58,7 +58,7 @@ const request = function request(config) {
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
   !config.params && (config.params = {})
-  !config.baseURL && (config.baseURL = `http://${window.location.hostname}:8090`)
+  !config.baseURL && (config.baseURL = `http://${window.location.hostname}:7090`)
   const { method, url, data, params, headers } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {

@@ -52,7 +52,8 @@
         <Modal :show="showAddAccount" @close="showAddAccount = false">
             <Add @add="addAccount" />
         </Modal>
-        <Modal @close="handleDeviceClose">
+        
+        <Modal :show="currentDevice" @close="handleDeviceClose">
             <Remote :device="currentDevice" />
         </Modal>
     </div>

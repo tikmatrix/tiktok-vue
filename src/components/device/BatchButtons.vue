@@ -20,7 +20,7 @@
         <!-- <Button @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi-slash" /> -->
         <Button @click="script('torch_on')" label="torchOn" icon="fa-solid fa-lightbulb" />
         <Button @click="script('torch_off')" label="torchOff" icon="fa-solid fa-power-off" />
-        <Button @click="script('datetime')" label="setTimezone" icon="fa-solid fa-clock" />
+        <Button @click="shell('am start -a android.settings.DATE_SETTINGS')" label="setTimezone" icon="fa-solid fa-clock" />
         <Button @click="script('info')" label="infoCrawler" icon="fa-solid fa-info-circle" />
         <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo"
             icon="fa-solid fa-sim-card" />

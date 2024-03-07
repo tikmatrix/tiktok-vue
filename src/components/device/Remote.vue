@@ -24,6 +24,8 @@
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
                 <div class="collapse-content">
+                    <Button @click="shell('am start -a android.settings.DATE_SETTINGS')" label="setTimezone"
+                         />
                     <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
                     <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
                     <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />
@@ -56,8 +58,7 @@
                         :disabled="task_status == 'running'" />
                     <Button @click="script('torch_off', device.serial)" label="torchOff"
                         :disabled="task_status == 'running'" />
-                    <Button @click="script('datetime', device.serial)" label="setTimezone"
-                        :disabled="task_status == 'running'" />
+                    
                     <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)"
                         :disabled="task_status == 'running'" />
                     <Button label="registerAll" icon="fa-solid fa-address-card"

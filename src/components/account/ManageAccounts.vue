@@ -13,8 +13,6 @@
                                 <th>{{ $t('email') }}</th>
                                 <th>{{ $t('username') }}</th>
                                 <th>{{ $t('fans') }}</th>
-                                <th>{{ $t('shopCreator') }}</th>
-                                <th>{{ $t('earnings') }}</th>
                                 <th>{{ $t('device') }}</th>
                                 <th>{{ $t('group') }}</th>
                                 <th>{{ $t('actions') }}</th>
@@ -26,16 +24,7 @@
                                 <td>{{ account.email }}</td>
                                 <td>{{ account.username }}</td>
                                 <td>{{ account.fans }}</td>
-                                <td>
-                                    <div class="badge badge-success" v-if="account.shop_creator == '1'"> {{ $t('enable') }}
-                                    </div>
-                                    <div class="badge badge-warning" v-else-if="account.shop_creator == '0'"> {{
-                                        $t('disable') }} </div>
-                                    <div class="badge badge-error" v-else-if="account.shop_creator == '2'"> {{
-                                        $t('block') }} </div>
-
-                                </td>
-                                <td>{{ account.earnings }}</td>
+                                
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(account.device)">{{ account.device }}</a>
@@ -130,7 +119,6 @@ export default {
                 pwd: account.pwd,
                 fans: account.fans,
                 device: account.device,
-                shop_creator: Number(account.shop_creator),
                 group_id: account.group_id,
                 username: account.username,
             }).then(res => {
@@ -151,7 +139,6 @@ export default {
                 pwd: account.pwd,
                 fans: account.fans,
                 device: account.device,
-                shop_creator: Number(account.shop_creator),
                 group_id: account.group_id,
                 username: account.username,
             }).then(res => {

@@ -89,18 +89,18 @@ export function get_publish_jobs() {
     url: api.publish_job,
   })
 }
-export function add_account({ email, pwd, fans, device, shop_creator, group_id }) {
+export function add_account({ email, pwd, fans, device, group_id }) {
   return request({
     method: 'post',
     url: api.account,
-    data: { email, pwd, fans, device, shop_creator, group_id }
+    data: { email, pwd, fans, device, group_id }
   })
 }
-export function update_account({ id, email, pwd, fans, device, shop_creator, group_id, username }) {
+export function update_account({ id, email, pwd, fans, device, group_id, username }) {
   return request({
     method: 'put',
     url: api.account,
-    data: { id, email, pwd, fans, device, shop_creator, group_id, username }
+    data: { id, email, pwd, fans, device, group_id, username }
   })
 }
 export function delete_account({ id }) {

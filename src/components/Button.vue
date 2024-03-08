@@ -27,7 +27,7 @@ export default {
         },
         loadingTime: {
             type: Number,
-            default: 3000 // default to 3 seconds
+            default: 1000 // default to 1 seconds
         }
     },
     data() {

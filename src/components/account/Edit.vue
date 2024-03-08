@@ -44,13 +44,7 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="grid grid-cols-3 w-full items-center gap-2 mb-2">
-            <label class="font-bold text-right col-span-1">{{ $t('shop_creator') }}:</label>
-            <select class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="account.shop_creator">
-                <option value="0">{{ $t('disable') }}</option>
-                <option value="1">{{ $t('enable') }}</option>
-            </select>
-        </div> -->
+      
 
         <!-- other fields... -->
         <div class="mt-4 w-full flex justify-end">

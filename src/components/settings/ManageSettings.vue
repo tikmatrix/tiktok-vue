@@ -47,7 +47,7 @@
                 <span class="label-text-alt">example: 192.168.0.1:8090</span>
             </div>
         </label>
-        <label class="form-control w-full max-w-md">
+        <!-- <label class="form-control w-full max-w-md">
             <div class="label">
                 <span class="label-text">{{ $t('timezoneTips') }}</span>
             </div>
@@ -60,7 +60,7 @@
             <div class="label">
                 <span class="label-text-alt">example: GMT+00:00</span>
             </div>
-        </label>
+        </label> -->
         <label class="form-control w-full max-w-md">
             <div class="label">
                 <span class="label-text">{{ $t('wifiTips') }}</span>

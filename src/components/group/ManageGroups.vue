@@ -77,10 +77,10 @@ export default {
             defaultGroup: {
                 name: '',
                 auto_train: 0,
-                train_start_time: '',
+                train_start_time: '00:00',
                 auto_publish: 0,
-                publish_start_time: '',
-                publish_type: 0,
+                publish_start_time: '00:00',
+                publish_type: 1,
                 title: '',
                 product_link: '',
                 floow_probable: 50,
@@ -122,7 +122,6 @@ export default {
                 collect_probable: Number(group.collect_probable),
 
             }).then(res => {
-                console.log(res)
                 this.showMoal = false
                 this.get_groups()
             }).catch(err => {
@@ -150,7 +149,6 @@ export default {
                 collect_probable: Number(group.collect_probable),
 
             }).then(res => {
-                console.log(res)
                 this.get_groups()
             }).catch(err => {
                 console.log(err)
@@ -160,7 +158,6 @@ export default {
             this.$service.delete_group({
                 id: group.id
             }).then(res => {
-                console.log(res)
                 this.get_groups()
             }).catch(err => {
                 console.log(err)

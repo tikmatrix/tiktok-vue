@@ -4,6 +4,7 @@ const api = {
     device: '/api/device',
     account: '/api/account',
     material: '/api/material',
+    upload_video: '/api/upload_video',
     material_count: '/api/material/count',
     publish_job: '/api/publish_job',
     train_job: '/api/train_job',
@@ -34,7 +35,10 @@ const api = {
     delete_all_train_jobs: '/api/train_job/delete_all',
     delete_all_publish_jobs: '/api/publish_job/delete_all',
     delete_all_post_comments: '/api/post_comment/delete_all',
-    get_proxys: '/api/get_proxys',
+    proxy: '/api/proxy',
+    proxy_rule: '/api/proxy_rule',
+    proxy_delay: '/api/proxy/delay',
+    get_ip: '/api/get_ip',
 
 }
 export default api

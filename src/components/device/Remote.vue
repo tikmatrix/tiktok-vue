@@ -16,11 +16,12 @@
             </div>
         </div>
         <div class="p-1 col-span-6">
-            <p class="p-1 text-lg font-bold">{{ device.serial }}
-                <!-- <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" /> -->
+            <p class="p-1 ">
+                NO: <span class="text-green-500 text-sm" v-text="device.index"></span>
+                Serial: <span class="text-green-500 text-sm" v-text="device.serial"></span>
+                FPS: <span class="text-green-500 text-sm" v-text="fps.toFixed(1)"></span>
+                LAN IP: <span class="text-green-500 text-sm" v-text="ip"></span>
             </p>
-            <p class="p-1 ">FPS: <span class="text-green-500" v-text="fps.toFixed(1)"></span></p>
-            <p class="p-1 ">IP: <span class="text-red-500" v-text="ip"></span></p>
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
                 <div class="collapse-content">
@@ -99,6 +100,7 @@
 </template>
 <script>
 import Button from '../Button.vue'
+import { inject } from 'vue';
 export default {
     props: {
         device: {
@@ -108,11 +110,16 @@ export default {
             }
         },
     },
+    setup() {
+        const devices = inject('devices');
+        return { devices: devices.list };
+    },
     components: {
         Button
     },
     data() {
         return {
+            devices: [],
             img: 'preview.jpg',
             rotation: 0,
             command: "",
@@ -411,6 +418,7 @@ export default {
         },
     },
     mounted() {
+        this.device.index = this.devices.findIndex(device => device.serial === this.device.serial)+1;
         this.get_ip()
         this.syncDisplay()
         // this.syncTouchpad()

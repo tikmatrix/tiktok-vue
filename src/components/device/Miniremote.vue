@@ -3,8 +3,8 @@
         class="relative rounded-lg border-4 border-black shadow-xl cursor-pointer transform hover:scale-105 transition-transform duration-100">
         <img v-bind:src="img" />
 
-        <div class="absolute top-0 left-0 text-white">
-            <h1 class=" font-bold text-lg p-2">{{ index + 1 }}</h1>
+        <div class="absolute top-2 left-2 p-1 text-white bg-black bg-opacity-50 rounded-lg">
+            <h1 class=" font-bold text-lg">{{ index + 1 }}</h1>
         </div>
     </div>
 </template>

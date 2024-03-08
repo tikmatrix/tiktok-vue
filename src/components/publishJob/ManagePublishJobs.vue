@@ -12,14 +12,11 @@
                             <tr>
                                 <th>{{ $t('id') }}</th>
                                 <th>{{ $t('startTime') }}</th>
-                                <!-- <th>{{ $t('endTime') }}</th> -->
                                 <th>{{ $t('status') }}</th>
                                 <th>{{ $t('material') }}</th>
                                 <th>{{ $t('username') }}</th>
                                 <th>{{ $t('device') }}</th>
                                 <th>{{ $t('group') }}</th>
-                                <th>{{ $t('publishType') }}</th>
-                                <!-- <th>{{ $t('productLink') }}</th> -->
                                 <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -27,7 +24,6 @@
                             <tr v-for="(publish_job, index) in slotProps.items" :key="index">
                                 <td>{{ publish_job.id }}</td>
                                 <td>{{ publish_job.start_time }}</td>
-                                <!-- <td>{{ publish_job.end_time }}</td> -->
                                 <td>
                                     <div class="badge badge-neutral" v-if="publish_job.status == '0'"> {{ $t('waiting') }}
                                     </div>
@@ -55,9 +51,6 @@
                                             publish_job.device }}</a>
                                 </td>
                                 <td>{{ publish_job.group_name || 'N/A' }}</td>
-                                <td>{{ parseInt(publish_job.publish_type) === 1 ? $t('selfMade') :
-                                    $t('aiMade') }}</td>
-                                <!-- <td>{{ publish_job.product_link }}</td> -->
                                 <td>
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

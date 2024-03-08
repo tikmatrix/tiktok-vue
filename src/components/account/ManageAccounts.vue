@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="accounts" :pageSize="10" :searchKeys="['email', 'username', 'device']" @refresh="get_accounts">
+        <Pagination :items="accounts" :searchKeys="['email', 'username', 'device']" @refresh="get_accounts">
             <template v-slot:buttons>
                 <Button @click="add_account" label="add" icon="fa fa-add" />
             </template>

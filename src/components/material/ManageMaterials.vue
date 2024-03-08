@@ -1,6 +1,6 @@
 <template>
     <div class=" w-full">
-        <Pagination :items="materials" :pageSize="10" :searchKeys="['name']" @refresh="get_materials">
+        <Pagination :items="materials" :searchKeys="['name']" @refresh="get_materials">
             <template v-slot:buttons>
                 <Button onclick="confirm_modal.showModal()" label="clearAll" />
             </template>

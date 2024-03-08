@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="proxy_data.proxies" :pageSize="10" :searchKeys="['name']" @refresh="get_proxys">
+        <Pagination :items="proxy_data.proxies" :searchKeys="['name']" @refresh="get_proxys">
             <template v-slot:buttons>
                 <Button onclick="add_proxys_dialog.showModal()" label="add" icon="fa fa-add" />
             </template>

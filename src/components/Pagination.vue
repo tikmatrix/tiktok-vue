@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full flex items-center">
+        <div class="w-full flex items-center p-4">
             <span class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</span>
             <div class="join">
                 <button class="join-item btn" @click="prevPage" :disabled="currentPage === 1">{{ $t('prev') }}</button>
@@ -8,6 +8,10 @@
                 <button class="join-item btn" @click="nextPage" :disabled="currentPage === pageCount">{{ $t('next')
                 }}</button>
             </div>
+            <select v-model="pageSize" class="select select-bordered max-w-xs ml-2">
+                <option :value="filteredItems.length">{{ $t('showAll') }}</option>
+                <option v-for="size in [5, 10, 20, 50, 100]" :key="size" :value="size">{{ size }}</option>
+            </select>
             <slot name="buttons"></slot>
             <Button icon="fa fa-refresh" @click="$emit('refresh')" label="refresh" />
             <div class="relative ml-2">
@@ -41,10 +45,7 @@ export default {
             type: Array,
             required: true
         },
-        pageSize: {
-            type: Number,
-            default: 5
-        },
+        
         searchKeys: {
             type: Array,
             required: true
@@ -53,6 +54,7 @@ export default {
     data() {
         return {
             currentPage: 1,
+            pageSize: 20,
             searchTerm: '',
             searchGroup: '',
             showDemoTip: false,

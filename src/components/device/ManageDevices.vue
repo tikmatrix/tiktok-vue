@@ -1,7 +1,7 @@
 <template>
     <div class=" w-full">
         <BatchButtons />
-        <Pagination :items="devices" :pageSize="devices.length" :searchKeys="['serial', 'account']" @refresh="get_devices">
+        <Pagination :items="devices" :searchKeys="['serial', 'account']" @refresh="get_devices">
             <template v-slot:default="slotProps">
                 <div class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-10 p-4">
                     <Miniremote v-for="(device, index) in slotProps.items" :device="device" :index="index"

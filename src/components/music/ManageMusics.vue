@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="musics" :pageSize="10" :searchKeys="['release_name', 'artist_name']" @refresh="get_musics">
+        <Pagination :items="musics" :searchKeys="['release_name', 'artist_name']" @refresh="get_musics">
             <template v-slot:buttons>
                 <Button @click="add_music" label="add" icon="fa fa-add" />
             </template>

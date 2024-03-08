@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="post_comments" :pageSize="10" :searchKeys="['name']" @refresh="get_post_comments">
+        <Pagination :items="post_comments" :searchKeys="['name']" @refresh="get_post_comments">
             <template v-slot:buttons>
                 <Button onclick="add_post_comment_dialog.showModal()" label="add" icon="fa fa-add" />
                 <Button onclick="confirm_modal.showModal()" label="clearAll" />

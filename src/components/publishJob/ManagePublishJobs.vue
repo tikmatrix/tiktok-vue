@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="jobs" :pageSize="10" :searchKeys="['device', 'id', 'account']" @refresh="get_publish_jobs">
+        <Pagination :items="jobs" :searchKeys="['device', 'id', 'account']" @refresh="get_publish_jobs">
             <template v-slot:buttons>
                 <Button @click="retry_all_failed" label="retryAllFaied" />
                 <Button onclick="confirm_modal.showModal()" label="clearAll" />

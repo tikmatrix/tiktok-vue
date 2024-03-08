@@ -1,6 +1,6 @@
 <template>
     <div class=" w-full">
-        <Pagination :items="avatars" :pageSize="10" :searchKeys="['name']" @refresh="get_avatars">
+        <Pagination :items="avatars" :searchKeys="['name']" @refresh="get_avatars">
             <template v-slot:buttons>
                 <Button @click="add_avatar" label="add" icon="fa fa-add" />
             </template>

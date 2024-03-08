@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="groups" :pageSize="10" :searchKeys="['name']" @refresh="get_groups">
+        <Pagination :items="groups" :searchKeys="['name']" @refresh="get_groups">
             <template v-slot:buttons>
                 <Button @click="add_group" label="add" icon="fa fa-add" />
             </template>

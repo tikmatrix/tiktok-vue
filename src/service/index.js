@@ -60,12 +60,22 @@ export function get_material_count({ used, group_id }) {
   })
 }
 
-export function upload_material(formData) {
+export function upload_material(formData,) {
   return post({
     headers: {
       'Content-Type': 'multipart/form-data'
     },
     url: api.material,
+    data: formData
+  })
+}
+export function upload_video(baseURL,formData) {
+  return post({
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    url: api.upload_video,
+    baseURL,
     data: formData
   })
 }

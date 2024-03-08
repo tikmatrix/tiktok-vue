@@ -165,6 +165,12 @@ export const i18n = createI18n({
             server: 'Server',
             port: 'Port',
             test: 'Test',
+            init: 'Init',
+            resetSize: 'Reset Size',
+            resetDensity: 'Reset Density',
+            showTimeSetting: 'Show Time Setting',
+            uploadVideo: 'Upload Video',
+            input_output: 'Input&Output',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

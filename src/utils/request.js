@@ -64,7 +64,7 @@ const request = function request(config) {
   if (import.meta.env.VITE_APP_MOCK === 'true') {
     return Promise.resolve(mock(url, mockMethod.toLowerCase()))
   }
-  console.log('request', config)
+  // console.log('request', config)
   return axios(config).then(ret => {
     let res
     if (typeof ret === 'string') {

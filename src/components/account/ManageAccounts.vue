@@ -27,7 +27,7 @@
                                 
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
-                                        @click="show_device(account.device)">{{ account.device }}</a>
+                                        @click="show_device(account.device)">{{ account.device_index }} - {{ account.device }}</a>
                                 </td>
 
                                 <td>{{ account.group_name }}</td>
@@ -100,11 +100,11 @@ export default {
         get_accounts() {
             this.currentAccount = null
             this.$service.get_accounts().then(res => {
-                console.log(res)
                 this.accounts = res.data
-                // this.accounts.forEach(account => {
-                //     account.online = this.devices.find(device => device.serial === account.device)
-                // })
+                this.accounts.forEach(account => {
+                    let device_index = this.devices.findIndex(device => device.serial === account.device);
+                    account.device_index = device_index+1;
+                })
                 this.get_groups();
             }).catch(err => {
                 console.log(err)
@@ -122,7 +122,6 @@ export default {
                 group_id: account.group_id,
                 username: account.username,
             }).then(res => {
-                console.log(res)
                 this.showAddAccount = false
                 this.get_accounts()
             }).catch(err => {
@@ -142,7 +141,6 @@ export default {
                 group_id: account.group_id,
                 username: account.username,
             }).then(res => {
-                console.log(res)
                 this.get_accounts()
             }).catch(err => {
                 console.log(err)
@@ -152,7 +150,6 @@ export default {
             this.$service.delete_account({
                 id: account.id
             }).then(res => {
-                console.log(res)
                 this.get_accounts()
             }).catch(err => {
                 console.log(err)
@@ -162,11 +159,8 @@ export default {
             this.$service.get_groups().then(res => {
                 this.groups = res.data
                 this.accounts.forEach(account => {
-                    if (account.group_id === 0) {
-                        account.group_name = this.$t('defaultGroup')
-                        return
-                    }
-                    account.group_name = this.groups.find(group => group.id === account.group_id).name
+                    let group = this.groups.find(group => group.id === account.group_id);
+                    account.group_name = group ? group.name : 'Group not found';
                 })
             }).catch(err => {
                 console.log(err)

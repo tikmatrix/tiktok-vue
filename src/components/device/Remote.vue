@@ -24,8 +24,8 @@
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
                 <div class="collapse-content">
-                    <Button @click="shell('am start -a android.settings.DATE_SETTINGS')" label="setTimezone"
-                         />
+                    <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
+                    <Button  label="setTimezone" icon="fa-solid fa-clock" @click="shell('am start -a android.settings.DATE_SETTINGS')" />
                     <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
                     <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
                     <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />

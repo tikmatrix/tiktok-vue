@@ -69,6 +69,7 @@ export default {
             account: {
                 email: '',
                 pwd: '123qwe...',
+                username: '@',
                 fans: 0,
                 device: '',
                 group_name: '',

@@ -99,11 +99,11 @@ export function get_publish_jobs() {
     url: api.publish_job,
   })
 }
-export function add_account({ email, pwd, fans, device, group_id }) {
+export function add_account({ email, pwd, fans, device, group_id,username }) {
   return request({
     method: 'post',
     url: api.account,
-    data: { email, pwd, fans, device, group_id }
+    data: { email, pwd, fans, device, group_id,username }
   })
 }
 export function update_account({ id, email, pwd, fans, device, group_id, username }) {

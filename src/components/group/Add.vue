@@ -21,7 +21,6 @@
 
         <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-2">{{ $t('trainTimes') }}:</label>
-
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time1" placeholder="00:00" />
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time2" placeholder="00:00" />
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time3" placeholder="00:00" />
@@ -29,6 +28,13 @@
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time5" placeholder="00:00" />
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time6" placeholder="00:00" />
         </div>
+        <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
+            <label class="font-bold text-right col-span-2">{{ $t('trainDuration') }}:</label>
+            <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="trainDurationInMinutes"
+                placeholder="0" />
+            <label class="text-sm text-left col-span-1 ">{{ $t('minute') }}</label>
+        </div>
+           
         <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-2">{{ $t('interact') }}:</label>
 
@@ -123,7 +129,16 @@ export default {
 
         },
     },
-
+    computed: {
+        trainDurationInMinutes: {
+            get() {
+                return this.group.train_duration / 60;
+            },
+            set(value) {
+                this.group.train_duration = value * 60;
+            }
+        }
+    },
     components: {
     },
     data() {
@@ -147,7 +162,6 @@ export default {
         add() {
             this.group.train_start_time = [this.train_time1, this.train_time2, this.train_time3, this.train_time4, this.train_time5, this.train_time6].filter(Boolean).join(',');
             this.group.publish_start_time = [this.publish_time1, this.publish_time2, this.publish_time3, this.publish_time4, this.publish_time5, this.publish_time6].filter(Boolean).join(',');
-            // Check publish_start_time format 00:00,01:00,02:00,...
             if (!this.group.train_start_time.match(/^(\d{2}:\d{2},)*\d{2}:\d{2}$/)) {
                 alert('train_start_time format error')
                 return

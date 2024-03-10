@@ -171,6 +171,8 @@ export const i18n = createI18n({
             showTimeSetting: 'Show Time Setting',
             uploadVideo: 'Upload Video',
             input_output: 'Input&Output',
+            trainDuration: 'Train Duration',
+            minute: 'Minute',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

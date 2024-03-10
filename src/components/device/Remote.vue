@@ -253,6 +253,9 @@ export default {
             if (this.readonly) {
                 return
             }
+            if (!this.touch) {
+                return
+            }
             this.touchSync('u', event)
             this.showEffect = false;
             this.touch = false;

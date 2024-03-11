@@ -332,7 +332,7 @@ export default {
                  // max size: 1200
                  this.scrcpy.send(1200)
                 // control: false
-                this.scrcpy.send('false')
+                this.scrcpy.send('true')
                 this.connect_details.push("device connected!")
                 this.connect_details.push("ready to receive image...")
             }

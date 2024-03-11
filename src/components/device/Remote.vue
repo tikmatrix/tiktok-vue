@@ -124,7 +124,6 @@ export default {
             effectX: 0,
             effectY: 0,
             scrcpy: null,
-            minitouch: null,
             touch: false,
             task_status: "idle",
             timer_fps: null,
@@ -228,12 +227,6 @@ export default {
                 console.log(err)
             })
         },
-        killMinitouch() {
-            this.shell('pkill minitouch')
-            this.shell('input keyevent KEYCODE_WAKEUP')
-            this.shell('settings put system screen_off_timeout 2147483647')
-            this.syncTouchpad()
-        },
         coords(boundingW, boundingH, relX, relY, rotation) {
             var w, h, x, y;
             switch (rotation) {
@@ -329,38 +322,17 @@ export default {
             this.effectX = x - 25;
             this.effectY = y - 25;
         },
-        syncTouchpad() {
-            this.connect_details.push("try to connect minitouch...")
-            this.minitouch = this.$service.connect_ws("minitouch", this.device.agent_ip, this.device.forward_port)
-            this.minitouch.onopen = (ret) => {
-                this.readonly = false
-                console.log("minitouch connected")
-                this.minitouch.send(`ws://127.0.0.1:${this.device.forward_port}/minitouch`)
-                this.minitouch.send(JSON.stringify({ // touch reset, fix when device is outof control
-                    operation: "r",
-                }))
-                this.connect_details.push("minitouch connected!")
-            }
-            this.minitouch.onmessage = (message) => {
-                console.log("minitouch recv", message)
-            }
-            this.minitouch.onclose = () => {
-                this.readonly = true
-                console.log("minitouch closed")
-                this.connect_details.push("minitouch closed!")
-            }
-            this.minitouch.onerror = () => {
-                this.readonly = true
-                console.log("minitouch error")
-                this.connect_details.push("minitouch error!")
-            }
-        },
+        
         syncDisplay() {
             this.connect_details.push("try to connect device...")
             this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:7092`);
             this.scrcpy.onopen = () => {
                 this.readonly = false
                 this.scrcpy.send(`${this.device.serial}`)
+                 // max size: 1200
+                 this.scrcpy.send(1200)
+                // control: false
+                this.scrcpy.send('false')
                 this.connect_details.push("device connected!")
                 this.connect_details.push("ready to receive image...")
             }
@@ -403,8 +375,6 @@ export default {
     mounted() {
         this.get_ip()
         this.syncDisplay()
-        // this.syncTouchpad()
-        // this.killMinitouch()
         // calculate fps
         this.timer_fps = setInterval(() => {
             this.fps = this.periodImageCount / 0.5
@@ -427,8 +397,6 @@ export default {
         this.readonly = true
         if (this.scrcpy)
             this.scrcpy.close()
-        if (this.minitouch)
-            this.minitouch.close()
         clearInterval(this.timer_fps)
         clearInterval(this.timer_task_status)
         clearInterval(this.timer_loading)

@@ -1,4 +1,4 @@
-import request, { wsFetch, post } from '../utils/request'
+import request, { post } from '../utils/request'
 import api from '../api'
 export function get_devices() {
   return request({
@@ -18,9 +18,7 @@ export function install(formData) {
     data: formData
   })
 }
-export function connect_ws(uri, host, forward_port) {
-  return wsFetch(uri, host, forward_port)
-}
+
 
 export function script({ script, serial = "", args = [] }) {
   let params = { script };

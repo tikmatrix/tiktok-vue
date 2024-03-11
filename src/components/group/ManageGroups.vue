@@ -35,10 +35,8 @@
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             @click="editgroup(group)">{{ $t('edit') }}</button>
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                            @click="addMaterial(group)">{{ $t('addMaterial') }}: {{
-                                                group.unused_material_count
-                                            }}</button>
+                                        <Button class="text-white" :showLoading="uploading(group.id)"
+                                            @click="addMaterial(group)" :label="'Add Video: ' +  group.unused_material_count"/>
                                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                             @click="deletegroup(group)">{{ $t('delete') }}</button>
                                     </div>
@@ -88,9 +86,14 @@ export default {
                 collect_probable: 50,
                 train_duration: 300,
             },
+            uploading_id: null,
         }
     },
+    
     methods: {
+        uploading(id) {
+            return this.uploading_id == id
+        },
         get_groups() {
             this.showMoal = false
             this.currentGroup = null
@@ -172,6 +175,7 @@ export default {
             document.getElementById('upload_material_input').click()
         },
         on_upload_material(e) {
+            this.uploading_id = this.currentGroup.id
             const formData = new FormData()
             formData.append('group_id', this.currentGroup.id)
             for (let i = 0; i < e.target.files.length; i++) {
@@ -180,8 +184,10 @@ export default {
             this.$service.upload_material(formData).then(res => {
                 console.log(res)
                 this.get_unused_material_count(this.currentGroup)
+                this.uploading_id = null
             }).catch(err => {
                 console.log(err)
+                this.uploading_id = null
             })
         },
         get_unused_material_count(group) {

@@ -49,8 +49,6 @@ for (let i = 1; i <= 10; i++) {
     "register_time": "2023-11-13 13:43:49",
     "last_login_time": "2023-11-13 13:43:49",
     "fans": 0,
-    "shop_creator": 0,
-    "earnings": 9999,
     "device": "device" + i,
     "automated": 0,
     "online": 1,

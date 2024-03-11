@@ -17,12 +17,23 @@
         </div>
         <div class="p-1 col-span-6">
             <p class="p-1 text-lg font-bold">{{ device.serial }}
-                <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
+                <!-- <Button label="repair" icon="fa-solid fa-wrench" @click="repair(device.serial)" /> -->
             </p>
             <p class="p-1 ">FPS: <span class="text-green-500" v-text="fps.toFixed(1)"></span></p>
+            <p class="p-1 ">IP: <span class="text-red-500" v-text="ip"></span></p>
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
                 <div class="collapse-content">
+                    
+                    <Button label="720x1280" icon="fa-solid fa-mobile" @click="shell('wm size 720x1280')" />
+                    <Button label="1080x1920" icon="fa-solid fa-mobile" @click="shell('wm size 1080x1920')" />
+                    <Button label="1440x2560" icon="fa-solid fa-mobile" @click="shell('wm size 1440x2560')" />
+                    <Button label="resetSize" icon="fa-solid fa-mobile" @click="shell('wm size reset')" />
+                    <Button label="240" icon="fa-solid fa-mobile" @click="shell('wm density 240')" />
+                    <Button label="320" icon="fa-solid fa-mobile" @click="shell('wm density 320')" />
+                    <Button label="480" icon="fa-solid fa-mobile" @click="shell('wm density 480')" />
+                    <Button label="resetDensity" icon="fa-solid fa-mobile" @click="shell('wm density reset')" />
+                    <Button label="showTimeSetting" icon="fa-solid fa-clock" @click="shell('am start -a android.settings.DATE_SETTINGS')" />
                     <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
                     <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
                     <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />
@@ -35,28 +46,28 @@
                         @click="shell('am force-stop com.zhiliaoapp.musically')" />
                     <Button label="clearTiktok" icon="fa-solid fa-trash"
                         @click="shell('pm clear com.zhiliaoapp.musically')" />
-                    <Button @click="shell(`settings put global http_proxy ${settings.proxy_url}`)" label="enableProxy"
+                    <Button @click="enable_proxy" label="enableProxy"
                         icon="fa-solid fa-link" />
                     <Button @click="shell('settings put global http_proxy :0')" label="disableProxy"
                         icon="fa-solid fa-unlink" />
                     <Button label="openWhoer" icon="fa-brands fa-wikipedia-w"
                         @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
+                    <Button label="ipinfo" icon="fa-solid fa-info" @click="shell('am start -a android.intent.action.VIEW -d https://ipinfo.io')" />
                     <Button label="reboot" icon="fa-solid fa-sync" @click="shell('reboot')" />
+                    <Button label="init" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
                 </div>
             </details>
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('autoScripts') }}</summary>
                 <div class="collapse-content">
-                    <Button @click="script('info', device.serial)" label="infoCrawler"
+                    
+                    <Button @click="script('profile', device.serial)" label="setProfile" icon="fa-solid fa-user"
                         :disabled="task_status == 'running'" />
-                    <Button @click="script('profile', device.serial)" label="setProfile"
+                    <Button @click="script('torch_on', device.serial)" label="torchOn" icon="fa-solid fa-lightbulb"
                         :disabled="task_status == 'running'" />
-                    <Button @click="script('torch_on', device.serial)" label="torchOn"
+                    <Button @click="script('torch_off', device.serial)" label="torchOff" icon="fa-solid fa-lightbulb"
                         :disabled="task_status == 'running'" />
-                    <Button @click="script('torch_off', device.serial)" label="torchOff"
-                        :disabled="task_status == 'running'" />
-                    <Button @click="script('datetime', device.serial)" label="setTimezone"
-                        :disabled="task_status == 'running'" />
+                    
                     <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)"
                         :disabled="task_status == 'running'" />
                     <Button label="registerAll" icon="fa-solid fa-address-card"
@@ -66,11 +77,13 @@
                 </div>
             </details>
             <details class="collapse collapse-arrow bg-base-200">
-                <summary class="collapse-title text-xl font-medium">{{ $t('keyboard') }}</summary>
+                <summary class="collapse-title text-xl font-medium">{{ $t('input_output') }}</summary>
                 <div class="collapse-content">
                     <input v-model="text" :placeholder="$t('inputText')" v-on:keyup.enter="inputText"
                         class="w-full p-2 my-2 border-2 border-gray-300 rounded">
+                    <input id="upload_video_input" type="file" v-on:change="on_upload_video" multiple hidden>
                     <Button label="readClipboard" icon="fa-solid fa-clipboard" @click="readClipboard" />
+                    <Button label="uploadVideo" icon="fa-solid fa-upload" @click="uploadVideo" />
                 </div>
 
             </details>
@@ -119,10 +132,47 @@ export default {
             loading_text: "",
             timer_loading: null,
             connect_details: [],
-            settings: {}
+            settings: {},
+            ip: "0.0.0.0",
         }
     },
     methods: {
+        uploadVideo(group) {
+            this.currentGroup = group
+            document.getElementById('upload_video_input').click()
+        },
+        on_upload_video(e) {
+            const formData = new FormData()
+            formData.append('serial', this.device.serial)
+            for (let i = 0; i < e.target.files.length; i++) {
+                formData.append('files', e.target.files[i])
+            }
+            this.$service.upload_video(`http://${this.device.agent_ip}:8091`,formData).then(res => {
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        enable_proxy() {
+            this.shell(`settings put global http_proxy ${this.settings.proxy_url}`)
+            this.$service.enable_proxy_rule({
+                serial: this.device.serial,
+                ip: this.ip
+            }).then(res => {
+                console.log(res)
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        get_ip() {
+            this.$service.get_ip({
+                baseURL: `http://${this.device.agent_ip}:8091`,
+                serial: this.device.serial
+            }).then(res => {
+                this.ip = res.data
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         readClipboard() {
             this.$service.read_clipboard({
                 baseURL: `http://${this.device.agent_ip}:7091`,
@@ -351,6 +401,7 @@ export default {
         },
     },
     mounted() {
+        this.get_ip()
         this.syncDisplay()
         // this.syncTouchpad()
         // this.killMinitouch()

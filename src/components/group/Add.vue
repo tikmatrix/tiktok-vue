@@ -73,7 +73,7 @@
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time5" placeholder="00:00" />
             <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time6" placeholder="00:00" />
         </div>
-        <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
+        <!-- <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('publishType') }}:</label>
             <div class="col-span-2 flex items-center gap-4">
                 <div class="flex items-center">
@@ -87,25 +87,22 @@
                     <label for="aiMade" class="ml-2">{{ $t('aiMade') }}</label>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('title') }}</label>
 
-            <textarea class="textarea textarea-success w-full max-w-xs" placeholder="Titles" autocomplete="off"
-                v-model="group.title">
+            <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" placeholder="Titles" autocomplete="off"
+                      v-model="group.title">
             </textarea>
-            <div class="label">
-                <span class="label-text">Number: {{ group.title ? group.title.split('\n').filter(line => line.trim() !==
-                    '').length : 0 }}</span>
-            </div>
+            
         </div>
 
-        <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
+        <!-- <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('productLink') }}</label>
             <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.product_link" />
-        </div>
+        </div> -->
 
         <!-- other fields... -->
         <div class=" mt-32 w-full flex justify-end">

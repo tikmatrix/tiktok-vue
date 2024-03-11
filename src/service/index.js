@@ -60,12 +60,22 @@ export function get_material_count({ used, group_id }) {
   })
 }
 
-export function upload_material(formData) {
+export function upload_material(formData,) {
   return post({
     headers: {
       'Content-Type': 'multipart/form-data'
     },
     url: api.material,
+    data: formData
+  })
+}
+export function upload_video(baseURL,formData) {
+  return post({
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    url: api.upload_video,
+    baseURL,
     data: formData
   })
 }
@@ -89,18 +99,18 @@ export function get_publish_jobs() {
     url: api.publish_job,
   })
 }
-export function add_account({ email, pwd, fans, device, shop_creator, group_id }) {
+export function add_account({ email, pwd, fans, device, group_id }) {
   return request({
     method: 'post',
     url: api.account,
-    data: { email, pwd, fans, device, shop_creator, group_id }
+    data: { email, pwd, fans, device, group_id }
   })
 }
-export function update_account({ id, email, pwd, fans, device, shop_creator, group_id, username }) {
+export function update_account({ id, email, pwd, fans, device, group_id, username }) {
   return request({
     method: 'put',
     url: api.account,
-    data: { id, email, pwd, fans, device, shop_creator, group_id, username }
+    data: { id, email, pwd, fans, device, group_id, username }
   })
 }
 export function delete_account({ id }) {
@@ -113,7 +123,21 @@ export function delete_account({ id }) {
 export function get_proxys() {
   return request({
     method: 'get',
-    url: api.get_proxys,
+    url: api.proxy,
+  })
+}
+export function add_proxys({ urls }) {
+  return request({
+    method: 'post',
+    url: api.proxy,
+    data: { urls }
+  })
+}
+export function test_speed({ name }) {
+  return request({
+    method: 'get',
+    url: api.proxy_delay,
+    params: { name }
   })
 }
 
@@ -420,4 +444,18 @@ export function delete_all_post_comments() {
     url: api.delete_all_post_comments,
   })
 }
-
+export function get_ip({ baseURL, serial }) {
+  return request({
+    method: 'get',
+    baseURL,
+    url: api.get_ip,
+    params: { serial }
+  })
+}
+export function enable_proxy_rule({ serial, ip }) {
+  return request({
+    method: 'put',
+    url: api.proxy_rule,
+    data: { serial, ip }
+  })
+}

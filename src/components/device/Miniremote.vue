@@ -40,7 +40,7 @@ export default {
             img: 'preview.jpg',
             err: '',
             display: null,
-            ws: null,
+            mjpeg: null,
         }
     },
     methods: {
@@ -87,9 +87,9 @@ export default {
         this.syncDisplay()
     },
     unmounted() {
-        if (this.ws) {
-            this.ws.close()
+        if (this.scrcpy) {
+            this.scrcpy.close()
         }
-    },
+    }, 
 }
 </script>

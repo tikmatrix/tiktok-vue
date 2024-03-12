@@ -41,6 +41,7 @@ export default {
             err: '',
             display: null,
             mjpeg: null,
+            scrcpy: null,
         }
     },
     methods: {

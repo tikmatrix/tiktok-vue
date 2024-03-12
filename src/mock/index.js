@@ -4,7 +4,6 @@ for (let i = 1; i <= 200; i++) {
   devices.push({
     'id': i,
     'serial': 'deviceabcdadsfsfsdfsd' + i,
-    'forward_port': '10800',
     'ip': '192.168.0.' + i,
     'agent_ip': '127.0.0.1'
   });

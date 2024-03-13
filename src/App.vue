@@ -53,6 +53,7 @@
       <ManageDevices v-if="selectedItem === 'devices'" />
       <ManageGroups v-if="selectedItem === 'groups'" />
       <ManageAccounts v-if="selectedItem === 'accounts'" />
+      <ManageAnalytics v-if="selectedItem === 'analytics'" />
       <ManageMaterials v-if="selectedItem === 'materials'" />
       <ManageComments v-if="selectedItem === 'comments'" />
       <ManageProxys v-if="selectedItem === 'proxys'" />
@@ -81,6 +82,7 @@ import Sidebar from './components/Sidebar.vue'
 import ManageDashboard from './components/dashboard/ManageDashboard.vue'
 import ManageDevices from './components/device/ManageDevices.vue'
 import ManageAccounts from './components/account/ManageAccounts.vue'
+import ManageAnalytics from './components/analytics/ManageAnalytics.vue'
 import ManageMaterials from './components/material/ManageMaterials.vue'
 import ManagePublishJobs from './components/publishJob/ManagePublishJobs.vue'
 import ManageDialog from './components/dialog/ManageDialog.vue'
@@ -100,6 +102,7 @@ export default {
     ManageDashboard,
     ManageDevices,
     ManageAccounts,
+    ManageAnalytics,
     ManageMaterials,
     ManagePublishJobs,
     ManageDialog,

@@ -467,3 +467,9 @@ export function enable_proxy_rule({ serial, ip }) {
     data: { serial, ip }
   })
 }
+export function get_analytics() {
+  return request({
+    method: 'get',
+    url: api.analytics,
+  })
+}

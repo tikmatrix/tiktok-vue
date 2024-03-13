@@ -39,6 +39,7 @@ const api = {
     proxy_rule: '/api/proxy_rule',
     proxy_delay: '/api/proxy/delay',
     get_ip: '/api/get_ip',
+    analytics: '/api/analytics',
 
 }
 export default api

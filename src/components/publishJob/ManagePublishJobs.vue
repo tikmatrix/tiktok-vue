@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account']" @refresh="get_publish_jobs">
+        <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account','device_index']" @refresh="get_publish_jobs">
             <template v-slot:buttons>
                 <Button @click="retry_all_failed" label="retryAllFaied" />
                 <Button onclick="confirm_modal.showModal()" label="clearAll" />
@@ -54,8 +54,7 @@
                                 <td>{{ publish_job.username }}</td>
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
-                                        @click="show_device(publish_job.device)">{{
-                                            publish_job.device }}</a>
+                                        @click="show_device(publish_job.device)">{{ publish_job.device_index }} - {{ publish_job.device }}</a>
                                 </td>
                                 <td>{{ publish_job.group_name || 'N/A' }}</td>
                                 <td>
@@ -145,6 +144,10 @@ export default {
             this.currentJob = null
             this.$service.get_publish_jobs().then(res => {
                 this.jobs = res.data
+                this.jobs.forEach(job => {
+                    let device_index = this.devices.findIndex(device => device.serial === job.device);
+                    job.device_index = device_index+1;
+                })
                 this.get_groups();
             }).catch(err => {
                 console.log(err)

@@ -43,6 +43,7 @@ export default {
                 { name: 'devices', icon: 'mobile-alt' },
                 { name: 'groups', icon: 'users' },
                 { name: 'accounts', icon: 'user' },
+                { name: 'analytics', icon: 'chart-bar' },
                 { name: 'materials', icon: 'images' },
                 { name: 'comments', icon: 'comment' },
                 { name: 'proxys', icon: 'globe' },

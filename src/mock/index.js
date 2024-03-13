@@ -3,7 +3,7 @@ let devices = [];
 for (let i = 1; i <= 200; i++) {
   devices.push({
     'id': i,
-    'serial': 'deviceabcdadsfsfsdfsd' + i,
+    'serial': 'device' + i,
     'forward_port': '10800',
     'ip': '192.168.0.' + i,
   });
@@ -115,6 +115,21 @@ for (let i = 1; i <= 100; i++) {
     "account_count": 8,
   });
 }
+let analytics = [];
+for (let i = 1; i <= 100; i++) {
+  analytics.push({
+    "id": i.toString(),
+    "create_time": "2023-11-13 13:43:49",
+    "day_hour": "2023-11-13 "+Math.floor(Math.random() * 24),
+    "follower_count": Math.floor(Math.random() * 1000),
+    "video_count": Math.floor(Math.random() * 1000),
+    "video_collect_count": Math.floor(Math.random() * 1000),
+    "video_comment_count": Math.floor(Math.random() * 1000),
+    "video_like_count": Math.floor(Math.random() * 1000),
+    "video_play_count": Math.floor(Math.random() * 1000),
+    "username": "@username" + i,
+  });
+}
 const data = {
   put: {
     [api.shell]: {},
@@ -220,6 +235,7 @@ const data = {
       ],
     [api.count_account_by_group_id]: Math.floor(Math.random() * 100),
     [api.post_comment]: post_comments,
+    [api.analytics]: analytics,
   }
 }
 

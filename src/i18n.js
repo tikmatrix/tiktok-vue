@@ -173,6 +173,9 @@ export const i18n = createI18n({
             input_output: 'Input&Output',
             trainDuration: 'Train Duration',
             minute: 'Minute',
+            clearNotification: 'Clear Notification',
+            showAll: 'Show All',
+            allStatus: 'All Status',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

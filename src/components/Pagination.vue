@@ -73,7 +73,7 @@ export default {
             if (this.searchTerm) {
                 return this.items.filter(item =>
                     this.searchKeys.some(key =>
-                        item[key] ? item[key].includes(this.searchTerm) : false
+                        item[key] ? String(item[key]) === this.searchTerm : false
                     ) &&
                     (!this.searchGroup || item.group_name === this.searchGroup)
                 );

@@ -1,9 +1,16 @@
 <template>
     <div class="w-full">
-        <Pagination :items="jobs" :searchKeys="['device', 'id', 'account']" @refresh="get_train_jobs">
+        <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account']" @refresh="get_train_jobs">
             <template v-slot:buttons>
                 <Button @click="retry_all_failed" label="retryAllFaied" />
                 <Button onclick="confirm_modal.showModal()" label="clearAll" />
+                <select v-model="searchStatus" class="select select-bordered max-w-xs ml-2">
+                    <option value="">{{ $t('allStatus') }}</option>
+                    <option value="0">{{ $t('waiting') }}</option>
+                    <option value="1">{{ $t('execing') }}</option>
+                    <option value="2">{{ $t('success') }}</option>
+                    <option value="3">{{ $t('failed') }}</option>
+                </select>
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -97,6 +104,16 @@ export default {
             groups: [],
             devices: [],
             currentDevice: null,
+            searchStatus: ''
+        }
+    },
+    computed: {
+        filter_jobs() {
+            let jobs = this.jobs
+            if (this.searchStatus) {
+                jobs = jobs.filter(job => job.status == this.searchStatus)
+            }
+            return jobs
         }
     },
     methods: {

@@ -26,6 +26,7 @@
                 <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo"
                     icon="fa-solid fa-sim-card" />
                 <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" icon="fa-solid fa-bell" />
+                <Button @click="script('clear_notification')" label="clearNotification" icon="fa-solid fa-bell-slash" />
                 <Button @click="shell('reboot')" label="rebootAll" color="btn-error" icon="fa-solid fa-power-off" />
                 </div>
         </details>

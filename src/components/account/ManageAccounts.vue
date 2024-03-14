@@ -22,7 +22,9 @@
                             <tr v-for="(account, index) in slotProps.items" :key="index">
                                 <td>{{ account.id }}</td>
                                 <td>{{ account.email }}</td>
-                                <td>{{ account.username }}</td>
+                                <td>
+                                    <a class="link link-primary" :href="`https://www.tiktok.com/${account.username}`" target="_blank">{{ account.username }}</a>
+                                </td>
                                 <td>{{ account.fans }}</td>
                                 
                                 <td>

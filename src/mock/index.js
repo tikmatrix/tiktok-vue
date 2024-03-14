@@ -130,6 +130,21 @@ for (let i = 1; i <= 100; i++) {
     "username": "@username" + i,
   });
 }
+let virtual_hosts = [];
+for (let i = 1; i <= 10; i++) {
+
+  virtual_hosts.push({
+    "id": i.toString(),
+    "user": "root",
+    "password": "xxxx",
+    "host": "vnc://192.168.1." + i,
+    "port": "22",
+    "name": "baking",
+    "edit_bot": "baking",
+    "post_bot": "baking",
+    "multilogin": "baking",
+  })
+}
 const data = {
   put: {
     [api.shell]: {},
@@ -236,6 +251,7 @@ const data = {
     [api.count_account_by_group_id]: Math.floor(Math.random() * 100),
     [api.post_comment]: post_comments,
     [api.analytics]: analytics,
+    [api.virtualHosts]: virtual_hosts,
   }
 }
 

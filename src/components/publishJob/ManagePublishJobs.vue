@@ -51,7 +51,9 @@
                                         <img :src="`${publish_job.material}`" class="w-[100px] h-[100px] max-w-none" />
                                     </template>
                                 </td>
-                                <td>{{ publish_job.username }}</td>
+                                <td>
+                                    <a class="link link-primary" :href="`https://www.tiktok.com/${publish_job.username}`" target="_blank">{{ publish_job.username }}</a>
+                                </td>
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(publish_job.device)">{{ publish_job.device_index }} - {{ publish_job.device }}</a>

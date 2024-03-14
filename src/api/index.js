@@ -40,6 +40,7 @@ const api = {
     proxy_delay: '/api/proxy/delay',
     get_ip: '/api/get_ip',
     analytics: '/api/analytics',
+    virtualHosts: '/api/virtual_hosts',
 
 }
 export default api

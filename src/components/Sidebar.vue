@@ -47,6 +47,7 @@ export default {
                 { name: 'materials', icon: 'images' },
                 { name: 'comments', icon: 'comment' },
                 { name: 'proxys', icon: 'globe' },
+                { name: 'virtualHosts', icon: 'server' },
                 // { name: 'musics', icon: 'music' },
                 { name: 'avatars', icon: 'user-circle' },
                 { name: 'publishJobs', icon: 'robot' },
@@ -79,6 +80,7 @@ export default {
             }
         }
     },
+    emits: ['menu_selected'],
     methods: {
 
         selectItem(index, item) {

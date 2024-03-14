@@ -3,7 +3,7 @@
         <div class="w-full flex items-center p-4">
             <span class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</span>
             <div class="join">
-                <button class="join-item btn" @click="prevPage" :disabled="currentPage === 1">{{ $t('prev') }}</button>
+                <button class="join-item btn" @click="prevPage" :disabled="currentPage === 1">{{ $t('previous') }}</button>
                 <button class="join-item btn btn-disabled">{{ currentPage }} / {{ pageCount }}</button>
                 <button class="join-item btn" @click="nextPage" :disabled="currentPage === pageCount">{{ $t('next')
                 }}</button>

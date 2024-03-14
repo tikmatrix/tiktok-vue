@@ -40,7 +40,9 @@
                                     <div class="badge badge-error" v-else-if="train_job.status == '3'"> {{
                                         $t('failed') }} </div>
                                 </td>
-                                <td>{{ train_job.username }}</td>
+                                <td>
+                                    <a class="link link-primary" :href="`https://www.tiktok.com/${train_job.username}`" target="_blank">{{ train_job.username }}</a>
+                                </td>
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
                                         @click="show_device(train_job.device)">{{ train_job.device_index }} - {{ train_job.device }}</a>

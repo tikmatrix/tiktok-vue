@@ -473,3 +473,9 @@ export function get_analytics() {
     url: api.analytics,
   })
 }
+export function get_virtualHosts() {
+  return request({
+    method: 'get',
+    url: api.virtualHosts,
+  })
+}

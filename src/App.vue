@@ -63,6 +63,7 @@
       <ManageTrainJobs v-if="selectedItem === 'trainJobs'" />
       <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
       <ManageSettings v-if="selectedItem === 'settings'" />
+      <ManageVirtualHosts v-if="selectedItem === 'virtualHosts'" />
       <footer class="footer footer-center p-4 bg-base-300 text-base-content">
         <aside>
           <p>Copyright © 2024 - All right reserved by niostack.com</p>
@@ -93,12 +94,14 @@ import ManageSettings from './components/settings/ManageSettings.vue'
 import ManageAvatars from './components/avatar/ManageAvatars.vue'
 import ManageComments from './components/comment/ManageComments.vue'
 import ManageProxys from './components/proxy/ManageProxys.vue'
+import ManageVirtualHosts from './components/virtualHost/ManageVirtualHosts.vue'
 
 
 export default {
   name: 'app',
   components: {
     Sidebar,
+    ManageVirtualHosts,
     ManageDashboard,
     ManageDevices,
     ManageAccounts,
@@ -120,6 +123,7 @@ export default {
       selectedItem: null
     }
   },
+  
   methods: {
     changeLocale(locale) {
       this.$i18n.locale = locale;

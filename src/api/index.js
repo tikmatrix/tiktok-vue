@@ -41,6 +41,8 @@ const api = {
     get_ip: '/api/get_ip',
     analytics: '/api/analytics',
     virtualHosts: '/api/virtual_hosts',
-
+    get_post_bot_status: '/api/virtual_hosts/get_post_bot_status',
+    start_post_bot: '/api/virtual_hosts/start_post_bot',
+    stop_post_bot: '/api/virtual_hosts/stop_post_bot',
 }
 export default api

@@ -475,7 +475,40 @@ export function get_analytics() {
 }
 export function get_virtualHosts() {
   return request({
+    baseURL: `http://${window.location.hostname}:18091`,
     method: 'get',
     url: api.virtualHosts,
+  })
+}
+export function add_virtualHost( virtualHosts ) {
+  return request({
+    baseURL: `http://${window.location.hostname}:18091`,
+    method: 'post',
+    url: api.virtualHosts,
+    data:  virtualHosts 
+  })
+}
+export function get_post_bot_status({id}) {
+  return request({
+    baseURL: `http://${window.location.hostname}:18091`,
+    method: 'get',
+    params: { id },
+    url: api.get_post_bot_status,
+  })
+}
+export function start_post_bot({id}) {
+  return request({
+    baseURL: `http://${window.location.hostname}:18091`,
+    method: 'get',
+    params: { id },
+    url: api.start_post_bot,
+  })
+}
+export function stop_post_bot({id}) {
+  return request({
+    baseURL: `http://${window.location.hostname}:18091`,
+    method: 'get',
+    params: { id },
+    url: api.stop_post_bot,
   })
 }

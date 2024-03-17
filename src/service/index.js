@@ -488,6 +488,15 @@ export function add_or_update_virtualHost( virtualHosts ) {
     data:  virtualHosts 
   })
 }
+export function init_virtualHost({ id }) {
+  return request({
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
+    method: 'get',
+    params: { id },
+    url: api.init_virtualHost,
+  })
+  
+}
 export function delete_virtualHost({ id }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,

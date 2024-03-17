@@ -22,7 +22,7 @@
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
                                 <td>
-                                    <a class="link link-primary">vnc://{{ item.host }}</a>
+                                    <a class="link link-primary" :href="'vnc://'+item.host" target="_blank">vnc://{{ item.host }}</a>
                                 </td>
                                 <!-- <td class="text-center">
                                         <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
@@ -86,10 +86,13 @@
 
                                 <td>
                                     <div class="space-x-4">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                            @click="edit(item)">{{ $t('edit') }}</button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                            @click="delete_virtualHost(item)">{{ $t('delete') }}</button>
+                                        <Button label="init" icon="fa fa-refresh" @click="init_virtualHost(item)" />
+                                        <Button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                        label="edit" icon="fa fa-edit"
+                                            @click="edit(item)" />
+                                        <Button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                        label="delete" icon="fa fa-trash"
+                                            @click="delete_virtualHost(item)" />
                                     </div>
                                 </td>
                             </tr>
@@ -163,6 +166,13 @@ export default {
                 this.get_virtualHosts()
             })
         },
+        init_virtualHost(item) {
+            this.$service.init_virtualHost({
+                id: item.id
+            }).then(res => {
+                console.log(res)
+            })
+        },
         format_time(time) {
             //format seconds to * s or * m or * h
             if (time < 60) {
@@ -194,6 +204,7 @@ export default {
             }).then(res => {
                 console.log(res)
                 item.status.loading = false
+                item.status.status = 1
             }).catch(err => {
                 console.log(err)
                 item.status.loading = false
@@ -206,6 +217,7 @@ export default {
             }).then(res => {
                 console.log(res)
                 item.status.loading = false
+                item.status.status = 0
             }).catch(err => {
                 console.log(err)
                 item.status.loading = false

@@ -475,22 +475,30 @@ export function get_analytics() {
 }
 export function get_virtualHosts() {
   return request({
-    baseURL: `http://${window.location.hostname}:18091`,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
     url: api.virtualHosts,
   })
 }
-export function add_virtualHost( virtualHosts ) {
+export function add_or_update_virtualHost( virtualHosts ) {
   return request({
-    baseURL: `http://${window.location.hostname}:18091`,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'post',
     url: api.virtualHosts,
     data:  virtualHosts 
   })
 }
+export function delete_virtualHost({ id }) {
+  return request({
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
+    method: 'delete',
+    params: { id },
+    url: api.virtualHosts,
+  })
+}
 export function get_post_bot_status({id}) {
   return request({
-    baseURL: `http://${window.location.hostname}:18091`,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
     params: { id },
     url: api.get_post_bot_status,
@@ -498,7 +506,7 @@ export function get_post_bot_status({id}) {
 }
 export function start_post_bot({id}) {
   return request({
-    baseURL: `http://${window.location.hostname}:18091`,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
     params: { id },
     url: api.start_post_bot,
@@ -506,7 +514,7 @@ export function start_post_bot({id}) {
 }
 export function stop_post_bot({id}) {
   return request({
-    baseURL: `http://${window.location.hostname}:18091`,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
     params: { id },
     url: api.stop_post_bot,

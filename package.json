@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "dev": "vite --mode dev",
+    "build": "vite build --mode prod",
+    "build:dev": "vite build --mode dev",
     "preview": "vite preview"
   },
   "dependencies": {

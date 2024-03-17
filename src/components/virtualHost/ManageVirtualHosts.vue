@@ -2,7 +2,7 @@
     <div class="w-full">
         <Pagination :items="virtualHosts" :searchKeys="[ 'host']" @refresh="get_virtualHosts">
             <template v-slot:buttons>
-                <Button onclick="add_dialog.showModal()" label="add" icon="fa fa-add" />
+                <Button @click="add" label="add" icon="fa fa-add" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -14,6 +14,7 @@
                                 <th>{{ $t('host') }}</th>
                                 <!-- <th>{{ $t('edit_bot') }}</th> -->
                                 <th>{{ $t('post_bot') }}</th>
+                                <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,14 +84,14 @@
                                 </td>
                                
 
-                                <!-- <td>
+                                <td>
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                                            @click="editAnalytics(item)">{{ $t('edit') }}</button>
+                                            @click="edit(item)">{{ $t('edit') }}</button>
                                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                                            @click="deleteAnalytics(item)">{{ $t('delete') }}</button>
+                                            @click="delete_virtualHost(item)">{{ $t('delete') }}</button>
                                     </div>
-                                </td> -->
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -99,7 +100,7 @@
         </Pagination>
     </div>
     <!-- Open the modal using ID.showModal() method -->
-    <dialog id="add_dialog" class="modal">
+    <dialog ref="add_dialog" class="modal">
             <div class="modal-box">
                 <form method="dialog">
                     <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
@@ -115,7 +116,7 @@
                 </div>
                 <div class="modal-action">
                     <form method="dialog">
-                        <button class="btn btn-primary" @click="add_virtualHost">Save</button>
+                        <button class="btn btn-primary" @click="add_or_update_virtualHost">Save</button>
                     </form>
                 </div>
             </div>
@@ -136,11 +137,32 @@ export default {
         return {
             virtualHosts: [],
             currentVirtualHost: {},
-            showAdd: false,
             update_status_timer: null,
         }
     },
     methods: {
+        add() {
+            this.currentVirtualHost = {
+                name: '',
+                host: '',
+                port: '22',
+                username: '',
+                password: '',
+            }
+            this.$refs.add_dialog.showModal()
+        },
+        edit(item) {
+            this.currentVirtualHost = item
+            this.$refs.add_dialog.showModal()
+        },
+        delete_virtualHost(item) {
+            this.$service.delete_virtualHost({
+                id: item.id
+            }).then(res => {
+                console.log(res)
+                this.get_virtualHosts()
+            })
+        },
         format_time(time) {
             //format seconds to * s or * m or * h
             if (time < 60) {
@@ -152,23 +174,14 @@ export default {
             }
         },
         get_virtualHosts() {
-            this.currentVirtualHost = {
-                name: 'Test Mac',
-                host: '192.168.4.91',
-                port: '22',
-                username: 'spaceship',
-                password: 'admin',
-            }
             this.$service.get_virtualHosts().then(res => {
-                console.log(res)
                 this.virtualHosts = res.data
             }).catch(err => {
                 console.log(err)
             })
         },
-        add_virtualHost() {
-            this.$service.add_virtualHost(this.currentVirtualHost).then(res => {
-                console.log(res)
+        add_or_update_virtualHost() {
+            this.$service.add_or_update_virtualHost(this.currentVirtualHost).then(res => {
                 this.get_virtualHosts()
             }).catch(err => {
                 console.log(err)
@@ -198,16 +211,11 @@ export default {
                 item.status.loading = false
             })
         },
-
         start_editBot() {
             this.$service.start_editBot().then(res => {
                 console.log(res)
             })
         },
-        
-
-        
-       
     },
     mounted() {
         this.get_virtualHosts();
@@ -221,7 +229,6 @@ export default {
                 this.$service.get_post_bot_status({
                     id: this.virtualHosts[i].id
                 }).then(res => {
-                    console.log(res)
                     this.virtualHosts[i].status = res.data
                     this.virtualHosts[i].status.loading = false
                 }).catch(err => {

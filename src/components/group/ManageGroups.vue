@@ -175,21 +175,32 @@ export default {
             document.getElementById('upload_material_input').click()
         },
         on_upload_material(e) {
-            this.uploading_id = this.currentGroup.id
-            const formData = new FormData()
-            formData.append('group_id', this.currentGroup.id)
-            for (let i = 0; i < e.target.files.length; i++) {
-                formData.append('files', e.target.files[i])
-            }
-            this.$service.upload_material(formData).then(res => {
-                console.log(res)
-                this.get_unused_material_count(this.currentGroup)
-                this.uploading_id = null
-            }).catch(err => {
-                console.log(err)
-                this.uploading_id = null
-            })
+            this.uploading_id = this.currentGroup.id;
+            const totalFiles = e.target.files.length;
+            let index = 0;
+
+            const uploadBatch = () => {
+                const formData = new FormData();
+                formData.append('group_id', this.currentGroup.id);
+                for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
+                    formData.append('files', e.target.files[index]);
+                }
+                this.$service.upload_material(formData).then(res => {
+                    this.get_unused_material_count(this.currentGroup);
+                    if (index < totalFiles) {
+                        uploadBatch(); // Upload next batch
+                    } else {
+                        this.uploading_id = null; // Finish uploading
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    this.uploading_id = null;
+                });
+            };
+
+            uploadBatch(); // Start uploading
         },
+
         get_unused_material_count(group) {
             this.$service.get_material_count({
                 group_id: group.id,

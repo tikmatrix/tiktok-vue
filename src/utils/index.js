@@ -38,28 +38,6 @@ export function getRequest () {
   return theRequest
 }
 
-// 数据上报打点
-export function pointOut (action, config = []) {
-  const uid = getCookie('uid')
-  if (uid) {
-    window.loggerFactory.setUid(uid)
-  }else{
-    window.loggerFactory.setUid('')
-  }
-  const logger = window.loggerFactory.getLogger('event')
-  logger.setAction(action)
-  config.forEach(item => {
-    const { key, type, value } = item
-    if (type === 'string') {
-      logger.putString(key, value)
-    } else if (type === 'number') {
-      logger.putNumber(key, value)
-    }
-  })
-
-  logger.send()
-}
-
 
 // 动态加载js，默认异步，callback=false为同步
 export function loadJs (url, callback) {
@@ -109,21 +87,6 @@ export function isMobile () {
   // # iPad safari 无法通过 navigator标识查找到 'iPad'
   const iPadOS13Up = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1
   return (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) || iPadOS13Up
-}
-
-// 是否为支付宝订单
-export function isAliPayOrder (pay_type_id) {
-  return [1003, 1004].some(x => x === pay_type_id)
-}
-
-/**
- * 是否为 阿里订单url
- *
- * @param url
- * @return {Array|{index: number, input: string}}
- */
-export function isAliPayOrderUrl (url = '') {
-  return url.match('alipay.com')
 }
 
 // 解决触摸穿透问题

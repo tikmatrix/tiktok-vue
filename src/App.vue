@@ -1,5 +1,8 @@
 <template>
-  <div class="drawer lg:drawer-open">
+  <template v-if="needLogin">
+    <Login />
+  </template>
+  <div class="drawer lg:drawer-open" v-else>
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex-grow">
       <div
@@ -16,8 +19,8 @@
           </div>
           <div class="flex-none">
             <ul class="menu menu-horizontal px-1">
-              <li><a href="https://niostack.com" target="_blank">About</a></li>
-              <li><a href="https://github.com/niostack/tiktok-matrix" target="_blank">Github</a></li>
+              <li><a href="https://doc.niostack.com" target="_blank">About</a></li>
+              <li><a @click="logout">Logout</a></li>
               <li>
                 <details>
                   <summary>
@@ -95,11 +98,13 @@ import ManageAvatars from './components/avatar/ManageAvatars.vue'
 import ManageComments from './components/comment/ManageComments.vue'
 import ManageProxys from './components/proxy/ManageProxys.vue'
 import ManageVirtualHosts from './components/virtualHost/ManageVirtualHosts.vue'
+import Login from './components/Login.vue'
 
 
 export default {
   name: 'app',
   components: {
+    Login,
     Sidebar,
     ManageVirtualHosts,
     ManageDashboard,
@@ -119,6 +124,7 @@ export default {
   },
   data() {
     return {
+      needLogin: true,
       showDemoTip: false,
       selectedItem: null
     }
@@ -131,9 +137,17 @@ export default {
     },
     menu_selected(item) {
       this.selectedItem = item.name
+    },
+    checkAuth() {
+      this.needLogin = this.$service.needLogin()
+    },
+    logout() {
+      this.$service.logout()
+      this.needLogin = true
     }
   },
   mounted() {
+    this.checkAuth()
     this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true';
   }
 }

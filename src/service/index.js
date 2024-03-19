@@ -1,5 +1,26 @@
 import request, { wsFetch, post } from '../utils/request'
+import * as util from '../utils'
 import api from '../api'
+export function auth({ password }) {
+  console.log(password)
+  if (!password) {
+    return false
+  }
+  if (password !== 'andy...') {
+    return false
+  }
+  util.setCookie('password', password)
+  return true
+}
+export function needLogin() {
+  if (!util.getCookie('password')) {
+    return true
+  }
+  return false
+}
+export function logout() {
+  util.delCookie('password')
+}
 export function get_devices() {
   return request({
     method: 'get',
@@ -69,7 +90,7 @@ export function upload_material(formData,) {
     data: formData
   })
 }
-export function upload_video(baseURL,formData) {
+export function upload_video(baseURL, formData) {
   return post({
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -99,11 +120,11 @@ export function get_publish_jobs() {
     url: api.publish_job,
   })
 }
-export function add_account({ email, pwd, fans, device, group_id,username }) {
+export function add_account({ email, pwd, fans, device, group_id, username }) {
   return request({
     method: 'post',
     url: api.account,
-    data: { email, pwd, fans, device, group_id,username }
+    data: { email, pwd, fans, device, group_id, username }
   })
 }
 export function update_account({ id, email, pwd, fans, device, group_id, username }) {
@@ -196,26 +217,30 @@ export function get_groups() {
     url: api.group,
   })
 }
-export function add_group({ name, auto_train, auto_publish, publish_start_time, 
-  train_start_time, title, publish_type, product_link, floow_probable, like_probable, 
-  collect_probable,train_duration }) {
+export function add_group({ name, auto_train, auto_publish, publish_start_time,
+  train_start_time, title, publish_type, product_link, floow_probable, like_probable,
+  collect_probable, train_duration }) {
   return request({
     method: 'post',
     url: api.group,
-    data: { name, auto_train, auto_publish, publish_start_time, 
+    data: {
+      name, auto_train, auto_publish, publish_start_time,
       train_start_time, title, publish_type, product_link, floow_probable, like_probable,
-       collect_probable,train_duration }
+      collect_probable, train_duration
+    }
   })
 }
-export function update_group({ id, name, auto_train, auto_publish, publish_start_time, 
-  train_start_time, title, publish_type, product_link, floow_probable, like_probable, 
-  collect_probable,train_duration }) {
+export function update_group({ id, name, auto_train, auto_publish, publish_start_time,
+  train_start_time, title, publish_type, product_link, floow_probable, like_probable,
+  collect_probable, train_duration }) {
   return request({
     method: 'put',
     url: api.group,
-    data: { id, name, auto_train, auto_publish, publish_start_time, 
-      train_start_time, title, publish_type, product_link, floow_probable, like_probable, 
-      collect_probable,train_duration }
+    data: {
+      id, name, auto_train, auto_publish, publish_start_time,
+      train_start_time, title, publish_type, product_link, floow_probable, like_probable,
+      collect_probable, train_duration
+    }
   })
 }
 export function delete_group({ id }) {
@@ -480,12 +505,12 @@ export function get_virtualHosts() {
     url: api.virtualHosts,
   })
 }
-export function add_or_update_virtualHost( virtualHosts ) {
+export function add_or_update_virtualHost(virtualHosts) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'post',
     url: api.virtualHosts,
-    data:  virtualHosts 
+    data: virtualHosts
   })
 }
 export function init_virtualHost({ id }) {
@@ -495,7 +520,7 @@ export function init_virtualHost({ id }) {
     params: { id },
     url: api.init_virtualHost,
   })
-  
+
 }
 export function delete_virtualHost({ id }) {
   return request({
@@ -505,7 +530,7 @@ export function delete_virtualHost({ id }) {
     url: api.virtualHosts,
   })
 }
-export function get_post_bot_status({id}) {
+export function get_post_bot_status({ id }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
@@ -513,7 +538,7 @@ export function get_post_bot_status({id}) {
     url: api.get_post_bot_status,
   })
 }
-export function start_post_bot({id}) {
+export function start_post_bot({ id }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
@@ -521,7 +546,7 @@ export function start_post_bot({id}) {
     url: api.start_post_bot,
   })
 }
-export function stop_post_bot({id}) {
+export function stop_post_bot({ id }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',

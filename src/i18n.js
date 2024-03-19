@@ -207,6 +207,9 @@ export const i18n = createI18n({
             running: 'Running',
             stopped: 'Stopped',
             clearTasks: 'Clear Tasks',
+            startAll: 'Start All',
+            stopAll: 'Stop All',
+            initAll: 'Init All',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

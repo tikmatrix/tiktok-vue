@@ -1,8 +1,11 @@
 <template>
     <div class="w-full">
-        <Pagination :items="virtualHosts" :searchKeys="[ 'host']" @refresh="get_virtualHosts">
+        <Pagination :items="virtualHosts" :searchKeys="[ 'name','host']" @refresh="get_virtualHosts">
             <template v-slot:buttons>
                 <Button @click="add" label="add" icon="fa fa-add" />
+                <Button @click="startAll" label="startAll" icon="fa fa-play" />
+                <Button @click="stopAll" label="stopAll" icon="fa fa-stop" />
+                <Button @click="initAll" label="initAll" icon="fa fa-refresh" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -144,6 +147,21 @@ export default {
         }
     },
     methods: {
+        initAll() {
+            for (let i = 0; i < this.virtualHosts.length; i++) {
+                this.init_virtualHost(this.virtualHosts[i])
+            }           
+        },
+        startAll() {
+            for (let i = 0; i < this.virtualHosts.length; i++) {
+                this.start_post_bot(this.virtualHosts[i])
+            }
+        },
+        stopAll() {
+            for (let i = 0; i < this.virtualHosts.length; i++) {
+                this.stop_post_bot(this.virtualHosts[i])
+            }
+        },
         add() {
             this.currentVirtualHost = {
                 name: '',
@@ -167,10 +185,12 @@ export default {
             })
         },
         init_virtualHost(item) {
+            item.status.loading = true
             this.$service.init_virtualHost({
                 id: item.id
             }).then(res => {
                 console.log(res)
+                item.status.loading = false
             })
         },
         format_time(time) {
@@ -180,12 +200,17 @@ export default {
             } else if (time < 3600) {
                 return Math.floor(time / 60) + ' m'
             } else {
-                return Math.floor(time / 3600) + ' h'
+                //keep 2 decimal
+                return (time / 3600).toFixed(2) + ' h'
             }
         },
         get_virtualHosts() {
             this.$service.get_virtualHosts().then(res => {
                 this.virtualHosts = res.data
+                //sort by name
+                this.virtualHosts.sort((a, b) => {
+                    return a.name.localeCompare(b.name)
+                })
             }).catch(err => {
                 console.log(err)
             })

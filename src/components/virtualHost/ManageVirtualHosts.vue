@@ -3,9 +3,9 @@
         <Pagination :items="virtualHosts" :searchKeys="[ 'name','host']" @refresh="get_virtualHosts">
             <template v-slot:buttons>
                 <Button @click="add" label="add" icon="fa fa-add" />
-                <Button @click="startAll" label="startAll" icon="fa fa-play" />
-                <Button @click="stopAll" label="stopAll" icon="fa fa-stop" />
-                <Button @click="initAll" label="initAll" icon="fa fa-refresh" />
+                <Button @click="startAll" label="startAll" icon="fa fa-play" :showLoading="startAllLoading" />
+                <Button @click="stopAll" label="stopAll" icon="fa fa-stop" :showLoading="stopAllLoading" />
+                <Button @click="initAll" label="initAll" icon="fa fa-refresh" :showLoading="initAllLoading" />
             </template>
             <template v-slot:default="slotProps">
                 <div class="overflow-x-auto">
@@ -15,8 +15,7 @@
                                 <th>{{ $t('id') }}</th>
                                 <th>{{ $t('name') }}</th>
                                 <th>{{ $t('host') }}</th>
-                                <!-- <th>{{ $t('edit_bot') }}</th> -->
-                                <th>{{ $t('post_bot') }}</th>
+                                <th>{{ $t('bot') }}</th>
                                 <th>{{ $t('actions') }}</th>
                             </tr>
                         </thead>
@@ -27,42 +26,52 @@
                                 <td>
                                     <a class="link link-primary" :href="'vnc://'+item.host" target="_blank">vnc://{{ item.host }}</a>
                                 </td>
-                                <!-- <td class="text-center">
+                                <td class="text-left" v-if='item.bot_type == "1"'>
                                         <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
                                             <div class="stat">
                                                 <div class="stat-title text-white">{{ $t('background') }}</div>
-                                                <div class="stat-value">99</div>
+                                                <div class="stat-value">{{ item.status.background_video_count }}</div>
                                                 <div class="stat-actions">
-                                                    <button class="btn btn-sm btn-success text-white">{{ $t('upload_background') }}</button>
+                                                    <button class="btn btn-sm btn-success text-white">{{ $t('upload') }}</button>
                                                 </div>
                                             </div>
                                             
                                             <div class="stat">
                                                 <div class="stat-title text-white">{{ $t('overlay') }}</div>
-                                                <div class="stat-value">3</div>
+                                                <div class="stat-value">{{ item.status.overlay_video_count }}</div>
                                                 <div class="stat-actions">
-                                                    <button class="btn btn-sm btn-success text-white">{{ $t('upload_overlay') }}</button>
+                                                    <button class="btn btn-sm btn-success text-white">{{ $t('upload') }}</button>
                                                 </div>
                                             </div>
                                             <div class="stat">
-                                                <div class="stat-title text-white">{{ $t('running') }}</div>
-                                                <div class="stat-value">12h</div>
-                                                <div class="stat-actions">
-                                                    <button class="btn btn-sm btn-error text-white">{{ $t('stop_bot') }}</button>
-                                                </div>
+                                            <div class="stat-title text-white">{{item.status?.status == 1 ? $t('running') : $t('stopped') }}</div>
+                                            <div class="stat-value">{{format_time(item.status?.uptime || 0)}}
+                                                <span class="loading loading-spinner text-warning"  v-if="item.status?.loading"></span>
+                                            </div>
+                                            <div class="stat-actions">
+                                                <button @click="start_edit_bot(item)" class="btn btn-sm btn-primary text-white" 
+                                                :disabled="item.status?.loading"
+                                                v-if="item.status?.status == 0">
+                                                    {{ $t('start_bot') }}
+                                                </button>
+                                                <button @click="stop_edit_bot(item)" class="btn btn-sm btn-error text-white" 
+                                                :disabled="item.status?.loading"
+                                                v-else>
+                                                    {{ $t('stop_bot') }}
+                                                </button>
                                             </div>
                                         </div>
-                                </td> -->
-                                <td class="text-left">
+                                        </div>
+                                </td>
+                                <td class="text-left" v-else>
                                     <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
                                         <div class="stat">
                                             <div class="stat-title text-white">{{ $t('videos') }}</div>
                                             <div class="stat-value">
                                                 {{item.status?.video_count || 0}}
-                                                <span class="loading loading-spinner text-warning" v-if="item.status?.loading"></span>
                                             </div>
                                             <div class="stat-actions">
-                                                <button class="btn btn-sm btn-success text-white">{{ $t('download_video') }}</button>
+                                                <button class="btn btn-sm btn-success text-white">{{ $t('download') }}</button>
                                             </div>
                                         </div>
                                         <div class="stat">
@@ -114,6 +123,18 @@
                 <h3 class="font-bold text-lg">Add new Virtual Host!</h3>
                
                 <div class="flex flex-col items-center gap-2 mb-2 w-full">
+                    <div class="col-span-2 flex items-center gap-4">
+                        <div class="flex items-center">
+                            <input type="radio" id="postBot" value="0" v-model="currentVirtualHost.bot_type"
+                                class="form-radio text-blue-500 h-4 w-4">
+                            <label for="postBot" class="ml-2">Post Bot</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="radio" id="editBot" value="1" v-model="currentVirtualHost.bot_type"
+                                class="form-radio text-blue-500 h-4 w-4">
+                            <label for="editBot" class="ml-2">Edit Bot</label>
+                        </div>
+                    </div>
                     <input class="input input-bordered w-full max-w-xs" placeholder="name" autocomplete="off" v-model="currentVirtualHost.name">
                     <input class="input input-bordered w-full max-w-xs" placeholder="host" autocomplete="off" v-model="currentVirtualHost.host">
                     <input class="input input-bordered w-full max-w-xs" placeholder="port" autocomplete="off" v-model="currentVirtualHost.port">
@@ -144,26 +165,63 @@ export default {
             virtualHosts: [],
             currentVirtualHost: {},
             update_status_timer: null,
+            startAllLoading: false,
+            stopAllLoading: false,
+            initAllLoading: false
         }
     },
     methods: {
         initAll() {
+            this.initAllLoading = true
+            let ids=[]
             for (let i = 0; i < this.virtualHosts.length; i++) {
-                this.init_virtualHost(this.virtualHosts[i])
-            }           
+                ids.push(this.virtualHosts[i].id)
+            }
+            this.$service.init_virtualHost({
+                ids: ids.join(',')
+            }).then(res => {
+                this.initAllLoading = false
+            })        
         },
         startAll() {
+            this.startAllLoading = true
+            let ids=[]
             for (let i = 0; i < this.virtualHosts.length; i++) {
-                this.start_post_bot(this.virtualHosts[i])
+                ids.push(this.virtualHosts[i].id)
+                this.virtualHosts[i].status.loading = true
             }
+            this.$service.start_post_bot({
+                ids: ids.join(',')
+            }).then(res => {
+                this.startAllLoading = false
+                for (let i = 0; i < this.virtualHosts.length; i++) {
+                    this.virtualHosts[i].status.loading = false
+                    this.virtualHosts[i].status.status = 1
+                    this.virtualHosts[i].status.uptime = 2
+                }
+            })
         },
         stopAll() {
+            this.stopAllLoading = true
+            let ids=[]
             for (let i = 0; i < this.virtualHosts.length; i++) {
-                this.stop_post_bot(this.virtualHosts[i])
+                ids.push(this.virtualHosts[i].id)
+                this.virtualHosts[i].status.loading = true
             }
+            this.$service.stop_post_bot({
+                ids: ids.join(',')
+            }).then(res => {
+                this.stopAllLoading = false
+                for (let i = 0; i < this.virtualHosts.length; i++) {
+                    this.virtualHosts[i].status.loading = false
+                    this.virtualHosts[i].status.status = 0
+                    this.virtualHosts[i].status.uptime = 0
+                }
+            })
         },
         add() {
             this.currentVirtualHost = {
+                bot_type: '0',
                 name: '',
                 host: '',
                 port: '22',
@@ -187,7 +245,7 @@ export default {
         init_virtualHost(item) {
             item.status.loading = true
             this.$service.init_virtualHost({
-                id: item.id
+                ids: item.id
             }).then(res => {
                 console.log(res)
                 item.status.loading = false
@@ -211,6 +269,13 @@ export default {
                 this.virtualHosts.sort((a, b) => {
                     return a.name.localeCompare(b.name)
                 })
+                //set default bot type
+                for (let i = 0; i < this.virtualHosts.length; i++) {
+                    if (!this.virtualHosts[i].bot_type) {
+                        this.virtualHosts[i].bot_type = '0'
+                    }
+                }
+                this.update_status();
             }).catch(err => {
                 console.log(err)
             })
@@ -225,7 +290,7 @@ export default {
         start_post_bot(item) {
             item.status.loading = true
             this.$service.start_post_bot({
-                id: item.id
+                ids: item.id
             }).then(res => {
                 console.log(res)
                 item.status.loading = false
@@ -238,7 +303,7 @@ export default {
         stop_post_bot(item) {
             item.status.loading = true
             this.$service.stop_post_bot({
-                id: item.id
+                ids: item.id
             }).then(res => {
                 console.log(res)
                 item.status.loading = false
@@ -253,16 +318,13 @@ export default {
                 console.log(res)
             })
         },
-    },
-    mounted() {
-        this.get_virtualHosts();
-        this.update_status_timer = setInterval(() => {
+        update_status() {
             for (let i = 0; i < this.virtualHosts.length; i++) {
                 if (this.virtualHosts[i].status?.loading) {
                     continue
                 }
                 !this.virtualHosts[i].status && (this.virtualHosts[i].status = {})
-                this.virtualHosts[i].status.loading = true
+                // this.virtualHosts[i].status.loading = true
                 this.$service.get_post_bot_status({
                     id: this.virtualHosts[i].id
                 }).then(res => {
@@ -273,7 +335,14 @@ export default {
                     this.virtualHosts[i].status.loading = false
                 })
             }
-        },3000)
+        }
+    },
+    mounted() {
+        this.get_virtualHosts();
+        
+        this.update_status_timer = setInterval(() => {
+            this.update_status()
+        },5000)
     },
     unmounted() {
         clearInterval(this.update_status_timer)

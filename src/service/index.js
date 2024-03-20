@@ -513,11 +513,11 @@ export function add_or_update_virtualHost(virtualHosts) {
     data: virtualHosts
   })
 }
-export function init_virtualHost({ id }) {
+export function init_virtualHost({ ids }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
-    params: { id },
+    params: { ids },
     url: api.init_virtualHost,
   })
 
@@ -538,19 +538,19 @@ export function get_post_bot_status({ id }) {
     url: api.get_post_bot_status,
   })
 }
-export function start_post_bot({ id }) {
+export function start_post_bot({ ids }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
-    params: { id },
+    params: { ids },
     url: api.start_post_bot,
   })
 }
-export function stop_post_bot({ id }) {
+export function stop_post_bot({ ids }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
-    params: { id },
+    params: { ids },
     url: api.stop_post_bot,
   })
 }

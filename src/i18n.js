@@ -210,6 +210,9 @@ export const i18n = createI18n({
             startAll: 'Start All',
             stopAll: 'Stop All',
             initAll: 'Init All',
+            bot: 'Bot',
+            upload: 'Upload',
+            download: 'Download',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

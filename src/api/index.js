@@ -44,6 +44,9 @@ const api = {
     get_post_bot_status: '/api/virtual_hosts/get_post_bot_status',
     start_post_bot: '/api/virtual_hosts/start_post_bot',
     stop_post_bot: '/api/virtual_hosts/stop_post_bot',
+    start_edit_bot: '/api/virtual_hosts/start_edit_bot',
+    stop_edit_bot: '/api/virtual_hosts/stop_edit_bot',
     init_virtualHost: '/api/virtual_hosts/init',
+    upload_to_virtualHost: '/api/virtual_hosts/upload_video',
 }
 export default api

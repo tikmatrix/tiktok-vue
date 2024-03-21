@@ -213,6 +213,7 @@ export const i18n = createI18n({
             bot: 'Bot',
             upload: 'Upload',
             download: 'Download',
+            ipinfo: 'IP Info',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

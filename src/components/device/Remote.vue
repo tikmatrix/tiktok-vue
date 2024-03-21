@@ -26,16 +26,16 @@
                 <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
                 <div class="collapse-content">
                     
-                    <Button label="720x1280" icon="fa-solid fa-mobile" @click="shell('wm size 720x1280')" />
+                    <!-- <Button label="720x1280" icon="fa-solid fa-mobile" @click="shell('wm size 720x1280')" /> -->
                     <Button label="1080x1920" icon="fa-solid fa-mobile" @click="shell('wm size 1080x1920')" />
                     <Button label="1440x2560" icon="fa-solid fa-mobile" @click="shell('wm size 1440x2560')" />
                     <Button label="resetSize" icon="fa-solid fa-mobile" @click="shell('wm size reset')" />
-                    <Button label="240" icon="fa-solid fa-mobile" @click="shell('wm density 240')" />
+                    <!-- <Button label="240" icon="fa-solid fa-mobile" @click="shell('wm density 240')" /> -->
                     <Button label="320" icon="fa-solid fa-mobile" @click="shell('wm density 320')" />
                     <Button label="480" icon="fa-solid fa-mobile" @click="shell('wm density 480')" />
                     <Button label="resetDensity" icon="fa-solid fa-mobile" @click="shell('wm density reset')" />
                     <Button label="showTimeSetting" icon="fa-solid fa-clock" @click="shell('am start -a android.settings.DATE_SETTINGS')" />
-                    <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" />
+                    <!-- <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" /> -->
                     <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
                     <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />
                     <Button label="wakeup" icon="fa-solid fa-mobile-screen"
@@ -51,6 +51,11 @@
                         icon="fa-solid fa-link" />
                     <Button @click="shell('settings put global http_proxy :0')" label="disableProxy"
                         icon="fa-solid fa-unlink" />
+                    <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo"
+                    icon="fa-solid fa-sim-card" />
+                    <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" icon="fa-solid fa-bell" />
+                    <Button @click="script('clear_notification', device.serial)" label="clearNotification" icon="fa-solid fa-bell-slash" />
+                    <Button @click="script('clear_tasks', device.serial)" label="clearTasks" icon="fa-solid fa-trash" /> 
                     <Button label="openWhoer" icon="fa-brands fa-wikipedia-w"
                         @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
                     <Button label="ipinfo" icon="fa-solid fa-info" @click="shell('am start -a android.intent.action.VIEW -d https://ipinfo.io')" />
@@ -61,6 +66,7 @@
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('autoScripts') }}</summary>
                 <div class="collapse-content">
+                    <Button @click="script('connect_wifi', device.serial)" label="connectWifi" icon="fa-solid fa-wifi" />
                     
                     <Button @click="script('profile', device.serial)" label="setProfile" icon="fa-solid fa-user"
                         :disabled="task_status == 'running'" />

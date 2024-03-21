@@ -90,6 +90,16 @@ export function upload_material(formData,) {
     data: formData
   })
 }
+export function upload_to_virtualHost(formData) {
+  return post({
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    url: api.upload_to_virtualHost,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
+    data: formData
+  })
+}
 export function upload_video(baseURL, formData) {
   return post({
     headers: {
@@ -552,5 +562,21 @@ export function stop_post_bot({ ids }) {
     method: 'get',
     params: { ids },
     url: api.stop_post_bot,
+  })
+}
+export function start_edit_bot({ ids }) {
+  return request({
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
+    method: 'get',
+    params: { ids },
+    url: api.start_edit_bot,
+  })
+}
+export function stop_edit_bot({ ids }) {
+  return request({
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
+    method: 'get',
+    params: { ids },
+    url: api.stop_edit_bot,
   })
 }

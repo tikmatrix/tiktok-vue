@@ -27,21 +27,37 @@
                                     <a class="link link-primary" :href="'vnc://'+item.host" target="_blank">vnc://{{ item.host }}</a>
                                 </td>
                                 <td class="text-left" v-if='item.bot_type == "1"'>
+                                        
                                         <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
                                             <div class="stat">
                                                 <div class="stat-title text-white">{{ $t('background') }}</div>
-                                                <div class="stat-value">{{ item.status.background_video_count }}</div>
-                                                <div class="stat-actions">
-                                                    <button class="btn btn-sm btn-success text-white">{{ $t('upload') }}</button>
+                                                <div class="stat-value">{{ item.status.background_video_count }}
+                                                    <span class="loading loading-spinner text-warning"  v-if="item.status?.uploading"></span>
                                                 </div>
+                                                <div class="stat-actions">
+                                                    <button class="btn btn-sm btn-success text-white" 
+                                                    :disabled="item.status?.uploading"
+                                                    @click="upload_background(item)">{{ $t('upload') }}
+                                                    
+                                                </button>
+                                                </div>
+                                                <input ref="upload_input_background" type="file" v-on:change="on_upload_background" multiple hidden>
                                             </div>
                                             
                                             <div class="stat">
                                                 <div class="stat-title text-white">{{ $t('overlay') }}</div>
-                                                <div class="stat-value">{{ item.status.overlay_video_count }}</div>
-                                                <div class="stat-actions">
-                                                    <button class="btn btn-sm btn-success text-white">{{ $t('upload') }}</button>
+                                                <div class="stat-value">{{ item.status.overlay_video_count }}
+                                                    <span class="loading loading-spinner text-warning"  v-if="item.status?.uploading"></span>
                                                 </div>
+                                                <div class="stat-actions">
+                                                    <button class="btn btn-sm btn-success text-white"
+                                                    :disabled="item.status?.uploading"
+                                                    @click="upload_overlay(item)"
+                                                    >{{ $t('upload') }}
+                                                    
+                                                </button>
+                                                </div>
+                                                <input ref="upload_input_overlay" type="file" v-on:change="on_upload_overlay" multiple hidden>
                                             </div>
                                             <div class="stat">
                                             <div class="stat-title text-white">{{item.status?.status == 1 ? $t('running') : $t('stopped') }}</div>
@@ -171,6 +187,67 @@ export default {
         }
     },
     methods: {
+        upload_overlay(item) {
+            this.currentVirtualHost = item
+            this.$refs.upload_input_overlay[0].click()
+        },
+        on_upload_overlay(e) {
+            this.currentVirtualHost.status.uploading = true;
+            const totalFiles = e.target.files.length;
+            let index = 0;
+            const uploadBatch = () => { 
+                const formData = new FormData();
+                formData.append('id', this.currentVirtualHost.id);
+                formData.append('dir', "overlay");
+                for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
+                    formData.append('files', e.target.files[index]);
+                    this.currentVirtualHost.status.overlay_video_count++;
+                }
+                this.$service.upload_to_virtualHost(formData).then(res => {
+                    
+                    if (index < totalFiles) {
+                        uploadBatch(); // Upload next batch
+                    } else {
+                        this.currentVirtualHost.status.uploading = false;
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    this.currentVirtualHost.status.uploading = false;
+                });
+            };
+            uploadBatch();
+        },
+        upload_background(item) {
+            this.currentVirtualHost = item
+            this.$refs.upload_input_background[0].click()
+        },
+        on_upload_background(e) {
+            this.currentVirtualHost.status.uploading = true;
+            const totalFiles = e.target.files.length;
+            let index = 0;
+            
+            const uploadBatch = () => {
+                const formData = new FormData();
+                formData.append('id', this.currentVirtualHost.id);
+                formData.append('dir', "Backgrounds");
+                for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
+                    formData.append('files', e.target.files[index]);
+                    this.currentVirtualHost.status.background_video_count++;
+                }
+                this.$service.upload_to_virtualHost(formData).then(res => {
+                    if (index < totalFiles) {
+                        uploadBatch(); // Upload next batch
+                    } else {
+                        this.currentVirtualHost.status.uploading = false;
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    this.currentVirtualHost.status.uploading = false;
+                });
+            };
+
+            uploadBatch(); 
+        },
         initAll() {
             this.initAllLoading = true
             let ids=[]
@@ -313,9 +390,30 @@ export default {
                 item.status.loading = false
             })
         },
-        start_editBot() {
-            this.$service.start_editBot().then(res => {
+        start_edit_bot(item) {
+            item.status.loading = true
+            this.$service.start_edit_bot({
+                ids: item.id
+            }).then(res => {
                 console.log(res)
+                item.status.loading = false
+                item.status.status = 1
+            }).catch(err => {
+                console.log(err)
+                item.status.loading = false
+            })
+        },
+        stop_edit_bot(item) {
+            item.status.loading = true
+            this.$service.stop_edit_bot({
+                ids: item.id
+            }).then(res => {
+                console.log(res)
+                item.status.loading = false
+                item.status.status = 0
+            }).catch(err => {
+                console.log(err)
+                item.status.loading = false
             })
         },
         update_status() {

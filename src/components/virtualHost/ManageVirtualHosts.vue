@@ -24,8 +24,8 @@
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
                                 <td>
-                                    <a class="link link-primary" :href="'vnc://' + item.host" target="_blank">vnc://{{
-            item.host }}</a>
+                                    <a class="link link-primary" :href="'vnc://' + item.host" target="_blank">
+                                        vnc://{{ item.host }}</a>
                                 </td>
                                 <td class="text-left" v-if='item.bot_type == "1"'>
 
@@ -55,8 +55,8 @@
                                             </div>
                                             <div class="stat-actions">
                                                 <button class="btn btn-sm btn-success text-white"
-                                                    :disabled="item.status?.uploading" @click="upload_overlay(item)">{{
-            $t('upload') }}
+                                                    :disabled="item.status?.uploading" @click="upload_overlay(item)">
+                                                    {{ $t('upload') }}
 
                                                 </button>
                                             </div>
@@ -70,8 +70,8 @@
                                             </div>
                                         </div>
                                         <div class="stat">
-                                            <div class="stat-title text-white">{{ item.status?.status == 1 ?
-            $t('running') : $t('stopped') }}</div>
+                                            <div class="stat-title text-white">
+                                                {{ item.status?.status == 1 ? $t('running') : $t('stopped') }}</div>
                                             <div class="stat-value">{{ format_time(item.status?.uptime || 0) }}
                                                 <span class="loading loading-spinner text-warning"
                                                     v-if="item.status?.loading"></span>
@@ -99,13 +99,13 @@
                                                 {{ item.status?.video_count || 0 }}
                                             </div>
                                             <div class="stat-actions">
-                                                <button class="btn btn-sm btn-success text-white">{{ $t('download')
-                                                    }}</button>
+                                                <button class="btn btn-sm btn-success text-white">
+                                                    {{ $t('download') }}</button>
                                             </div>
                                         </div>
                                         <div class="stat">
-                                            <div class="stat-title text-white">{{ item.status?.status == 1 ?
-            $t('running') : $t('stopped') }}</div>
+                                            <div class="stat-title text-white">
+                                                {{ item.status?.status == 1 ? $t('running') : $t('stopped') }}</div>
                                             <div class="stat-value">{{ format_time(item.status?.uptime || 0) }}
                                                 <span class="loading loading-spinner text-warning"
                                                     v-if="item.status?.loading"></span>

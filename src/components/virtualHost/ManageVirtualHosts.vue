@@ -98,10 +98,6 @@
                                             <div class="stat-value">
                                                 {{ item.status?.video_count || 0 }}
                                             </div>
-                                            <div class="stat-actions">
-                                                <button class="btn btn-sm btn-success text-white">
-                                                    {{ $t('download') }}</button>
-                                            </div>
                                         </div>
                                         <div class="stat">
                                             <div class="stat-title text-white">

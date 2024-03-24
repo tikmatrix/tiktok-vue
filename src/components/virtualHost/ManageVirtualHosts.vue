@@ -434,19 +434,21 @@ export default {
         },
         update_status() {
             for (let i = 0; i < this.virtualHosts.length; i++) {
-                if (this.virtualHosts[i].status?.loading) {
+                if (this.virtualHosts[i].status?.updating) {
                     continue
                 }
                 !this.virtualHosts[i].status && (this.virtualHosts[i].status = {})
-                // this.virtualHosts[i].status.loading = true
+                this.virtualHosts[i].status.updating = true
                 this.$service.get_post_bot_status({
                     id: this.virtualHosts[i].id
                 }).then(res => {
                     this.virtualHosts[i].status = res.data
                     this.virtualHosts[i].status.loading = false
+                    this.virtualHosts[i].status.updating = false
                 }).catch(err => {
                     console.log(err)
                     this.virtualHosts[i].status.loading = false
+                    this.virtualHosts[i].status.updating = false
                 })
             }
         }

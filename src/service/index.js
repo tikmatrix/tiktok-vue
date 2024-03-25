@@ -580,3 +580,11 @@ export function stop_edit_bot({ ids }) {
     url: api.stop_edit_bot,
   })
 }
+export function clear_edit_bot({ id,dir }) {
+  return request({
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
+    method: 'get',
+    params: { id,dir },
+    url: api.clear_edit_bot,
+  })
+}

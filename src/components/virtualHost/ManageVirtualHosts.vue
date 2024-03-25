@@ -38,9 +38,12 @@
                                             </div>
                                             <div class="stat-actions">
                                                 <button class="btn btn-sm btn-success text-white"
-                                                    :disabled="item.status?.uploading"
+                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
                                                     @click="upload_background(item)">{{ $t('upload') }}
-
+                                                </button>
+                                                <button class="btn btn-sm btn-error text-white ml-1"
+                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
+                                                    @click="clear_background(item)">{{ $t('clear') }}
                                                 </button>
                                             </div>
                                             <input ref="upload_input_background" type="file"
@@ -55,9 +58,12 @@
                                             </div>
                                             <div class="stat-actions">
                                                 <button class="btn btn-sm btn-success text-white"
-                                                    :disabled="item.status?.uploading" @click="upload_overlay(item)">
+                                                    :disabled="item.status?.status == 1 || item.status?.uploading" @click="upload_overlay(item)">
                                                     {{ $t('upload') }}
-
+                                                </button>
+                                                <button class="btn btn-sm btn-error text-white ml-1"
+                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
+                                                    @click="clear_overlay(item)">{{ $t('clear') }}
                                                 </button>
                                             </div>
                                             <input ref="upload_input_overlay" type="file"
@@ -67,6 +73,13 @@
                                             <div class="stat-title text-white">{{ $t('finished') }}</div>
                                             <div class="stat-value">{{ item.status.finished_video_count }}
 
+                                            </div>
+                                            <div class="stat-actions">
+                                                
+                                                <button class="btn btn-sm btn-error text-white"
+                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
+                                                    @click="clear_finished(item)">{{ $t('clear') }}
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="stat">
@@ -203,6 +216,42 @@ export default {
         }
     },
     methods: {
+        clear_background(item) {
+            item.status.uploading = true
+            this.$service.clear_edit_bot({
+                id: item.id,
+                dir: "Backgrounds"
+            }).then(res => {
+                item.status.background_video_count = 0
+                item.status.uploading = false
+            }).catch(err => {
+                item.status.uploading = false
+            })
+        },
+        clear_overlay(item) {
+            item.status.uploading = true
+            this.$service.clear_edit_bot({
+                id: item.id,
+                dir: "overlay"
+            }).then(res => {
+                item.status.overlay_video_count = 0
+                item.status.uploading = false
+            }).catch(err => {
+                item.status.uploading = false
+            })
+        },
+        clear_finished(item) {
+            item.status.uploading = true
+            this.$service.clear_edit_bot({
+                id: item.id,
+                dir: "Finished_Edits"
+            }).then(res => {
+                item.status.finished_count = 0
+                item.status.uploading = false
+            }).catch(err => {
+                item.status.uploading = false
+            })
+        },
         upload_overlay(item) {
             this.currentVirtualHost = item
             this.$refs.upload_input_overlay[0].click()

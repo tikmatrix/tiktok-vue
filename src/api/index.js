@@ -48,5 +48,6 @@ const api = {
     stop_edit_bot: '/api/virtual_hosts/stop_edit_bot',
     init_virtualHost: '/api/virtual_hosts/init',
     upload_to_virtualHost: '/api/virtual_hosts/upload_video',
+    clear_edit_bot: '/api/virtual_hosts/clear_edit_bot'
 }
 export default api

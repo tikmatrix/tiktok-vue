@@ -358,16 +358,16 @@ export default {
         get_virtualHosts() {
             this.$service.get_virtualHosts().then(res => {
                 this.virtualHosts = res.data
-                //sort by name
-                this.virtualHosts.sort((a, b) => {
-                    return a.name.localeCompare(b.name)
-                })
                 //set default bot type
                 for (let i = 0; i < this.virtualHosts.length; i++) {
                     if (!this.virtualHosts[i].bot_type) {
                         this.virtualHosts[i].bot_type = '0'
                     }
                 }
+                //sort by name
+                this.virtualHosts.sort((a, b) => {
+                    return -a.bot_type.localeCompare(b.bot_type) || a.name.localeCompare(b.name)
+                })
                 this.update_status();
             }).catch(err => {
                 console.log(err)

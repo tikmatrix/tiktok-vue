@@ -47,7 +47,7 @@ export default {
     },
     methods: {
         syncDisplay() {
-            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:7092`);
+            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:${import.meta.env.VITE_SCRCPY_PORT}`);
             this.scrcpy.onopen = () => {
                 this.readonly = false
                 this.scrcpy.send(`${this.device.serial}`)

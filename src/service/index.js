@@ -1,4 +1,4 @@
-import request, { wsFetch, post } from '../utils/request'
+import request, {  post } from '../utils/request'
 import * as util from '../utils'
 import api from '../api'
 export function auth({ password }) {

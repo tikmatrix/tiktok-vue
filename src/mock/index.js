@@ -6,6 +6,7 @@ for (let i = 1; i <= 200; i++) {
     'serial': 'device' + i,
     'forward_port': '10800',
     'ip': '192.168.0.' + i,
+    'agent_ip': '127.0.0.1'
   });
 }
 let groups = [];
@@ -120,7 +121,7 @@ for (let i = 1; i <= 100; i++) {
   analytics.push({
     "id": i.toString(),
     "create_time": "2023-11-13 13:43:49",
-    "day_hour": "2023-11-13 "+Math.floor(Math.random() * 24),
+    "day_hour": "2023-11-13 " + Math.floor(Math.random() * 24),
     "follower_count": Math.floor(Math.random() * 1000),
     "video_count": Math.floor(Math.random() * 1000),
     "video_collect_count": Math.floor(Math.random() * 1000),

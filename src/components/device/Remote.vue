@@ -136,8 +136,7 @@ export default {
             showEffect: false,
             effectX: 0,
             effectY: 0,
-            minicap: null,
-            minitouch: null,
+            scrcpy: null,
             touch: false,
             task_status: "idle",
             timer_fps: null,
@@ -188,7 +187,7 @@ export default {
         },
         readClipboard() {
             this.$service.read_clipboard({
-                baseURL: `http://${this.device.agent_ip}:8091`,
+                baseURL: `http://${this.device.agent_ip}:7091`,
                 serial: this.device.serial
             }).then(res => {
                 this.text = res.data
@@ -240,18 +239,9 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-
-        },
-
-        killMinitouch() {
-            this.shell('pkill minitouch')
-            this.shell('input keyevent KEYCODE_WAKEUP')
-            this.shell('settings put system screen_off_timeout 2147483647')
-            this.syncTouchpad()
         },
         coords(boundingW, boundingH, relX, relY, rotation) {
             var w, h, x, y;
-
             switch (rotation) {
                 case 0:
                     w = boundingW
@@ -278,11 +268,7 @@ export default {
                     y = boundingW - relX
                     break
             }
-
-            return {
-                xP: x / w,
-                yP: y / h,
-            }
+            return {x,y,w,h }
         },
         touchSync(operation, event) {
             var e = event;
@@ -290,18 +276,16 @@ export default {
                 e = e.originalEvent
             }
             e.preventDefault()
-
             let x = e.offsetX, y = e.offsetY
             let w = e.target.clientWidth, h = e.target.clientHeight
             let scaled = this.coords(w, h, x, y, this.rotation);
-            this.minitouch.send(JSON.stringify({
+            this.scrcpy.send(JSON.stringify({
                 operation: operation, // u, d, c, w
-                index: 0,
-                pressure: 0.5,
-                xP: scaled.xP,
-                yP: scaled.yP,
+                x: scaled.x,
+                y: scaled.y,
+                w: scaled.w,
+                h: scaled.h
             }))
-            this.minitouch.send(JSON.stringify({ operation: 'c' }))
         },
         mouseMoveListener(event) {
             if (this.readonly) {
@@ -313,7 +297,6 @@ export default {
             this.touchSync('m', event)
             this.updateEffectPosition(event)
         },
-
         mouseUpListener(event) {
             if (this.readonly) {
                 return
@@ -326,11 +309,13 @@ export default {
             if (this.readonly) {
                 return
             }
+            if (!this.touch) {
+                return
+            }
             this.touchSync('u', event)
             this.showEffect = false;
             this.touch = false;
         },
-
         mouseDownListener(event) {
             if (this.readonly) {
                 return
@@ -350,47 +335,31 @@ export default {
             this.effectX = x - 25;
             this.effectY = y - 25;
         },
-        syncTouchpad() {
-            this.connect_details.push("try to connect minitouch...")
-            this.minitouch = this.$service.connect_ws("minitouch", this.device.agent_ip, this.device.forward_port)
-            this.minitouch.onopen = (ret) => {
-                this.readonly = false
-                console.log("minitouch connected")
-                this.minitouch.send(`ws://127.0.0.1:${this.device.forward_port}/minitouch`)
-                this.minitouch.send(JSON.stringify({ // touch reset, fix when device is outof control
-                    operation: "r",
-                }))
-                this.connect_details.push("minitouch connected!")
-            }
-            this.minitouch.onmessage = (message) => {
-                console.log("minitouch recv", message)
-
-            }
-            this.minitouch.onclose = () => {
-                this.readonly = true
-                console.log("minitouch closed")
-                this.connect_details.push("minitouch closed!")
-            }
-            this.minitouch.onerror = () => {
-                this.readonly = true
-                console.log("minitouch error")
-                this.connect_details.push("minitouch error!")
-            }
-        },
+        
         syncDisplay() {
-            this.connect_details.push("try to connect minicap...")
-            this.minicap = this.$service.connect_ws("minicap", this.device.agent_ip, this.device.forward_port)
-            this.minicap.onclose = () => {
-                console.log('minicap onclose', arguments)
-                this.img = 'preview.jpg'
-                this.connect_details.push("minicap closed!")
+            this.connect_details.push("try to connect device...")
+            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:7092`);
+            this.scrcpy.onopen = () => {
+                this.readonly = false
+                this.scrcpy.send(`${this.device.serial}`)
+                 // max size: 1200
+                 this.scrcpy.send(1200)
+                // control: false
+                this.scrcpy.send('true')
+                this.connect_details.push("device connected!")
+                this.connect_details.push("ready to receive image...")
             }
-            this.minicap.onerror = () => {
-                console.log('minicap onerror', arguments)
+            this.scrcpy.onclose = () => {
+                this.readonly = true
                 this.img = 'preview.jpg'
-                this.connect_details.push("minicap error!")
+                this.connect_details.push("connect closed!")
             }
-            this.minicap.onmessage = (message) => {
+            this.scrcpy.onerror = () => {
+                this.readonly = true
+                this.img = 'preview.jpg'
+                this.connect_details.push("connect error!")
+            }
+            this.scrcpy.onmessage = (message) => {
                 if (message.data instanceof Blob) {
                     this.periodImageCount += 1 // help for calculate fps
                     let blob = new Blob([message.data], {
@@ -406,15 +375,8 @@ export default {
                 } else if (/data size: /.test(message.data)) {
                 } else if (/^rotation/.test(message.data)) {
                     this.rotation = parseInt(message.data.substr('rotation '.length), 10);
-                    console.log("minicap rotation:", this.rotation)
-                } else {
-                    console.log("minicap receive message:", message.data)
+                    console.log("rotation:", this.rotation)
                 }
-            }
-            this.minicap.onopen = () => {
-                console.log('minicap connected')
-                this.minicap.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
-                this.connect_details.push("minicap connected!")
             }
         },
         get_settings() {
@@ -427,9 +389,6 @@ export default {
         this.device.index = this.devices.findIndex(device => device.serial === this.device.serial)+1;
         this.get_ip()
         this.syncDisplay()
-        // this.syncTouchpad()
-        this.killMinitouch()
-
         // calculate fps
         this.timer_fps = setInterval(() => {
             this.fps = this.periodImageCount / 0.5
@@ -450,14 +409,11 @@ export default {
     unmounted() {
         console.log('remote unmounted')
         this.readonly = true
-        if (this.minicap)
-            this.minicap.close()
-        if (this.minitouch)
-            this.minitouch.close()
+        if (this.scrcpy)
+            this.scrcpy.close()
         clearInterval(this.timer_fps)
         clearInterval(this.timer_task_status)
         clearInterval(this.timer_loading)
     },
-
 }
 </script>

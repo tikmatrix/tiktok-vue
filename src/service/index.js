@@ -39,9 +39,7 @@ export function install(formData) {
     data: formData
   })
 }
-export function connect_ws(uri, host, forward_port) {
-  return wsFetch(uri, host, forward_port)
-}
+
 
 export function script({ script, serial = "", args = [] }) {
   let params = { script };
@@ -580,11 +578,11 @@ export function stop_edit_bot({ ids }) {
     url: api.stop_edit_bot,
   })
 }
-export function clear_edit_bot({ id,dir }) {
+export function clear_edit_bot({ id, dir }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
-    params: { id,dir },
+    params: { id, dir },
     url: api.clear_edit_bot,
   })
 }

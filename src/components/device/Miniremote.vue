@@ -41,20 +41,30 @@ export default {
             img: 'preview.jpg',
             err: '',
             display: null,
-            ws: null,
+            mjpeg: null,
+            scrcpy: null,
         }
     },
     methods: {
         syncDisplay() {
-            this.ws = this.$service.connect_ws("minicap", this.device.agent_ip, this.device.forward_port)
-
-            this.ws.onclose = () => {
-                console.log('onclose', arguments)
+            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:7092`);
+            this.scrcpy.onopen = () => {
+                this.readonly = false
+                this.scrcpy.send(`${this.device.serial}`)
+                // max size: 800
+                this.scrcpy.send(800)
+                // control: false
+                this.scrcpy.send('false')
             }
-            this.ws.onerror = () => {
-                console.log('onerror', arguments)
+            this.scrcpy.onclose = () => {
+                this.readonly = true
+                this.img = 'preview.jpg'
             }
-            this.ws.onmessage = (message) => {
+            this.scrcpy.onerror = () => {
+                this.readonly = true
+                this.img = 'preview.jpg'
+            }
+            this.scrcpy.onmessage = (message) => {
                 if (message.data instanceof Blob) {
                     this.periodImageCount += 1 // help for calculate fps
                     let blob = new Blob([message.data], {
@@ -68,17 +78,10 @@ export default {
                     let u = URL.createObjectURL(blob)
                     this.img = u
                 } else if (/data size: /.test(message.data)) {
-                    // console.log("receive message:", message.data)
                 } else if (/^rotation/.test(message.data)) {
                     this.rotation = parseInt(message.data.substr('rotation '.length), 10);
                     console.log("rotation:", this.rotation)
-                } else {
-                    console.log("receive message:", message.data)
                 }
-            }
-            this.ws.onopen = () => {
-                console.log('onopen', arguments)
-                this.ws.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
             }
         },
     },
@@ -86,8 +89,8 @@ export default {
         this.syncDisplay()
     },
     unmounted() {
-        if (this.ws) {
-            this.ws.close()
+        if (this.scrcpy) {
+            this.scrcpy.close()
         }
     },
 }

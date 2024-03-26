@@ -26,21 +26,21 @@
                     <font-awesome-icon :icon="['fas', 'mobile-alt']" />
                 </div>
                 <div class="stat-title">{{ $t('deviceCount') }}</div>
-                <div class="stat-value">{{ device_count }}</div>
+                <CountUp class="stat-value" :end="device_count"/>
             </div>
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'users']" />
                 </div>
                 <div class="stat-title">{{ $t('accountCount') }}</div>
-                <div class="stat-value">{{ account_count }}</div>
+                <CountUp class="stat-value" :end="account_count"/>
             </div>
             <div class="stat">
                 <div class="stat-figure text-secondary">
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
                 <div class="stat-title">{{ $t('trainJobCount') }}</div>
-                <div class="stat-value">{{ train_job_count }}</div>
+                <CountUp class="stat-value" :end="train_job_count"/>
                 <div class="stat-desc">success rate {{ train_job_sucess_rate * 100 }}%</div>
             </div>
             <div class="stat">
@@ -48,7 +48,7 @@
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
                 <div class="stat-title">{{ $t('publishJobCount') }}</div>
-                <div class="stat-value">{{ publish_job_count }}</div>
+                <CountUp class="stat-value" :end="publish_job_count"/>
                 <div class="stat-desc">success rate {{ publish_job_sucess_rate * 100 }}%</div>
             </div>
             <div class="stat">
@@ -56,7 +56,7 @@
                     <font-awesome-icon :icon="['fas', 'robot']" />
                 </div>
                 <div class="stat-title">{{ $t('commentJobCount') }}</div>
-                <div class="stat-value">{{ comment_job_count }}</div>
+                <CountUp class="stat-value" :end="comment_job_count"/>
                 <div class="stat-desc">success rate {{ comment_job_sucess_rate * 100 }}%</div>
             </div>
         </div>
@@ -69,7 +69,7 @@
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
                 <div class="stat-title">{{ $t('trainJobQueue') }}</div>
-                <div class="stat-value">{{ train_job_queue }}</div>
+                <CountUp class="stat-value" :end="train_job_queue"/>
                 <div class="stat-desc">{{ running_train_job_count }} is running</div>
             </div>
             <div class="stat">
@@ -77,7 +77,7 @@
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
                 <div class="stat-title">{{ $t('publishJobQueue') }}</div>
-                <div class="stat-value">{{ publish_job_queue }}</div>
+                <CountUp class="stat-value" :end="publish_job_queue"/>
                 <div class="stat-desc">{{ running_publish_job_count }} is running</div>
             </div>
             <div class="stat">
@@ -85,7 +85,7 @@
                     <font-awesome-icon :icon="['fas', 'cogs']" />
                 </div>
                 <div class="stat-title">{{ $t('commentJobQueue') }}</div>
-                <div class="stat-value">{{ comment_job_queue }}</div>
+                <CountUp class="stat-value" :end="comment_job_queue"/>
                 <div class="stat-desc">{{ running_comment_job_count }} is running</div>
             </div>
         </div>
@@ -107,11 +107,13 @@
     <input id="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden>
 </template>
 <script>
+import CountUp from '../Countup.vue'
 import Button from '../Button.vue'
 
 export default {
     name: 'app',
     components: {
+        CountUp,
         Button,
     },
     data() {

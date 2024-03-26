@@ -32,10 +32,7 @@
                                     <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
                                         <div class="stat">
                                             <div class="stat-title text-white">{{ $t('background') }}</div>
-                                            <div class="stat-value">{{ item.status.background_video_count }}
-                                                <span class="loading loading-spinner text-warning"
-                                                    v-if="item.status?.uploading"></span>
-                                            </div>
+                                            <CountUp class="stat-value" :end="item.status?.background_video_count"/>
                                             <div class="stat-actions">
                                                 <button class="btn btn-sm btn-success text-white"
                                                     :disabled="item.status?.status == 1 || item.status?.uploading"
@@ -52,10 +49,8 @@
 
                                         <div class="stat">
                                             <div class="stat-title text-white">{{ $t('overlay') }}</div>
-                                            <div class="stat-value">{{ item.status.overlay_video_count }}
-                                                <span class="loading loading-spinner text-warning"
-                                                    v-if="item.status?.uploading"></span>
-                                            </div>
+                                            
+                                            <CountUp class="stat-value" :end="item.status?.overlay_video_count"/>
                                             <div class="stat-actions">
                                                 <button class="btn btn-sm btn-success text-white"
                                                     :disabled="item.status?.status == 1 || item.status?.uploading" @click="upload_overlay(item)">
@@ -71,9 +66,8 @@
                                         </div>
                                         <div class="stat">
                                             <div class="stat-title text-white">{{ $t('finished') }}</div>
-                                            <div class="stat-value">{{ item.status.finished_video_count }}
-
-                                            </div>
+                                           
+                                            <CountUp class="stat-value" :end="item.status?.finished_video_count"/>
                                             <div class="stat-actions">
                                                 
                                                 <button class="btn btn-sm btn-error text-white"
@@ -108,9 +102,7 @@
                                     <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
                                         <div class="stat">
                                             <div class="stat-title text-white">{{ $t('videos') }}</div>
-                                            <div class="stat-value">
-                                                {{ item.status?.video_count || 0 }}
-                                            </div>
+                                            <CountUp class="stat-value" :end="item.status?.video_count"/>
                                         </div>
                                         <div class="stat">
                                             <div class="stat-title text-white">
@@ -195,12 +187,14 @@
     </dialog>
 </template>
 <script>
+import CountUp from '../Countup.vue'
 import Modal from '../Modal.vue'
 import Button from '../Button.vue'
 import Pagination from '../Pagination.vue'
 export default {
     name: 'app',
     components: {
+        CountUp,
         Modal,
         Button,
         Pagination,
@@ -212,7 +206,8 @@ export default {
             update_status_timer: null,
             startAllLoading: false,
             stopAllLoading: false,
-            initAllLoading: false
+            initAllLoading: false,
+           
         }
     },
     methods: {

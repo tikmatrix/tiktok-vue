@@ -343,7 +343,7 @@ export default {
                 this.readonly = false
                 this.scrcpy.send(`${this.device.serial}`)
                  // max size: 1200
-                 this.scrcpy.send(1200)
+                 this.scrcpy.send(800)
                 // control: false
                 this.scrcpy.send('true')
                 this.connect_details.push("device connected!")

@@ -52,7 +52,7 @@ export default {
                 this.readonly = false
                 this.scrcpy.send(`${this.device.serial}`)
                 // max size: 800
-                this.scrcpy.send(800)
+                this.scrcpy.send(400)
                 // control: false
                 this.scrcpy.send('false')
             }

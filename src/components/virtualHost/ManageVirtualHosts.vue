@@ -268,10 +268,12 @@ export default {
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
+                        console.log("upload done");
                         this.currentVirtualHost.status.uploading = false;
                     }
                 }).catch(err => {
                     console.log(err);
+                    console.log("upload error");
                     this.currentVirtualHost.status.uploading = false;
                 });
             };
@@ -290,19 +292,25 @@ export default {
                 const formData = new FormData();
                 formData.append('id', this.currentVirtualHost.id);
                 formData.append('dir', "Backgrounds");
+                let count=0;
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
                     this.currentVirtualHost.status.background_video_count++;
+                    count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
+                        console.log("upload done,index:" + index+" totalFiles:" + totalFiles);
                         this.currentVirtualHost.status.uploading = false;
                     }
                 }).catch(err => {
-                    console.log(err);
-                    this.currentVirtualHost.status.uploading = false;
+                    // console.log(err);
+                    console.log("upload error");
+                    //retry
+                    index-=count;
+                    // this.currentVirtualHost.status.uploading = false;
                 });
             };
 
@@ -486,12 +494,13 @@ export default {
                 this.$service.get_post_bot_status({
                     id: this.virtualHosts[i].id
                 }).then(res => {
+                    res.data.uploading=this.virtualHosts[i].status?.uploading
                     this.virtualHosts[i].status = res.data
                     this.virtualHosts[i].status.loading = false
                     this.virtualHosts[i].status.updating = false
                 }).catch(err => {
-                    console.log(err)
-                    this.virtualHosts[i].status.loading = false
+                    // console.log(err)
+                    // this.virtualHosts[i].status.loading = false
                     this.virtualHosts[i].status.updating = false
                 })
             }

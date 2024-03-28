@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import util from '../util'
+import * as util from '../utils'
 export default {
   name: 'Login',
   data() {
@@ -35,14 +35,14 @@ export default {
   },
   methods: {
     auth() {
-      if (!password) {
+      if (!this.password) {
         return
       }
       this.$service.auth({
         password: this.password
       }).then((res) => {
         if (res.data === 'success') {
-          util.setCookie('password', password)
+          util.setCookie('password', this.password)
           //refresh
           window.location.reload()
         } else {

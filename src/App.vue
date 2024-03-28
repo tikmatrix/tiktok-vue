@@ -99,7 +99,7 @@ import ManageComments from './components/comment/ManageComments.vue'
 import ManageProxys from './components/proxy/ManageProxys.vue'
 import ManageVirtualHosts from './components/virtualHost/ManageVirtualHosts.vue'
 import Login from './components/Login.vue'
-import util from './util'
+import * as util from './utils'
 
 
 export default {
@@ -144,7 +144,7 @@ export default {
         this.needLogin = false
         return
       }
-      this.$service.checkAuth({
+      this.$service.auth({
         password: util.getCookie('password')
       }).then(res => {
         if (res.data === 'success') {

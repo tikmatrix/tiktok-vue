@@ -1,4 +1,4 @@
-import request, {  post } from '../utils/request'
+import request, { post } from '../utils/request'
 import * as util from '../utils'
 import api from '../api'
 export function auth({ password }) {
@@ -485,10 +485,10 @@ export function delete_all_post_comments() {
     url: api.delete_all_post_comments,
   })
 }
-export function get_ip({ baseURL, serial }) {
+export function get_ip({ serial, agent_ip }) {
   return request({
     method: 'get',
-    baseURL,
+    baseURL: `http://${agent_ip}:${import.meta.env.VITE_AGENT_PORT}`,
     url: api.get_ip,
     params: { serial }
   })

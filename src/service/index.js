@@ -1,4 +1,4 @@
-import request, { wsFetch, post } from '../utils/request'
+import request, { post } from '../utils/request'
 import * as util from '../utils'
 import api from '../api'
 export function auth({ password }) {
@@ -39,9 +39,7 @@ export function install(formData) {
     data: formData
   })
 }
-export function connect_ws(uri, host, forward_port) {
-  return wsFetch(uri, host, forward_port)
-}
+
 
 export function script({ script, serial = "", args = [] }) {
   let params = { script };
@@ -487,10 +485,10 @@ export function delete_all_post_comments() {
     url: api.delete_all_post_comments,
   })
 }
-export function get_ip({ baseURL, serial }) {
+export function get_ip({ serial, agent_ip }) {
   return request({
     method: 'get',
-    baseURL,
+    baseURL: `http://${agent_ip}:${import.meta.env.VITE_AGENT_PORT}`,
     url: api.get_ip,
     params: { serial }
   })
@@ -580,11 +578,11 @@ export function stop_edit_bot({ ids }) {
     url: api.stop_edit_bot,
   })
 }
-export function clear_edit_bot({ id,dir }) {
+export function clear_edit_bot({ id, dir }) {
   return request({
     baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
-    params: { id,dir },
+    params: { id, dir },
     url: api.clear_edit_bot,
   })
 }

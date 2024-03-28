@@ -44,7 +44,7 @@
             </div>
 
             <div class="label">
-                <span class="label-text-alt">example: 192.168.0.1:8090</span>
+                <span class="label-text-alt">example: 192.168.0.1:7890</span>
             </div>
         </label>
         <!-- <label class="form-control w-full max-w-md">
@@ -111,7 +111,6 @@
 </template>
 <script>
 import Button from '../Button.vue'
-
 export default {
     name: 'app',
     components: {
@@ -152,7 +151,6 @@ export default {
             }, (err) => {
                 console.error('Async: Could not copy text: ', err);
             });
-
         },
         get_license() {
             this.$service.get_license().then((res) => {

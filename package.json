@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "vite --mode dev",
+    "test": "vite --mode test",
     "build": "vite build --mode prod",
     "build:dev": "vite build --mode dev",
+    "build:test": "vite build --mode test",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -14,9 +16,11 @@
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^3.0.5",
+    "@types/jmuxer": "^2.0.6",
     "@vuepic/vue-datepicker": "^7.2.2",
     "axios": "^1.6.1",
     "countup.js": "^2.8.0",
+    "jmuxer": "^2.0.5",
     "odometer_countup": "^1.0.4",
     "vue": "^3.3.4",
     "vue-axios": "^3.5.2",

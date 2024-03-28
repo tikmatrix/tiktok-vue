@@ -20,7 +20,7 @@ jobs:
             run: npm ci
     
           - name: Build
-            run: npm run build:dev
+            run: npm run build:test
     
           - name: 📂 upload to server
             uses: appleboy/scp-action@v0.1.4

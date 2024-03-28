@@ -1,9 +1,9 @@
 <template>
     <div class="p-4 grid grid-cols-10">
         <div class="relative col-span-4 ">
-            <img ref="screen" v-bind:src="img" class=" rounded-lg border-4  border-black shadow-lg cursor-pointer"
-                @mousedown="mouseDownListener" @mouseup="mouseUpListener" @mouseleave="mouseLeaveListener"
-                @mousemove="mouseMoveListener" />
+            <video ref="display" autoplay poster="../../assets/preview.jpg"
+                class=" rounded-lg border-4  border-black shadow-lg cursor-pointer" @mousedown="mouseDownListener"
+                @mouseup="mouseUpListener" @mouseleave="mouseLeaveListener" @mousemove="mouseMoveListener" />
             <div v-if="showEffect" class="absolute rounded-full w-12 h-12 bg-white opacity-50 pointer-events-none"
                 :style="{ top: `${effectY}px`, left: `${effectX}px` }"></div>
             <!-- add a tast running tips -->
@@ -25,7 +25,7 @@
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
                 <div class="collapse-content">
-                    
+
                     <!-- <Button label="720x1280" icon="fa-solid fa-mobile" @click="shell('wm size 720x1280')" /> -->
                     <Button label="1080x1920" icon="fa-solid fa-mobile" @click="shell('wm size 1080x1920')" />
                     <Button label="1440x2560" icon="fa-solid fa-mobile" @click="shell('wm size 1440x2560')" />
@@ -34,9 +34,11 @@
                     <Button label="320" icon="fa-solid fa-mobile" @click="shell('wm density 320')" />
                     <Button label="480" icon="fa-solid fa-mobile" @click="shell('wm density 480')" />
                     <Button label="resetDensity" icon="fa-solid fa-mobile" @click="shell('wm density reset')" />
-                    <Button label="showTimeSetting" icon="fa-solid fa-clock" @click="shell('am start -a android.settings.DATE_SETTINGS')" />
+                    <Button label="showTimeSetting" icon="fa-solid fa-clock"
+                        @click="shell('am start -a android.settings.DATE_SETTINGS')" />
                     <!-- <Button label="menu" icon="fa-solid fa-bars" @click="shell('input keyevent KEYCODE_APP_SWITCH')" /> -->
-                    <Button label="back" icon="fa-solid fa-chevron-left" @click="shell('input keyevent KEYCODE_BACK')" />
+                    <Button label="back" icon="fa-solid fa-chevron-left"
+                        @click="shell('input keyevent KEYCODE_BACK')" />
                     <Button label="home" icon="fa-solid fa-home" @click="shell('input keyevent KEYCODE_HOME')" />
                     <Button label="wakeup" icon="fa-solid fa-mobile-screen"
                         @click="shell('input keyevent KEYCODE_WAKEUP')" />
@@ -47,18 +49,20 @@
                         @click="shell('am force-stop com.zhiliaoapp.musically')" />
                     <Button label="clearTiktok" icon="fa-solid fa-trash"
                         @click="shell('pm clear com.zhiliaoapp.musically')" />
-                    <Button @click="enable_proxy" label="enableProxy"
-                        icon="fa-solid fa-link" />
+                    <Button @click="enable_proxy" label="enableProxy" icon="fa-solid fa-link" />
                     <Button @click="shell('settings put global http_proxy :0')" label="disableProxy"
                         icon="fa-solid fa-unlink" />
                     <Button @click="shell('am start -a android.settings.DEVICE_INFO_SETTINGS')" label="showSimInfo"
-                    icon="fa-solid fa-sim-card" />
-                    <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification" icon="fa-solid fa-bell" />
-                    <Button @click="script('clear_notification', device.serial)" label="clearNotification" icon="fa-solid fa-bell-slash" />
-                    <Button @click="script('clear_tasks', device.serial)" label="clearTasks" icon="fa-solid fa-trash" /> 
+                        icon="fa-solid fa-sim-card" />
+                    <Button @click="shell('input swipe 500 0 500 1000')" label="openNotification"
+                        icon="fa-solid fa-bell" />
+                    <Button @click="script('clear_notification', device.serial)" label="clearNotification"
+                        icon="fa-solid fa-bell-slash" />
+                    <Button @click="script('clear_tasks', device.serial)" label="clearTasks" icon="fa-solid fa-trash" />
                     <Button label="openWhoer" icon="fa-brands fa-wikipedia-w"
                         @click="shell('am start -a android.intent.action.VIEW -d https://whoer.net')" />
-                    <Button label="ipinfo" icon="fa-solid fa-info" @click="shell('am start -a android.intent.action.VIEW -d https://ipinfo.io')" />
+                    <Button label="ipinfo" icon="fa-solid fa-info"
+                        @click="shell('am start -a android.intent.action.VIEW -d https://ipinfo.io')" />
                     <Button label="reboot" icon="fa-solid fa-sync" @click="shell('reboot')" />
                     <Button label="init" icon="fa-solid fa-wrench" @click="repair(device.serial)" />
                 </div>
@@ -66,15 +70,16 @@
             <details class="collapse collapse-arrow bg-base-200">
                 <summary class="collapse-title text-xl font-medium">{{ $t('autoScripts') }}</summary>
                 <div class="collapse-content">
-                    <Button @click="script('connect_wifi', device.serial)" label="connectWifi" icon="fa-solid fa-wifi" />
-                    
+                    <Button @click="script('connect_wifi', device.serial)" label="connectWifi"
+                        icon="fa-solid fa-wifi" />
+
                     <Button @click="script('profile', device.serial)" label="setProfile" icon="fa-solid fa-user"
                         :disabled="task_status == 'running'" />
                     <Button @click="script('torch_on', device.serial)" label="torchOn" icon="fa-solid fa-lightbulb"
                         :disabled="task_status == 'running'" />
                     <Button @click="script('torch_off', device.serial)" label="torchOff" icon="fa-solid fa-lightbulb"
                         :disabled="task_status == 'running'" />
-                    
+
                     <Button label="register" icon="fa-solid fa-address-card" @click="script('register', device.serial)"
                         :disabled="task_status == 'running'" />
                     <Button label="registerAll" icon="fa-solid fa-address-card"
@@ -107,6 +112,7 @@
 <script>
 import Button from '../Button.vue'
 import { inject } from 'vue';
+import JMuxer from 'jmuxer'
 export default {
     props: {
         device: {
@@ -136,8 +142,7 @@ export default {
             showEffect: false,
             effectX: 0,
             effectY: 0,
-            minicap: null,
-            minitouch: null,
+            scrcpy: null,
             touch: false,
             task_status: "idle",
             timer_fps: null,
@@ -160,7 +165,7 @@ export default {
             for (let i = 0; i < e.target.files.length; i++) {
                 formData.append('files', e.target.files[i])
             }
-            this.$service.upload_video(`http://${this.device.agent_ip}:8091`,formData).then(res => {
+            this.$service.upload_video(`http://${this.device.agent_ip}:8091`, formData).then(res => {
             }).catch(err => {
                 console.log(err)
             })
@@ -178,7 +183,7 @@ export default {
         },
         get_ip() {
             this.$service.get_ip({
-                baseURL: `http://${this.device.agent_ip}:8091`,
+                agent_ip: this.device.agent_ip,
                 serial: this.device.serial
             }).then(res => {
                 this.ip = res.data
@@ -188,7 +193,7 @@ export default {
         },
         readClipboard() {
             this.$service.read_clipboard({
-                baseURL: `http://${this.device.agent_ip}:8091`,
+                baseURL: `http://${this.device.agent_ip}:7091`,
                 serial: this.device.serial
             }).then(res => {
                 this.text = res.data
@@ -240,18 +245,9 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-
-        },
-
-        killMinitouch() {
-            this.shell('pkill minitouch')
-            this.shell('input keyevent KEYCODE_WAKEUP')
-            this.shell('settings put system screen_off_timeout 2147483647')
-            this.syncTouchpad()
         },
         coords(boundingW, boundingH, relX, relY, rotation) {
             var w, h, x, y;
-
             switch (rotation) {
                 case 0:
                     w = boundingW
@@ -278,11 +274,7 @@ export default {
                     y = boundingW - relX
                     break
             }
-
-            return {
-                xP: x / w,
-                yP: y / h,
-            }
+            return { x, y, w, h }
         },
         touchSync(operation, event) {
             var e = event;
@@ -290,18 +282,16 @@ export default {
                 e = e.originalEvent
             }
             e.preventDefault()
-
             let x = e.offsetX, y = e.offsetY
             let w = e.target.clientWidth, h = e.target.clientHeight
             let scaled = this.coords(w, h, x, y, this.rotation);
-            this.minitouch.send(JSON.stringify({
+            this.scrcpy.send(JSON.stringify({
                 operation: operation, // u, d, c, w
-                index: 0,
-                pressure: 0.5,
-                xP: scaled.xP,
-                yP: scaled.yP,
+                x: scaled.x,
+                y: scaled.y,
+                w: scaled.w,
+                h: scaled.h
             }))
-            this.minitouch.send(JSON.stringify({ operation: 'c' }))
         },
         mouseMoveListener(event) {
             if (this.readonly) {
@@ -313,7 +303,6 @@ export default {
             this.touchSync('m', event)
             this.updateEffectPosition(event)
         },
-
         mouseUpListener(event) {
             if (this.readonly) {
                 return
@@ -326,11 +315,13 @@ export default {
             if (this.readonly) {
                 return
             }
+            if (!this.touch) {
+                return
+            }
             this.touchSync('u', event)
             this.showEffect = false;
             this.touch = false;
         },
-
         mouseDownListener(event) {
             if (this.readonly) {
                 return
@@ -350,71 +341,48 @@ export default {
             this.effectX = x - 25;
             this.effectY = y - 25;
         },
-        syncTouchpad() {
-            this.connect_details.push("try to connect minitouch...")
-            this.minitouch = this.$service.connect_ws("minitouch", this.device.agent_ip, this.device.forward_port)
-            this.minitouch.onopen = (ret) => {
-                this.readonly = false
-                console.log("minitouch connected")
-                this.minitouch.send(`ws://127.0.0.1:${this.device.forward_port}/minitouch`)
-                this.minitouch.send(JSON.stringify({ // touch reset, fix when device is outof control
-                    operation: "r",
-                }))
-                this.connect_details.push("minitouch connected!")
-            }
-            this.minitouch.onmessage = (message) => {
-                console.log("minitouch recv", message)
 
-            }
-            this.minitouch.onclose = () => {
-                this.readonly = true
-                console.log("minitouch closed")
-                this.connect_details.push("minitouch closed!")
-            }
-            this.minitouch.onerror = () => {
-                this.readonly = true
-                console.log("minitouch error")
-                this.connect_details.push("minitouch error!")
-            }
-        },
         syncDisplay() {
-            this.connect_details.push("try to connect minicap...")
-            this.minicap = this.$service.connect_ws("minicap", this.device.agent_ip, this.device.forward_port)
-            this.minicap.onclose = () => {
-                console.log('minicap onclose', arguments)
-                this.img = 'preview.jpg'
-                this.connect_details.push("minicap closed!")
-            }
-            this.minicap.onerror = () => {
-                console.log('minicap onerror', arguments)
-                this.img = 'preview.jpg'
-                this.connect_details.push("minicap error!")
-            }
-            this.minicap.onmessage = (message) => {
-                if (message.data instanceof Blob) {
-                    this.periodImageCount += 1 // help for calculate fps
-                    let blob = new Blob([message.data], {
-                        type: 'image/jpeg'
-                    })
-                    let URL = window.URL || window.webkitURL
-                    // Revoke the old URL before creating a new one
-                    if (this.img) {
-                        URL.revokeObjectURL(this.img);
+            const jmuxer = new JMuxer({
+                node: this.$refs.display,
+                mode: 'video',
+                flushingTime: 1,
+                maxDelay: 0,
+                fps: 60,
+                debug: false,
+                onError: function (data) {
+                    if (/Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor)) {
+                        jmuxer.reset();
                     }
-                    let u = URL.createObjectURL(blob)
-                    this.img = u
-                } else if (/data size: /.test(message.data)) {
-                } else if (/^rotation/.test(message.data)) {
-                    this.rotation = parseInt(message.data.substr('rotation '.length), 10);
-                    console.log("minicap rotation:", this.rotation)
-                } else {
-                    console.log("minicap receive message:", message.data)
                 }
+            })
+            this.connect_details.push("try to connect device...")
+            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:${import.meta.env.VITE_SCRCPY_PORT}`);
+            this.scrcpy.binaryType = 'arraybuffer';
+            this.scrcpy.onopen = () => {
+                this.readonly = false
+                this.scrcpy.send(`${this.device.serial}`)
+                // max size: 1200
+                this.scrcpy.send(800)
+                // control: false
+                this.scrcpy.send('true')
+                this.connect_details.push("device connected!")
             }
-            this.minicap.onopen = () => {
-                console.log('minicap connected')
-                this.minicap.send(`ws://127.0.0.1:${this.device.forward_port}/minicap`)
-                this.connect_details.push("minicap connected!")
+            this.scrcpy.onclose = () => {
+                this.readonly = true
+                this.img = 'preview.jpg'
+                this.connect_details.push("connect closed!")
+            }
+            this.scrcpy.onerror = () => {
+                this.readonly = true
+                this.img = 'preview.jpg'
+                this.connect_details.push("connect error!")
+            }
+            this.scrcpy.onmessage = (message) => {
+                this.periodImageCount += 1
+                jmuxer.feed({
+                    video: new Uint8Array(message.data)
+                });
             }
         },
         get_settings() {
@@ -424,12 +392,9 @@ export default {
         },
     },
     mounted() {
-        this.device.index = this.devices.findIndex(device => device.serial === this.device.serial)+1;
+        this.device.index = this.devices.findIndex(device => device.serial === this.device.serial) + 1;
         this.get_ip()
         this.syncDisplay()
-        // this.syncTouchpad()
-        this.killMinitouch()
-
         // calculate fps
         this.timer_fps = setInterval(() => {
             this.fps = this.periodImageCount / 0.5
@@ -450,14 +415,11 @@ export default {
     unmounted() {
         console.log('remote unmounted')
         this.readonly = true
-        if (this.minicap)
-            this.minicap.close()
-        if (this.minitouch)
-            this.minitouch.close()
+        if (this.scrcpy)
+            this.scrcpy.close()
         clearInterval(this.timer_fps)
         clearInterval(this.timer_task_status)
         clearInterval(this.timer_loading)
     },
-
 }
 </script>

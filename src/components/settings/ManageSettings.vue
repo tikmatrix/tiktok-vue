@@ -25,7 +25,7 @@
 
             <div class="label">
                 <label class="label-text-alt text-red-500 font-bold" v-if="license.status != 'pass'">{{
-                    license.status }}</label>
+            license.status }}</label>
                 <label class="label-text-alt" v-if="license.status == 'pass'">
                     For: <label class="text-green-500 font-bold">{{ license.name }}</label>
                     Left: <label class="text-red-500 font-bold">{{ license.left_days }}</label> days.
@@ -105,6 +105,22 @@
 
             <div class="label">
                 <span class="label-text-alt">example: sk-xxxxxxxxxxxxxxxx </span>
+            </div>
+        </label>
+        <label class="form-control w-full max-w-md">
+            <div class="label">
+                <span class="label-text">{{ $t('passwordTips') }}</span>
+            </div>
+            <div class="join">
+                <input type="text" placeholder="password" class="input input-primary w-full max-w-md join-item"
+                    v-model="settings.password" />
+
+
+                <Button @click="set_settings" label="save" :loading-time=2000 />
+            </div>
+
+            <div class="label">
+                <span class="label-text-alt">example: 123456 </span>
             </div>
         </label>
     </div>

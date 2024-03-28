@@ -99,6 +99,7 @@ import ManageComments from './components/comment/ManageComments.vue'
 import ManageProxys from './components/proxy/ManageProxys.vue'
 import ManageVirtualHosts from './components/virtualHost/ManageVirtualHosts.vue'
 import Login from './components/Login.vue'
+import util from './util'
 
 
 export default {
@@ -129,7 +130,7 @@ export default {
       selectedItem: null
     }
   },
-  
+
   methods: {
     changeLocale(locale) {
       this.$i18n.locale = locale;
@@ -139,7 +140,19 @@ export default {
       this.selectedItem = item.name
     },
     checkAuth() {
-      this.needLogin = this.$service.needLogin()
+      if (import.meta.env.VITE_APP_MOCK === 'true') {
+        this.needLogin = false
+        return
+      }
+      this.$service.checkAuth({
+        password: util.getCookie('password')
+      }).then(res => {
+        if (res.data === 'success') {
+          this.needLogin = false
+        } else {
+          this.needLogin = true
+        }
+      })
     },
     logout() {
       this.$service.logout()
@@ -152,4 +165,3 @@ export default {
   }
 }
 </script>
-

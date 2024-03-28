@@ -1,4 +1,5 @@
 const api = {
+    auth: '/api/auth',
     install: '/api/install',
     script: '/api/script',
     device: '/api/device',

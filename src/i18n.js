@@ -114,6 +114,7 @@ export const i18n = createI18n({
             emailTips: 'Customize the registration email suffix',
             openaiTips: 'Is it necessary to customize the username and nickname with AI',
             licenseTips: 'Enter the license key',
+            passwordTips: 'Enter the password',
             save: 'Save',
             setProfile: 'Set Profile',
             avatars: 'Avatars',

@@ -2,22 +2,15 @@ import request, { post } from '../utils/request'
 import * as util from '../utils'
 import api from '../api'
 export function auth({ password }) {
-  console.log(password)
-  if (!password) {
-    return false
-  }
-  if (password !== 'andy...') {
-    return false
-  }
-  util.setCookie('password', password)
-  return true
+  return request({
+    method: 'post',
+    url: api.auth,
+    data: {
+      password
+    }
+  })
 }
-export function needLogin() {
-  if (!util.getCookie('password')) {
-    return true
-  }
-  return false
-}
+
 export function logout() {
   util.delCookie('password')
 }
@@ -320,11 +313,11 @@ export function get_settings() {
     url: api.settings,
   })
 }
-export function update_settings({ proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix }) {
+export function update_settings({ proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix, password }) {
   return request({
     method: 'put',
     url: api.settings,
-    data: { proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix }
+    data: { proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix, password }
   })
 }
 export function get_task_status({ serial }) {

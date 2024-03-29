@@ -66,7 +66,8 @@
       <ManageTrainJobs v-if="selectedItem === 'trainJobs'" />
       <ManageDialog v-if="selectedItem === 'dialogWatcher'" />
       <ManageSettings v-if="selectedItem === 'settings'" />
-      <ManageVirtualHosts v-if="selectedItem === 'virtualHosts'" />
+      <ManagePostBots v-if="selectedItem === 'postBots'" />
+      <ManageEditBots v-if="selectedItem === 'editBots'" />
       <footer class="footer footer-center p-4 bg-base-300 text-base-content">
         <aside>
           <p>Copyright © 2024 - All right reserved by niostack.com</p>
@@ -97,7 +98,9 @@ import ManageSettings from './components/settings/ManageSettings.vue'
 import ManageAvatars from './components/avatar/ManageAvatars.vue'
 import ManageComments from './components/comment/ManageComments.vue'
 import ManageProxys from './components/proxy/ManageProxys.vue'
-import ManageVirtualHosts from './components/virtualHost/ManageVirtualHosts.vue'
+import ManagePostBots from './components/virtualHost/ManagePostBots.vue'
+import ManageEditBots from './components/virtualHost/ManageEditBots.vue'
+
 import Login from './components/Login.vue'
 import * as util from './utils'
 
@@ -107,7 +110,6 @@ export default {
   components: {
     Login,
     Sidebar,
-    ManageVirtualHosts,
     ManageDashboard,
     ManageDevices,
     ManageAccounts,
@@ -121,7 +123,9 @@ export default {
     ManageSettings,
     ManageAvatars,
     ManageComments,
-    ManageProxys
+    ManageProxys,
+    ManagePostBots,
+    ManageEditBots
   },
   data() {
     return {

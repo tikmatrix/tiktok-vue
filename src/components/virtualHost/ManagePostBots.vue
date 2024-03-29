@@ -27,82 +27,12 @@
                                     <a class="link link-primary" :href="'vnc://' + item.host" target="_blank">
                                         vnc://{{ item.host }}</a>
                                 </td>
-                                <td class="text-left" v-if='item.bot_type == "1"'>
 
-                                    <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
-                                        <div class="stat">
-                                            <div class="stat-title text-white">{{ $t('background') }}</div>
-                                            <CountUp class="stat-value" :end="item.status?.background_video_count"/>
-                                            <div class="stat-actions">
-                                                <button class="btn btn-sm btn-success text-white"
-                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
-                                                    @click="upload_background(item)">{{ $t('upload') }}
-                                                </button>
-                                                <button class="btn btn-sm btn-error text-white ml-1"
-                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
-                                                    @click="clear_background(item)">{{ $t('clear') }}
-                                                </button>
-                                            </div>
-                                            <input ref="upload_input_background" type="file"
-                                                v-on:change="on_upload_background" multiple hidden>
-                                        </div>
-
-                                        <div class="stat">
-                                            <div class="stat-title text-white">{{ $t('overlay') }}</div>
-                                            
-                                            <CountUp class="stat-value" :end="item.status?.overlay_video_count"/>
-                                            <div class="stat-actions">
-                                                <button class="btn btn-sm btn-success text-white"
-                                                    :disabled="item.status?.status == 1 || item.status?.uploading" @click="upload_overlay(item)">
-                                                    {{ $t('upload') }}
-                                                </button>
-                                                <button class="btn btn-sm btn-error text-white ml-1"
-                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
-                                                    @click="clear_overlay(item)">{{ $t('clear') }}
-                                                </button>
-                                            </div>
-                                            <input ref="upload_input_overlay" type="file"
-                                                v-on:change="on_upload_overlay" multiple hidden>
-                                        </div>
-                                        <div class="stat">
-                                            <div class="stat-title text-white">{{ $t('finished') }}</div>
-                                           
-                                            <CountUp class="stat-value" :end="item.status?.finished_video_count"/>
-                                            <div class="stat-actions">
-                                                
-                                                <button class="btn btn-sm btn-error text-white"
-                                                    :disabled="item.status?.status == 1 || item.status?.uploading"
-                                                    @click="clear_finished(item)">{{ $t('clear') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="stat">
-                                            <div class="stat-title text-white">
-                                                {{ item.status?.status == 1 ? $t('running') : $t('stopped') }}</div>
-                                            <div class="stat-value">{{ format_time(item.status?.uptime || 0) }}
-                                                <span class="loading loading-spinner text-warning"
-                                                    v-if="item.status?.loading"></span>
-                                            </div>
-                                            <div class="stat-actions">
-                                                <button @click="start_edit_bot(item)"
-                                                    class="btn btn-sm btn-primary text-white"
-                                                    :disabled="item.status?.loading" v-if="item.status?.status == 0">
-                                                    {{ $t('start_bot') }}
-                                                </button>
-                                                <button @click="stop_edit_bot(item)"
-                                                    class="btn btn-sm btn-error text-white"
-                                                    :disabled="item.status?.loading" v-else>
-                                                    {{ $t('stop_bot') }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-left" v-else>
+                                <td class="text-left">
                                     <div class="stats bg-gradient-to-r from-primary to-success text-primary-content">
                                         <div class="stat">
                                             <div class="stat-title text-white">{{ $t('videos') }}</div>
-                                            <CountUp class="stat-value" :end="item.status?.video_count"/>
+                                            <CountUp class="stat-value" :end="item.status?.video_count" />
                                         </div>
                                         <div class="stat">
                                             <div class="stat-title text-white">
@@ -207,7 +137,7 @@ export default {
             startAllLoading: false,
             stopAllLoading: false,
             initAllLoading: false,
-           
+
         }
     },
     methods: {
@@ -292,7 +222,7 @@ export default {
                 const formData = new FormData();
                 formData.append('id', this.currentVirtualHost.id);
                 formData.append('dir', "Backgrounds");
-                let count=0;
+                let count = 0;
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
                     this.currentVirtualHost.status.background_video_count++;
@@ -302,14 +232,14 @@ export default {
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
-                        console.log("upload done,index:" + index+" totalFiles:" + totalFiles);
+                        console.log("upload done,index:" + index + " totalFiles:" + totalFiles);
                         this.currentVirtualHost.status.uploading = false;
                     }
                 }).catch(err => {
                     // console.log(err);
                     console.log("upload error");
                     //retry
-                    index-=count;
+                    index -= count;
                     // this.currentVirtualHost.status.uploading = false;
                 });
             };
@@ -416,9 +346,13 @@ export default {
                         this.virtualHosts[i].bot_type = '0'
                     }
                 }
+                //filter bot type
+                this.virtualHosts = this.virtualHosts.filter(item => {
+                    return item.bot_type === '0'
+                })
                 //sort by name
                 this.virtualHosts.sort((a, b) => {
-                    return -a.bot_type.localeCompare(b.bot_type) || a.name.localeCompare(b.name)
+                    return a.name.localeCompare(b.name)
                 })
                 this.update_status();
             }).catch(err => {
@@ -494,7 +428,7 @@ export default {
                 this.$service.get_post_bot_status({
                     id: this.virtualHosts[i].id
                 }).then(res => {
-                    res.data.uploading=this.virtualHosts[i].status?.uploading
+                    res.data.uploading = this.virtualHosts[i].status?.uploading
                     this.virtualHosts[i].status = res.data
                     this.virtualHosts[i].status.loading = false
                     this.virtualHosts[i].status.updating = false

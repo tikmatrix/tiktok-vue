@@ -91,13 +91,13 @@ export function upload_to_virtualHost(formData) {
     data: formData
   })
 }
-export function upload_video(baseURL, formData) {
+export function upload_video(formData) {
   return post({
     headers: {
       'Content-Type': 'multipart/form-data'
     },
     url: api.upload_video,
-    baseURL,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     data: formData
   })
 }
@@ -440,9 +440,9 @@ export function add_comment({ account_id, content, no, parent_no }) {
     data: { account_id, content, no, parent_no }
   })
 }
-export function read_clipboard({ baseURL, serial }) {
+export function read_clipboard({ serial }) {
   return request({
-    baseURL,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     method: 'get',
     url: api.read_clipboard,
     params: { serial }
@@ -478,10 +478,10 @@ export function delete_all_post_comments() {
     url: api.delete_all_post_comments,
   })
 }
-export function get_ip({ serial, agent_ip }) {
+export function get_ip({ serial }) {
   return request({
     method: 'get',
-    baseURL: `http://${agent_ip}:${import.meta.env.VITE_AGENT_PORT}`,
+    baseURL: `http://${window.location.hostname}:${import.meta.env.VITE_AGENT_PORT}`,
     url: api.get_ip,
     params: { serial }
   })

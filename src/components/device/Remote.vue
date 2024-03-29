@@ -165,7 +165,7 @@ export default {
             for (let i = 0; i < e.target.files.length; i++) {
                 formData.append('files', e.target.files[i])
             }
-            this.$service.upload_video(`http://${this.device.agent_ip}:8091`, formData).then(res => {
+            this.$service.upload_video(formData).then(res => {
             }).catch(err => {
                 console.log(err)
             })
@@ -183,7 +183,6 @@ export default {
         },
         get_ip() {
             this.$service.get_ip({
-                agent_ip: this.device.agent_ip,
                 serial: this.device.serial
             }).then(res => {
                 this.ip = res.data
@@ -193,7 +192,6 @@ export default {
         },
         readClipboard() {
             this.$service.read_clipboard({
-                baseURL: `http://${this.device.agent_ip}:7091`,
                 serial: this.device.serial
             }).then(res => {
                 this.text = res.data
@@ -357,7 +355,7 @@ export default {
                 }
             })
             this.connect_details.push("try to connect device...")
-            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:${import.meta.env.VITE_SCRCPY_PORT}`);
+            this.scrcpy = new WebSocket(`ws://${window.location.hostname}:${import.meta.env.VITE_SCRCPY_PORT}`);
             this.scrcpy.binaryType = 'arraybuffer';
             this.scrcpy.onopen = () => {
                 this.readonly = false

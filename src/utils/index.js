@@ -13,7 +13,7 @@ export function getAgentUrl() {
   if (window.location.port) {
     return window.location.protocol + '//' + window.location.hostname + ':' + import.meta.env.VITE_AGENT_PORT
   } else {
-    return window.location.protocol + '//agent.' + window.location.hostname
+    return window.location.protocol + '//agent-' + window.location.hostname
   }
 }
 //get ws url
@@ -22,7 +22,7 @@ export function getWsUrl() {
   if (window.location.port) {
     return 'ws://' + window.location.hostname + ':' + import.meta.env.VITE_WS_PORT
   } else {
-    return 'ws://ws.' + window.location.hostname
+    return 'ws://ws-' + window.location.hostname
   }
 }
 

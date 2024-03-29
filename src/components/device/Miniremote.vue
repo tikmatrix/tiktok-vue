@@ -11,6 +11,7 @@
 <script>
 import Button from '../Button.vue'
 import JMuxer from 'jmuxer'
+import * as util from '../../utils'
 export default {
     components: {
         Button
@@ -52,7 +53,7 @@ export default {
                     }
                 }
             })
-            this.scrcpy = new WebSocket(`ws://${this.device.agent_ip}:${import.meta.env.VITE_SCRCPY_PORT}`);
+            this.scrcpy = new WebSocket(util.getWsUrl());
             this.scrcpy.binaryType = 'arraybuffer';
             this.scrcpy.onopen = () => {
                 this.readonly = false

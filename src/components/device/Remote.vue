@@ -113,6 +113,7 @@
 import Button from '../Button.vue'
 import { inject } from 'vue';
 import JMuxer from 'jmuxer'
+import * as util from '../../utils'
 export default {
     props: {
         device: {
@@ -355,7 +356,7 @@ export default {
                 }
             })
             this.connect_details.push("try to connect device...")
-            this.scrcpy = new WebSocket(`ws://${window.location.hostname}:${import.meta.env.VITE_SCRCPY_PORT}`);
+            this.scrcpy = new WebSocket(util.getWsUrl());
             this.scrcpy.binaryType = 'arraybuffer';
             this.scrcpy.onopen = () => {
                 this.readonly = false

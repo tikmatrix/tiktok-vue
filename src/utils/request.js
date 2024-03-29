@@ -7,7 +7,6 @@ export function post(config) {
   !config && (config = { headers: {} })
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
-  !config.baseURL && (config.baseURL = `http://${window.location.hostname}:${import.meta.env.VITE_SERVER_PORT}`)
   const { method, url, data, params, headers } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {
@@ -31,7 +30,6 @@ const request = function request(config) {
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
   !config.params && (config.params = {})
-  !config.baseURL && (config.baseURL = `http://${window.location.hostname}:${import.meta.env.VITE_SERVER_PORT}`)
   const { method, url, data, params, headers } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {

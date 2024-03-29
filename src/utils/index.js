@@ -22,7 +22,7 @@ export function getWsUrl() {
   if (window.location.port) {
     return 'ws://' + window.location.hostname + ':' + import.meta.env.VITE_WS_PORT
   } else {
-    return 'ws://ws-' + window.location.hostname
+    return 'wss://ws-' + window.location.hostname
   }
 }
 

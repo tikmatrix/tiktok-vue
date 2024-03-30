@@ -7,6 +7,7 @@ export function post(config) {
   !config && (config = { headers: {} })
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
+  !config.baseURL && (config.baseURL = '')
   const { method, url, data, params, headers } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {

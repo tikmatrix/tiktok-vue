@@ -44,6 +44,7 @@
                                                 </button>
                                             </div>
                                             <input ref="upload_input_background" type="file"
+                                                accept="video/mp4,video/x-m4v,video/*"
                                                 v-on:change="on_upload_background" multiple hidden>
                                         </div>
 
@@ -119,7 +120,20 @@
             </template>
         </Pagination>
     </div>
-    <!-- Open the modal using ID.showModal() method -->
+    <!-- upload progress dialog -->
+    <dialog ref="upload_dialog" class="modal">
+        <div class="modal-box">
+            <form method="dialog">
+                <!-- <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button> -->
+            </form>
+            <h3 class="font-bold text-lg">Upload Progress</h3>
+            <div class="py-4">
+                <progress class="progress progress-success w-full" :value="upload_progress"
+                    :max="max_upload_progress"></progress>
+            </div>
+        </div>
+    </dialog>
+    <!-- create dialog -->
     <dialog ref="add_dialog" class="modal">
         <div class="modal-box">
             <form method="dialog">
@@ -180,6 +194,8 @@ export default {
             startAllLoading: false,
             stopAllLoading: false,
             initAllLoading: false,
+            upload_progress: 10,
+            max_upload_progress: 100,
 
         }
     },
@@ -228,6 +244,9 @@ export default {
             this.currentVirtualHost.status.uploading = true;
             const totalFiles = e.target.files.length;
             let index = 0;
+            this.update_progress = index
+            this.max_upload_progress = totalFiles
+            this.$refs.upload_dialog.showModal()
             const uploadBatch = () => {
                 const formData = new FormData();
                 formData.append('id', this.currentVirtualHost.id);
@@ -237,17 +256,19 @@ export default {
                     this.currentVirtualHost.status.overlay_video_count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {
-
+                    this.update_progress = index
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
                         console.log("upload done");
                         this.currentVirtualHost.status.uploading = false;
+                        this.$refs.upload_input_overlay[0].value = '';
+                        this.$refs.upload_dialog.close()
                     }
+
                 }).catch(err => {
-                    console.log(err);
                     console.log("upload error");
-                    this.currentVirtualHost.status.uploading = false;
+                    index -= count;
                 });
             };
             uploadBatch();
@@ -260,7 +281,9 @@ export default {
             this.currentVirtualHost.status.uploading = true;
             const totalFiles = e.target.files.length;
             let index = 0;
-
+            this.update_progress = index
+            this.max_upload_progress = totalFiles
+            this.$refs.upload_dialog.showModal()
             const uploadBatch = () => {
                 const formData = new FormData();
                 formData.append('id', this.currentVirtualHost.id);
@@ -272,18 +295,17 @@ export default {
                     count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {
+                    this.update_progress = index
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
-                        console.log("upload done,index:" + index + " totalFiles:" + totalFiles);
                         this.currentVirtualHost.status.uploading = false;
+                        this.$refs.upload_input_background[0].value = '';
+                        this.$refs.upload_dialog.close()
                     }
                 }).catch(err => {
-                    // console.log(err);
                     console.log("upload error");
-                    //retry
                     index -= count;
-                    // this.currentVirtualHost.status.uploading = false;
                 });
             };
 

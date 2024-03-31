@@ -244,19 +244,21 @@ export default {
             this.currentVirtualHost.status.uploading = true;
             const totalFiles = e.target.files.length;
             let index = 0;
-            this.update_progress = index
+            this.upload_progress = index
             this.max_upload_progress = totalFiles
             this.$refs.upload_dialog.showModal()
             const uploadBatch = () => {
                 const formData = new FormData();
                 formData.append('id', this.currentVirtualHost.id);
                 formData.append('dir', "overlay");
+                let count = 0;
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
                     this.currentVirtualHost.status.overlay_video_count++;
+                    this.upload_progress++;
+                    count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {
-                    this.update_progress = index
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
@@ -281,7 +283,7 @@ export default {
             this.currentVirtualHost.status.uploading = true;
             const totalFiles = e.target.files.length;
             let index = 0;
-            this.update_progress = index
+            this.upload_progress = index
             this.max_upload_progress = totalFiles
             this.$refs.upload_dialog.showModal()
             const uploadBatch = () => {
@@ -292,10 +294,10 @@ export default {
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
                     this.currentVirtualHost.status.background_video_count++;
+                    this.upload_progress++;
                     count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {
-                    this.update_progress = index
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
@@ -501,10 +503,12 @@ export default {
     },
     mounted() {
         this.get_virtualHosts();
-
+        this.upload_progress = 0
+        this.max_upload_progress = 100
+        this.$refs.upload_dialog.showModal()
         // this.update_status_timer = setInterval(() => {
-        //     this.update_status()
-        // }, 5000)
+        //     this.upload_progress++
+        // }, 1000)
     },
     unmounted() {
         clearInterval(this.update_status_timer)

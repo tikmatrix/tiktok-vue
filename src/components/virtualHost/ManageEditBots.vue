@@ -255,10 +255,11 @@ export default {
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
                     this.currentVirtualHost.status.overlay_video_count++;
-                    this.upload_progress++;
+
                     count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {
+                    this.upload_progress = index
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
@@ -294,10 +295,10 @@ export default {
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
                     this.currentVirtualHost.status.background_video_count++;
-                    this.upload_progress++;
                     count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {
+                    this.upload_progress = index
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {

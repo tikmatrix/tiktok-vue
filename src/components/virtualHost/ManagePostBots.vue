@@ -443,9 +443,9 @@ export default {
     mounted() {
         this.get_virtualHosts();
 
-        this.update_status_timer = setInterval(() => {
-            this.update_status()
-        }, 5000)
+        // this.update_status_timer = setInterval(() => {
+        //     this.update_status()
+        // }, 5000)
     },
     unmounted() {
         clearInterval(this.update_status_timer)

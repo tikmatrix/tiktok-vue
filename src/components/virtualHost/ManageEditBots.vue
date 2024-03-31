@@ -503,9 +503,9 @@ export default {
     },
     mounted() {
         this.get_virtualHosts();
-        this.upload_progress = 0
-        this.max_upload_progress = 100
-        this.$refs.upload_dialog.showModal()
+        // this.upload_progress = 0
+        // this.max_upload_progress = 100
+        // this.$refs.upload_dialog.showModal()
         // this.update_status_timer = setInterval(() => {
         //     this.upload_progress++
         // }, 1000)

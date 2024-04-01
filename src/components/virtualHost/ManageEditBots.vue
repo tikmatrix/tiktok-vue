@@ -43,9 +43,7 @@
                                                     @click="clear_background(item)">{{ $t('clear') }}
                                                 </button>
                                             </div>
-                                            <input ref="upload_input_background" type="file"
-                                                accept="video/mp4,video/x-m4v,video/*"
-                                                v-on:change="on_upload_background" multiple hidden>
+
                                         </div>
 
                                         <div class="stat">
@@ -63,8 +61,7 @@
                                                     @click="clear_overlay(item)">{{ $t('clear') }}
                                                 </button>
                                             </div>
-                                            <input ref="upload_input_overlay" type="file"
-                                                v-on:change="on_upload_overlay" multiple hidden>
+
                                         </div>
                                         <div class="stat">
                                             <div class="stat-title text-white">{{ $t('finished') }}</div>
@@ -120,6 +117,10 @@
             </template>
         </Pagination>
     </div>
+    <input ref="upload_input_overlay" type="file" accept="video/mp4,video/x-m4v,video/*" v-on:change="on_upload_overlay"
+        multiple hidden>
+    <input ref="upload_input_background" type="file" accept="video/mp4,video/x-m4v,video/*"
+        v-on:change="on_upload_background" multiple hidden>
     <!-- upload progress dialog -->
     <dialog ref="upload_dialog" class="modal">
         <div class="modal-box">
@@ -238,7 +239,7 @@ export default {
         },
         upload_overlay(item) {
             this.currentVirtualHost = item
-            this.$refs.upload_input_overlay[0].click()
+            this.$refs.upload_input_overlay.click()
         },
         on_upload_overlay(e) {
             this.currentVirtualHost.status.uploading = true;
@@ -264,7 +265,7 @@ export default {
                     } else {
                         console.log("upload done");
                         this.currentVirtualHost.status.uploading = false;
-                        this.$refs.upload_input_overlay[0].value = '';
+                        this.$refs.upload_input_overlay.value = '';
                         this.$refs.upload_dialog.close()
                     }
 
@@ -277,7 +278,7 @@ export default {
         },
         upload_background(item) {
             this.currentVirtualHost = item
-            this.$refs.upload_input_background[0].click()
+            this.$refs.upload_input_background.click()
         },
         on_upload_background(e) {
             this.currentVirtualHost.status.uploading = true;
@@ -302,7 +303,7 @@ export default {
                         uploadBatch(); // Upload next batch
                     } else {
                         this.currentVirtualHost.status.uploading = false;
-                        this.$refs.upload_input_background[0].value = '';
+                        this.$refs.upload_input_background.value = '';
                         this.$refs.upload_dialog.close()
                     }
                 }).catch(err => {

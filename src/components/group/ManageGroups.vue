@@ -51,7 +51,7 @@
                 </div>
             </template>
         </Pagination>
-        <input ref="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden>
+
         <Modal :show="showMoal" @close="showMoal = false">
             <Add :group="currentGroup || defaultGroup" @update="updateGroup" @add="addgroup" />
         </Modal>
@@ -69,6 +69,7 @@
             </div>
         </dialog>
     </div>
+    <input ref="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden>
 </template>
 <script>
 import Modal from '../Modal.vue'
@@ -190,7 +191,8 @@ export default {
 
         addMaterial(group) {
             this.currentGroup = group
-            this.$refs.upload_material_input[0].click()
+            console.log(this.$refs.upload_material_input)
+            this.$refs.upload_material_input.click()
         },
         on_upload_material(e) {
             this.uploading_id = this.currentGroup.id;
@@ -214,7 +216,7 @@ export default {
                         uploadBatch(); // Upload next batch
                     } else {
                         this.uploading_id = null; // Finish uploading
-                        this.$refs.upload_material_input[0].value = '';
+                        this.$refs.upload_material_input.value = '';
                         this.$refs.upload_dialog.close()
                     }
                 }).catch(err => {

@@ -374,6 +374,7 @@ export default {
                 console.log(res)
                 item.status.loading = false
                 item.status.status = 1
+                item.status.uptime = 3
             }).catch(err => {
                 console.log(err)
                 item.status.loading = false
@@ -400,6 +401,7 @@ export default {
                 console.log(res)
                 item.status.loading = false
                 item.status.status = 1
+                item.status.uptime = 3
             }).catch(err => {
                 console.log(err)
                 item.status.loading = false

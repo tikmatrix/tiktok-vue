@@ -26,18 +26,22 @@
                                     <div class="badge badge-error" v-else> {{ $t('disable') }} </div>
                                 </td>
                                 <td>
-                                    <div class="badge badge-success" v-if="group.auto_publish == '1'"> {{ $t('enable') }}
+                                    <div class="badge badge-success" v-if="group.auto_publish == '1'"> {{ $t('enable')
+                                        }}
                                     </div>
                                     <div class="badge badge-error" v-else> {{ $t('disable') }} </div>
                                 </td>
 
                                 <td>
                                     <div class="space-x-4">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                        <button
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             @click="editgroup(group)">{{ $t('edit') }}</button>
                                         <Button class="text-white" :showLoading="uploading(group.id)"
-                                            @click="addMaterial(group)" :label="'Add Video: ' +  group.unused_material_count"/>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                            @click="addMaterial(group)"
+                                            :label="'Add Video: ' + group.unused_material_count" />
+                                        <button
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                             @click="deletegroup(group)">{{ $t('delete') }}</button>
                                     </div>
                                 </td>
@@ -51,6 +55,19 @@
         <Modal :show="showMoal" @close="showMoal = false">
             <Add :group="currentGroup || defaultGroup" @update="updateGroup" @add="addgroup" />
         </Modal>
+        <!-- upload progress dialog -->
+        <dialog ref="upload_dialog" class="modal">
+            <div class="modal-box">
+                <form method="dialog">
+                    <!-- <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button> -->
+                </form>
+                <h3 class="font-bold text-lg">Upload Progress</h3>
+                <div class="py-4">
+                    <progress class="progress progress-success w-full" :value="upload_progress"
+                        :max="max_upload_progress"></progress>
+                </div>
+            </div>
+        </dialog>
     </div>
 </template>
 <script>
@@ -87,9 +104,11 @@ export default {
                 train_duration: 300,
             },
             uploading_id: null,
+            upload_progress: 10,
+            max_upload_progress: 100,
         }
     },
-    
+
     methods: {
         uploading(id) {
             return this.uploading_id == id
@@ -98,7 +117,6 @@ export default {
             this.showMoal = false
             this.currentGroup = null
             this.$service.get_groups().then(res => {
-                console.log(res)
                 this.groups = res.data
                 for (let i = 0; i < this.groups.length; i++) {
                     this.get_unused_material_count(this.groups[i])
@@ -178,23 +196,31 @@ export default {
             this.uploading_id = this.currentGroup.id;
             const totalFiles = e.target.files.length;
             let index = 0;
-
+            this.upload_progress = index
+            this.max_upload_progress = totalFiles
+            this.$refs.upload_dialog.showModal()
             const uploadBatch = () => {
                 const formData = new FormData();
                 formData.append('group_id', this.currentGroup.id);
+                let count = 0;
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
+                    this.currentGroup.unused_material_count++;
+                    count++;
                 }
                 this.$service.upload_material(formData).then(res => {
-                    this.get_unused_material_count(this.currentGroup);
+                    this.upload_progress = index
                     if (index < totalFiles) {
                         uploadBatch(); // Upload next batch
                     } else {
                         this.uploading_id = null; // Finish uploading
+                        this.$refs.upload_input_overlay[0].value = '';
+                        this.$refs.upload_dialog.close()
                     }
                 }).catch(err => {
                     console.log(err);
                     this.uploading_id = null;
+                    index -= count;
                 });
             };
 

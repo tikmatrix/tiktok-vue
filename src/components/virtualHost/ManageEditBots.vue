@@ -255,7 +255,6 @@ export default {
                 for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
                     formData.append('files', e.target.files[index]);
                     this.currentVirtualHost.status.overlay_video_count++;
-
                     count++;
                 }
                 this.$service.upload_to_virtualHost(formData).then(res => {

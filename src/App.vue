@@ -158,10 +158,11 @@ export default {
 
   methods: {
     loadTheme() {
-      this.isDark = util.getCookie('theme') === 'dark'
+      this.isDark = localStorage.getItem('theme') === 'dark'
     },
     toggleTheme() {
-      util.setCookie('theme', !this.isDark ? 'dark' : 'light')
+      this.isDark = !this.isDark
+      localStorage.setItem('theme', this.isDark ? 'dark' : 'light')
     },
     changeLocale(locale) {
       this.$i18n.locale = locale;

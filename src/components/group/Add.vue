@@ -1,6 +1,5 @@
 <template>
-    <div class="flex flex-col items-start p-4">
-
+    <div class="bg-base-100 flex flex-col items-start p-4">
         <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('name') }}</label>
             <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.name" />
@@ -30,24 +29,24 @@
         </div>
         <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-2">{{ $t('trainDuration') }}:</label>
-            <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="trainDurationInMinutes"
-                placeholder="0" />
+            <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2"
+                v-model="trainDurationInMinutes" placeholder="0" />
             <label class="text-sm text-left col-span-1 ">{{ $t('minute') }}</label>
         </div>
-           
+
         <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-2">{{ $t('interact') }}:</label>
 
             <div class="col-span-2 grid grid-cols-6 items-center">
                 <label class="text-sm text-right col-span-3">{{ $t('floowProbable') }}: </label>
-                <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.floow_probable"
-                    placeholder="0" />
+                <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2"
+                    v-model="group.floow_probable" placeholder="0" />
                 <label class="text-sm  text-left col-span-1 ">%</label>
             </div>
             <div class="col-span-2 grid grid-cols-6 items-center">
                 <label class="text-sm text-right col-span-3">{{ $t('likeProbable') }}: </label>
-                <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="group.like_probable"
-                    placeholder="0" />
+                <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2"
+                    v-model="group.like_probable" placeholder="0" />
                 <label class="text-sm text-left col-span-1 ">%</label>
             </div>
             <div class="col-span-2 grid grid-cols-6 items-center">
@@ -72,12 +71,18 @@
         </div>
         <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-2">{{ $t('publishTimes') }}:</label>
-            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time1" placeholder="00:00" />
-            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time2" placeholder="00:00" />
-            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time3" placeholder="00:00" />
-            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time4" placeholder="00:00" />
-            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time5" placeholder="00:00" />
-            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time6" placeholder="00:00" />
+            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time1"
+                placeholder="00:00" />
+            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time2"
+                placeholder="00:00" />
+            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time3"
+                placeholder="00:00" />
+            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time4"
+                placeholder="00:00" />
+            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time5"
+                placeholder="00:00" />
+            <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time6"
+                placeholder="00:00" />
         </div>
         <!-- <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('publishType') }}:</label>
@@ -99,10 +104,10 @@
         <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('title') }}</label>
 
-            <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" placeholder="Titles" autocomplete="off"
-                      v-model="group.title">
+            <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" placeholder="Titles"
+                autocomplete="off" v-model="group.title">
             </textarea>
-            
+
         </div>
 
         <!-- <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-start p-4">
+    <div class="bg-base-100 flex flex-col items-start p-4">
 
         <div class="flex flex-row items-center gap-2 mb-2 w-full">
             <textarea class="textarea textarea-success w-full max-w-xs" placeholder="input formated comments"
@@ -27,8 +27,8 @@
                 <div class="chat-header">
                     #{{ comment.no }}:
                     <span class=" text-primary"> {{ comment.username }} {{ comment.parent_no ? 'Reply#' +
-                        comment.parent_no
-                        : 'Comment' }}</span>
+                    comment.parent_no
+                    : 'Comment' }}</span>
                 </div>
                 <div class="chat-bubble">{{ comment.content }}</div>
             </div>

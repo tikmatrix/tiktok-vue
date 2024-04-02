@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-start p-4">
+    <div class="bg-base-100 flex flex-col items-start p-4">
 
 
 

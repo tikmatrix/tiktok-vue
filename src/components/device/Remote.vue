@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 grid grid-cols-10">
+    <div class="bg-base-100 p-4 grid grid-cols-10">
         <div class="relative col-span-4 ">
             <video ref="display" autoplay poster="../../assets/preview.jpg"
                 class=" rounded-lg border-4  border-black shadow-lg cursor-pointer" @mousedown="mouseDownListener"

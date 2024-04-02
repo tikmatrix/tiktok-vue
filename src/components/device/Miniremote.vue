@@ -1,8 +1,8 @@
 <template>
     <div @click="$emit('show_device', device)"
-        class="relative rounded-lg border-4 border-black shadow-xl cursor-pointer transform hover:scale-105 transition-transform duration-100">
-        <video ref="display" autoplay poster="../../assets/preview.jpg"></video>
-
+        class="relative rounded-2xl shadow-2xl cursor-pointer transform hover:scale-105 transition-transform duration-100">
+        <video ref="display" autoplay poster="../../assets/preview.jpg" class=" rounded-2xl"></video>
+        <div class="skeleton absolute w-full h-full top-0 left-0 bg-opacity-20" v-if="loading"></div>
         <div class="absolute top-2 left-2 p-1 text-white bg-black bg-opacity-50 rounded-lg">
             <h1 class=" font-bold text-lg">{{ index + 1 }}</h1>
         </div>
@@ -36,6 +36,7 @@ export default {
             display: null,
             mjpeg: null,
             scrcpy: null,
+            loading: true,
         }
     },
     methods: {
@@ -62,6 +63,7 @@ export default {
                 this.scrcpy.send(400)
                 // control: false
                 this.scrcpy.send('false')
+
             }
             this.scrcpy.onclose = () => {
                 this.readonly = true
@@ -72,6 +74,7 @@ export default {
                 this.img = 'preview.jpg'
             }
             this.scrcpy.onmessage = (message) => {
+                this.loading = false
                 jmuxer.feed({
                     video: new Uint8Array(message.data)
                 });

@@ -2,7 +2,7 @@
     <div class="bg-base-100 p-4 grid grid-cols-10">
         <div class="relative col-span-4 ">
             <video ref="display" autoplay poster="../../assets/preview.jpg"
-                class=" rounded-lg border-4  border-black shadow-lg cursor-pointer" @mousedown="mouseDownListener"
+                class=" rounded-2xl border-2  border-gray-300 shadow-2xl cursor-pointer" @mousedown="mouseDownListener"
                 @mouseup="mouseUpListener" @mouseleave="mouseLeaveListener" @mousemove="mouseMoveListener" />
             <div v-if="showEffect" class="absolute rounded-full w-12 h-12 bg-white opacity-50 pointer-events-none"
                 :style="{ top: `${effectY}px`, left: `${effectX}px` }"></div>
@@ -12,8 +12,9 @@
                 <span class="">
                     Auto Task Running
                 </span>
-                <span class=" font-bold">{{ loading_text }}</span>
+                <span class="font-bold">{{ loading_text }}</span>
             </div>
+            <div class="skeleton absolute w-full h-full top-0 left-0 bg-opacity-20" v-if="loading"></div>
         </div>
         <div class="p-1 col-span-6">
             <p class="p-1 ">
@@ -137,7 +138,7 @@ export default {
             rotation: 0,
             command: "",
             text: "",
-            readonly: true,
+            loading: true,
             fps: 0,
             periodImageCount: 0,
             showEffect: false,
@@ -153,6 +154,7 @@ export default {
             connect_details: [],
             settings: {},
             ip: "0.0.0.0",
+
         }
     },
     methods: {
@@ -293,7 +295,7 @@ export default {
             }))
         },
         mouseMoveListener(event) {
-            if (this.readonly) {
+            if (this.loading) {
                 return
             }
             if (!this.touch) {
@@ -303,7 +305,7 @@ export default {
             this.updateEffectPosition(event)
         },
         mouseUpListener(event) {
-            if (this.readonly) {
+            if (this.loading) {
                 return
             }
             this.touchSync('u', event)
@@ -311,7 +313,7 @@ export default {
             this.touch = false;
         },
         mouseLeaveListener(event) {
-            if (this.readonly) {
+            if (this.loading) {
                 return
             }
             if (!this.touch) {
@@ -322,7 +324,7 @@ export default {
             this.touch = false;
         },
         mouseDownListener(event) {
-            if (this.readonly) {
+            if (this.loading) {
                 return
             }
             this.touchSync('d', event)
@@ -359,7 +361,7 @@ export default {
             this.scrcpy = new WebSocket(util.getWsUrl());
             this.scrcpy.binaryType = 'arraybuffer';
             this.scrcpy.onopen = () => {
-                this.readonly = false
+                this.loading = false
                 this.scrcpy.send(`${this.device.serial}`)
                 // max size: 1200
                 this.scrcpy.send(800)
@@ -368,12 +370,12 @@ export default {
                 this.connect_details.push("device connected!")
             }
             this.scrcpy.onclose = () => {
-                this.readonly = true
+                this.loading = true
                 this.img = 'preview.jpg'
                 this.connect_details.push("connect closed!")
             }
             this.scrcpy.onerror = () => {
-                this.readonly = true
+                this.loading = true
                 this.img = 'preview.jpg'
                 this.connect_details.push("connect error!")
             }
@@ -413,7 +415,7 @@ export default {
     },
     unmounted() {
         console.log('remote unmounted')
-        this.readonly = true
+        this.loading = true
         if (this.scrcpy)
             this.scrcpy.close()
         clearInterval(this.timer_fps)

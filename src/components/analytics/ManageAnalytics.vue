@@ -8,7 +8,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>{{ $t('id') }}</th>
+                                <!-- <th>{{ $t('id') }}</th> -->
                                 <th>{{ $t('username') }}</th>
                                 <th>{{ $t('follower_count') }}</th>
                                 <th>{{ $t('video_count') }}</th>
@@ -22,7 +22,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in slotProps.items" :key="index">
-                                <td>{{ item.id }}</td>
+                                <!-- <td>{{ item.id }}</td> -->
                                 <td>
                                     <a class="link link-primary" :href="`https://www.tiktok.com/@${item.username}`"
                                         target="_blank">@{{ item.username }}</a>

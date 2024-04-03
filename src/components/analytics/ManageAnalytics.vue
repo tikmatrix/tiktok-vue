@@ -118,6 +118,16 @@ export default {
         }
     },
     methods: {
+        //format number to n or n.n k or n.n m
+        format_number(number) {
+            if (number < 1000) {
+                return number
+            } else if (number < 1000000) {
+                return (number / 1000).toFixed(2) + 'k'
+            } else if (number < 1000000000) {
+                return (number / 1000000).toFixed(2) + 'm'
+            }
+        },
         get_analytics() {
             this.currentAnalytics = null
             this.$service.get_analytics().then(res => {

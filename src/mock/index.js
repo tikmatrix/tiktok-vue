@@ -128,7 +128,7 @@ for (let i = 1; i <= 100; i++) {
     "video_comment_count": Math.floor(Math.random() * 1000000),
     "video_like_count": Math.floor(Math.random() * 1000000),
     "video_play_count": Math.floor(Math.random() * 1000000),
-    "username": "username" + i,
+    "username": "username" + Math.floor(Math.random() * 10),
   });
 }
 let virtual_hosts = [];

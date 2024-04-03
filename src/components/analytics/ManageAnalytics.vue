@@ -139,28 +139,39 @@ export default {
             this.$service.get_analytics().then(res => {
                 this.analytics = res.data
                 this.analytics.forEach((item, index) => {
-                    if (index < this.analytics.length - 1) {
-                        item.follower_count_up = Math.max(0, item.follower_count - this.analytics[index + 1].follower_count);
-                        item.video_count_up = Math.max(0, item.video_count - this.analytics[index + 1].video_count);
-                        item.video_collect_count_up = Math.max(0, item.video_collect_count - this.analytics[index + 1].video_collect_count);
-                        item.video_comment_count_up = Math.max(0, item.video_comment_count - this.analytics[index + 1].video_comment_count);
-                        item.video_like_count_up = Math.max(0, item.video_like_count - this.analytics[index + 1].video_like_count);
-                        item.video_play_count_up = Math.max(0, item.video_play_count - this.analytics[index + 1].video_play_count);
-                    } else {
-                        item.follower_count_up = 0
-                        item.video_count_up = 0
-                        item.video_collect_count_up = 0
-                        item.video_comment_count_up = 0
-                        item.video_like_count_up = 0
-                        item.video_play_count_up = 0
+                    // 向前搜索具有相同username的元素
+                    let prevItem = null;
+                    for (let i = index - 1; i >= 0; i--) {
+                        if (this.analytics[i].username === item.username) {
+                            prevItem = this.analytics[i];
+                            break;
+                        }
                     }
-                    item.follower_count_up = `↗︎ ${this.format_number(item.follower_count_up)} (${(item.follower_count_up / item.follower_count * 100).toFixed(0)}%)`
-                    item.video_count_up = `↗︎ ${this.format_number(item.video_count_up)} (${(item.video_count_up / item.video_count * 100).toFixed(0)}%)`
-                    item.video_collect_count_up = `↗︎ ${this.format_number(item.video_collect_count_up)} (${(item.video_collect_count_up / item.video_collect_count * 100).toFixed(0)}%)`
-                    item.video_comment_count_up = `↗︎ ${this.format_number(item.video_comment_count_up)} (${(item.video_comment_count_up / item.video_comment_count * 100).toFixed(0)}%)`
-                    item.video_like_count_up = `↗︎ ${this.format_number(item.video_like_count_up)} (${(item.video_like_count_up / item.video_like_count * 100).toFixed(0)}%)`
-                    item.video_play_count_up = `↗︎ ${this.format_number(item.video_play_count_up)} (${(item.video_play_count_up / item.video_play_count * 100).toFixed(0)}%)`
-                })
+
+                    if (prevItem) {
+                        item.follower_count_up = Math.max(0, item.follower_count - prevItem.follower_count);
+                        item.video_count_up = Math.max(0, item.video_count - prevItem.video_count);
+                        item.video_collect_count_up = Math.max(0, item.video_collect_count - prevItem.video_collect_count);
+                        item.video_comment_count_up = Math.max(0, item.video_comment_count - prevItem.video_comment_count);
+                        item.video_like_count_up = Math.max(0, item.video_like_count - prevItem.video_like_count);
+                        item.video_play_count_up = Math.max(0, item.video_play_count - prevItem.video_play_count);
+
+                        item.follower_count_up = `↗︎ ${this.format_number(item.follower_count_up)} (${(item.follower_count_up / prevItem.follower_count * 100).toFixed(0)}%)`;
+                        item.video_count_up = `↗︎ ${this.format_number(item.video_count_up)} (${(item.video_count_up / prevItem.video_count * 100).toFixed(0)}%)`;
+                        item.video_collect_count_up = `↗︎ ${this.format_number(item.video_collect_count_up)} (${(item.video_collect_count_up / prevItem.video_collect_count * 100).toFixed(0)}%)`;
+                        item.video_comment_count_up = `↗︎ ${this.format_number(item.video_comment_count_up)} (${(item.video_comment_count_up / prevItem.video_comment_count * 100).toFixed(0)}%)`;
+                        item.video_like_count_up = `↗︎ ${this.format_number(item.video_like_count_up)} (${(item.video_like_count_up / prevItem.video_like_count * 100).toFixed(0)}%)`;
+                        item.video_play_count_up = `↗︎ ${this.format_number(item.video_play_count_up)} (${(item.video_play_count_up / prevItem.video_play_count * 100).toFixed(0)}%)`;
+                    } else {
+                        item.follower_count_up = '↗︎ 0 (0%)';
+                        item.video_count_up = '↗︎ 0 (0%)';
+                        item.video_collect_count_up = '↗︎ 0 (0%)';
+                        item.video_comment_count_up = '↗︎ 0 (0%)';
+                        item.video_like_count_up = '↗︎ 0 (0%)';
+                        item.video_play_count_up = '↗︎ 0 (0%)';
+                    }
+                });
+
             }).catch(err => {
                 console.log(err)
             })

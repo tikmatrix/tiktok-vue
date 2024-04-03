@@ -33,7 +33,7 @@
                                         <!-- <div class="stat-figure text-primary">
                                             <font-awesome-icon :icon="['fas', 'user']" />
                                         </div> -->
-                                        <div class="stat-value">{{ item.follower_count }}</div>
+                                        <div class="stat-value">{{ format_number(item.follower_count) }}</div>
                                         <div class="stat-desc">{{ item.follower_count_up }}</div>
                                     </div>
                                 </td>
@@ -42,7 +42,7 @@
                                         <!-- <div class="stat-figure text-secondary">
                                             <font-awesome-icon :icon="['fas', 'video']" />
                                         </div> -->
-                                        <div class="stat-value">{{ item.video_count }}</div>
+                                        <div class="stat-value">{{ format_number(item.video_count) }}</div>
                                         <div class="stat-desc">{{ item.video_count_up }}</div>
                                     </div>
                                 </td>
@@ -51,7 +51,8 @@
                                         <div class="stat-figure text-secondary">
                                             <font-awesome-icon :icon="['fas', 'eye']" />
                                         </div>
-                                        <div class="stat-value text-secondary">{{ item.video_play_count }}</div>
+                                        <div class="stat-value text-secondary">{{ format_number(item.video_play_count)
+                                            }}</div>
                                         <div class="stat-desc text-secondary">{{ item.video_play_count_up }}</div>
                                     </div>
                                 </td>
@@ -60,7 +61,8 @@
                                         <div class="stat-figure text-primary">
                                             <font-awesome-icon :icon="['fas', 'thumbs-up']" />
                                         </div>
-                                        <div class="stat-value text-primary">{{ item.video_like_count }}</div>
+                                        <div class="stat-value text-primary">{{ format_number(item.video_like_count) }}
+                                        </div>
                                         <div class="stat-desc text-primary">{{ item.video_like_count_up }}</div>
                                     </div>
                                 </td>
@@ -69,7 +71,8 @@
                                         <div class="stat-figure text-secondary">
                                             <font-awesome-icon :icon="['fas', 'comment']" />
                                         </div>
-                                        <div class="stat-value text-secondary">{{ item.video_comment_count }}</div>
+                                        <div class="stat-value text-secondary">{{
+            format_number(item.video_comment_count) }}</div>
                                         <div class="stat-desc text-secondary">{{ item.video_comment_count_up }}</div>
                                     </div>
                                 </td>
@@ -80,7 +83,8 @@
                                         <div class="stat-figure text-primary">
                                             <font-awesome-icon :icon="['fas', 'star']" />
                                         </div>
-                                        <div class="stat-value text-primary">{{ item.video_collect_count }}</div>
+                                        <div class="stat-value text-primary">{{ format_number(item.video_collect_count)
+                                            }}</div>
                                         <div class="stat-desc text-primary">{{ item.video_collect_count_up }}</div>
                                     </div>
                                 </td>
@@ -150,12 +154,12 @@ export default {
                         item.video_like_count_up = 0
                         item.video_play_count_up = 0
                     }
-                    item.follower_count_up = `↗︎ ${item.follower_count_up} (${(item.follower_count_up / item.follower_count * 100).toFixed(0)}%)`
-                    item.video_count_up = `↗︎ ${item.video_count_up} (${(item.video_count_up / item.video_count * 100).toFixed(0)}%)`
-                    item.video_collect_count_up = `↗︎ ${item.video_collect_count_up} (${(item.video_collect_count_up / item.video_collect_count * 100).toFixed(0)}%)`
-                    item.video_comment_count_up = `↗︎ ${item.video_comment_count_up} (${(item.video_comment_count_up / item.video_comment_count * 100).toFixed(0)}%)`
-                    item.video_like_count_up = `↗︎ ${item.video_like_count_up} (${(item.video_like_count_up / item.video_like_count * 100).toFixed(0)}%)`
-                    item.video_play_count_up = `↗︎ ${item.video_play_count_up} (${(item.video_play_count_up / item.video_play_count * 100).toFixed(0)}%)`
+                    item.follower_count_up = `↗︎ ${this.format_number(item.follower_count_up)} (${(item.follower_count_up / item.follower_count * 100).toFixed(0)}%)`
+                    item.video_count_up = `↗︎ ${this.format_number(item.video_count_up)} (${(item.video_count_up / item.video_count * 100).toFixed(0)}%)`
+                    item.video_collect_count_up = `↗︎ ${this.format_number(item.video_collect_count_up)} (${(item.video_collect_count_up / item.video_collect_count * 100).toFixed(0)}%)`
+                    item.video_comment_count_up = `↗︎ ${this.format_number(item.video_comment_count_up)} (${(item.video_comment_count_up / item.video_comment_count * 100).toFixed(0)}%)`
+                    item.video_like_count_up = `↗︎ ${this.format_number(item.video_like_count_up)} (${(item.video_like_count_up / item.video_like_count * 100).toFixed(0)}%)`
+                    item.video_play_count_up = `↗︎ ${this.format_number(item.video_play_count_up)} (${(item.video_play_count_up / item.video_play_count * 100).toFixed(0)}%)`
                 })
             }).catch(err => {
                 console.log(err)

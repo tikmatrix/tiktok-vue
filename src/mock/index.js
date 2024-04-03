@@ -122,13 +122,13 @@ for (let i = 1; i <= 100; i++) {
     "id": i.toString(),
     "create_time": "2023-11-13 13:43:49",
     "day_hour": "2023-11-13 " + Math.floor(Math.random() * 24),
-    "follower_count": Math.floor(Math.random() * 1000),
-    "video_count": Math.floor(Math.random() * 1000),
-    "video_collect_count": Math.floor(Math.random() * 1000),
-    "video_comment_count": Math.floor(Math.random() * 1000),
-    "video_like_count": Math.floor(Math.random() * 1000),
-    "video_play_count": Math.floor(Math.random() * 1000),
-    "username": "@username" + i,
+    "follower_count": Math.floor(Math.random() * 1000000),
+    "video_count": Math.floor(Math.random() * 1000000),
+    "video_collect_count": Math.floor(Math.random() * 1000000),
+    "video_comment_count": Math.floor(Math.random() * 1000000),
+    "video_like_count": Math.floor(Math.random() * 1000000),
+    "video_play_count": Math.floor(Math.random() * 1000000),
+    "username": "username" + i,
   });
 }
 let virtual_hosts = [];

@@ -40,7 +40,7 @@ const api = {
     proxy_rule: '/api/proxy_rule',
     proxy_delay: '/api/proxy/delay',
     get_ip: '/api/get_ip',
-    analytics: '/api/analytics',
+    analytics: '/api/data_analysis',
     virtualHosts: '/api/virtual_hosts',
     get_post_bot_status: '/api/virtual_hosts/get_post_bot_status',
     start_post_bot: '/api/virtual_hosts/start_post_bot',

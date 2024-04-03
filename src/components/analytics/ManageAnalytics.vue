@@ -12,10 +12,10 @@
                                 <th>{{ $t('username') }}</th>
                                 <th>{{ $t('follower_count') }}</th>
                                 <th>{{ $t('video_count') }}</th>
-                                <th>{{ $t('video_collect_count') }}</th>
-                                <th>{{ $t('video_comment_count') }}</th>
-                                <th>{{ $t('video_like_count') }}</th>
                                 <th>{{ $t('video_play_count') }}</th>
+                                <th>{{ $t('video_like_count') }}</th>
+                                <th>{{ $t('video_comment_count') }}</th>
+                                <th>{{ $t('video_collect_count') }}</th>
                                 <th>{{ $t('day_hour') }}</th>
                                 <!-- <th>{{ $t('actions') }}</th> -->
                             </tr>
@@ -30,38 +30,29 @@
 
                                 <td>
                                     <div class="stat">
-                                        <div class="stat-figure text-primary">
+                                        <!-- <div class="stat-figure text-primary">
                                             <font-awesome-icon :icon="['fas', 'user']" />
-                                        </div>
-                                        <div class="stat-value text-primary">{{ item.follower_count }}</div>
-                                        <div class="stat-desc text-primary">{{ item.follower_count_up }}</div>
+                                        </div> -->
+                                        <div class="stat-value">{{ item.follower_count }}</div>
+                                        <div class="stat-desc">{{ item.follower_count_up }}</div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="stat">
-                                        <div class="stat-figure text-secondary">
+                                        <!-- <div class="stat-figure text-secondary">
                                             <font-awesome-icon :icon="['fas', 'video']" />
-                                        </div>
-                                        <div class="stat-value text-secondary">{{ item.video_count }}</div>
-                                        <div class="stat-desc text-secondary">{{ item.video_count_up }}</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="stat">
-                                        <div class="stat-figure text-primary">
-                                            <font-awesome-icon :icon="['fas', 'star']" />
-                                        </div>
-                                        <div class="stat-value text-primary">{{ item.video_collect_count }}</div>
-                                        <div class="stat-desc text-primary">{{ item.video_collect_count_up }}</div>
+                                        </div> -->
+                                        <div class="stat-value">{{ item.video_count }}</div>
+                                        <div class="stat-desc">{{ item.video_count_up }}</div>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="stat">
                                         <div class="stat-figure text-secondary">
-                                            <font-awesome-icon :icon="['fas', 'comment']" />
+                                            <font-awesome-icon :icon="['fas', 'eye']" />
                                         </div>
-                                        <div class="stat-value text-secondary">{{ item.video_comment_count }}</div>
-                                        <div class="stat-desc text-secondary">{{ item.video_comment_count_up }}</div>
+                                        <div class="stat-value text-secondary">{{ item.video_play_count }}</div>
+                                        <div class="stat-desc text-secondary">{{ item.video_play_count_up }}</div>
                                     </div>
                                 </td>
                                 <td>
@@ -76,10 +67,21 @@
                                 <td>
                                     <div class="stat">
                                         <div class="stat-figure text-secondary">
-                                            <font-awesome-icon :icon="['fas', 'play-circle']" />
+                                            <font-awesome-icon :icon="['fas', 'comment']" />
                                         </div>
-                                        <div class="stat-value text-secondary">{{ item.video_play_count }}</div>
-                                        <div class="stat-desc text-secondary">{{ item.video_play_count_up }}</div>
+                                        <div class="stat-value text-secondary">{{ item.video_comment_count }}</div>
+                                        <div class="stat-desc text-secondary">{{ item.video_comment_count_up }}</div>
+                                    </div>
+                                </td>
+
+
+                                <td>
+                                    <div class="stat">
+                                        <div class="stat-figure text-primary">
+                                            <font-awesome-icon :icon="['fas', 'star']" />
+                                        </div>
+                                        <div class="stat-value text-primary">{{ item.video_collect_count }}</div>
+                                        <div class="stat-desc text-primary">{{ item.video_collect_count_up }}</div>
                                     </div>
                                 </td>
                                 <td>{{ item.day_hour }}</td>

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full">
-        <Pagination :items="analytics" :searchKeys="[ 'username', 'day_hour', 'device_index']" @refresh="get_analytics">
+        <Pagination :items="analytics" :searchKeys="['username', 'day_hour', 'device_index']" @refresh="get_analytics">
             <template v-slot:buttons>
             </template>
             <template v-slot:default="slotProps">
@@ -10,46 +10,79 @@
                             <tr>
                                 <th>{{ $t('id') }}</th>
                                 <th>{{ $t('username') }}</th>
-                                <th>{{ $t('day_hour') }}</th>
                                 <th>{{ $t('follower_count') }}</th>
                                 <th>{{ $t('video_count') }}</th>
                                 <th>{{ $t('video_collect_count') }}</th>
                                 <th>{{ $t('video_comment_count') }}</th>
                                 <th>{{ $t('video_like_count') }}</th>
                                 <th>{{ $t('video_play_count') }}</th>
+                                <th>{{ $t('day_hour') }}</th>
                                 <!-- <th>{{ $t('actions') }}</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="(item, index) in slotProps.items" :key="index">
                                 <td>{{ item.id }}</td>
-                                <td>{{ item.username }}</td>
-                                <td>{{ item.day_hour }}</td>
                                 <td>
-                                    <div class="stat-value text-primary">{{ item.follower_count }}</div>
-                                    <div class="stat-desc text-primary">{{ item.follower_count_up }}</div>
-                                </td>
-                                <td>
-                                    <div class="stat-value text-secondary">{{ item.video_count }}</div>
-                                    <div class="stat-desc text-secondary">{{ item.video_count_up }}</div>
-                                </td>
-                                <td>
-                                    <div class="stat-value text-primary">{{ item.video_collect_count }}</div>
-                                    <div class="stat-desc text-primary">{{ item.video_collect_count_up }}</div>
-                                </td>
-                                <td>
-                                    <div class="stat-value text-secondary">{{ item.video_comment_count }}</div>
-                                    <div class="stat-desc text-secondary">{{ item.video_comment_count_up }}</div>
-                                </td>
-                                <td>
-                                    <div class="stat-value text-primary">{{ item.video_like_count }}</div>
-                                    <div class="stat-desc text-primary">{{ item.video_like_count_up }}</div>
-                                </td>
-                                <td>
-                                    <div class="stat-value text-secondary">{{ item.video_play_count }}</div>
-                                    <div class="stat-desc text-secondary">{{ item.video_play_count_up }}</div>
+                                    <a class="link link-primary" :href="`https://www.tiktok.com/@${item.username}`"
+                                        target="_blank">@{{ item.username }}</a>
                                 </td>
 
+                                <td>
+                                    <div class="stat">
+                                        <div class="stat-figure text-primary">
+                                            <font-awesome-icon :icon="['fas', 'user']" />
+                                        </div>
+                                        <div class="stat-value text-primary">{{ item.follower_count }}</div>
+                                        <div class="stat-desc text-primary">{{ item.follower_count_up }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="stat">
+                                        <div class="stat-figure text-secondary">
+                                            <font-awesome-icon :icon="['fas', 'video']" />
+                                        </div>
+                                        <div class="stat-value text-secondary">{{ item.video_count }}</div>
+                                        <div class="stat-desc text-secondary">{{ item.video_count_up }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="stat">
+                                        <div class="stat-figure text-primary">
+                                            <font-awesome-icon :icon="['fas', 'star']" />
+                                        </div>
+                                        <div class="stat-value text-primary">{{ item.video_collect_count }}</div>
+                                        <div class="stat-desc text-primary">{{ item.video_collect_count_up }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="stat">
+                                        <div class="stat-figure text-secondary">
+                                            <font-awesome-icon :icon="['fas', 'comment']" />
+                                        </div>
+                                        <div class="stat-value text-secondary">{{ item.video_comment_count }}</div>
+                                        <div class="stat-desc text-secondary">{{ item.video_comment_count_up }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="stat">
+                                        <div class="stat-figure text-primary">
+                                            <font-awesome-icon :icon="['fas', 'thumbs-up']" />
+                                        </div>
+                                        <div class="stat-value text-primary">{{ item.video_like_count }}</div>
+                                        <div class="stat-desc text-primary">{{ item.video_like_count_up }}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="stat">
+                                        <div class="stat-figure text-secondary">
+                                            <font-awesome-icon :icon="['fas', 'play-circle']" />
+                                        </div>
+                                        <div class="stat-value text-secondary">{{ item.video_play_count }}</div>
+                                        <div class="stat-desc text-secondary">{{ item.video_play_count_up }}</div>
+                                    </div>
+                                </td>
+                                <td>{{ item.day_hour }}</td>
                                 <!-- <td>
                                     <div class="space-x-4">
                                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -105,19 +138,19 @@ export default {
                         item.video_like_count_up = 0
                         item.video_play_count_up = 0
                     }
-                    item.follower_count_up =`↗︎ ${item.follower_count_up} (${(item.follower_count_up / item.follower_count * 100).toFixed(0)}%)`
-                    item.video_count_up =`↗︎ ${item.video_count_up} (${(item.video_count_up / item.video_count * 100).toFixed(0)}%)`
-                    item.video_collect_count_up =`↗︎ ${item.video_collect_count_up} (${(item.video_collect_count_up / item.video_collect_count * 100).toFixed(0)}%)`
-                    item.video_comment_count_up =`↗︎ ${item.video_comment_count_up} (${(item.video_comment_count_up / item.video_comment_count * 100).toFixed(0)}%)`
-                    item.video_like_count_up =`↗︎ ${item.video_like_count_up} (${(item.video_like_count_up / item.video_like_count * 100).toFixed(0)}%)`
-                    item.video_play_count_up =`↗︎ ${item.video_play_count_up} (${(item.video_play_count_up / item.video_play_count * 100).toFixed(0)}%)`
+                    item.follower_count_up = `↗︎ ${item.follower_count_up} (${(item.follower_count_up / item.follower_count * 100).toFixed(0)}%)`
+                    item.video_count_up = `↗︎ ${item.video_count_up} (${(item.video_count_up / item.video_count * 100).toFixed(0)}%)`
+                    item.video_collect_count_up = `↗︎ ${item.video_collect_count_up} (${(item.video_collect_count_up / item.video_collect_count * 100).toFixed(0)}%)`
+                    item.video_comment_count_up = `↗︎ ${item.video_comment_count_up} (${(item.video_comment_count_up / item.video_comment_count * 100).toFixed(0)}%)`
+                    item.video_like_count_up = `↗︎ ${item.video_like_count_up} (${(item.video_like_count_up / item.video_like_count * 100).toFixed(0)}%)`
+                    item.video_play_count_up = `↗︎ ${item.video_play_count_up} (${(item.video_play_count_up / item.video_play_count * 100).toFixed(0)}%)`
                 })
             }).catch(err => {
                 console.log(err)
             })
         },
-        
-       
+
+
     },
     mounted() {
         this.get_analytics();

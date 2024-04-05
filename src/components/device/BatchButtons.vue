@@ -24,6 +24,7 @@
                     icon="fa-solid fa-unlink" />
 
                 <Button @click="script('connect_wifi')" label="connectWifi" icon="fa-solid fa-wifi" />
+                <Button @click="script('unlock')" label="unlock" icon="fa-solid fa-unlock" />
                 <!-- <Button @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi-slash" /> -->
                 <Button @click="script('torch_on')" label="torchOn" icon="fa-solid fa-lightbulb" />
                 <Button @click="script('torch_off')" label="torchOff" icon="fa-solid fa-power-off" />

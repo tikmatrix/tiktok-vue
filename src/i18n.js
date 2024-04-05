@@ -218,6 +218,7 @@ export const i18n = createI18n({
             ipinfo: 'IP Info',
             finished: 'Finished',
             clear: 'Clear',
+            unlock: 'Unlock',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

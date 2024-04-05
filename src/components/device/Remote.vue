@@ -29,11 +29,11 @@
 
                     <!-- <Button label="720x1280" icon="fa-solid fa-mobile" @click="shell('wm size 720x1280')" /> -->
                     <Button label="1080x1920" icon="fa-solid fa-mobile" @click="shell('wm size 1080x1920')" />
-                    <Button label="1440x2560" icon="fa-solid fa-mobile" @click="shell('wm size 1440x2560')" />
+                    <!-- <Button label="1440x2560" icon="fa-solid fa-mobile" @click="shell('wm size 1440x2560')" /> -->
                     <Button label="resetSize" icon="fa-solid fa-mobile" @click="shell('wm size reset')" />
                     <!-- <Button label="240" icon="fa-solid fa-mobile" @click="shell('wm density 240')" /> -->
                     <Button label="320" icon="fa-solid fa-mobile" @click="shell('wm density 320')" />
-                    <Button label="480" icon="fa-solid fa-mobile" @click="shell('wm density 480')" />
+                    <!-- <Button label="480" icon="fa-solid fa-mobile" @click="shell('wm density 480')" /> -->
                     <Button label="resetDensity" icon="fa-solid fa-mobile" @click="shell('wm density reset')" />
                     <Button label="showTimeSetting" icon="fa-solid fa-clock"
                         @click="shell('am start -a android.settings.DATE_SETTINGS')" />

@@ -1,6 +1,7 @@
 <template>
     <div class="w-full">
-        <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account','device_index']" @refresh="get_train_jobs">
+        <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account', 'device_index']"
+            @refresh="get_train_jobs">
             <template v-slot:buttons>
                 <Button @click="retry_all_failed" label="retryAllFaied" />
                 <Button onclick="confirm_modal.showModal()" label="clearAll" />
@@ -20,6 +21,7 @@
                                 <th>{{ $t('id') }}</th>
                                 <th>{{ $t('startTime') }}</th>
                                 <th>{{ $t('status') }}</th>
+                                <th>{{ $t('remark') }}</th>
                                 <th>{{ $t('username') }}</th>
                                 <th>{{ $t('device') }}</th>
                                 <th>{{ $t('group') }}</th>
@@ -34,25 +36,30 @@
                                     <div class="badge badge-neutral" v-if="train_job.status == '0'"> {{ $t('waiting') }}
                                     </div>
                                     <div class="badge badge-primary" v-else-if="train_job.status == '1'"> {{
-                                        $t('execing') }} </div>
+            $t('execing') }} </div>
                                     <div class="badge badge-success" v-else-if="train_job.status == '2'"> {{
-                                        $t('success') }} </div>
+            $t('success') }} </div>
                                     <div class="badge badge-error" v-else-if="train_job.status == '3'"> {{
-                                        $t('failed') }} </div>
+            $t('failed') }} </div>
                                 </td>
+                                <td>{{ train_job.remark }}</td>
                                 <td>
-                                    <a class="link link-primary" :href="`https://www.tiktok.com/${train_job.username}`" target="_blank">{{ train_job.username }}</a>
+                                    <a class="link link-primary" :href="`https://www.tiktok.com/${train_job.username}`"
+                                        target="_blank">{{ train_job.username }}</a>
                                 </td>
                                 <td>
                                     <a class="cursor-pointer underline text-blue-500"
-                                        @click="show_device(train_job.device)">{{ train_job.device_index }} - {{ train_job.device }}</a>
+                                        @click="show_device(train_job.device)">{{ train_job.device_index }} - {{
+            train_job.device }}</a>
                                 </td>
                                 <td>{{ train_job.group_name || 'N/A' }}</td>
                                 <td>
                                     <div class="space-x-4">
-                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                                        <button
+                                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                                             @click="retry(train_job)">{{ $t('retry') }}</button>
-                                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                        <button
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                                             @click="deleteJob(train_job)">{{ $t('delete') }}</button>
                                     </div>
                                 </td>
@@ -137,7 +144,7 @@ export default {
                 this.jobs = res.data
                 this.jobs.forEach(job => {
                     let device_index = this.devices.findIndex(device => device.serial === job.device);
-                    job.device_index = device_index+1;
+                    job.device_index = device_index + 1;
                 })
                 this.get_groups();
             }).catch(err => {

@@ -22,7 +22,7 @@
                     icon="fa-solid fa-link" />
                 <Button @click="shell('settings put global http_proxy :0')" label="disableProxy"
                     icon="fa-solid fa-unlink" />
-
+                <Button @click="shell('am start -n com.android.settings/.LanguageSettings')" label="showLanguageSetting" icon="fa-solid fa-trash" />
                 <Button @click="script('connect_wifi')" label="connectWifi" icon="fa-solid fa-wifi" />
                 <Button @click="script('unlock')" label="unlock" icon="fa-solid fa-unlock" />
                 <!-- <Button @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi-slash" /> -->

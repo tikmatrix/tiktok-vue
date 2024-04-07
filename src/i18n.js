@@ -219,6 +219,7 @@ export const i18n = createI18n({
             finished: 'Finished',
             clear: 'Clear',
             unlock: 'Unlock',
+            showLanguageSetting: 'Show Language Setting',
         },
         'zh-CN': {
             siteName: 'TikTok 矩阵',

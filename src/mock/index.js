@@ -43,7 +43,7 @@ let accounts = []
 for (let i = 1; i <= 10; i++) {
   accounts.push({
     id: i,
-    email: 'admin' + i + '@niostack.com',
+    email: 'admin' + i + '@tikmatrix.com',
     username: '@admin' + i,
     pwd: '123qwe...',
     register_time: '2023-11-13 13:43:49',
@@ -200,7 +200,7 @@ const data = {
       wifi_name: 'ExampleWiFi',
       wifi_password: 'ExamplePassword',
       version: '1.0.0',
-      adb_mode: 'tcp'
+      adb_mode: 'USB'
     },
     [api.task_status]: 'running',
     [api.avatar]: avatars,

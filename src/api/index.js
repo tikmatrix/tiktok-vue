@@ -48,6 +48,7 @@ const api = {
   upload_to_virtualHost: '/api/virtual_hosts/upload_video',
   clear_edit_bot: '/api/virtual_hosts/clear_edit_bot',
   adb_command: '/agent/api/adb_command',
-  script: '/agent/api/script'
+  script: '/agent/api/script',
+  scan_tcp: '/agent/api/tcp_scan'
 }
 export default api

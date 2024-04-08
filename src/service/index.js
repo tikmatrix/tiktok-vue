@@ -614,3 +614,10 @@ export function script(scriptRequest) {
     url: api.script
   })
 }
+export function scan_tcp() {
+  return request({
+    baseURL: util.getAgentUrl(),
+    method: 'get',
+    url: api.scan_tcp
+  })
+}

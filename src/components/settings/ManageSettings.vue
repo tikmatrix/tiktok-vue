@@ -80,7 +80,7 @@
       </div>
 
       <div class="label">
-        <span class="label-text-alt">example: @niostack.com </span>
+        <span class="label-text-alt">example: @tikmatrix.com </span>
       </div>
     </label>
     <label class="form-control w-full max-w-md">

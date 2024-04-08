@@ -1,43 +1,39 @@
 <template>
-    <div ref="countup"></div>
+  <div ref="countup"></div>
 </template>
 
 <script>
 import { CountUp } from 'countup.js'
-import { Odometer } from 'odometer_countup';
 export default {
-    name: 'app',
-    components: {
-        CountUp
+  name: 'app',
+  components: {},
+  props: {
+    end: {
+      type: Number,
+      default: 0
     },
-    props: {
-        end: {
-            type: Number,
-            default: 0
-        },
-        options: {
-            type: Object,
-            default: () => {
-                return {
-                    duration: 3,
-                }
-            }
-        }
-    },
-    watch: {
-        end: function (newVal, oldVal) {
-            this.countUp.update(newVal)
-        }
-    },
-    data() {
+    options: {
+      type: Object,
+      default: () => {
         return {
-            countUp: null
+          duration: 3
         }
-    },
-    mounted() {
-        this.countUp = new CountUp(this.$refs.countup, this.end,this.options)
-        this.countUp.start()
-    },
-
+      }
+    }
+  },
+  watch: {
+    end: function (newVal) {
+      this.countUp.update(newVal)
+    }
+  },
+  data() {
+    return {
+      countUp: null
+    }
+  },
+  mounted() {
+    this.countUp = new CountUp(this.$refs.countup, this.end, this.options)
+    this.countUp.start()
+  }
 }
 </script>

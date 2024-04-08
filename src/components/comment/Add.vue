@@ -1,154 +1,150 @@
 <template>
-    <div class="bg-base-100 flex flex-col items-start p-4">
-
-        <div class="flex flex-row items-center gap-2 mb-2 w-full">
-            <textarea class="textarea textarea-success w-full max-w-xs" placeholder="input formated comments"
-                autocomplete="off" v-model="post_comment_topic.content">
-            </textarea>
-            <label class="input input-bordered flex items-center gap-2">
-                <span class=" text-primary">AccountCount: </span>
-                <input type="number" class="grow" placeholder="account count" v-model="post_comment_topic.account_count"
-                    readonly />
-            </label>
-            <!-- gen comments btn -->
-            <Button class="btn-primary" @click="genComments" label="parse" />
-            <Button class="btn-primary" @click="add" label="save" :disabled="error_msg !== ''" />
-        </div>
-        <div class="divider">comments</div>
-        <div class="text-error">{{ error_msg }}</div>
-        <!-- comments -->
-        <div class="w-full items-center gap-2 mb-2">
-            <div class="chat chat-start" v-for="comment in post_comment_topic.comments" :key="comment.no">
-                <div class="chat-image avatar">
-                    <div class="w-14 h-14 rounded-full border-2 border-green-500 text-center bg-blue-400">
-                        <img src="/tx.png" alt="avatar" class="rounded-full" />
-                    </div>
-                </div>
-                <div class="chat-header">
-                    #{{ comment.no }}:
-                    <span class=" text-primary"> {{ comment.username }} {{ comment.parent_no ? 'Reply#' +
-                    comment.parent_no
-                    : 'Comment' }}</span>
-                </div>
-                <div class="chat-bubble">{{ comment.content }}</div>
-            </div>
-
-        </div>
-
-
+  <div class="bg-base-100 flex flex-col items-start p-4">
+    <div class="flex flex-row items-center gap-2 mb-2 w-full">
+      <textarea class="textarea textarea-success w-full max-w-xs" placeholder="input formated comments" autocomplete="off" v-model="post_comment_topic.content">
+      </textarea>
+      <label class="input input-bordered flex items-center gap-2">
+        <span class="text-primary">AccountCount: </span>
+        <input type="number" class="grow" placeholder="account count" v-model="post_comment_topic.account_count" readonly />
+      </label>
+      <!-- gen comments btn -->
+      <MyButton class="btn-primary" @click="genComments" label="parse" />
+      <MyButton class="btn-primary" @click="add" label="save" :disabled="error_msg !== ''" />
     </div>
+    <div class="divider">comments</div>
+    <div class="text-error">{{ error_msg }}</div>
+    <!-- comments -->
+    <div class="w-full items-center gap-2 mb-2">
+      <div class="chat chat-start" v-for="comment in post_comment_topic.comments" :key="comment.no">
+        <div class="chat-image avatar">
+          <div class="w-14 h-14 rounded-full border-2 border-green-500 text-center bg-blue-400">
+            <img src="/tx.png" alt="avatar" class="rounded-full" />
+          </div>
+        </div>
+        <div class="chat-header">
+          #{{ comment.no }}:
+          <span class="text-primary"> {{ comment.username }} {{ comment.parent_no ? 'Reply#' + comment.parent_no : 'Comment' }}</span>
+        </div>
+        <div class="chat-bubble">{{ comment.content }}</div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import Button from '../Button.vue'
+import MyButton from '../Button.vue'
 export default {
-    props: {
-        post_comment: {
-            type: Object,
-            required: true,
-        },
-
-    },
-
-    components: {
-        Button
-    },
-    data() {
-        return {
-            error_msg: 'parse comments first',
-            post_comment_topic: {
-                post_comment_id: 0,
-                content: '',
-                account_count: 0,
-                comments: [],
-                accounts: []
-            }
-        };
-    },
-    emits: ['add'],
-    methods: {
-        add() {
-            this.$emit('add', this.post_comment_topic);
-        },
-        get_accounts() {
-            this.$service.get_accounts().then(res => {
-                this.accounts = res.data
-            }).catch(err => {
-                console.log(err)
-            })
-        },
-        genComments() {
-            //filter empty lines
-            this.post_comment_topic.content = this.post_comment_topic.content.split('\n').filter(Boolean).join('\n')
-            //filter blank lines
-            this.post_comment_topic.content = this.post_comment_topic.content.replace(/^\s*[\r\n]/gm, '')
-            //split by line and add to comments
-            this.account_count = 0
-            var usernames = []
-
-            this.post_comment_topic.content.split('\n').map((comment, index) => {
-                //fileter head and tail space
-                comment = comment.replace(/^\s+|\s+$/g, '')
-                var no = index + 1
-                var parent_no = 0
-                var username = comment.split(':')[0].split(' ')[0]
-                if (!usernames.includes(username)) {
-                    usernames.push(username)
-                }
-                if (comment.includes('(replying to')) {
-                    var replying_to_username = comment.split('replying to ')[1].split(')')[0]
-                    console.log('replying_to_username:', replying_to_username)
-                    //find parent_no
-                    var parent_comment = this.post_comment_topic.comments.find(comment => comment.username === replying_to_username)
-                    if (parent_comment) {
-                        parent_no = parent_comment.no
-                    }
-                }
-                //remove head and tail 
-                var content = comment.split(':')[1].replace(/^\s+|\s+$/g, '').replace(/^"|"$/g, '')
-                this.post_comment_topic.comments.push({
-                    no: no,
-                    content: content,
-                    username: username,
-                    parent_no: parent_no,
-                    status: 0
-                })
-
-            })
-            this.post_comment_topic.account_count = usernames.length
-            if (this.accounts.length < usernames.length) {
-                this.error_msg = 'account not enough'
-                return
-            }
-            this.error_msg = ''
-            //copy accounts
-            var temp_accounts = this.accounts.slice()
-            var random_account_map = {}
-            this.post_comment_topic.comments.forEach(comment => {
-                if (random_account_map[comment.username]) {
-                    // console.log('random_account_map[comment.username]:', random_account_map[comment.username])
-                    var account = random_account_map[comment.username]
-                    comment.username = account.username
-                    comment.account_id = account.id
-
-                } else {
-                    //random pop account
-                    // console.log('random pop account, temp_accounts.length:', temp_accounts.length, 'temp_accounts:', temp_accounts)
-                    var account = temp_accounts.splice(Math.floor(Math.random() * temp_accounts.length), 1)[0]
-                    // console.log('random pop account, account:', account)
-                    random_account_map[comment.username] = account
-                    comment.username = account.username
-                    comment.account_id = account.id
-                    // console.log('random pop account, comment:', comment)
-                }
-            })
-        }
-    },
-    mounted() {
-        this.post_comment_topic.post_comment_id = this.post_comment.id
-        this.get_accounts()
+  props: {
+    post_comment: {
+      type: Object,
+      required: true
     }
-};
+  },
+
+  components: {
+    MyButton
+  },
+  data() {
+    return {
+      error_msg: 'parse comments first',
+      post_comment_topic: {
+        post_comment_id: 0,
+        content: '',
+        account_count: 0,
+        comments: [],
+        accounts: []
+      }
+    }
+  },
+  emits: ['add'],
+  methods: {
+    add() {
+      this.$emit('add', this.post_comment_topic)
+    },
+    get_accounts() {
+      this.$service
+        .get_accounts()
+        .then(res => {
+          this.accounts = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    genComments() {
+      //filter empty lines
+      this.post_comment_topic.content = this.post_comment_topic.content.split('\n').filter(Boolean).join('\n')
+      //filter blank lines
+      this.post_comment_topic.content = this.post_comment_topic.content.replace(/^\s*[\r\n]/gm, '')
+      //split by line and add to comments
+      this.account_count = 0
+      var usernames = []
+
+      this.post_comment_topic.content.split('\n').map((comment, index) => {
+        //fileter head and tail space
+        comment = comment.replace(/^\s+|\s+$/g, '')
+        var no = index + 1
+        var parent_no = 0
+        var username = comment.split(':')[0].split(' ')[0]
+        if (!usernames.includes(username)) {
+          usernames.push(username)
+        }
+        if (comment.includes('(replying to')) {
+          var replying_to_username = comment.split('replying to ')[1].split(')')[0]
+          console.log('replying_to_username:', replying_to_username)
+          //find parent_no
+          var parent_comment = this.post_comment_topic.comments.find(comment => comment.username === replying_to_username)
+          if (parent_comment) {
+            parent_no = parent_comment.no
+          }
+        }
+        //remove head and tail
+        var content = comment
+          .split(':')[1]
+          .replace(/^\s+|\s+$/g, '')
+          .replace(/^"|"$/g, '')
+        this.post_comment_topic.comments.push({
+          no: no,
+          content: content,
+          username: username,
+          parent_no: parent_no,
+          status: 0
+        })
+      })
+      this.post_comment_topic.account_count = usernames.length
+      if (this.accounts.length < usernames.length) {
+        this.error_msg = 'account not enough'
+        return
+      }
+      this.error_msg = ''
+      //copy accounts
+      var temp_accounts = this.accounts.slice()
+      var random_account_map = {}
+      var account = {}
+      this.post_comment_topic.comments.forEach(comment => {
+        if (random_account_map[comment.username]) {
+          // console.log('random_account_map[comment.username]:', random_account_map[comment.username])
+          account = random_account_map[comment.username]
+          comment.username = account.username
+          comment.account_id = account.id
+        } else {
+          //random pop account
+          // console.log('random pop account, temp_accounts.length:', temp_accounts.length, 'temp_accounts:', temp_accounts)
+          account = temp_accounts.splice(Math.floor(Math.random() * temp_accounts.length), 1)[0]
+          // console.log('random pop account, account:', account)
+          random_account_map[comment.username] = account
+          comment.username = account.username
+          comment.account_id = account.id
+          // console.log('random pop account, comment:', comment)
+        }
+      })
+    }
+  },
+  mounted() {
+    this.post_comment_topic.post_comment_id = this.post_comment.id
+    this.get_accounts()
+  }
+}
 </script>
 <!-- 
 

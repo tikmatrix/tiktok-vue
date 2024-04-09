@@ -17,10 +17,9 @@ export function logout() {
 export function get_devices() {
   return request({
     method: 'get',
-    url: api.device,
+    url: api.device
   })
 }
-
 
 export function install(formData) {
   return request({
@@ -30,24 +29,6 @@ export function install(formData) {
     },
     url: api.install,
     data: formData
-  })
-}
-
-
-export function script({ script, serial = "", args = [] }) {
-  let params = { script };
-  if (serial) {
-    params.serial = serial
-  }
-
-  if (args.length > 0) {
-    params.args = args.join(',')
-  }
-
-  return request({
-    method: 'get',
-    url: api.script,
-    params
   })
 }
 
@@ -61,7 +42,7 @@ export function get_materials_byused({ used }) {
 export function get_materials() {
   return request({
     method: 'get',
-    url: api.material,
+    url: api.material
   })
 }
 export function get_material_count({ used, group_id }) {
@@ -72,7 +53,7 @@ export function get_material_count({ used, group_id }) {
   })
 }
 
-export function upload_material(formData,) {
+export function upload_material(formData) {
   return post({
     headers: {
       'Content-Type': 'multipart/form-data'
@@ -112,13 +93,13 @@ export function delete_material({ id }) {
 export function get_accounts() {
   return request({
     method: 'get',
-    url: api.account,
+    url: api.account
   })
 }
 export function get_publish_jobs() {
   return request({
     method: 'get',
-    url: api.publish_job,
+    url: api.publish_job
   })
 }
 export function add_account({ email, pwd, fans, device, group_id, username }) {
@@ -144,12 +125,14 @@ export function delete_account({ id }) {
 }
 export function get_proxys() {
   return request({
+    baseURL: util.getAgentUrl(),
     method: 'get',
-    url: api.proxy,
+    url: api.proxy
   })
 }
 export function add_proxys({ urls }) {
   return request({
+    baseURL: util.getAgentUrl(),
     method: 'post',
     url: api.proxy,
     data: { urls }
@@ -157,6 +140,7 @@ export function add_proxys({ urls }) {
 }
 export function test_speed({ name }) {
   return request({
+    baseURL: util.getAgentUrl(),
     method: 'get',
     url: api.proxy_delay,
     params: { name }
@@ -166,7 +150,7 @@ export function test_speed({ name }) {
 export function get_train_jobs() {
   return request({
     method: 'get',
-    url: api.train_job,
+    url: api.train_job
   })
 }
 export function delete_train_job({ id }) {
@@ -197,13 +181,7 @@ export function update_publish_job({ id, status, publish_type }) {
     data: { id, status, publish_type }
   })
 }
-export function shell({ serial, cmd }) {
-  return request({
-    method: 'post',
-    url: api.shell,
-    data: { serial, cmd }
-  })
-}
+
 //repair
 export function init({ serial, init }) {
   return request({
@@ -215,32 +193,74 @@ export function init({ serial, init }) {
 export function get_groups() {
   return request({
     method: 'get',
-    url: api.group,
+    url: api.group
   })
 }
-export function add_group({ name, auto_train, auto_publish, publish_start_time,
-  train_start_time, title, publish_type, product_link, floow_probable, like_probable,
-  collect_probable, train_duration }) {
+export function add_group({
+  name,
+  auto_train,
+  auto_publish,
+  publish_start_time,
+  train_start_time,
+  title,
+  publish_type,
+  product_link,
+  floow_probable,
+  like_probable,
+  collect_probable,
+  train_duration
+}) {
   return request({
     method: 'post',
     url: api.group,
     data: {
-      name, auto_train, auto_publish, publish_start_time,
-      train_start_time, title, publish_type, product_link, floow_probable, like_probable,
-      collect_probable, train_duration
+      name,
+      auto_train,
+      auto_publish,
+      publish_start_time,
+      train_start_time,
+      title,
+      publish_type,
+      product_link,
+      floow_probable,
+      like_probable,
+      collect_probable,
+      train_duration
     }
   })
 }
-export function update_group({ id, name, auto_train, auto_publish, publish_start_time,
-  train_start_time, title, publish_type, product_link, floow_probable, like_probable,
-  collect_probable, train_duration }) {
+export function update_group({
+  id,
+  name,
+  auto_train,
+  auto_publish,
+  publish_start_time,
+  train_start_time,
+  title,
+  publish_type,
+  product_link,
+  floow_probable,
+  like_probable,
+  collect_probable,
+  train_duration
+}) {
   return request({
     method: 'put',
     url: api.group,
     data: {
-      id, name, auto_train, auto_publish, publish_start_time,
-      train_start_time, title, publish_type, product_link, floow_probable, like_probable,
-      collect_probable, train_duration
+      id,
+      name,
+      auto_train,
+      auto_publish,
+      publish_start_time,
+      train_start_time,
+      title,
+      publish_type,
+      product_link,
+      floow_probable,
+      like_probable,
+      collect_probable,
+      train_duration
     }
   })
 }
@@ -254,7 +274,7 @@ export function delete_group({ id }) {
 export function get_musics() {
   return request({
     method: 'get',
-    url: api.music,
+    url: api.music
   })
 }
 export function add_music({ release_name, artist_name }) {
@@ -282,7 +302,7 @@ export function delete_music({ id }) {
 export function get_watchers() {
   return request({
     method: 'get',
-    url: api.watcher,
+    url: api.watcher
   })
 }
 export function add_watcher({ name, conditions, action, status }) {
@@ -310,7 +330,7 @@ export function delete_watcher({ id }) {
 export function get_settings() {
   return request({
     method: 'get',
-    url: api.settings,
+    url: api.settings
   })
 }
 export function update_settings({ proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix, password }) {
@@ -330,7 +350,7 @@ export function get_task_status({ serial }) {
 export function get_license() {
   return request({
     method: 'get',
-    url: api.get_license,
+    url: api.get_license
   })
 }
 export function add_license({ key }) {
@@ -343,7 +363,7 @@ export function add_license({ key }) {
 export function get_avatars() {
   return request({
     method: 'get',
-    url: api.avatar,
+    url: api.avatar
   })
 }
 export function upload_avatar(formData) {
@@ -366,25 +386,25 @@ export function delete_avatar({ id }) {
 export function count_train_job_by_status() {
   return request({
     method: 'get',
-    url: api.count_train_job_by_status,
+    url: api.count_train_job_by_status
   })
 }
 export function count_publish_job_by_status() {
   return request({
     method: 'get',
-    url: api.count_publish_job_by_status,
+    url: api.count_publish_job_by_status
   })
 }
 export function count_online_device() {
   return request({
     method: 'get',
-    url: api.count_online_device,
+    url: api.count_online_device
   })
 }
 export function count_all_account() {
   return request({
     method: 'get',
-    url: api.count_all_account,
+    url: api.count_all_account
   })
 }
 export function count_account_by_group_id({ group_id }) {
@@ -397,13 +417,13 @@ export function count_account_by_group_id({ group_id }) {
 export function retry_all_failed_train_job() {
   return request({
     method: 'get',
-    url: api.retry_all_failed_train_job,
+    url: api.retry_all_failed_train_job
   })
 }
 export function retry_all_failed_publish_job() {
   return request({
     method: 'get',
-    url: api.retry_all_failed_publish_job,
+    url: api.retry_all_failed_publish_job
   })
 }
 export function add_post_comment({ post_url }) {
@@ -416,7 +436,7 @@ export function add_post_comment({ post_url }) {
 export function get_post_comments() {
   return request({
     method: 'get',
-    url: api.post_comment,
+    url: api.post_comment
   })
 }
 export function gen_topic_comments({ content, account_count }) {
@@ -451,31 +471,31 @@ export function read_clipboard({ serial }) {
 export function count_comment_job_by_status() {
   return request({
     method: 'get',
-    url: api.count_comment_job_by_status,
+    url: api.count_comment_job_by_status
   })
 }
 export function delete_all_materials() {
   return request({
     method: 'delete',
-    url: api.delete_all_materials,
+    url: api.delete_all_materials
   })
 }
 export function delete_all_train_jobs() {
   return request({
     method: 'delete',
-    url: api.delete_all_train_jobs,
+    url: api.delete_all_train_jobs
   })
 }
 export function delete_all_publish_jobs() {
   return request({
     method: 'delete',
-    url: api.delete_all_publish_jobs,
+    url: api.delete_all_publish_jobs
   })
 }
 export function delete_all_post_comments() {
   return request({
     method: 'delete',
-    url: api.delete_all_post_comments,
+    url: api.delete_all_post_comments
   })
 }
 export function get_ip({ serial }) {
@@ -496,14 +516,14 @@ export function enable_proxy_rule({ serial, ip }) {
 export function get_analytics() {
   return request({
     method: 'get',
-    url: api.analytics,
+    url: api.analytics
   })
 }
 export function get_virtualHosts() {
   return request({
     baseURL: util.getAgentUrl(),
     method: 'get',
-    url: api.virtualHosts,
+    url: api.virtualHosts
   })
 }
 export function add_or_update_virtualHost(virtualHosts) {
@@ -519,16 +539,15 @@ export function init_virtualHost({ ids }) {
     baseURL: util.getAgentUrl(),
     method: 'get',
     params: { ids },
-    url: api.init_virtualHost,
+    url: api.init_virtualHost
   })
-
 }
 export function delete_virtualHost({ id }) {
   return request({
     baseURL: util.getAgentUrl(),
     method: 'delete',
     params: { id },
-    url: api.virtualHosts,
+    url: api.virtualHosts
   })
 }
 export function get_post_bot_status({ id }) {
@@ -536,7 +555,7 @@ export function get_post_bot_status({ id }) {
     baseURL: util.getAgentUrl(),
     method: 'get',
     params: { id },
-    url: api.get_post_bot_status,
+    url: api.get_post_bot_status
   })
 }
 export function start_post_bot({ ids }) {
@@ -544,7 +563,7 @@ export function start_post_bot({ ids }) {
     baseURL: util.getAgentUrl(),
     method: 'get',
     params: { ids },
-    url: api.start_post_bot,
+    url: api.start_post_bot
   })
 }
 export function stop_post_bot({ ids }) {
@@ -552,7 +571,7 @@ export function stop_post_bot({ ids }) {
     baseURL: util.getAgentUrl(),
     method: 'get',
     params: { ids },
-    url: api.stop_post_bot,
+    url: api.stop_post_bot
   })
 }
 export function start_edit_bot({ ids }) {
@@ -560,7 +579,7 @@ export function start_edit_bot({ ids }) {
     baseURL: util.getAgentUrl(),
     method: 'get',
     params: { ids },
-    url: api.start_edit_bot,
+    url: api.start_edit_bot
   })
 }
 export function stop_edit_bot({ ids }) {
@@ -568,7 +587,7 @@ export function stop_edit_bot({ ids }) {
     baseURL: util.getAgentUrl(),
     method: 'get',
     params: { ids },
-    url: api.stop_edit_bot,
+    url: api.stop_edit_bot
   })
 }
 export function clear_edit_bot({ id, dir }) {
@@ -576,6 +595,29 @@ export function clear_edit_bot({ id, dir }) {
     baseURL: util.getAgentUrl(),
     method: 'get',
     params: { id, dir },
-    url: api.clear_edit_bot,
+    url: api.clear_edit_bot
+  })
+}
+export function adb_command(adbCommandRequest) {
+  return request({
+    baseURL: util.getAgentUrl(),
+    method: 'post',
+    data: adbCommandRequest,
+    url: api.adb_command
+  })
+}
+export function script(scriptRequest) {
+  return request({
+    baseURL: util.getAgentUrl(),
+    method: 'post',
+    data: scriptRequest,
+    url: api.script
+  })
+}
+export function scan_tcp() {
+  return request({
+    baseURL: util.getAgentUrl(),
+    method: 'get',
+    url: api.scan_tcp
   })
 }

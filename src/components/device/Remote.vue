@@ -46,6 +46,7 @@
           @click="adb_command(['shell', 'am', 'start', '-n', 'com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity'])"
         />
         <MyButton label="stopTiktok" icon="fa-brands fa-tiktok" @click="adb_command(['shell', 'am', 'force-stop', 'com.zhiliaoapp.musically'])" />
+        <MyButton label="clearTiktok" icon="fa-brands fa-tiktok" @click="adb_command(['shell', 'pm', 'clear', 'com.zhiliaoapp.musically'])" />
         <MyButton label="enableProxy" icon="fa-solid fa-link" @click="enable_proxy" />
         <MyButton label="disableProxy" icon="fa-solid fa-unlink" @click="adb_command(['shell', 'settings', 'put', 'global', 'http_proxy', ':0'])" />
         <MyButton label="showLanguageSetting" icon="fa-solid fa-trash" @click="adb_command(['shell', 'am', 'start', '-n', 'com.android.settings/.LanguageSettings'])" />
@@ -54,13 +55,7 @@
         <MyButton label="openNotification" icon="fa-solid fa-bell" @click="adb_command(['shell', 'input', 'swipe', '500', '0', '500', '1000'])" />
         <MyButton label="openWhoer" icon="fa-brands fa-wikipedia-w" @click="adb_command(['shell', 'am', 'start', '-a', 'android.intent.action.VIEW', '-d', 'https://whoer.net'])" />
         <MyButton label="ipinfo" icon="fa-solid fa-info" @click="adb_command(['shell', 'am', 'start', '-a', 'android.intent.action.VIEW', '-d', 'https://ipinfo.io'])" />
-        <MyButton @click="script('connect_wifi')" label="connectWifi" icon="fa-solid fa-wifi" />
-        <MyButton @click="script('unlock')" label="unlock" icon="fa-solid fa-unlock" />
-        <MyButton @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi-slash" />
-        <MyButton @click="script('torch_on')" label="torchOn" icon="fa-solid fa-lightbulb" />
-        <MyButton @click="script('torch_off')" label="torchOff" icon="fa-solid fa-power-off" />
-        <MyButton @click="script('clear_notification')" label="clearNotification" icon="fa-solid fa-bell-slash" />
-        <MyButton @click="script('clear_tasks')" label="clearTasks" icon="fa-solid fa-trash" />
+       
         <MyButton label="reboot" color="btn-error" icon="fa-solid fa-power-off" @click="adb_command(['shell','reboot'])" />
           <MyButton label="init" icon="fa-solid fa-wrench" @click="repair(mydevice.serial)" />
         </div>
@@ -68,12 +63,14 @@
       <details class="collapse collapse-arrow bg-base-200">
         <summary class="collapse-title text-xl font-medium">{{ $t('autoScripts') }}</summary>
         <div class="collapse-content">
-          <MyButton @click="script('connect_wifi')" label="connectWifi" icon="fa-solid fa-wifi" />
-
-          <MyButton @click="script('profile')" label="setProfile" icon="fa-solid fa-user" :disabled="task_status == 'running'" />
+          <MyButton @click="script('connect_wifi')" label="connectWifi" icon="fa-solid fa-wifi" :disabled="task_status == 'running'" />
+          <MyButton @click="script('unlock')" label="unlock" icon="fa-solid fa-unlock" :disabled="task_status == 'running'" />
+          <MyButton @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi-slash" :disabled="task_status == 'running'" />
           <MyButton @click="script('torch_on')" label="torchOn" icon="fa-solid fa-lightbulb" :disabled="task_status == 'running'" />
-          <MyButton @click="script('torch_off')" label="torchOff" icon="fa-solid fa-lightbulb" :disabled="task_status == 'running'" />
-
+          <MyButton @click="script('torch_off')" label="torchOff" icon="fa-solid fa-power-off" :disabled="task_status == 'running'" />
+          <MyButton @click="script('clear_notification')" label="clearNotification" icon="fa-solid fa-bell-slash" :disabled="task_status == 'running'" />
+          <MyButton @click="script('clear_tasks')" label="clearTasks" icon="fa-solid fa-trash" :disabled="task_status == 'running'" />
+          <MyButton @click="script('profile')" label="setProfile" icon="fa-solid fa-user" :disabled="task_status == 'running'" />
           <MyButton label="register" icon="fa-solid fa-address-card" @click="script('register')" :disabled="task_status == 'running'" />
           <MyButton
             label="registerAll"

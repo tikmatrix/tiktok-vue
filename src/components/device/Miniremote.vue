@@ -36,6 +36,7 @@ export default {
   },
   methods: {
     syncDisplay() {
+      this.loading = true
       const jmuxer = new JMuxer({
         node: this.$refs.display,
         mode: 'video',
@@ -60,12 +61,10 @@ export default {
         this.scrcpy.send('false')
       }
       this.scrcpy.onclose = () => {
-        this.readonly = true
-        this.img = 'preview.jpg'
+        this.loading = true
       }
       this.scrcpy.onerror = () => {
-        this.readonly = true
-        this.img = 'preview.jpg'
+        this.loading = true
       }
       this.scrcpy.onmessage = message => {
         this.loading = false

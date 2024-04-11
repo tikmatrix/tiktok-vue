@@ -4,7 +4,7 @@ export const i18n = createI18n({
   locale: 'en', // 设置默认语言
   messages: {
     en: {
-      siteName: 'TikTok Matrix',
+      siteName: 'Tik Matrix',
       devices: 'Devices',
       accounts: 'Accounts',
       materials: 'Videos',
@@ -217,7 +217,7 @@ export const i18n = createI18n({
       showLanguageSetting: 'Show Language Setting'
     },
     'zh-CN': {
-      siteName: 'TikTok 矩阵',
+      siteName: 'Tik Matrix',
       devices: '设备',
       accounts: '帐号',
       materials: '素材',

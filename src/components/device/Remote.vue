@@ -32,8 +32,8 @@
       <details class="collapse collapse-arrow bg-base-200">
         <summary class="collapse-title text-xl font-medium">{{ $t('quickOperation') }}</summary>
         <div class="collapse-content">
-          <MyButton icon="fa fa-upload" @click="app_install" label="installApk" />
-        <MyButton icon="fa fa-trash" @click="app_uninstall" label="uninstallApk" />
+          <!-- <MyButton icon="fa fa-upload" @click="app_install" label="installApk" />
+        <MyButton icon="fa fa-trash" @click="app_uninstall" label="uninstallApk" /> -->
         <MyButton label="1080x1920" icon="fa-solid fa-mobile" @click="adb_command(['shell', 'wm', 'size', '1080x1920'])" />
         <MyButton label="320" icon="fa-solid fa-mobile" @click="adb_command(['shell', 'wm', 'density', '320'])" />
         <MyButton label="back" icon="fa-solid fa-chevron-left" @click="adb_command(['shell', 'input', 'keyevent', 'KEYCODE_BACK'])" />
@@ -65,7 +65,7 @@
         <div class="collapse-content">
           <MyButton @click="script('connect_wifi')" label="connectWifi" icon="fa-solid fa-wifi" :disabled="task_status == 'running'" />
           <MyButton @click="script('unlock')" label="unlock" icon="fa-solid fa-unlock" :disabled="task_status == 'running'" />
-          <MyButton @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi-slash" :disabled="task_status == 'running'" />
+          <MyButton @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi" :disabled="task_status == 'running'" />
           <MyButton @click="script('torch_on')" label="torchOn" icon="fa-solid fa-lightbulb" :disabled="task_status == 'running'" />
           <MyButton @click="script('torch_off')" label="torchOff" icon="fa-solid fa-power-off" :disabled="task_status == 'running'" />
           <MyButton @click="script('clear_notification')" label="clearNotification" icon="fa-solid fa-bell-slash" :disabled="task_status == 'running'" />
@@ -90,12 +90,7 @@
           <MyButton label="uploadVideo" icon="fa-solid fa-upload" @click="uploadVideo" />
         </div>
       </details>
-      <div class="divider divider-info">{{ $t('logs') }}</div>
-      <div class="p-1">
-        <div class="mockup-code">
-          <pre data-prefix=">" v-for="detail in connect_details" v-bind:key="detail"><code class="text-success">{{ detail }}</code></pre>
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -123,7 +118,6 @@ export default {
   data() {
     return {
       mydevice: {},
-      img: 'preview.jpg',
       rotation: 0,
       command: '',
       text: '',
@@ -140,7 +134,6 @@ export default {
       timer_task_status: null,
       loading_text: '',
       timer_loading: null,
-      connect_details: [],
       settings: {},
       ip: '0.0.0.0'
     }
@@ -373,7 +366,6 @@ export default {
           }
         }
       })
-      this.connect_details.push('try to connect mydevice...')
       this.scrcpy = new WebSocket(util.getWsUrl())
       this.scrcpy.binaryType = 'arraybuffer'
       this.scrcpy.onopen = () => {
@@ -383,17 +375,12 @@ export default {
         this.scrcpy.send(800)
         // control: false
         this.scrcpy.send('true')
-        this.connect_details.push('mydevice connected!')
       }
       this.scrcpy.onclose = () => {
         this.loading = true
-        this.img = 'preview.jpg'
-        this.connect_details.push('connect closed!')
       }
       this.scrcpy.onerror = () => {
         this.loading = true
-        this.img = 'preview.jpg'
-        this.connect_details.push('connect error!')
       }
       this.scrcpy.onmessage = message => {
         this.periodImageCount += 1

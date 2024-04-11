@@ -71,7 +71,7 @@
             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
           />
         </svg>
-        <span class="font-bold">{{ $t('demoTip', { email: 'admin@tikmatrix.com' }) }}</span>
+        <span class="font-bold">{{ $t('demoTip', { email: 'admin@niostack.com' }) }}</span>
         <a class="link link-primary" href="https://t.me/+iGhozoBfAbI5YmE1">Join Telegram Group</a>
       </div>
       <ManageDashboard v-if="selectedItem === 'dashboard'" />
@@ -92,7 +92,7 @@
       <ManageEditBots v-if="selectedItem === 'editBots'" />
       <footer class="footer footer-center p-4 bg-base-300 text-base-content">
         <aside>
-          <p>Copyright © 2024 - All right reserved by tikmatrix.com</p>
+          <p>Copyright © 2023-2024 - All right reserved by tikmatrix.com</p>
         </aside>
       </footer>
     </div>

@@ -18,7 +18,7 @@
       <div class="chat chat-start" v-for="comment in post_comment_topic.comments" :key="comment.no">
         <div class="chat-image avatar">
           <div class="w-14 h-14 rounded-full border-2 border-green-500 text-center bg-blue-400">
-            <img src="/tx.png" alt="avatar" class="rounded-full" />
+            
           </div>
         </div>
         <div class="chat-header">

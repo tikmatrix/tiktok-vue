@@ -18,6 +18,8 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 library.add(fas, fab)
 import { i18n } from './i18n.js'
 import { reactive } from 'vue'
+import mitt from 'mitt'
+const emitter = mitt()
 
 let devices = reactive({ list: [] })
 
@@ -34,6 +36,7 @@ app.use(i18n)
 app.provide('axios', app.config.globalProperties.axios) // provide 'axios'
 app.provide('devices', devices) // provide 'devices
 app.config.globalProperties.$service = service
+app.config.globalProperties.$emitter = emitter
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('VueDatePicker', VueDatePicker)
 app.mount('#app')

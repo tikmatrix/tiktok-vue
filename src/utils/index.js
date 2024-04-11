@@ -87,52 +87,10 @@ export function loadCss(url) {
   document.head.appendChild(css)
 }
 
-// 判断是否微信环境
-export function isWechat() {
-  const agent = navigator.userAgent.toLowerCase()
-  if (/wxwork/.test(agent)) {
-    return false
-  }
-  if (/micromessenger/.test(agent)) {
-    return 'wechat'
-  }
-  return false
-}
 
 // 判断是否手机环境
 export function isMobile() {
   // # iPad safari 无法通过 navigator标识查找到 'iPad'
   const iPadOS13Up = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1
   return /Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent) || iPadOS13Up
-}
-
-// 解决触摸穿透问题
-export function ModalHelper(bodyCls) {
-  var scrollTop
-  return {
-    afterOpen: function () {
-      scrollTop = document.scrollingElement.scrollTop
-      document.body.classList.add(bodyCls)
-      document.body.style.top = -scrollTop + 'px'
-    },
-    beforeClose: function () {
-      document.body.classList.remove(bodyCls)
-      // scrollTop lost after set position:fixed, restore it back.
-      document.scrollingElement.scrollTop = scrollTop
-    }
-  }
-}
-
-// 刷新页面（为解决微信刷新不生效问题）
-export function reload() {
-  const query = window.$route.query
-  const path = window.$route.path
-  let search = window.location.search
-  const time = new Date().getTime()
-  if (query.time) {
-    const param = search.replace(`&time=${query.time}`, `&time=${time}`)
-    window.location.href = path + param
-  } else {
-    window.location.href = path + search + `&time=${time}`
-  }
 }

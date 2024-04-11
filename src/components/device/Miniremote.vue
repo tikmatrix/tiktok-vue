@@ -1,10 +1,17 @@
 <template>
-  <div @click="$emit('show_device', device)" class="relative rounded-2xl shadow-2xl cursor-pointer transform hover:scale-105 transition-transform duration-100">
-    <video ref="display" autoplay poster="../../assets/preview.jpg" class="rounded-2xl"></video>
+  <div class="indicator w-auto relative  rounded-2xl shadow-2xl cursor-pointer transform hover:scale-105 transition-transform duration-100">
+    <video ref="display" autoplay poster="../../assets/preview.jpg" class="rounded-2xl w-full"
+        @mousedown="mouseDownListener"
+        @mouseup="mouseUpListener"
+        @mouseleave="mouseLeaveListener"
+        @mousemove="mouseMoveListener"
+    >
+    </video>
     <div class="skeleton absolute w-full h-full top-0 left-0 bg-opacity-20" v-if="loading"></div>
-    <div class="absolute top-2 left-2 p-1 text-white bg-black bg-opacity-50 rounded-lg">
+    <div class=" text-white bg-black bg-opacity-50 rounded-lg indicator-item badge">
       <h1 class="font-bold text-lg">{{ index + 1 }}</h1>
     </div>
+    
   </div>
 </template>
 <script>
@@ -21,20 +28,124 @@ export default {
       default: () => {
         return {}
       }
+    },
+    sync: {
+      type: Boolean,
+      default: false
     }
   },
 
   data() {
     return {
-      img: 'preview.jpg',
-      err: '',
-      display: null,
-      mjpeg: null,
+      rotation: 0,
       scrcpy: null,
       loading: true
     }
   },
   methods: {
+    coords(boundingW, boundingH, relX, relY, rotation) {
+      var w, h, x, y
+      switch (rotation) {
+        case 0:
+          w = boundingW
+          h = boundingH
+          x = relX
+          y = relY
+          break
+        case 90:
+          w = boundingH
+          h = boundingW
+          x = boundingH - relY
+          y = relX
+          break
+        case 180:
+          w = boundingW
+          h = boundingH
+          x = boundingW - relX
+          y = boundingH - relY
+          break
+        case 270:
+          w = boundingH
+          h = boundingW
+          x = relY
+          y = boundingW - relX
+          break
+      }
+      return { x, y, w, h }
+    },
+    touchSync(operation, event) {
+      var e = event
+      if (e.originalEvent) {
+        e = e.originalEvent
+      }
+      e.preventDefault()
+      let x = e.offsetX,
+        y = e.offsetY
+      let w = e.target.clientWidth,
+        h = e.target.clientHeight
+      let scaled = this.coords(w, h, x, y, this.rotation)
+      console.log("x: ", x, "y: ", y, "w: ", w, "h: ", h, "scaled", scaled)
+      let data = JSON.stringify({
+          operation: operation, // u, d, c, w
+          x: scaled.x,
+          y: scaled.y,
+          w: scaled.w,
+          h: scaled.h
+      });
+      if (this.sync) {
+        console.log("send data: ",data)
+        this.$emitter.emit('syncEventData',data)
+      }else{
+        this.scrcpy.send(data)
+      }
+    },
+    mouseMoveListener(event) {
+      if (this.loading) {
+        return
+      }
+      if (!this.touch) {
+        return
+      }
+      if (!this.sync){
+        return
+      }
+      this.touchSync('m', event)
+    },
+    mouseUpListener(event) {
+      if (!this.sync){
+        this.$emit('show_device', this.device)
+        return
+      }
+      if (!this.touch) {
+        return
+      }
+      
+      this.touchSync('u', event)
+      this.touch = false
+    },
+    mouseLeaveListener(event) {
+      if (this.loading) {
+        return
+      }
+      if (!this.touch) {
+        return
+      }
+      if (!this.sync){
+        return
+      }
+      this.touchSync('u', event)
+      this.touch = false
+    },
+    mouseDownListener(event) {
+      if (this.loading) {
+        return
+      }
+      if (!this.sync){
+        return
+      }
+      this.touchSync('d', event)
+      this.touch = true
+    },
     syncDisplay() {
       this.loading = true
       const jmuxer = new JMuxer({
@@ -53,18 +164,21 @@ export default {
       this.scrcpy = new WebSocket(util.getWsUrl())
       this.scrcpy.binaryType = 'arraybuffer'
       this.scrcpy.onopen = () => {
-        this.readonly = false
         this.scrcpy.send(`${this.device.serial}`)
-        // max size: 800
+        // max size
         this.scrcpy.send(400)
-        // control: false
-        this.scrcpy.send('false')
+        // control
+        this.scrcpy.send('true')
       }
       this.scrcpy.onclose = () => {
         this.loading = true
+        jmuxer.reset()
+        console.log('onclose')
       }
       this.scrcpy.onerror = () => {
         this.loading = true
+        jmuxer.reset()
+        console.log('onerror')
       }
       this.scrcpy.onmessage = message => {
         this.loading = false
@@ -76,11 +190,18 @@ export default {
   },
   mounted() {
     this.syncDisplay()
+    this.$emitter.on('syncEventData', (data) => {
+      console.log("receive data: ",data)
+      if (this.sync&&this.scrcpy){
+        this.scrcpy.send(data)
+      }
+    });
   },
   unmounted() {
     if (this.scrcpy) {
       this.scrcpy.close()
     }
+    this.$emitter.off('syncEventData');
   }
 }
 </script>

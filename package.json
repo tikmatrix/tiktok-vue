@@ -21,6 +21,7 @@
     "axios": "^1.6.1",
     "countup.js": "^2.8.0",
     "jmuxer": "^2.0.5",
+    "mitt": "^3.0.1",
     "odometer_countup": "^1.0.4",
     "vue": "^3.3.4",
     "vue-axios": "^3.5.2",

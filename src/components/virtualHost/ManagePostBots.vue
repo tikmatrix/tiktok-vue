@@ -60,9 +60,9 @@
 
                 <td>
                   <div class="space-x-4">
-                    <Button label="init" icon="fa fa-refresh" @click="init_virtualHost(item)" />
-                    <Button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" label="edit" icon="fa fa-edit" @click="edit(item)" />
-                    <Button
+                    <MyButton label="init" icon="fa fa-refresh" @click="init_virtualHost(item)" />
+                    <MyButton class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" label="edit" icon="fa fa-edit" @click="edit(item)" />
+                    <MyButton
                       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                       label="delete"
                       icon="fa fa-trash"

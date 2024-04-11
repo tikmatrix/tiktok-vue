@@ -356,7 +356,7 @@ export default {
       const jmuxer = new JMuxer({
         node: this.$refs.display,
         mode: 'video',
-        flushingTime: 1,
+        flushingTime: 0,
         maxDelay: 0,
         fps: 60,
         debug: false,

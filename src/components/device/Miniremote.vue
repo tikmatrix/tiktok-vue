@@ -147,11 +147,14 @@ export default {
       this.touch = true
     },
     syncDisplay() {
+      if (import.meta.env.VITE_APP_MOCK === 'true')
+        return
+
       this.loading = true
       const jmuxer = new JMuxer({
         node: this.$refs.display,
         mode: 'video',
-        flushingTime: 1,
+        flushingTime: 0,
         maxDelay: 0,
         fps: 30,
         debug: false,

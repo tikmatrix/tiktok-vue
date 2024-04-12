@@ -378,9 +378,11 @@ export default {
       }
       this.scrcpy.onclose = () => {
         this.loading = true
+        jmuxer.reset()
       }
       this.scrcpy.onerror = () => {
         this.loading = true
+        jmuxer.reset()
       }
       this.scrcpy.onmessage = message => {
         this.periodImageCount += 1

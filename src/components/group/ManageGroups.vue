@@ -32,7 +32,7 @@
                 <td>
                   <div class="space-x-4">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="editgroup(group)">{{ $t('edit') }}</button>
-                    <Button
+                    <MyButton
                       class="text-white"
                       :showLoading="uploading(group.id)"
                       @click="addMaterial(group)"

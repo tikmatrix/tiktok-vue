@@ -356,7 +356,7 @@ export default {
       const jmuxer = new JMuxer({
         node: this.$refs.display,
         mode: 'video',
-        flushingTime: 1,
+        flushingTime: 0,
         maxDelay: 0,
         fps: 60,
         debug: false,
@@ -378,9 +378,11 @@ export default {
       }
       this.scrcpy.onclose = () => {
         this.loading = true
+        jmuxer.reset()
       }
       this.scrcpy.onerror = () => {
         this.loading = true
+        jmuxer.reset()
       }
       this.scrcpy.onmessage = message => {
         this.periodImageCount += 1

@@ -105,6 +105,7 @@ export default {
         this.$refs.device_panel.$el.classList.remove('top-0')
         this.$refs.device_panel.$el.classList.remove('left-0')
         this.$refs.device_panel.$el.classList.remove('z-10')
+        this.$refs.device_panel.$el.classList.remove('overflow-y-auto')
         this.fullscreen = false
       }else{
         this.$refs.device_panel.$el.classList.add('w-screen')
@@ -113,6 +114,7 @@ export default {
         this.$refs.device_panel.$el.classList.add('top-0')
         this.$refs.device_panel.$el.classList.add('left-0')
         this.$refs.device_panel.$el.classList.add('z-10')
+        this.$refs.device_panel.$el.classList.add('overflow-y-auto')
         this.fullscreen = true
       }
       

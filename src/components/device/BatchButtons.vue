@@ -34,6 +34,7 @@
         <MyButton @click="script('torch_off')" label="torchOff" icon="fa-solid fa-power-off" />
         <MyButton @click="script('clear_notification')" label="clearNotification" icon="fa-solid fa-bell-slash" />
         <MyButton @click="script('clear_tasks')" label="clearTasks" icon="fa-solid fa-trash" />
+        <MyButton @click="script('match_account')" label="matchAccount" icon="fa-solid fa-user-plus" />
         <MyButton label="rebootAll" color="btn-error" icon="fa-solid fa-power-off" @click="adb_command(['shell','reboot'])" />
       </div>
     </details>

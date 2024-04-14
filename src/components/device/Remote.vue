@@ -71,6 +71,7 @@
           <MyButton @click="script('clear_notification')" label="clearNotification" icon="fa-solid fa-bell-slash" :disabled="task_status == 'running'" />
           <MyButton @click="script('clear_tasks')" label="clearTasks" icon="fa-solid fa-trash" :disabled="task_status == 'running'" />
           <MyButton @click="script('profile')" label="setProfile" icon="fa-solid fa-user" :disabled="task_status == 'running'" />
+          <MyButton @click="script('match_account')" label="matchAccount" icon="fa-solid fa-user-plus" :disabled="task_status == 'running'" />
           <MyButton label="register" icon="fa-solid fa-address-card" @click="script('register')" :disabled="task_status == 'running'" />
           <MyButton
             label="registerAll"

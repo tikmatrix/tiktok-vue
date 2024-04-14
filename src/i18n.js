@@ -214,7 +214,8 @@ export const i18n = createI18n({
       finished: 'Finished',
       clear: 'Clear',
       unlock: 'Unlock',
-      showLanguageSetting: 'Show Language Setting'
+      showLanguageSetting: 'Show Language Setting',
+      matchAccount: 'Match Account',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',

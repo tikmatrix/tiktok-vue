@@ -18,7 +18,7 @@
           @click="adb_command(['shell', 'am', 'start', '-n', 'com.zhiliaoapp.musically/com.ss.android.ugc.aweme.splash.SplashActivity'])"
         />
         <MyButton label="stopTiktok" icon="fa-brands fa-tiktok" @click="adb_command(['shell', 'am', 'force-stop', 'com.zhiliaoapp.musically'])" />
-        <MyButton label="enableProxy" icon="fa-solid fa-link" @click="adb_command(['shell', 'settings', 'put', 'global', 'http_proxy', `${settings.proxy_url}`])" />
+        <MyButton label="enableProxy" icon="fa-solid fa-link" @click="enable_proxy" />
         <MyButton label="disableProxy" icon="fa-solid fa-unlink" @click="adb_command(['shell', 'settings', 'put', 'global', 'http_proxy', ':0'])" />
         <MyButton label="showLanguageSetting" icon="fa-solid fa-trash" @click="adb_command(['shell', 'am', 'start', '-n', 'com.android.settings/.LanguageSettings'])" />
         <MyButton label="showTimeSetting" icon="fa-solid fa-clock" @click="adb_command(['shell', 'am', 'start', '-a', 'android.settings.DATE_SETTINGS'])" />
@@ -60,6 +60,26 @@ export default {
     }
   },
   methods: {
+    enable_proxy() {
+      this.adb_command(['shell', 'settings', 'put', 'global', 'http_proxy', `${this.settings.proxy_url}`])
+      for (let i = 0; i < this.devices.length; i++) {
+        this.$service.get_ip({
+          serial: this.devices[i].serial,
+        })
+        .then(res => {
+          this.$service.enable_proxy_rule({
+            serial: this.devices[i].serial,
+            ip: res.data
+          })
+          .then(res => {
+            console.log(res)
+          })
+        })
+       
+        
+      }
+      
+    },
     adb_command(args) {
       this.$service
         .adb_command({

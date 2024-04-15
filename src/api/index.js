@@ -49,6 +49,7 @@ const api = {
   clear_edit_bot: '/api/virtual_hosts/clear_edit_bot',
   adb_command: '/agent/api/adb_command',
   script: '/agent/api/script',
-  scan_tcp: '/agent/api/tcp_scan'
+  scan_tcp: '/agent/api/tcp_scan',
+  stop_task: '/agent/api/stop_task'
 }
 export default api

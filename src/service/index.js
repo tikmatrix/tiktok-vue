@@ -622,3 +622,11 @@ export function scan_tcp() {
     url: api.scan_tcp
   })
 }
+export function stop_task({ serial }) {
+  return request({
+    baseURL: util.getAgentUrl(),
+    method: 'get',
+    params: { serial },
+    url: api.stop_task
+  })
+}

@@ -18,8 +18,8 @@
       ></div>
       <!-- add a tast running tips -->
       <div class="absolute top-0 p-1 bg-red-500 text-white rounded-lg w-full text-left" v-show="task_status == 'running'">
-        <span class=""> Auto Task Running </span>
-        <span class="font-bold">{{ loading_text }}</span>
+        <span class=""> Auto Task Running... </span>
+        <MyButton @click="stop_task" label="stopTask" icon="fa-solid fa-stop" />
       </div>
       <div class="skeleton absolute w-full h-full top-0 left-0 bg-opacity-20" v-if="loading"></div>
     </div>
@@ -72,7 +72,7 @@
           <MyButton @click="script('clear_tasks')" label="clearTasks" icon="fa-solid fa-trash" :disabled="task_status == 'running'" />
           <MyButton @click="script('profile')" label="setProfile" icon="fa-solid fa-user" :disabled="task_status == 'running'" />
           <MyButton @click="script('match_account')" label="matchAccount" icon="fa-solid fa-user-plus" :disabled="task_status == 'running'" />
-          <MyButton label="register" icon="fa-solid fa-address-card" @click="script('register')" :disabled="task_status == 'running'" />
+          <MyButton label="register" icon="fa-solid fa-address-card" @click="script('register',['1'])" :disabled="task_status == 'running'" />
           <MyButton
             label="registerAll"
             icon="fa-solid fa-address-card"
@@ -133,7 +133,6 @@ export default {
       task_status: 'idle',
       timer_fps: null,
       timer_task_status: null,
-      loading_text: '',
       timer_loading: null,
       settings: {},
       ip: '0.0.0.0'
@@ -202,6 +201,17 @@ export default {
         })
         .then(res => {
           this.task_status = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    stop_task() {
+      this.$service
+        .stop_task({
+          serial: this.mydevice.serial
+        })
+        .then(res => {
         })
         .catch(err => {
           console.log(err)
@@ -411,13 +421,7 @@ export default {
     this.timer_task_status = setInterval(() => {
       this.get_task_status()
     }, 1000)
-    this.timer_loading = setInterval(() => {
-      if (this.loading_text.length > 5) {
-        this.loading_text = ''
-      } else {
-        this.loading_text += '.'
-      }
-    }, 500)
+   
     this.get_settings()
   },
   unmounted() {

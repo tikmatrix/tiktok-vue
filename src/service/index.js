@@ -509,6 +509,7 @@ export function get_ip({ serial }) {
 export function enable_proxy_rule({ serial, ip }) {
   return request({
     method: 'put',
+    baseURL: util.getAgentUrl(),
     url: api.proxy_rule,
     data: { serial, ip }
   })

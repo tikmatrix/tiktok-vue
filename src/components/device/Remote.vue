@@ -39,7 +39,7 @@
         <MyButton label="back" icon="fa-solid fa-chevron-left" @click="adb_command(['shell', 'input', 'keyevent', 'KEYCODE_BACK'])" />
         <MyButton label="home" icon="fa-solid fa-home" @click="adb_command(['shell', 'input', 'keyevent', 'KEYCODE_HOME'])" />
         <MyButton label="wakeup" icon="fa-solid fa-mobile-screen" @click="adb_command(['shell', 'input', 'keyevent', 'KEYCODE_WAKEUP'])" />
-        <MyButton label="setInputMethod" icon="fa-solid fa-mobile" @click="adb_command(['shell', 'ime', 'set','com.github.uiautomator/.FastInputIME'])" />
+        
         <MyButton label="sleep" icon="fa-solid fa-mobile" @click="adb_command(['shell', 'input', 'keyevent', 'KEYCODE_SLEEP'])" />
         <MyButton
           label="openTiktok"
@@ -90,6 +90,7 @@
           <input id="upload_video_input" type="file" v-on:change="on_upload_video" multiple hidden />
           <MyButton label="readClipboard" icon="fa-solid fa-clipboard" @click="readClipboard" />
           <MyButton label="uploadVideo" icon="fa-solid fa-upload" @click="uploadVideo" />
+          <MyButton label="setInputMethod" icon="fa-solid fa-mobile" @click="adb_command(['shell', 'ime', 'set','com.github.uiautomator/.FastInputIME'])" />
         </div>
       </details>
 

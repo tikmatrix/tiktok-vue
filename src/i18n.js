@@ -216,6 +216,8 @@ export const i18n = createI18n({
       unlock: 'Unlock',
       showLanguageSetting: 'Show Language Setting',
       matchAccount: 'Match Account',
+      setInputMethod: 'Set Input Method',
+      enableTCP: 'Enable TCP',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',

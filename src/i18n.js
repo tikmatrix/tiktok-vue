@@ -219,6 +219,7 @@ export const i18n = createI18n({
       setInputMethod: 'Set Input Method',
       enableTCP: 'Enable TCP',
       readClipboard: 'Read Clipboard',
+      train: 'Train',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',

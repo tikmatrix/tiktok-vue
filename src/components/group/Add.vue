@@ -1,7 +1,7 @@
 <template>
   <div class="bg-base-100 flex flex-col items-start p-4">
     <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
-      <label class="font-bold text-right col-span-1">{{ $t('name') }}</label>
+      <label class="font-bold text-right col-span-1">{{ $t('name') }}:</label>
       <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="mygroup.name" />
     </div>
     <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
@@ -14,9 +14,9 @@
         <span>{{ $t('trainTimeTips') }}</span>
       </div>
     </div>
-
+    <div v-if ="mygroup.auto_train == 1">
     <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
-      <label class="font-bold text-right col-span-2">{{ $t('trainTimes') }}:</label>
+      <label class="font-bold text-right col-span-2">{{ $t('trainTimer') }}:</label>
       <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time1" placeholder="00:00" />
       <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time2" placeholder="00:00" />
       <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="train_time3" placeholder="00:00" />
@@ -29,26 +29,30 @@
       <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="trainDurationInMinutes" placeholder="0" />
       <label class="text-sm text-left col-span-1">{{ $t('minute') }}</label>
     </div>
-
+    <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
+      <label class="font-bold text-right col-span-1">{{ $t('topics') }}:</label>
+      <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" placeholder="Topics" autocomplete="off" v-model="mygroup.topic"> </textarea>
+    </div>
     <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
       <label class="font-bold text-right col-span-2">{{ $t('interact') }}:</label>
 
       <div class="col-span-2 grid grid-cols-6 items-center">
-        <label class="text-sm text-right col-span-3">{{ $t('floowProbable') }}: </label>
+        <label class="text-sm text-right col-span-3">{{ $t('floow') }}: </label>
         <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="mygroup.floow_probable" placeholder="0" />
         <label class="text-sm text-left col-span-1">%</label>
       </div>
       <div class="col-span-2 grid grid-cols-6 items-center">
-        <label class="text-sm text-right col-span-3">{{ $t('likeProbable') }}: </label>
+        <label class="text-sm text-right col-span-3">{{ $t('like') }}: </label>
         <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="mygroup.like_probable" placeholder="0" />
         <label class="text-sm text-left col-span-1">%</label>
       </div>
       <div class="col-span-2 grid grid-cols-6 items-center">
-        <label class="text-sm text-right col-span-3">{{ $t('collectProbable') }}: </label>
+        <label class="text-sm text-right col-span-3">{{ $t('collect') }}: </label>
         <input type="number" class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="mygroup.collect_probable" placeholder="0" />
         <label class="text-sm text-left col-span-1">%</label>
       </div>
     </div>
+  </div>
     <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
       <label class="font-bold text-right col-span-2">{{ $t('autoPublish') }}:</label>
       <input type="checkbox" class="toggle toggle-accent" v-model="mygroup.auto_publish" true-value="1" false-value="0" />
@@ -59,8 +63,9 @@
         <span>{{ $t('publishTimeTips') }}</span>
       </div>
     </div>
+    <div v-if ="mygroup.auto_publish == 1">
     <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
-      <label class="font-bold text-right col-span-2">{{ $t('publishTimes') }}:</label>
+      <label class="font-bold text-right col-span-2">{{ $t('publishTimer') }}:</label>
       <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time1" placeholder="00:00" />
       <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time2" placeholder="00:00" />
       <input class="border-2 border-gray-300 p-2 rounded col-span-1" v-model="publish_time3" placeholder="00:00" />
@@ -85,18 +90,16 @@
         </div> -->
 
     <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
-      <label class="font-bold text-right col-span-1">{{ $t('title') }}</label>
-
+      <label class="font-bold text-right col-span-1">{{ $t('titles') }}:</label>
       <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" placeholder="Titles" autocomplete="off" v-model="mygroup.title"> </textarea>
     </div>
-
     <!-- <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('productLink') }}</label>
             <input class="border-2 border-gray-300 p-2 rounded col-span-2" v-model="mygroup.product_link" />
         </div> -->
-
+    </div>
     <!-- other fields... -->
-    <div class="mt-32 w-full flex justify-end">
+    <div class="mt-8 w-full flex justify-end">
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" @click="add">
         {{ $t('add') }}
       </button>
@@ -125,7 +128,10 @@ export default {
   components: {},
   data() {
     return {
-      mygroup: {},
+      mygroup: {
+        auto_train: 0,
+        auto_publish: 0,
+      },
       train_time1: '',
       train_time2: '',
       train_time3: '',

@@ -196,72 +196,18 @@ export function get_groups() {
     url: api.group
   })
 }
-export function add_group({
-  name,
-  auto_train,
-  auto_publish,
-  publish_start_time,
-  train_start_time,
-  title,
-  publish_type,
-  product_link,
-  floow_probable,
-  like_probable,
-  collect_probable,
-  train_duration
-}) {
+export function add_group(group) {
   return request({
     method: 'post',
     url: api.group,
-    data: {
-      name,
-      auto_train,
-      auto_publish,
-      publish_start_time,
-      train_start_time,
-      title,
-      publish_type,
-      product_link,
-      floow_probable,
-      like_probable,
-      collect_probable,
-      train_duration
-    }
+    data: group
   })
 }
-export function update_group({
-  id,
-  name,
-  auto_train,
-  auto_publish,
-  publish_start_time,
-  train_start_time,
-  title,
-  publish_type,
-  product_link,
-  floow_probable,
-  like_probable,
-  collect_probable,
-  train_duration
-}) {
+export function update_group(group) {
   return request({
     method: 'put',
     url: api.group,
-    data: {
-      id,
-      name,
-      auto_train,
-      auto_publish,
-      publish_start_time,
-      train_start_time,
-      title,
-      publish_type,
-      product_link,
-      floow_probable,
-      like_probable,
-      collect_probable,
-      train_duration
-    }
+    data: group
   })
 }
 export function delete_group({ id }) {

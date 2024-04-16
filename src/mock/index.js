@@ -145,6 +145,8 @@ for (let i = 1; i <= 10; i++) {
     multilogin: 'baking'
   })
 }
+let menus = ["dashboard", "groups", "devices", "materials", "accounts", "publishJobs", "trainJobs", "dialogWatcher", "avatars", "comments", "analytics", "settings"]
+
 const data = {
   put: {
     [api.shell]: {},
@@ -245,7 +247,8 @@ const data = {
     [api.count_account_by_group_id]: Math.floor(Math.random() * 100),
     [api.post_comment]: post_comments,
     [api.analytics]: analytics,
-    [api.virtualHosts]: virtual_hosts
+    [api.virtualHosts]: virtual_hosts,
+    [api.menus]: menus
   }
 }
 

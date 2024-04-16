@@ -218,6 +218,7 @@ export const i18n = createI18n({
       matchAccount: 'Match Account',
       setInputMethod: 'Set Input Method',
       enableTCP: 'Enable TCP',
+      readClipboard: 'Read Clipboard',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',

@@ -220,6 +220,7 @@ export const i18n = createI18n({
       enableTCP: 'Enable TCP',
       readClipboard: 'Read Clipboard',
       train: 'Train',
+      copy: 'Copy',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',

@@ -68,7 +68,7 @@ export function upload_to_virtualHost(formData) {
       'Content-Type': 'multipart/form-data'
     },
     url: api.upload_to_virtualHost,
-    baseURL: util.getAgentUrl(),
+
     data: formData
   })
 }
@@ -78,7 +78,7 @@ export function upload_video(formData) {
       'Content-Type': 'multipart/form-data'
     },
     url: api.upload_video,
-    baseURL: util.getAgentUrl(),
+
     data: formData
   })
 }
@@ -125,14 +125,14 @@ export function delete_account({ id }) {
 }
 export function get_proxys() {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     url: api.proxy
   })
 }
 export function add_proxys({ urls }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'post',
     url: api.proxy,
     data: { urls }
@@ -140,7 +140,7 @@ export function add_proxys({ urls }) {
 }
 export function test_speed({ name }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     url: api.proxy_delay,
     params: { name }
@@ -462,7 +462,7 @@ export function add_comment({ account_id, content, no, parent_no }) {
 }
 export function read_clipboard({ serial }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     url: api.read_clipboard,
     params: { serial }
@@ -501,7 +501,7 @@ export function delete_all_post_comments() {
 export function get_ip({ serial }) {
   return request({
     method: 'get',
-    baseURL: util.getAgentUrl(),
+
     url: api.get_ip,
     params: { serial }
   })
@@ -509,7 +509,7 @@ export function get_ip({ serial }) {
 export function enable_proxy_rule({ serial, ip }) {
   return request({
     method: 'put',
-    baseURL: util.getAgentUrl(),
+
     url: api.proxy_rule,
     data: { serial, ip }
   })
@@ -522,14 +522,14 @@ export function get_analytics() {
 }
 export function get_virtualHosts() {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     url: api.virtualHosts
   })
 }
 export function add_or_update_virtualHost(virtualHosts) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'post',
     url: api.virtualHosts,
     data: virtualHosts
@@ -537,7 +537,7 @@ export function add_or_update_virtualHost(virtualHosts) {
 }
 export function init_virtualHost({ ids }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { ids },
     url: api.init_virtualHost
@@ -545,7 +545,7 @@ export function init_virtualHost({ ids }) {
 }
 export function delete_virtualHost({ id }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'delete',
     params: { id },
     url: api.virtualHosts
@@ -553,7 +553,7 @@ export function delete_virtualHost({ id }) {
 }
 export function get_post_bot_status({ id }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { id },
     url: api.get_post_bot_status
@@ -561,7 +561,7 @@ export function get_post_bot_status({ id }) {
 }
 export function start_post_bot({ ids }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { ids },
     url: api.start_post_bot
@@ -569,7 +569,7 @@ export function start_post_bot({ ids }) {
 }
 export function stop_post_bot({ ids }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { ids },
     url: api.stop_post_bot
@@ -577,7 +577,7 @@ export function stop_post_bot({ ids }) {
 }
 export function start_edit_bot({ ids }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { ids },
     url: api.start_edit_bot
@@ -585,7 +585,7 @@ export function start_edit_bot({ ids }) {
 }
 export function stop_edit_bot({ ids }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { ids },
     url: api.stop_edit_bot
@@ -593,7 +593,7 @@ export function stop_edit_bot({ ids }) {
 }
 export function clear_edit_bot({ id, dir }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { id, dir },
     url: api.clear_edit_bot
@@ -601,7 +601,7 @@ export function clear_edit_bot({ id, dir }) {
 }
 export function adb_command(adbCommandRequest) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'post',
     data: adbCommandRequest,
     url: api.adb_command
@@ -609,7 +609,7 @@ export function adb_command(adbCommandRequest) {
 }
 export function script(scriptRequest) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'post',
     data: scriptRequest,
     url: api.script
@@ -617,16 +617,23 @@ export function script(scriptRequest) {
 }
 export function scan_tcp() {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     url: api.scan_tcp
   })
 }
 export function stop_task({ serial }) {
   return request({
-    baseURL: util.getAgentUrl(),
+
     method: 'get',
     params: { serial },
     url: api.stop_task
+  })
+}
+export function get_menus() {
+  return request({
+
+    method: 'get',
+    url: api.menus
   })
 }

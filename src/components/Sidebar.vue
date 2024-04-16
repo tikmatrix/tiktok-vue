@@ -5,7 +5,6 @@
     <a class="btn btn-ghost text-xl">{{ $t('siteName') }}</a>
   </div>
   <ul class="menu p-4 w-60 min-h-full bg-base-200 text-base-content">
-    
     <li v-for="(item, index) in menuItems" :key="index">
       <a :class="{ active: selectedItem === index }" @click="selectItem(index, item)">
         <font-awesome-icon :icon="item.icon" class="w-4 h-4" /> {{ $t(`${item.name}`) }}
@@ -23,7 +22,8 @@ export default {
   data() {
     return {
       selectedItem: 0,
-      menuItems: [
+      menuItems: [],
+      fullMenuItems: [
         { name: 'dashboard', icon: 'tachometer-alt' },
         { name: 'devices', icon: 'mobile-alt' },
         { name: 'groups', icon: 'users' },
@@ -49,6 +49,12 @@ export default {
   
   emits: ['menu_selected'],
   methods: {
+    get_menus() {
+      this.$service.get_menus().then(res => {
+        this.menuItems = this.fullMenuItems.filter(item => res.data.includes(item.name))
+        this.selectItem(this.selectedItem, this.menuItems[this.selectedItem])
+      })
+    },
     selectItem(index, item) {
       this.selectedItem = index
       this.$emit('menu_selected', item)
@@ -70,8 +76,8 @@ export default {
     }
   },
   mounted() {
-    this.selectItem(this.selectedItem, this.menuItems[this.selectedItem])
-
+    this.get_menus()
+    
     this.get_settings()
   }
 }

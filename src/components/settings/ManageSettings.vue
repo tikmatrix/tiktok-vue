@@ -8,7 +8,7 @@
     <h1 class="text-2xl mb-6">{{ $t('settings') }}</h1>
     <label class="form-control w-full max-w-md">
       <div class="join">
-        <input type="text" placeholder="uid" class="input input-primary w-full join-item" v-model="license.uid" disabled />
+        <input id="uid" type="text" placeholder="uid" class="input input-primary w-full join-item" v-model="license.uid" readonly />
         <MyButton @click="copyuid" label="copy" :loading-time="1" />
       </div>
 
@@ -146,18 +146,22 @@ export default {
     },
     copyuid() {
       //copy uid to clipboard
-      navigator.clipboard.writeText(this.license.uid).then(
-        () => {
-          console.log('Async: Copying to clipboard was successful!')
+      var input = document.getElementById("uid");
+      input.select(); // 选择文本
+      input.setSelectionRange(0, 99999); // 对于移动设备，确保能选择文本
+
+      try {
+          var successful = document.execCommand('copy'); // 执行复制操作
+          var msg = successful ? 'successful' : 'unsuccessful';
+          console.log('Copying text command was ' + msg);
           this.showToast = true
           setTimeout(() => {
             this.showToast = false
           }, 2000)
-        },
-        err => {
-          console.error('Async: Could not copy text: ', err)
-        }
-      )
+      } catch (err) {
+          console.log('Unable to copy', err);
+      }
+      
     },
     get_license() {
       this.$service.get_license().then(res => {

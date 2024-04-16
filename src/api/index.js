@@ -50,6 +50,7 @@ const api = {
   adb_command: '/agent/api/adb_command',
   script: '/agent/api/script',
   scan_tcp: '/agent/api/tcp_scan',
-  stop_task: '/agent/api/stop_task'
+  stop_task: '/agent/api/stop_task',
+  menus: '/agent/api/menus'
 }
 export default api

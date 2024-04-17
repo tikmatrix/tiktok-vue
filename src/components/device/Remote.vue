@@ -91,7 +91,7 @@
           <input id="upload_video_input" type="file" v-on:change="on_upload_video" multiple hidden />
           <MyButton label="readClipboard" icon="fa-solid fa-clipboard" @click="readClipboard" />
           <MyButton label="uploadVideo" icon="fa-solid fa-upload" @click="uploadVideo" />
-          <MyButton label="setInputMethod" icon="fa-solid fa-mobile" @click="adb_command(['shell', 'ime', 'set','com.github.uiautomator/.FastInputIME'])" />
+          <MyButton label="setInputMethod" icon="fa-solid fa-mobile" @click="adb_command(['shell', 'ime', 'set','com.github.tikmatrix/.FastInputIME'])" />
         </div>
       </details>
 

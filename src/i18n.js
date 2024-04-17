@@ -222,6 +222,7 @@ export const i18n = createI18n({
       train: 'Train',
       copy: 'Copy',
       topics: 'Topics',
+      remark: 'Remark',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',

@@ -64,7 +64,7 @@
       <details class="collapse collapse-arrow bg-base-200">
         <summary class="collapse-title text-xl font-medium">{{ $t('autoScripts') }}</summary>
         <div class="collapse-content">
-          <MyButton @click="script('train',['0','50','50','50','','300'])" label="train" icon="fa-solid fa-dumbbell" :disabled="task_status == 'running'" />
+          <MyButton @click="script('train',['0','50','50','50','','300',''])" label="train" icon="fa-solid fa-dumbbell" :disabled="task_status == 'running'" />
           <MyButton @click="script('connect_wifi')" label="connectWifi" icon="fa-solid fa-wifi" :disabled="task_status == 'running'" />
           <MyButton @click="script('unlock')" label="unlock" icon="fa-solid fa-unlock" :disabled="task_status == 'running'" />
           <MyButton @click="script('disconnect_wifi')" label="disconnectWifi" icon="fa-solid fa-wifi" :disabled="task_status == 'running'" />

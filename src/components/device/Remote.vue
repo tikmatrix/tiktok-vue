@@ -17,7 +17,7 @@
         :style="{ top: `${effectY}px`, left: `${effectX}px` }"
       ></div>
       <!-- add a tast running tips -->
-      <div class="absolute top-0 p-1 bg-red-500 text-white rounded-lg w-full text-left" v-show="task_status == 'running'">
+      <div class="absolute top-0 p-1 bg-red-500 bg-opacity-50 text-white rounded-lg w-full text-left" v-show="task_status == 'running'">
         <span class=""> Auto Task Running... </span>
         <MyButton @click="stop_task" label="stopTask" icon="fa-solid fa-stop" />
       </div>

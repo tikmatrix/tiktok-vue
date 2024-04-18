@@ -141,7 +141,8 @@ export default {
           floow_probable: Number(group.floow_probable),
           like_probable: Number(group.like_probable),
           collect_probable: Number(group.collect_probable),
-          train_duration: Number(group.train_duration)
+          train_duration: Number(group.train_duration),
+          topic: group.topic
         })
         .then(() => {
           this.showMoal = false
@@ -170,7 +171,8 @@ export default {
           floow_probable: Number(group.floow_probable),
           like_probable: Number(group.like_probable),
           collect_probable: Number(group.collect_probable),
-          train_duration: Number(group.train_duration)
+          train_duration: Number(group.train_duration),
+          topic: group.topic
         })
         .then(() => {
           this.get_groups()

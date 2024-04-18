@@ -33,7 +33,7 @@ for (let i = 1; i <= 100; i++) {
   materials.push({
     id: i.toString(),
     md5: '6aed71a8304f9dc68a9acd66fc5e057d',
-    name: 'preview.jpg',
+    name: 'mock.webp',
     create_time: '2023-11-13 13:43:49',
     used: Math.round(Math.random()), // 生成0或1的随机整数
     group_id: Math.floor(Math.random() * 10) + 1 // 生成1到10之间的随机整数
@@ -63,7 +63,7 @@ for (let i = 1; i <= 100; i++) {
     start_time: '2023-11-13 13:43:49',
     end_time: '2023-11-13 13:43:49',
     status: Math.floor(Math.random() * 4), // 生成0到3之间的随机整数
-    material: '/preview.jpg',
+    material: '/mock.webp',
     username: '@admin' + i,
     title: 'title',
     device: 'device' + i,
@@ -102,7 +102,7 @@ let avatars = []
 for (let i = 1; i <= 100; i++) {
   avatars.push({
     id: i.toString(),
-    name: '/tx.png'
+    name: '/mock.webp'
   })
 }
 let post_comments = []

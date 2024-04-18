@@ -147,8 +147,14 @@ export default {
       this.touch = true
     },
     syncDisplay() {
-      if (import.meta.env.VITE_APP_MOCK === 'true')
+      if (import.meta.env.VITE_APP_MOCK === 'true'){
+        setTimeout(() => {
+        this.loading = false
+      }, 3000)
         return
+      }
+        
+        
 
       this.loading = true
       const jmuxer = new JMuxer({

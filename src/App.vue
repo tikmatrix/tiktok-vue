@@ -193,7 +193,8 @@ export default {
   },
   mounted() {
     this.loadTheme()
-    this.checkAuth()
+    // this.checkAuth()
+    this.needLogin = false
     this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true'
   }
 }

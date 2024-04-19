@@ -26,6 +26,7 @@ export function getApiUrl() {
   }
 }
 
+
 // 设置cookie,增加到vue实例方便全局调用
 export function setCookie(c_name, value, expiredays = 7) {
   var exdate = new Date()

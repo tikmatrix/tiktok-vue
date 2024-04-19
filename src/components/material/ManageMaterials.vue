@@ -28,7 +28,7 @@
                 <td @click="show_material(material)">
                   <div class="cursor-pointer">
                     <template v-if="material.name.endsWith('.mp4') || material.name.endsWith('.webm')">
-                      <video :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none"></video>
+                      <video :src="`${util.getApiUrl()}/${material.name}`" class="w-[100px] h-[100px] max-w-none"></video>
                     </template>
                     <template v-else>
                       <img :src="`${material.name}`" class="w-[100px] h-[100px] max-w-none" />
@@ -71,7 +71,7 @@ import Detail from './Detail.vue'
 import Modal from '../Modal.vue'
 import MyButton from '../Button.vue'
 import Pagination from '../Pagination.vue'
-
+import * as util from '../../utils'
 export default {
   name: 'app',
   components: {

@@ -145,7 +145,7 @@ for (let i = 1; i <= 10; i++) {
     multilogin: 'baking'
   })
 }
-let menus = ["dashboard", "groups", "devices", "materials", "accounts", "publishJobs", "trainJobs", "dialogWatcher", "avatars", "comments", "analytics", "settings"]
+let menus = ["dashboard", "groups", "devices", "materials", "accounts", "publishJobs", "trainJobs", "dialogWatcher", "avatars", "settings"]
 
 const data = {
   put: {

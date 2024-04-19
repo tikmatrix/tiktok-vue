@@ -1,6 +1,6 @@
 import axios from 'axios'
 import mock from '../mock'
-import * as util from '../../utils'
+import * as util from '../utils'
 export function post(config) {
   !config && (config = { headers: {} })
   !config.headers && (config.headers = {})

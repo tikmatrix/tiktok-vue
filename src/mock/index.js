@@ -63,7 +63,7 @@ for (let i = 1; i <= 100; i++) {
     start_time: '2023-11-13 13:43:49',
     end_time: '2023-11-13 13:43:49',
     status: Math.floor(Math.random() * 4), // 生成0到3之间的随机整数
-    material: '/mock.webp',
+    material: 'mock.webp',
     username: '@admin' + i,
     title: 'title',
     device: 'device' + i,
@@ -102,7 +102,7 @@ let avatars = []
 for (let i = 1; i <= 100; i++) {
   avatars.push({
     id: i.toString(),
-    name: '/mock.webp'
+    name: 'mock.webp'
   })
 }
 let post_comments = []

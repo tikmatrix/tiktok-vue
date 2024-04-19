@@ -41,10 +41,10 @@
                 <td>{{ publish_job.remark }}</td>
                 <td>
                   <template v-if="publish_job.material.endsWith('.mp4') || publish_job.material.endsWith('.webm')">
-                    <video :src="`${publish_job.material}`" class="w-[100px] h-[100px] max-w-none"></video>
+                    <video :src="`${$config.apiUrl}/${publish_job.material}`" class="w-[100px] h-[100px] max-w-none"></video>
                   </template>
                   <template v-else>
-                    <img :src="`${publish_job.material}`" class="w-[100px] h-[100px] max-w-none" />
+                    <img :src="`${$config.apiUrl}/${publish_job.material}`" class="w-[100px] h-[100px] max-w-none" />
                   </template>
                 </td>
                 <td>
@@ -111,7 +111,7 @@ export default {
       jobs: [],
       groups: [],
       currentDevice: null,
-      searchStatus: ''
+      searchStatus: '',
     }
   },
   computed: {

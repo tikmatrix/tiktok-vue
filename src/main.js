@@ -19,6 +19,7 @@ library.add(fas, fab)
 import { i18n } from './i18n.js'
 import { reactive } from 'vue'
 import mitt from 'mitt'
+import * as util from './utils'
 const emitter = mitt()
 
 let devices = reactive({ list: [] })
@@ -29,6 +30,10 @@ async function getDevices() {
 }
 getDevices() //get devices on page load
 setInterval(getDevices, 3000)
+let config = {
+  wsUrl: import.meta.env.VITE_WS_URL,
+  apiUrl: import.meta.env.VITE_API_URL
+}
 
 const app = createApp(App)
 app.use(VueAxios, axios)
@@ -37,6 +42,7 @@ app.provide('axios', app.config.globalProperties.axios) // provide 'axios'
 app.provide('devices', devices) // provide 'devices
 app.config.globalProperties.$service = service
 app.config.globalProperties.$emitter = emitter
+app.config.globalProperties.$config = config
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('VueDatePicker', VueDatePicker)
 app.mount('#app')

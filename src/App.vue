@@ -2,6 +2,9 @@
   <template v-if="needLogin">
     <Login />
   </template>
+  <template v-if="!agentRunning">
+    <RunAgentTips />
+  </template>
   <div class="drawer lg:drawer-open" v-else>
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex-grow">
@@ -121,12 +124,15 @@ import ManageProxys from './components/proxy/ManageProxys.vue'
 import ManagePostBots from './components/virtualHost/ManagePostBots.vue'
 import ManageEditBots from './components/virtualHost/ManageEditBots.vue'
 import Login from './components/Login.vue'
+import RunAgentTips from './components/RunAgentTips.vue'
+
 import * as util from './utils'
 
 export default {
   name: 'app',
   components: {
     Login,
+    RunAgentTips,
     Sidebar,
     ManageDashboard,
     ManageDevices,
@@ -150,7 +156,8 @@ export default {
       needLogin: true,
       showDemoTip: false,
       isDark: false,
-      selectedItem: null
+      selectedItem: null,
+      agentRunning: true
     }
   },
 
@@ -196,6 +203,14 @@ export default {
     // this.checkAuth()
     this.needLogin = false
     this.showDemoTip = import.meta.env.VITE_APP_MOCK === 'true'
+    //check this.$apiUrl is ok
+    this.$service.get_devices().then(res => {
+      this.agentRunning = true
+      console.log("agent running")
+    }).catch(err => {
+       this.agentRunning = false
+       console.log("agent not running")
+    })
   }
 }
 </script>

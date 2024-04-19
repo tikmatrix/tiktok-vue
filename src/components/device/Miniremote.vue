@@ -170,7 +170,7 @@ export default {
           }
         }
       })
-      this.scrcpy = new WebSocket(util.getWsUrl())
+      this.scrcpy = new WebSocket(import.meta.env.VITE_WS_URL)
       this.scrcpy.binaryType = 'arraybuffer'
       this.scrcpy.onopen = () => {
         this.scrcpy.send(`${this.device.serial}`)

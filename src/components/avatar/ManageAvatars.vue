@@ -22,7 +22,7 @@
                 <td>
                   <div class="avatar">
                     <div class="w-24 rounded-full">
-                      <img :src="`${avatar.name}`" />
+                      <img :src="`${$config.apiUrl}/${avatar.name}`" />
                     </div>
                   </div>
                 </td>

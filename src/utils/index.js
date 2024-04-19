@@ -9,23 +9,6 @@ export function getCookie(name) {
   }
 }
 
-//get ws url
-export function getWsUrl() {
-  //if current url contains a port
-  if (window.location.port) {
-    return 'ws://' + window.location.hostname + ':' + import.meta.env.VITE_WS_PORT
-  } else {
-    return 'ws://127.0.0.1:' + import.meta.env.VITE_WS_PORT
-  }
-}
-export function getApiUrl() {
-  if (window.location.port) {
-    return 'http://' + window.location.hostname + ':' + import.meta.env.VITE_WS_PORT
-  } else {
-    return 'http://127.0.0.1:' + import.meta.env.VITE_API_PORT
-  }
-}
-
 
 // 设置cookie,增加到vue实例方便全局调用
 export function setCookie(c_name, value, expiredays = 7) {

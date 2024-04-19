@@ -1,11 +1,11 @@
 import axios from 'axios'
 import mock from '../mock'
-
+import * as util from '../../utils'
 export function post(config) {
   !config && (config = { headers: {} })
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
-  !config.baseURL && (config.baseURL = '')
+  !config.baseURL && (config.baseURL = util.getApiUrl())
   const { method, url, data, headers } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {
@@ -28,6 +28,7 @@ const request = function request(config) {
   !config.headers && (config.headers = {})
   !config.data && (config.data = {})
   !config.params && (config.params = {})
+  !config.baseURL && (config.baseURL = util.getApiUrl())
   const { method, url } = config
   const mockMethod = method || 'get'
   if (import.meta.env.VITE_APP_MOCK === 'true') {

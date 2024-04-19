@@ -15,7 +15,14 @@ export function getWsUrl() {
   if (window.location.port) {
     return 'ws://' + window.location.hostname + ':' + import.meta.env.VITE_WS_PORT
   } else {
-    return 'wss://wss-' + window.location.hostname
+    return 'ws://127.0.0.1:' + import.meta.env.VITE_WS_PORT
+  }
+}
+export function getApiUrl() {
+  if (window.location.port) {
+    return 'http://' + window.location.hostname + ':' + import.meta.env.VITE_WS_PORT
+  } else {
+    return 'http://127.0.0.1:' + import.meta.env.VITE_API_PORT
   }
 }
 

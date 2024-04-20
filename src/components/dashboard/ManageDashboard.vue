@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-start p-12 w-full">
     <h1 class="text-2xl mb-6">{{ $t('dashboard') }}</h1>
-    <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-200">
+    <!-- <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-200">
       <div class="collapse-title text-xl font-medium">
         {{ $t('quickStart') }}
       </div>
@@ -16,7 +16,7 @@
           <li class="step step-primary">{{ $t('step.step7') }}</li>
         </ul>
       </div>
-    </div>
+    </div> -->
 
     <div class="divider">{{ $t('overview') }}</div>
     <div class="stats shadow">

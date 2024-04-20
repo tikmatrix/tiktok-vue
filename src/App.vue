@@ -23,8 +23,8 @@
           </div>
           <div class="flex-none">
             <ul class="menu menu-horizontal px-1">
-              <li><a href="https://doc.tikmatrix.com" target="_blank">About</a></li>
-              <li><a @click="logout">Logout</a></li>
+              <li><a href="https://doc.tikmatrix.com" target="_blank">Document</a></li>
+              <!-- <li><a @click="logout">Logout</a></li> -->
               <li>
                 <label class="swap swap-rotate">
                   <!-- this hidden checkbox controls the state -->
@@ -101,7 +101,7 @@
     </div>
 
     <div class="drawer-side z-4">
-      <Sidebar @menu_selected="menu_selected" />
+      <Sidebar @menu_selected="menu_selected" :selectedItem="selectedItem" />
     </div>
   </div>
 </template>

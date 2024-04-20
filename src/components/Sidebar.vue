@@ -4,11 +4,12 @@
     <font-awesome-icon icon="fa-brands fa-tiktok" />
     <a class="btn btn-ghost text-xl">{{ $t('siteName') }}</a>
   </div>
-  <ul class="menu p-4 w-60 min-h-full bg-base-200 text-base-content">
+  <ul class="menu p-4 h-screen w-auto bg-base-200 text-base-content">
     <li v-for="(item, index) in menuItems" :key="index">
-      <a :class="{ active: selectedItem === index }" @click="selectItem(index, item)">
+      <a :class="{ active: selectedItemIndex === index }" @click="selectItem(index, item)">
         <font-awesome-icon :icon="item.icon" class="w-4 h-4" /> {{ $t(`${item.name}`) }}
       </a>
+     
     </li>
 
     <li>
@@ -18,10 +19,22 @@
 </template>
 
 <script>
+import { inject } from 'vue'
 export default {
+  name: 'Sidebar',
+  setup() {
+    const devices = inject('devices')
+
+    return { devices: devices.list }
+  },
+  props: {
+    selectedItem: String,
+    default: 'dashboard'
+
+  },
   data() {
     return {
-      selectedItem: 0,
+      selectedItemIndex: 0,
       menuItems: [],
       fullMenuItems: [
         { name: 'dashboard', icon: 'tachometer-alt' },
@@ -52,11 +65,11 @@ export default {
     get_menus() {
       this.$service.get_menus().then(res => {
         this.menuItems = this.fullMenuItems.filter(item => res.data.includes(item.name))
-        this.selectItem(this.selectedItem, this.menuItems[this.selectedItem])
+        this.selectItem(this.selectedItemIndex, this.menuItems[this.selectedItemIndex])
       })
     },
     selectItem(index, item) {
-      this.selectedItem = index
+      this.selectedItemIndex = index
       this.$emit('menu_selected', item)
     },
     get_settings() {

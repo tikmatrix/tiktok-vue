@@ -19,7 +19,9 @@ library.add(fas, fab)
 import { i18n } from './i18n.js'
 import { reactive } from 'vue'
 import mitt from 'mitt'
-import * as util from './utils'
+import VueDragSelect from "@coleqiu/vue-drag-select";
+
+
 const emitter = mitt()
 
 let devices = reactive({ list: [] })
@@ -38,6 +40,7 @@ let config = {
 const app = createApp(App)
 app.use(VueAxios, axios)
 app.use(i18n)
+app.use(VueDragSelect);
 app.provide('axios', app.config.globalProperties.axios) // provide 'axios'
 app.provide('devices', devices) // provide 'devices
 app.config.globalProperties.$service = service

@@ -1,24 +1,79 @@
 <template>
-  <div class="indicator w-auto relative  rounded-2xl shadow-2xl cursor-pointer transform hover:scale-105 transition-transform duration-100">
-    <video ref="display" autoplay poster="../../assets/preview.jpg" class="rounded-2xl w-full"
-        @mousedown="mouseDownListener"
-        @mouseup="mouseUpListener"
-        @mouseleave="mouseLeaveListener"
-        @mousemove="mouseMoveListener"
-    >
-    </video>
+  <div 
+  :class="'indicator relative rounded-2xl shadow-2xl cursor-pointer' + (selectedIndex == index ? '':' transform hover:scale-105 transition-transform duration-100')">
+    <div class="flex">
+      <div class="flex flex-col">
+        <div class="flex flex-row" v-if="selectedIndex == index">
+          <div class="flex flex-1 justify-center">
+            <span class="text-3xl font-bold">{{ device.serial }}</span>
+          </div>
+          <button class="btn bg-gray-500 hover:bg-gray-700 text-white font-bold rounded float-right">
+            <font-awesome-icon icon="fa fa-times" class="h-4 w-4" />
+          </button>
+        </div>
+        <div class="flex flex-row flex-1">
+          <video ref="display" autoplay poster="../../assets/preview.jpg" :class="'flex-1 rounded-2xl' + (selectedIndex == index ? ' w-[320px]':' w-24')"
+              @mousedown="mouseDownListener"
+              @mouseup="mouseUpListener"
+              @mouseleave="mouseLeaveListener"
+              @mousemove="mouseMoveListener">
+          </video>
+          <div class="flex flex-col justify-center" v-if="selectedIndex == index">
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Home">
+              <font-awesome-icon icon="fa-solid fa-home" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Back">
+              <font-awesome-icon icon="fa fa-reply" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Task">
+              <font-awesome-icon icon="fa fa-window-restore" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Up">
+              <font-awesome-icon icon="fa-arrow-up" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Down">
+              <font-awesome-icon icon="fa-arrow-down" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Left">
+              <font-awesome-icon icon="fa-arrow-left" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Right">
+              <font-awesome-icon icon="fa-arrow-right" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Power">
+              <font-awesome-icon icon="fa fa-lightbulb" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Restart">
+              <font-awesome-icon icon="fa fa fa-repeat" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Upload">
+              <font-awesome-icon icon="fa fa-upload" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Input Text">
+              <font-awesome-icon icon="fa fa-keyboard" class="h-4 w-4" />
+            </button>
+            <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="ADB">
+              <font-awesome-icon icon="fa fa-terminal" class="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <div class="skeleton absolute w-full h-full top-0 left-0 bg-opacity-20" v-if="loading"></div>
     <div class=" text-white bg-black bg-opacity-50 rounded-lg indicator-item badge">
       <h1 class="font-bold text-lg">{{ index + 1 }}</h1>
     </div>
-    
   </div>
 </template>
 <script>
 import JMuxer from 'jmuxer'
-import * as util from '../../utils'
 export default {
   props: {
+    selectedIndex: {
+      type: Number,
+      default: -1
+    },
     index: {
       type: Number,
       default: 0
@@ -32,6 +87,10 @@ export default {
     sync: {
       type: Boolean,
       default: false
+    },
+    scrcpy: {
+      type: Object,
+      default: null
     }
   },
 
@@ -84,7 +143,6 @@ export default {
       let w = e.target.clientWidth,
         h = e.target.clientHeight
       let scaled = this.coords(w, h, x, y, this.rotation)
-      console.log("x: ", x, "y: ", y, "w: ", w, "h: ", h, "scaled", scaled)
       let data = JSON.stringify({
           operation: operation, // u, d, c, w
           x: scaled.x,
@@ -95,7 +153,7 @@ export default {
       if (this.sync) {
         console.log("send data: ",data)
         this.$emitter.emit('syncEventData',data)
-      }else{
+      }else if (this.scrcpy) {
         this.scrcpy.send(data)
       }
     },
@@ -112,16 +170,15 @@ export default {
       this.touchSync('m', event)
     },
     mouseUpListener(event) {
-      if (!this.sync){
-        this.$emit('show_device', this.device)
-        return
-      }
       if (!this.touch) {
         return
       }
-      
-      this.touchSync('u', event)
       this.touch = false
+      if (!this.sync){
+        this.$emit('show_device', this.index,this.scrcpy)
+        return
+      }
+      this.touchSync('u', event)
     },
     mouseLeaveListener(event) {
       if (this.loading) {
@@ -130,21 +187,19 @@ export default {
       if (!this.touch) {
         return
       }
+      this.touch = false
       if (!this.sync){
         return
       }
       this.touchSync('u', event)
-      this.touch = false
+      
     },
     mouseDownListener(event) {
       if (this.loading) {
         return
       }
-      if (!this.sync){
-        return
-      }
-      this.touchSync('d', event)
       this.touch = true
+      this.touchSync('d', event)
     },
     syncDisplay() {
       if (import.meta.env.VITE_APP_MOCK === 'true'){
@@ -153,8 +208,6 @@ export default {
       }, 3000)
         return
       }
-        
-        
 
       this.loading = true
       const jmuxer = new JMuxer({
@@ -170,8 +223,10 @@ export default {
           }
         }
       })
-      this.scrcpy = new WebSocket(import.meta.env.VITE_WS_URL)
-      this.scrcpy.binaryType = 'arraybuffer'
+      if (!this.scrcpy) {
+        this.scrcpy = new WebSocket(import.meta.env.VITE_WS_URL)
+        this.scrcpy.binaryType = 'arraybuffer'
+      }
       this.scrcpy.onopen = () => {
         this.scrcpy.send(`${this.device.serial}`)
         // max size

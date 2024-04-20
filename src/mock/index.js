@@ -244,6 +244,24 @@ const data = {
         count: 232
       }
     ],
+    [api.count_comment_job_by_status]: [
+      {
+        status: 0,
+        count: 232
+      },
+      {
+        status: 1,
+        count: 32
+      },
+      {
+        status: 2,
+        count: 23232
+      },
+      {
+        status: 3,
+        count: 232
+      }
+    ],
     [api.count_account_by_group_id]: Math.floor(Math.random() * 100),
     [api.post_comment]: post_comments,
     [api.analytics]: analytics,

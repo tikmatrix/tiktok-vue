@@ -4,7 +4,7 @@
     <div class="divider"></div>
     <span class="text-lg font-bold ml-2">{{ selection.length }} Devices Selected</span>
     <drag-select v-model="selection">
-      <drag-select-option v-for="(item, index) in devices" :value="index+1" :key="index+1">
+      <drag-select-option v-for="(item, index) in devices" :value="item.serial" :key="item.serial">
         {{index+1}}
       </drag-select-option>
     </drag-select>
@@ -40,7 +40,8 @@
                 :index="selectedIndex"
                 :sync="true"
                 :scrcpy="selectedScrcpy"
-                :selectedIndex="selectedIndex"/>
+                :selectedIndex="selectedIndex"
+                @hide_device="hide_device"/>
         </div>
         <div class="flex flex-wrap gap-2 flex-1">
           <div
@@ -49,7 +50,7 @@
             <Miniremote 
               :device="device" 
               :index="index"
-              :sync="selection.includes(index+1)"
+              :sync="selection.includes(device.serial)"
               @show_device="show_device" />
           </div>
         </div>
@@ -69,9 +70,7 @@
         </div>
       </template>
     </Pagination>
-    <Modal :show="currentDevice" @close="handleDeviceClose">
-      <Remote :device="currentDevice" />
-    </Modal>
+   
   </div>
 </template>
 <script>
@@ -99,7 +98,6 @@ export default {
   },
   data() {
     return {
-      currentDevice: null,
       settings: {
         adb_mode: ''
       },
@@ -134,16 +132,17 @@ export default {
       }
       
     },
-    handleDeviceClose() {
-      this.currentDevice = null
-    },
+    
 
     show_device(index,scrcpy) {
-      // this.currentDevice = device
       this.selectedIndex = index;
       this.selectedScrcpy = scrcpy;
-      console.log(this.selectedIndex)
-      this.selection = [index+1]
+      this.selection = [this.devices[index].serial]
+    },
+    hide_device() {
+      this.selectedIndex = -1
+      this.selectedScrcpy = null
+      this.selection = []
     },
     get_groups() {
       this.$service
@@ -190,10 +189,50 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    }
+    },
+    adb_command(args) {
+      this.$service
+        .adb_command({
+          serials: this.selection,
+          args: args
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    script(name, args=[]) {
+      this.$service
+        .script({
+          name: name,
+          serials: this.selection,
+          args: args
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
   },
   mounted() {
     this.get_settings()
+    this.$emitter.on('adbEventData', (data) => {
+      console.log("receive adbEventData: ",data)
+      this.adb_command(data.args)
+      
+    });
+    this.$emitter.on('scriptEventData', (data) => {
+      console.log("receive scriptEventData: ",data)
+      this.script(data.name,data.args)
+    });
+  },
+  unmounted() {
+    this.$emitter.off('adbEventData');
+    this.$emitter.off('scriptEventData');
   }
 }
 </script>

@@ -20,6 +20,7 @@ import { i18n } from './i18n.js'
 import { reactive } from 'vue'
 import mitt from 'mitt'
 import VueDragSelect from "@coleqiu/vue-drag-select";
+import VueDraggableResizable from 'vue-draggable-resizable'
 
 
 const emitter = mitt()
@@ -48,4 +49,5 @@ app.config.globalProperties.$emitter = emitter
 app.config.globalProperties.$config = config
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component('VueDatePicker', VueDatePicker)
+app.component("vue-draggable-resizable", VueDraggableResizable)
 app.mount('#app')

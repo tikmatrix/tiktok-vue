@@ -1,13 +1,23 @@
 <template>
   <div class="w-full">
-    <BatchButtons :devices="devices" />
-    <div class="divider"></div>
-    <span class="text-lg font-bold ml-2">{{ selection.length }} Devices Selected</span>
+    <!-- <BatchButtons :devices="devices" /> -->
+    <!-- <div class="divider"></div> -->
+    <div class="p-4">
+    <div class="form-control">
+      <label class="cursor-pointer label">
+        <div class="flex-1">
+          <span class="text-lg font-bold m-2">{{ selection.length }} Devices Selected</span>
+        </div>
+        <span class="label-text">Select All</span>
+        <input type="checkbox" class="checkbox checkbox-success" @change="selectAll" :checked="isSelecteAll" />
+      </label>
+    </div>
     <drag-select v-model="selection">
       <drag-select-option v-for="(item, index) in devices" :value="item.serial" :key="item.serial">
         {{index+1}}
       </drag-select-option>
     </drag-select>
+  </div>
     <Pagination ref="device_panel" :items="devices" :searchKeys="['serial', 'account']" :showRefBtn="false">
       <template v-slot:buttons>
         <div class="p-2 bg-accent rounded-lg shadow-md ml-2">
@@ -34,15 +44,7 @@
        </template>
       <template v-slot:default="slotProps">
       <div class="flex flex-wrap gap-2 p-4">
-        <div>
-          <Miniremote v-if="selectedIndex>=0"
-                :device="devices[selectedIndex]" 
-                :index="selectedIndex"
-                :sync="true"
-                :scrcpy="selectedScrcpy"
-                :selectedIndex="selectedIndex"
-                @hide_device="hide_device"/>
-        </div>
+       
         <div class="flex flex-wrap gap-2 flex-1">
           <div
             v-for="(device, index) in devices" 
@@ -51,7 +53,7 @@
               :device="device" 
               :index="index"
               :sync="selection.includes(device.serial)"
-              @show_device="show_device" />
+               />
           </div>
         </div>
       </div>
@@ -75,7 +77,7 @@
 </template>
 <script>
 import MyButton from '../Button.vue'
-import BatchButtons from './BatchButtons.vue'
+// import BatchButtons from './BatchButtons.vue'
 import Miniremote from './Miniremote.vue'
 import Remote from './Remote.vue'
 import Modal from '../Modal.vue'
@@ -92,7 +94,7 @@ export default {
     MyButton,
     Miniremote,
     Remote,
-    BatchButtons,
+    // BatchButtons,
     Modal,
     Pagination,
   },
@@ -103,12 +105,20 @@ export default {
       },
       isTcp: false,
       fullscreen: false,
-      selectedIndex: -1,
       selection: [],
+      isSelecteAll: false
     }
   },
   
   methods: {
+    selectAll() {
+      this.isSelecteAll = !this.isSelecteAll
+      if (this.isSelecteAll) {
+        this.selection = this.devices.map(device => device.serial)
+      } else {
+        this.selection = []
+      }
+    },
     expand() {
       // fullscreen: fixed top-0 left-0 w-screen h-screen z-10
       if (this.fullscreen) {
@@ -132,18 +142,6 @@ export default {
       }
       
     },
-    
-
-    show_device(index,scrcpy) {
-      this.selectedIndex = index;
-      this.selectedScrcpy = scrcpy;
-      this.selection = [this.devices[index].serial]
-    },
-    hide_device() {
-      this.selectedIndex = -1
-      this.selectedScrcpy = null
-      this.selection = []
-    },
     get_groups() {
       this.$service
         .get_groups()
@@ -161,13 +159,11 @@ export default {
       this.$service.get_settings().then(res => {
         this.settings = res.data
         this.isTcp = this.settings.adb_mode === 'TCP'
-        console.log(this.isTcp)
       })
     },
     toggleUsbTcp() {
       this.isTcp = !this.isTcp
       this.settings.adb_mode = this.isTcp ? 'TCP' : 'USB'
-      console.log('adb_mode changed to:', this.settings.adb_mode)
       if (this.settings.adb_mode === 'TCP') {
         this.scan_tcp()
       }
@@ -217,7 +213,23 @@ export default {
           console.log(err)
         })
     },
+    uploadFiles(files) {
+      const formData = new FormData()
+      formData.append('serials', this.selection)
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i])
+      }
+      this.$service
+        .upload_video(formData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
   },
+  
   mounted() {
     this.get_settings()
     this.$emitter.on('adbEventData', (data) => {
@@ -228,6 +240,12 @@ export default {
     this.$emitter.on('scriptEventData', (data) => {
       console.log("receive scriptEventData: ",data)
       this.script(data.name,data.args)
+    });
+    this.$emitter.on('uploadFiles', (files) => {
+      this.uploadFiles(files)
+    });
+    this.$emitter.on('openDevice', (device) => {
+      this.selection.push(device.serial)
     });
   },
   unmounted() {

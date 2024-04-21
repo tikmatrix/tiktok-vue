@@ -93,6 +93,8 @@
       <ManageSettings v-if="selectedItem === 'settings'" />
       <ManagePostBots v-if="selectedItem === 'postBots'" />
       <ManageEditBots v-if="selectedItem === 'editBots'" />
+
+      
       <footer class="footer footer-center p-4 bg-base-300 text-base-content">
         <aside>
           <p>Copyright © 2023-2024 - All right reserved by tikmatrix.com</p>
@@ -103,8 +105,26 @@
     <div class="drawer-side z-4">
       <Sidebar @menu_selected="menu_selected" :selectedItem="selectedItem" />
     </div>
+    
   </div>
+  <vue-draggable-resizable 
+  v-if="device && device.serial"
+    :w="400" :h="600" 
+    :resizable="false"
+    :parent="false"
+    drag-handle=".drag"
+     class="bg-base-100 fixed top-0 left-0 z-3">
+        <Miniremote 
+            
+            @hide_device="this.device=null"
+            :device="device" 
+            :big="true"
+            :sync="true"/>
+      </vue-draggable-resizable>
 </template>
+<style>
+@import "vue-draggable-resizable/style.css";
+</style>
 <script>
 import Sidebar from './components/Sidebar.vue'
 import ManageDashboard from './components/dashboard/ManageDashboard.vue'
@@ -125,6 +145,7 @@ import ManagePostBots from './components/virtualHost/ManagePostBots.vue'
 import ManageEditBots from './components/virtualHost/ManageEditBots.vue'
 import Login from './components/Login.vue'
 import RunAgentTips from './components/RunAgentTips.vue'
+import Miniremote from './components/device/Miniremote.vue'
 
 import * as util from './utils'
 
@@ -149,15 +170,17 @@ export default {
     ManageComments,
     ManageProxys,
     ManagePostBots,
-    ManageEditBots
+    ManageEditBots,
+    Miniremote
   },
   data() {
     return {
+      device: null,
       needLogin: true,
       showDemoTip: false,
       isDark: false,
       selectedItem: null,
-      agentRunning: true
+      agentRunning: true,
     }
   },
 
@@ -211,6 +234,12 @@ export default {
        this.agentRunning = false
        console.log("agent not running")
     })
+    this.$emitter.on('openDevice', (device) => {
+      this.device = device
+    });
+  },
+  unmounted() {
+    this.$emitter.off('openDevice');
   }
 }
 </script>

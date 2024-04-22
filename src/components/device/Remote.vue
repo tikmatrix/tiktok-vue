@@ -133,7 +133,7 @@ export default {
       effectY: 0,
       scrcpy: null,
       touch: false,
-      task_status: 'idle',
+      task_status: 'IDLE',
       timer_fps: null,
       timer_task_status: null,
       timer_loading: null,

@@ -6,8 +6,9 @@
     <div class="form-control">
       <label class="cursor-pointer label">
         <div class="flex-1">
-          <span class="text-lg font-bold m-2">{{ selection.length }} Devices Selected</span>
+          
         </div>
+        <span class="text-lg font-bold m-2">{{ selection.length }} Selected</span>
         <span class="label-text">Select All</span>
         <input type="checkbox" class="checkbox checkbox-success" @change="selectAll" :checked="isSelecteAll" />
       </label>
@@ -246,6 +247,9 @@ export default {
     });
     this.$emitter.on('openDevice', (device) => {
       this.selection.push(device.serial)
+    });
+    this.$emitter.on('closeDevice', (device) => {
+      this.selection.splice(this.selection.indexOf(device.serial), 1)
     });
   },
   unmounted() {

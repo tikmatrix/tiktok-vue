@@ -1,54 +1,65 @@
 <template>
     <div class="flex flex-col justify-start">
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Home"
-      @click="$emit('send_keycode','home')">
-        <font-awesome-icon icon="fa-solid fa-home" class="h-4 w-4" />
-      </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Back"
-      @click="$emit('send_keycode','back')">
-        <font-awesome-icon icon="fa fa-reply" class="h-4 w-4" />
-      </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Task"
-      @click="$emit('send_keycode','task')">
-        <font-awesome-icon icon="fa fa-window-restore" class="h-4 w-4" />
-      </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Up"
-      @click="$emitter.emit('adbEventData',{args:['shell', 'input', 'swipe', '500', '1000', '500', '500', '300']})">
-        <font-awesome-icon icon="fa-arrow-up" class="h-4 w-4" />
-      </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Down"
-      @click="$emitter.emit('adbEventData',{args:['shell', 'input', 'swipe', '500', '500', '500', '1000', '300']})">
-        <font-awesome-icon icon="fa-arrow-down" class="h-4 w-4" />
-      </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Left"
-      @click="$emitter.emit('adbEventData',{args:['shell', 'input','swipe', '1000', '500', '500', '500', '300' ]})">
-        <font-awesome-icon icon="fa-arrow-left" class="h-4 w-4" />
-      </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Right"
-      @click="$emitter.emit('adbEventData',{args:['shell', 'input','swipe', '500', '500', '1000', '500', '300']})">
-        <font-awesome-icon icon="fa-arrow-right" class="h-4 w-4" />
-      </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Power"
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
       @click="$emitter.emit('adbEventData',{args:['shell', 'input', 'keyevent', 'KEYCODE_POWER']})">
-        <font-awesome-icon icon="fa fa-lightbulb" class="h-4 w-4" />
+        <font-awesome-icon icon="fa fa-lightbulb" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Power</span>
       </button>
-      <button class="btn bg-red-500 hover:bg-red-700 text-white font-bold rounded tooltip" data-tip="Restart"
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 tooltip p-1"
       @click="$emitter.emit('adbEventData',{args:['shell', 'reboot']})">
-        <font-awesome-icon icon="fa fa fa-refresh" class="h-4 w-4" />
+        <font-awesome-icon icon="fa fa fa-refresh" class="h-4 w-4 text-red-500" />
+        <span class="text-xs block font-normal">Restart</span>
       </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Upload"
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
+      @click="$emitter.emit('adbEventData',{args:['shell', 'input', 'swipe', '500', '1000', '500', '500', '300']})">
+        <font-awesome-icon icon="fa-arrow-up" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Up</span>
+      </button>
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
+      @click="$emitter.emit('adbEventData',{args:['shell', 'input', 'swipe', '500', '500', '500', '1000', '300']})">
+        <font-awesome-icon icon="fa-arrow-down" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Down</span>
+      </button>
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
+      @click="$emitter.emit('adbEventData',{args:['shell', 'input','swipe', '1000', '500', '500', '500', '300' ]})">
+        <font-awesome-icon icon="fa-arrow-left" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Left</span>
+      </button>
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
+      @click="$emitter.emit('adbEventData',{args:['shell', 'input','swipe', '500', '500', '1000', '500', '300']})">
+        <font-awesome-icon icon="fa-arrow-right" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Right</span>
+      </button>
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('showTimeSetting')"
+        @click="$emitter.emit('adbEventData',{args:['shell', 'am', 'start', '-a', 'android.settings.DATE_SETTINGS']})">
+        <font-awesome-icon icon="fa fa-clock" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Time</span>
+        </button>
+        <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('showLanguageSetting')"
+        @click="$emitter.emit('adbEventData',{args:['shell', 'am', 'start', '-n', 'com.android.settings/.LanguageSettings']})">
+        <font-awesome-icon icon="fa fa-language" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Lang</span>
+        </button>
+        <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('showSimInfo')"
+        @click="$emitter.emit('adbEventData',{args:['shell', 'am', 'start', '-a', 'android.settings.DEVICE_INFO_SETTINGS']})">
+        <font-awesome-icon icon="fa fa-mobile" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Sim</span>
+        </button>
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
       @click="uploadVideo">
-        <font-awesome-icon icon="fa fa-upload" class="h-4 w-4" />
+        <font-awesome-icon icon="fa fa-upload" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Upload</span>
         <input id="upload_video_input" type="file" v-on:change="on_upload_video" multiple hidden />
-
       </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="Input Text"
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
       @click="show_text_input_dialog">
-        <font-awesome-icon icon="fa fa-keyboard" class="h-4 w-4" />
+        <font-awesome-icon icon="fa fa-keyboard" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">Input</span>
       </button>
-      <button class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold rounded tooltip" data-tip="ADB"
-      @click="show_adb_input_dialog">
-        <font-awesome-icon icon="fa fa-terminal" class="h-4 w-4" />
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('enableTCP')"
+      @click="$emitter.emit('adbEventData',{args:['tcpip', '5555']})">
+      <font-awesome-icon icon="fa-solid fa-network-wired" class="h-4 w-4 text-blue-500" />
+      <span class="text-xs block font-normal">TCP</span>
       </button>
     </div>
     <dialog ref="input_dialog" class="modal">

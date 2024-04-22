@@ -109,15 +109,16 @@
   </div>
   <vue-draggable-resizable 
   v-if="device && device.serial"
-    :w="400" :h="600" 
+    :w="411" :h="677" 
     :resizable="false"
     :parent="false"
+    :z="5"
     drag-handle=".drag"
-     class="bg-base-100 fixed top-0 left-0 z-3">
+    class="bg-base-100 fixed top-16 left-16 border-1 border-base-300 justify-center items-center">
         <Miniremote 
-            
-            @hide_device="this.device=null"
+            :max_size="800"
             :device="device" 
+            :index="device.index"
             :big="true"
             :sync="true"/>
       </vue-draggable-resizable>
@@ -236,6 +237,9 @@ export default {
     })
     this.$emitter.on('openDevice', (device) => {
       this.device = device
+    });
+    this.$emitter.on('closeDevice', (device) => {
+      this.device = null
     });
   },
   unmounted() {

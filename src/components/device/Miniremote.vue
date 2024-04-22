@@ -1,35 +1,44 @@
 <template>
-  <div 
-  :class="'indicator relative rounded-2xl shadow-2xl cursor-pointer' + (big ? '':' transform hover:scale-105 transition-transform duration-100')">
-    <div class="flex">
+  <div class="relative  shadow-2xl border-2 border-solid border-black indicator">
+    <div class="flex justify-center items-center">
       <div class="flex flex-col">
-        <div class="flex flex-row drag" v-if="big">
-          <div class="flex flex-1 justify-center">
-            <span class="text-3xl font-bold">{{ device.serial }}</span>
+        <div class="flex flex-row drag">
+          <div class="flex flex-1  justify-center items-center text-center pr-1 pl-1">
+            <div class="flex-1 justify-center items-center text-center">
+              <span class="text-xs font-bold">{{ index+1 }}</span>
+              <span :class="'text-xs'+(task_status == 'RUNNING' ? ' text-green-500' : ' text-red-500')" @click="stop_task" v-if="big"> - {{ task_status }}</span>
+            </div>
+            <div class="justify-center items-center text-center">
+              <span class="text-xs mr-2 font-bold" v-if="big">{{ device.serial }} </span>
+              <span class="text-xs">FPS: {{ fps.toFixed(0) }}</span>
+            </div>
           </div>
-          <button class="btn bg-gray-500 hover:bg-gray-700 text-white font-bold rounded float-right"
-            @click="$emit('hide_device')">
+          <button class="btn bg-transparent hover:bg-transparent hover:text-red-500 text-gray-700 float-right border-0 p-4"
+            @click="$emitter.emit('closeDevice', this.device)" v-if="big">
             <font-awesome-icon icon="fa fa-times" class="h-4 w-4" />
           </button>
         </div>
-        <div class="flex flex-row flex-1">
+        
+        <div class="flex flex-row flex-1 ">
           <LeftBars v-if="big" />
-          <span class="indicator-item indicator-center indicator-middle badge badge-secondary bg-opacity-50">
-            {{ index + 1 }}
-            FPS: {{ fps.toFixed(1) }}
-          </span> 
-          <video ref="display" autoplay poster="../../assets/preview.jpg" :class="'flex-1 rounded-2xl' + (big ? ' w-[320px]':' w-24')"
+          <div>
+            <video ref="display" autoplay poster="../../assets/preview.jpg" :class="'flex-1' + (big ? ' w-[320px]':' w-24')"
               @mousedown="mouseDownListener"
               @mouseup="mouseUpListener"
               @mouseleave="mouseLeaveListener"
-              @mousemove="mouseMoveListener">
-          </video>
+              @mousemove="mouseMoveListener"></video>
+            <BottomBar v-if="big" @send_keycode="send_keycode"/>
+          </div>
           <RightBars v-if="big" @send_keycode="send_keycode"/>
+          <div class="skeleton absolute w-full h-full bg-opacity-20" v-if="loading"></div>
         </div>
+          
       </div>
     </div>
+    <div v-if="!big" class="indicator-item indicator-center indicator-middle badge badge-lg badge-neutral bg-opacity-20 font-bold">
+      <span >{{ index+1 }}</span>
+    </div>
     
-    <div class="skeleton absolute w-full h-full top-0 left-0 bg-opacity-20" v-if="loading"></div>
   </div>
   
 </template>
@@ -37,13 +46,19 @@
 import JMuxer from 'jmuxer'
 import LeftBars from './LeftBars.vue';
 import RightBars from './RightBars.vue';
+import BottomBar from './BottomBar.vue';
 export default {
   name: 'Miniremote',
   components: {
     LeftBars,
-    RightBars
+    RightBars,
+    BottomBar
   },
   props: {
+    max_size: {
+      type: Number,
+      default: 400
+    },
     big: {
       type: Boolean,
       default: false
@@ -69,9 +84,11 @@ export default {
       fps: 0,
       periodImageCount: 0,
       timer_fps: null,
+      timer_task_status: null,
       jmuxer: null,
       scrcpy: null,
       loading: true,
+      task_status: 'IDLE',
       input_dialog_title: '',
       input_dialog_text: '',
       input_callback: null
@@ -92,9 +109,29 @@ export default {
       }));
       }, 100);
     },
-    
-    
-    
+    get_task_status() {
+      this.$service
+        .get_task_status({
+          serial: this.device.serial
+        })
+        .then(res => {
+          this.task_status = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    stop_task() {
+      this.$service
+        .stop_task({
+          serial: this.device.serial
+        })
+        .then(res => {
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     coords(boundingW, boundingH, relX, relY, rotation) {
       var w, h, x, y
       switch (rotation) {
@@ -167,7 +204,9 @@ export default {
       this.touch = false
       if (!this.big) {
         console.log("open device: ",this.device)
-        this.$emitter.emit('openDevice', this.device)
+        let mydevice=this.device
+        mydevice.index=this.index
+        this.$emitter.emit('openDevice', mydevice)
         return
       }
       this.touchSync('u', event)
@@ -200,7 +239,7 @@ export default {
         console.log(this.index,':onopen')
         this.scrcpy.send(`${this.device.serial}`)
         // max size
-        this.scrcpy.send(400)
+        this.scrcpy.send(this.max_size)
         // control
         this.scrcpy.send('true')
       }
@@ -265,6 +304,11 @@ export default {
       this.fps = this.periodImageCount / 0.5
       this.periodImageCount = 0
     }, 500)
+    if (this.big){
+      this.timer_task_status = setInterval(() => {
+        this.get_task_status()
+      }, 1000)
+    }
   },
   unmounted() {
     if (this.scrcpy) {
@@ -272,6 +316,7 @@ export default {
     }
     // this.$emitter.off('syncEventData');
     clearInterval(this.timer_fps)
+    clearInterval(this.timer_task_status)
   }
 }
 </script>

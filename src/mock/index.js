@@ -204,7 +204,7 @@ const data = {
       version: '1.0.0',
       adb_mode: 'USB'
     },
-    [api.task_status]: 'running',
+    [api.task_status]: 'RUNNING',
     [api.avatar]: avatars,
     [api.count_online_device]: 2000,
     [api.count_all_account]: 16000,

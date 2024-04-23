@@ -32,12 +32,7 @@
                 <td>
                   <div class="space-x-4">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="editgroup(group)">{{ $t('edit') }}</button>
-                    <MyButton
-                      class="text-white"
-                      :showLoading="uploading(group.id)"
-                      @click="addMaterial(group)"
-                      :label="'Add Video: ' + group.unused_material_count"
-                    />
+                    <button class="btn btn-sm btn-success" @click="addMaterial(group)">{{ $t('addMaterial') }}:{{ group.unused_material_count }}</button>
                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deletegroup(group)">{{ $t('delete') }}</button>
                   </div>
                 </td>

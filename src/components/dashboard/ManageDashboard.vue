@@ -40,7 +40,7 @@
         </div>
         <div class="stat-title">{{ $t('trainJobCount') }}</div>
         <CountUp class="stat-value" :end="train_job_count" />
-        <div class="stat-desc">success rate {{ train_job_sucess_rate * 100 }}%</div>
+        <div class="stat-desc">{{ $t('successRate') }} {{ train_job_sucess_rate * 100 }}%</div>
       </div>
       <div class="stat">
         <div class="stat-figure text-secondary">
@@ -48,7 +48,7 @@
         </div>
         <div class="stat-title">{{ $t('publishJobCount') }}</div>
         <CountUp class="stat-value" :end="publish_job_count" />
-        <div class="stat-desc">success rate {{ publish_job_sucess_rate * 100 }}%</div>
+        <div class="stat-desc">{{ $t('successRate') }} {{ publish_job_sucess_rate * 100 }}%</div>
       </div>
       <div class="stat">
         <div class="stat-figure text-secondary">
@@ -56,7 +56,7 @@
         </div>
         <div class="stat-title">{{ $t('commentJobCount') }}</div>
         <CountUp class="stat-value" :end="comment_job_count" />
-        <div class="stat-desc">success rate {{ comment_job_sucess_rate * 100 }}%</div>
+        <div class="stat-desc">{{ $t('successRate') }} {{ comment_job_sucess_rate * 100 }}%</div>
       </div>
     </div>
     <div class="divider">{{ $t('overview') }}</div>
@@ -67,7 +67,7 @@
         </div>
         <div class="stat-title">{{ $t('trainJobQueue') }}</div>
         <CountUp class="stat-value" :end="train_job_queue" />
-        <div class="stat-desc">{{ running_train_job_count }} is running</div>
+        <div class="stat-desc">{{ running_train_job_count }} {{ $t('isRunning') }}</div>
       </div>
       <div class="stat">
         <div class="stat-figure text-primary">
@@ -75,7 +75,7 @@
         </div>
         <div class="stat-title">{{ $t('publishJobQueue') }}</div>
         <CountUp class="stat-value" :end="publish_job_queue" />
-        <div class="stat-desc">{{ running_publish_job_count }} is running</div>
+        <div class="stat-desc">{{ running_publish_job_count }} {{ $t('isRunning') }}</div>
       </div>
       <div class="stat">
         <div class="stat-figure text-primary">
@@ -83,7 +83,7 @@
         </div>
         <div class="stat-title">{{ $t('commentJobQueue') }}</div>
         <CountUp class="stat-value" :end="comment_job_queue" />
-        <div class="stat-desc">{{ running_comment_job_count }} is running</div>
+        <div class="stat-desc">{{ running_comment_job_count }} {{ $t('isRunning') }}</div>
       </div>
     </div>
     <div class="divider">{{ $t('matrixGroup') }}</div>

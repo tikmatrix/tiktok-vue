@@ -6,9 +6,9 @@
           <div class="flex flex-1  justify-center items-center text-center pr-1 pl-1">
             <div class="flex-1 justify-center items-center text-center">
               <span class="text-xs font-bold">{{ index+1 }}</span>
-              <span :class="'text-xs'+(task_status == 'RUNNING' ? ' text-green-500' : ' text-red-500')" v-if="big"> - {{ task_status }}</span>
+              <span :class="'text-xs'+(task_status == 'RUNNING' ? ' text-green-500' : ' text-red-500')" v-if="big"> - {{ $t(task_status) }}</span>
               <button class="btn bg-transparent hover:bg-transparent hover:text-red-500 text-red-700 border-0" v-if="big&&task_status == 'RUNNING'" @click="stop_task">
-                <font-awesome-icon icon="fa fa-stop" class="h-4 w-4" />Stop</button>
+                <font-awesome-icon icon="fa fa-stop" class="h-4 w-4" />{{ $t('stop') }}</button>
             </div>
             <div class="justify-center items-center text-center">
               <span class="text-xs mr-2 font-bold" v-if="big">{{ device.serial }} </span>

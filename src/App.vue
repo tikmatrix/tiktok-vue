@@ -9,7 +9,7 @@
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex-grow">
       <div
-        class="bg-base-100 text-base-content sticky top-0 z-3 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)]"
+        class="bg-base-100 text-base-content sticky top-0 z-10 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)]"
       >
         <div class="navbar bg-base-100">
           <div class="flex-1 lg:hidden">
@@ -23,7 +23,7 @@
           </div>
           <div class="flex-none">
             <ul class="menu menu-horizontal px-1">
-              <li><a href="https://doc.tikmatrix.com" target="_blank">Document</a></li>
+              <li><a href="https://doc.tikmatrix.com" target="_blank">{{ $t('document') }}</a></li>
               <!-- <li><a @click="logout">Logout</a></li> -->
               <li>
                 <label class="swap swap-rotate">
@@ -46,7 +46,7 @@
                 </label>
               </li>
               <li>
-                <details>
+                <details ref="language_detail">
                   <summary>
                     <svg class="h-5 w-5 fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512">
                       <path d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"></path>
@@ -75,7 +75,7 @@
           />
         </svg>
         <span class="font-bold">{{ $t('demoTip', { email: 'admin@niostack.com' }) }}</span>
-        <a class="link link-primary" href="https://t.me/+iGhozoBfAbI5YmE1">Join Telegram Group</a>
+        <a class="link link-primary" href="https://t.me/+iGhozoBfAbI5YmE1">{{ $t('demoTip2') }}</a>
       </div>
       <div class="p-4">
         <div class="form-control">
@@ -83,8 +83,8 @@
             <div class="flex-1">
               
             </div>
-            <span class="text-lg font-bold m-2">{{ selection.length }} Selected</span>
-            <span class="label-text">Select All</span>
+            <span class="text-lg font-bold m-2">{{ selection.length }} {{ $t('selected') }}</span>
+            <span class="label-text">{{ $t('selectAll') }}</span>
             <input type="checkbox" class="checkbox checkbox-success" @change="selectAll" :checked="isSelecteAll" />
           </label>
         </div>
@@ -129,7 +129,7 @@
     :w="411" :h="677" 
     :resizable="false"
     :parent="false"
-    :z="5"
+    :z="11"
     drag-handle=".drag"
     class="bg-base-100 fixed top-16 left-16 border-1 border-base-300 justify-center items-center">
         <Miniremote 
@@ -268,7 +268,8 @@ export default {
     },
     changeLocale(locale) {
       this.$i18n.locale = locale
-      this.open = false
+      //remove attr:open
+      this.$refs.language_detail.removeAttribute('open')
     },
     menu_selected(item) {
       this.selectedItem = item.name

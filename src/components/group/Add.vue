@@ -31,7 +31,7 @@
     </div>
     <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
       <label class="font-bold text-right col-span-1">{{ $t('topics') }}:</label>
-      <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" placeholder="Topics" autocomplete="off" v-model="mygroup.topic"> </textarea>
+      <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" :placeholder="$t('topicsTips')" autocomplete="off" v-model="mygroup.topic"> </textarea>
     </div>
     <div class="grid grid-cols-8 w-full items-center gap-2 mb-2">
       <label class="font-bold text-right col-span-2">{{ $t('interact') }}:</label>
@@ -91,7 +91,7 @@
 
     <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
       <label class="font-bold text-right col-span-1">{{ $t('titles') }}:</label>
-      <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" placeholder="Titles" autocomplete="off" v-model="mygroup.title"> </textarea>
+      <textarea class="textarea textarea-success w-full max-w-xl col-span-3 h-32" :placeholder="$t('titlesTips')" autocomplete="off" v-model="mygroup.title"> </textarea>
     </div>
     <!-- <div class="grid grid-cols-4 w-full items-center gap-2 mb-2">
             <label class="font-bold text-right col-span-1">{{ $t('productLink') }}</label>

@@ -213,6 +213,8 @@ export const i18n = createI18n({
       train: 'Train',
       copy: 'Copy',
       topics: 'Topics',
+      topicsTips: 'Enter the topic to be searched,one topic per line',
+      titlesTips: 'Enter the title and tags of the video,one title per line',
       remark: 'Remark',
       document: 'Document',
       selected: 'Selected',
@@ -408,6 +410,12 @@ export const i18n = createI18n({
       RUNNING: '运行中',
       IDLE: '空闲',
       remark: '备注',
+      trainTimer: '养号定时器',
+      trainDuration: '养号时长',
+      topics: '话题',
+      publishTimer: '发布定时器',
+      topicsTips: '输入要搜索的话题,一行一个话题',
+      titlesTips: '输入视频的标题和标签,一行一个标题',
     }
   }
 })

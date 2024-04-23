@@ -77,6 +77,23 @@
         <span class="font-bold">{{ $t('demoTip', { email: 'admin@niostack.com' }) }}</span>
         <a class="link link-primary" href="https://t.me/+iGhozoBfAbI5YmE1">Join Telegram Group</a>
       </div>
+      <div class="p-4">
+        <div class="form-control">
+          <label class="cursor-pointer label">
+            <div class="flex-1">
+              
+            </div>
+            <span class="text-lg font-bold m-2">{{ selection.length }} Selected</span>
+            <span class="label-text">Select All</span>
+            <input type="checkbox" class="checkbox checkbox-success" @change="selectAll" :checked="isSelecteAll" />
+          </label>
+        </div>
+        <drag-select v-model="selection">
+          <drag-select-option v-for="(item, index) in devices" :value="item.serial" :key="item.serial">
+            {{index+1}}
+          </drag-select-option>
+        </drag-select>
+      </div>
       <ManageDashboard v-if="selectedItem === 'dashboard'" />
       <ManageDevices v-if="selectedItem === 'devices'" />
       <ManageGroups v-if="selectedItem === 'groups'" />
@@ -147,11 +164,16 @@ import ManageEditBots from './components/virtualHost/ManageEditBots.vue'
 import Login from './components/Login.vue'
 import RunAgentTips from './components/RunAgentTips.vue'
 import Miniremote from './components/device/Miniremote.vue'
-
+import { inject } from 'vue'
 import * as util from './utils'
 
 export default {
   name: 'app',
+  setup() {
+    const devices = inject('devices')
+
+    return { devices: devices.list }
+  },
   components: {
     Login,
     RunAgentTips,
@@ -182,10 +204,61 @@ export default {
       isDark: false,
       selectedItem: null,
       agentRunning: true,
+      selection: [],
+      isSelecteAll: false
     }
   },
-
   methods: {
+    selectAll() {
+      this.isSelecteAll = !this.isSelecteAll
+      if (this.isSelecteAll) {
+        this.selection = this.devices.map(device => device.serial)
+      } else {
+        this.selection = []
+      }
+    },
+    uploadFiles(files) {
+      const formData = new FormData()
+      formData.append('serials', this.selection)
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i])
+      }
+      this.$service
+        .upload_video(formData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    adb_command(args) {
+      this.$service
+        .adb_command({
+          serials: this.selection,
+          args: args
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    script(name, args=[]) {
+      this.$service
+        .script({
+          name: name,
+          serials: this.selection,
+          args: args
+        })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     loadTheme() {
       this.isDark = localStorage.getItem('theme') === 'dark'
     },
@@ -237,13 +310,34 @@ export default {
     })
     this.$emitter.on('openDevice', (device) => {
       this.device = device
+      this.selection.push(device.serial)
     });
     this.$emitter.on('closeDevice', (device) => {
       this.device = null
+      this.selection=[]
     });
+    this.$emitter.on('adbEventData', (data) => {
+      console.log("receive adbEventData: ",data)
+      this.adb_command(data.args)
+      
+    });
+    this.$emitter.on('scriptEventData', (data) => {
+      console.log("receive scriptEventData: ",data)
+      this.script(data.name,data.args)
+    });
+    this.$emitter.on('uploadFiles', (files) => {
+      this.uploadFiles(files)
+    });
+    this.$emitter.on('eventData', (data) => {
+      let new_data={
+        devices:[...this.selection],
+        data:data
+      }
+      this.$emitter.emit('syncEventData',new_data)
+    });
+    
   },
   unmounted() {
-    this.$emitter.off('openDevice');
   }
 }
 </script>

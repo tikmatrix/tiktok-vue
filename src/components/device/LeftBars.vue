@@ -47,7 +47,6 @@
         <font-awesome-icon icon="fa-solid fa-graduation-cap" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">Train</span>
         </button>
-       
     </div>
 </template>
 <script>

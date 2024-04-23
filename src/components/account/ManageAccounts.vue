@@ -28,7 +28,7 @@
                 <td>{{ account.fans }}</td>
 
                 <td>
-                  <a class="cursor-pointer underline text-blue-500" @click="show_device(account.device)">{{ account.device_index }} - {{ account.device }}</a>
+                  <a class="cursor-pointer underline text-blue-500" @click="show_device(account.device_index,account.device)">{{ account.device_index }} - {{ account.device }}</a>
                 </td>
 
                 <td>{{ account.group_name }}</td>
@@ -54,9 +54,7 @@
       <Add @add="addAccount" />
     </Modal>
 
-    <Modal :show="currentDevice" @close="handleDeviceClose">
-      <Remote :device="currentDevice" />
-    </Modal>
+ 
   </div>
 </template>
 <script>
@@ -65,7 +63,6 @@ import MyButton from '../Button.vue'
 import Edit from './Edit.vue'
 import Add from './Add.vue'
 import Pagination from '../Pagination.vue'
-import Remote from '../device/Remote.vue'
 import { inject } from 'vue'
 export default {
   name: 'app',
@@ -75,7 +72,6 @@ export default {
     Edit,
     Add,
     Pagination,
-    Remote
   },
   setup() {
     const devices = inject('devices')
@@ -87,15 +83,13 @@ export default {
       groups: [],
       currentAccount: null,
       showAddAccount: false,
-      currentDevice: null
     }
   },
   methods: {
-    handleDeviceClose() {
-      this.currentDevice = null
-    },
-    show_device(device) {
-      this.currentDevice = this.devices.find(d => d.serial === device)
+    show_device(index,serial) {
+      let mydevice=this.devices.find(d => d.serial === serial)
+      mydevice.index=index-1
+      this.$emitter.emit('openDevice', mydevice)
     },
 
     get_accounts() {

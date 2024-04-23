@@ -2,23 +2,7 @@
   <div class="w-full">
     <!-- <BatchButtons :devices="devices" /> -->
     <!-- <div class="divider"></div> -->
-    <div class="p-4">
-    <div class="form-control">
-      <label class="cursor-pointer label">
-        <div class="flex-1">
-          
-        </div>
-        <span class="text-lg font-bold m-2">{{ selection.length }} Selected</span>
-        <span class="label-text">Select All</span>
-        <input type="checkbox" class="checkbox checkbox-success" @change="selectAll" :checked="isSelecteAll" />
-      </label>
-    </div>
-    <drag-select v-model="selection">
-      <drag-select-option v-for="(item, index) in devices" :value="item.serial" :key="item.serial">
-        {{index+1}}
-      </drag-select-option>
-    </drag-select>
-  </div>
+    
     <Pagination ref="device_panel" :items="devices" :searchKeys="['serial', 'account']" :showRefBtn="false">
       <template v-slot:buttons>
         <div class="p-2 bg-accent rounded-lg shadow-md ml-2">
@@ -53,7 +37,6 @@
             <Miniremote 
               :device="device" 
               :index="index"
-              :sync="selection.includes(device.serial)"
                />
           </div>
         </div>
@@ -78,14 +61,12 @@
 </template>
 <script>
 import MyButton from '../Button.vue'
-// import BatchButtons from './BatchButtons.vue'
 import Miniremote from './Miniremote.vue'
-import Remote from './Remote.vue'
 import Modal from '../Modal.vue'
 import Pagination from '../Pagination.vue'
 import { inject } from 'vue'
 export default {
-  name: 'app',
+  name: 'devices',
   setup() {
     const devices = inject('devices')
 
@@ -94,8 +75,6 @@ export default {
   components: {
     MyButton,
     Miniremote,
-    Remote,
-    // BatchButtons,
     Modal,
     Pagination,
   },
@@ -106,20 +85,12 @@ export default {
       },
       isTcp: false,
       fullscreen: false,
-      selection: [],
-      isSelecteAll: false
+      
     }
   },
   
   methods: {
-    selectAll() {
-      this.isSelecteAll = !this.isSelecteAll
-      if (this.isSelecteAll) {
-        this.selection = this.devices.map(device => device.serial)
-      } else {
-        this.selection = []
-      }
-    },
+    
     expand() {
       // fullscreen: fixed top-0 left-0 w-screen h-screen z-10
       if (this.fullscreen) {
@@ -187,74 +158,14 @@ export default {
           console.log(err)
         })
     },
-    adb_command(args) {
-      this.$service
-        .adb_command({
-          serials: this.selection,
-          args: args
-        })
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    script(name, args=[]) {
-      this.$service
-        .script({
-          name: name,
-          serials: this.selection,
-          args: args
-        })
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-    uploadFiles(files) {
-      const formData = new FormData()
-      formData.append('serials', this.selection)
-      for (let i = 0; i < files.length; i++) {
-        formData.append('files', files[i])
-      }
-      this.$service
-        .upload_video(formData)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
+    
+    
   },
   
   mounted() {
     this.get_settings()
-    this.$emitter.on('adbEventData', (data) => {
-      console.log("receive adbEventData: ",data)
-      this.adb_command(data.args)
-      
-    });
-    this.$emitter.on('scriptEventData', (data) => {
-      console.log("receive scriptEventData: ",data)
-      this.script(data.name,data.args)
-    });
-    this.$emitter.on('uploadFiles', (files) => {
-      this.uploadFiles(files)
-    });
-    this.$emitter.on('openDevice', (device) => {
-      this.selection.push(device.serial)
-    });
-    this.$emitter.on('closeDevice', (device) => {
-      this.selection.splice(this.selection.indexOf(device.serial), 1)
-    });
   },
   unmounted() {
-    this.$emitter.off('adbEventData');
-    this.$emitter.off('scriptEventData');
   }
 }
 </script>

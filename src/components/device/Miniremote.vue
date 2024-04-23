@@ -6,7 +6,9 @@
           <div class="flex flex-1  justify-center items-center text-center pr-1 pl-1">
             <div class="flex-1 justify-center items-center text-center">
               <span class="text-xs font-bold">{{ index+1 }}</span>
-              <span :class="'text-xs'+(task_status == 'RUNNING' ? ' text-green-500' : ' text-red-500')" @click="stop_task" v-if="big"> - {{ task_status }}</span>
+              <span :class="'text-xs'+(task_status == 'RUNNING' ? ' text-green-500' : ' text-red-500')" v-if="big"> - {{ task_status }}</span>
+              <button class="btn bg-transparent hover:bg-transparent hover:text-red-500 text-red-700 border-0" v-if="big&&task_status == 'RUNNING'" @click="stop_task">
+                <font-awesome-icon icon="fa fa-stop" class="h-4 w-4" />Stop</button>
             </div>
             <div class="justify-center items-center text-center">
               <span class="text-xs mr-2 font-bold" v-if="big">{{ device.serial }} </span>
@@ -73,10 +75,7 @@ export default {
         return {}
       }
     },
-    sync: {
-      type: Boolean,
-      default: false
-    },
+    
   },
   data() {
     return {
@@ -96,13 +95,13 @@ export default {
   },
   methods: {
     send_keycode(keycode) {
-      this.$emitter.emit('syncEventData',JSON.stringify({
+      this.$emitter.emit('eventData',JSON.stringify({
           type: 'keycode',//type=keycode
           operation: 'd',//operation=down
           keycode,
       }));
       setTimeout(() => {
-        this.$emitter.emit('syncEventData',JSON.stringify({
+        this.$emitter.emit('eventData',JSON.stringify({
           type: 'keycode',//type=keycode
           operation: 'u',//operation=up
           keycode,
@@ -183,16 +182,13 @@ export default {
           x: (scaled.x/scaled.w).toFixed(2), 
           y: (scaled.y/scaled.h).toFixed(2), 
       });
-      this.$emitter.emit('syncEventData',data)
+      this.$emitter.emit('eventData',data)
     },
     mouseMoveListener(event) {
       if (this.loading) {
         return
       }
       if (!this.touch) {
-        return
-      }
-      if (!this.sync){
         return
       }
       this.touchSync('m', event)
@@ -219,9 +215,6 @@ export default {
         return
       }
       this.touch = false
-      if (!this.sync){
-        return
-      }
       this.touchSync('u', event)
       
     },
@@ -295,9 +288,12 @@ export default {
   mounted() {
     this.syncDisplay()
     this.$emitter.on('syncEventData', (data) => {
-      console.log("receive syncEventData: ",data,"this.sync: ",this.sync)
-      if (this.sync&&this.scrcpy){
-        this.scrcpy.send(data)
+      console.log("receive syncEventData: ",data.devices)
+      if (!data.devices.includes(this.device.serial)) {
+        return
+      }
+      if (this.scrcpy){
+        this.scrcpy.send(data.data)
       }
     });
     this.timer_fps = setInterval(() => {
@@ -314,7 +310,6 @@ export default {
     if (this.scrcpy) {
       this.scrcpy.close()
     }
-    // this.$emitter.off('syncEventData');
     clearInterval(this.timer_fps)
     clearInterval(this.timer_task_status)
   }

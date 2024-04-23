@@ -51,7 +51,7 @@
                   <a class="link link-primary" :href="`https://www.tiktok.com/${publish_job.username}`" target="_blank">{{ publish_job.username }}</a>
                 </td>
                 <td>
-                  <a class="cursor-pointer underline text-blue-500" @click="show_device(publish_job.device)"
+                  <a class="cursor-pointer underline text-blue-500" @click="show_device(publish_job.device_index,publish_job.device)"
                     >{{ publish_job.device_index }} - {{ publish_job.device }}</a
                   >
                 </td>
@@ -70,9 +70,7 @@
         </div>
       </template>
     </Pagination>
-    <Modal :show="currentDevice" @close="handleDeviceClose">
-      <Remote :device="currentDevice" />
-    </Modal>
+    
     <dialog id="confirm_modal" class="modal">
       <div class="modal-box">
         <form method="dialog">
@@ -92,14 +90,12 @@
 import Modal from '../Modal.vue'
 import MyButton from '../Button.vue'
 import Pagination from '../Pagination.vue'
-import Remote from '../device/Remote.vue'
 import { inject } from 'vue'
 export default {
   name: 'app',
   components: {
     MyButton,
     Modal,
-    Remote,
     Pagination
   },
   setup() {
@@ -110,7 +106,6 @@ export default {
     return {
       jobs: [],
       groups: [],
-      currentDevice: null,
       searchStatus: '',
     }
   },
@@ -135,11 +130,11 @@ export default {
           console.log(err)
         })
     },
-    handleDeviceClose() {
-      this.currentDevice = null
-    },
-    show_device(device) {
-      this.currentDevice = this.devices.find(d => d.serial === device)
+   
+    show_device(index,serial) {
+      let mydevice=this.devices.find(d => d.serial === serial)
+      mydevice.index=index-1
+      this.$emitter.emit('openDevice', mydevice)
     },
     get_publish_jobs() {
       this.currentJob = null

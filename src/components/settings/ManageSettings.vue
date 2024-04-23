@@ -55,7 +55,7 @@
                 <span class="label-text-alt">example: GMT+00:00</span>
             </div>
         </label> -->
-    <label class="form-control w-full max-w-md">
+    <!-- <label class="form-control w-full max-w-md">
       <div class="label">
         <span class="label-text">{{ $t('wifiTips') }}</span>
       </div>
@@ -68,7 +68,7 @@
       <div class="label">
         <span class="label-text-alt">your wifi ssid and password. </span>
       </div>
-    </label>
+    </label> -->
     <label class="form-control w-full max-w-md">
       <div class="label">
         <span class="label-text">{{ $t('emailTips') }}</span>
@@ -83,7 +83,7 @@
         <span class="label-text-alt">example: @tikmatrix.com </span>
       </div>
     </label>
-    <label class="form-control w-full max-w-md">
+    <!-- <label class="form-control w-full max-w-md">
       <div class="label">
         <span class="label-text">{{ $t('openaiTips') }}</span>
       </div>
@@ -96,8 +96,8 @@
       <div class="label">
         <span class="label-text-alt">example: sk-xxxxxxxxxxxxxxxx </span>
       </div>
-    </label>
-    <label class="form-control w-full max-w-md">
+    </label> -->
+    <!-- <label class="form-control w-full max-w-md">
       <div class="label">
         <span class="label-text">{{ $t('passwordTips') }}</span>
       </div>
@@ -110,7 +110,7 @@
       <div class="label">
         <span class="label-text-alt">example: 123456 </span>
       </div>
-    </label>
+    </label> -->
   </div>
 </template>
 <script>

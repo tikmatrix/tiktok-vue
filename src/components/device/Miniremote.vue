@@ -2,7 +2,7 @@
   <div class="relative  shadow-2xl border-2 border-solid border-black indicator">
     <div class="flex justify-center items-center">
       <div class="flex flex-col">
-        <div class="flex flex-row drag">
+        <div class="flex flex-row drag  bg-base-300">
           <div class="flex flex-1  justify-center items-center text-center pr-1 pl-1">
             <div class="flex-1 justify-center items-center text-center">
               <span class="text-xs font-bold">{{ index+1 }}</span>
@@ -19,12 +19,16 @@
             @click="$emitter.emit('closeDevice', this.device)" v-if="big">
             <font-awesome-icon icon="fa fa-times" class="h-4 w-4" />
           </button>
+          <span class="bg-transparent hover:bg-transparent hover:text-red-500 text-gray-700 float-right border-0 pl-1 pr-1 pt-0 pb-0 cursor-pointer tooltip" :data-tip="$t('hideTips')"
+            @click="$emitter.emit('hideDevice', this.device)" v-if="!big">
+            <font-awesome-icon icon="fa fa-eye" class="h-4 w-4" />
+        </span>
         </div>
         
         <div class="flex flex-row flex-1 ">
           <LeftBars v-if="big" />
           <div>
-            <video ref="display" autoplay poster="../../assets/preview.jpg" :class="'flex-1' + (big ? ' w-[320px]':' w-24')"
+            <video ref="display" autoplay poster="../../assets/preview.jpg" :class="'flex-1 object-fill' + (big ? ' w-[320px] h-[580px]':' w-[110px] h-[200px]')"
               @mousedown="mouseDownListener"
               @mouseup="mouseUpListener"
               @mouseleave="mouseLeaveListener"
@@ -32,12 +36,12 @@
             <BottomBar v-if="big" @send_keycode="send_keycode"/>
           </div>
           <RightBars v-if="big" @send_keycode="send_keycode"/>
-          <div class="skeleton absolute w-full h-full bg-opacity-20" v-if="loading"></div>
+          <!-- <div class="skeleton absolute w-full h-full bg-opacity-20" v-if="loading"></div> -->
         </div>
           
       </div>
     </div>
-    <div v-if="!big" class="indicator-item indicator-center indicator-middle badge badge-lg badge-neutral bg-opacity-20 font-bold">
+    <div v-if="!big" class="indicator-item indicator-center indicator-middle badge badge-lg badge-neutral bg-opacity-50 font-bold">
       <span >{{ index+1 }}</span>
     </div>
     
@@ -59,7 +63,7 @@ export default {
   props: {
     max_size: {
       type: Number,
-      default: 400
+      default: 300
     },
     big: {
       type: Boolean,
@@ -199,7 +203,7 @@ export default {
       }
       this.touch = false
       if (!this.big) {
-        console.log("open device: ",this.device)
+        // console.log("open device: ",this.device)
         let mydevice=this.device
         mydevice.index=this.index
         this.$emitter.emit('openDevice', mydevice)
@@ -229,7 +233,7 @@ export default {
       this.scrcpy = new WebSocket(import.meta.env.VITE_WS_URL)
       this.scrcpy.binaryType = 'arraybuffer'
       this.scrcpy.onopen = () => {
-        console.log(this.index,':onopen')
+        // console.log(this.index,':onopen')
         this.scrcpy.send(`${this.device.serial}`)
         // max size
         this.scrcpy.send(this.max_size)
@@ -239,7 +243,7 @@ export default {
       this.scrcpy.onclose = () => {
         this.loading = true
         this.jmuxer.reset()
-        console.log(this.index,':onclose')
+        // console.log(this.index,':onclose')
         //sleep 1s
         // setTimeout(() => {
         //   this.connect()

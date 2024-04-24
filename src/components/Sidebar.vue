@@ -1,6 +1,7 @@
 <template>
   <label for="my-drawer" aria-label="close Menu" class="drawer-overlay"></label>
-  <div class="flex-1 hidden lg:block p-4">
+  <!-- <div class="flex-1 hidden lg:block p-4"> -->
+  <div class="flex-1 p-4">
     <font-awesome-icon icon="fa-brands fa-tiktok" />
     <a class="btn btn-ghost text-xl">{{ $t('siteName') }}</a>
   </div>
@@ -20,6 +21,7 @@
 
 <script>
 import { inject } from 'vue'
+
 export default {
   name: 'Sidebar',
   setup() {

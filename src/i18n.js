@@ -239,6 +239,8 @@ export const i18n = createI18n({
       task: 'Task',
       RUNNING: 'Running',
       IDLE: 'Idle',
+      hideTips: 'Hide this device',
+      showHiddenDevices: 'Show hidden devices',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -416,6 +418,8 @@ export const i18n = createI18n({
       publishTimer: '发布定时器',
       topicsTips: '输入要搜索的话题,一行一个话题',
       titlesTips: '输入视频的标题和标签,一行一个标题',
+      hideTips: '隐藏这个设备',
+      showHiddenDevices: '显示隐藏设备'
     }
   }
 })

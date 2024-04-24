@@ -21,14 +21,32 @@ import { reactive } from 'vue'
 import mitt from 'mitt'
 import VueDragSelect from "@coleqiu/vue-drag-select";
 import VueDraggableResizable from 'vue-draggable-resizable'
+import * as util from './utils'
 
 
 const emitter = mitt()
-
+let hideDevices = []
+hideDevices = util.getData('hideDevices')
+if (!hideDevices) {
+  console.log("init hideDevices")
+  hideDevices = []
+}
 let devices = reactive({ list: [] })
-
+emitter.on('hideDevice', (device) => {
+  hideDevices.push(device.serial)
+  util.setData('hideDevices', hideDevices)
+  devices.list.splice(devices.list.indexOf(device), 1)
+});
+emitter.on('show-hidden-devices', () => {
+  console.log("show-hidden-devices")
+  hideDevices = []
+  util.setData('hideDevices', hideDevices)
+})
 async function getDevices() {
   const res = await service.get_devices()
+  if (hideDevices.length > 0) {
+    res.data = res.data.filter(device => !hideDevices.includes(device.serial))
+  }
   devices.list.splice(0, devices.list.length, ...res.data)
 }
 getDevices() //get devices on page load

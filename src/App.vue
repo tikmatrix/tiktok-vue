@@ -5,14 +5,14 @@
   <template v-if="!agentRunning">
     <RunAgentTips />
   </template>
-  <div class="drawer lg:drawer-open" v-else>
+  <div class="drawer drawer-open" v-else>
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content flex-grow">
       <div
-        class="bg-base-100 text-base-content sticky top-0 z-10 flex h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)]"
-      >
+        class="bg-base-100 text-base-content sticky top-0 z-10 flex 
+        h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)]">
         <div class="navbar bg-base-100">
-          <div class="flex-1 lg:hidden">
+          <!-- <div class="flex-1 lg:hidden">
             <label for="my-drawer" class="btn btn-square btn-ghost">
               <font-awesome-icon icon="fa-solid fa-bars" />
             </label>
@@ -20,7 +20,7 @@
           <div class="flex-1 visible lg:invisible">
             <font-awesome-icon icon="fa-brands fa-tiktok" />
             <a class="btn btn-ghost text-xl">{{ $t('siteName') }}</a>
-          </div>
+          </div> -->
           <div class="flex-none">
             <ul class="menu menu-horizontal px-1">
               <li><a href="https://doc.tikmatrix.com" target="_blank">{{ $t('document') }}</a></li>
@@ -129,15 +129,14 @@
     :w="411" :h="677" 
     :resizable="false"
     :parent="false"
-    :z="11"
+    :z="20"
     drag-handle=".drag"
-    class="bg-base-100 fixed top-16 left-16 border-1 border-base-300 justify-center items-center">
+    class="bg-base-100 fixed top-16 left-16 border-1 border-base-300 justify-center items-center flex flex-col">
         <Miniremote 
-            :max_size="800"
+            :max_size="1200"
             :device="device" 
             :index="device.index"
-            :big="true"
-            :sync="true"/>
+            :big="true"/>
       </vue-draggable-resizable>
 </template>
 <style>
@@ -205,7 +204,7 @@ export default {
       selectedItem: null,
       agentRunning: true,
       selection: [],
-      isSelecteAll: false
+      isSelecteAll: false,
     }
   },
   methods: {
@@ -294,7 +293,7 @@ export default {
     logout() {
       this.$service.logout()
       this.needLogin = true
-    }
+    },
   },
   mounted() {
     this.loadTheme()
@@ -336,7 +335,6 @@ export default {
       }
       this.$emitter.emit('syncEventData',new_data)
     });
-    
   },
   unmounted() {
   }

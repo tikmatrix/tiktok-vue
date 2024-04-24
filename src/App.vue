@@ -21,6 +21,7 @@
             <font-awesome-icon icon="fa-brands fa-tiktok" />
             <a class="btn btn-ghost text-xl">{{ $t('siteName') }}</a>
           </div> -->
+          <div class="flex-1"></div>
           <div class="flex-none">
             <ul class="menu menu-horizontal px-1">
               <li><a href="https://doc.tikmatrix.com" target="_blank">{{ $t('document') }}</a></li>
@@ -231,6 +232,21 @@ export default {
           console.log(err)
         })
     },
+    installApks(files) {
+      const formData = new FormData()
+      formData.append('serials', this.selection)
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i])
+      }
+      this.$service
+        .install(formData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     adb_command(args) {
       this.$service
         .adb_command({
@@ -327,6 +343,9 @@ export default {
     });
     this.$emitter.on('uploadFiles', (files) => {
       this.uploadFiles(files)
+    });
+    this.$emitter.on('installApks', (files) => {
+      this.installApks(files)
     });
     this.$emitter.on('eventData', (data) => {
       let new_data={

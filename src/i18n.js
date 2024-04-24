@@ -241,6 +241,9 @@ export const i18n = createI18n({
       IDLE: 'Idle',
       hideTips: 'Hide this device',
       showHiddenDevices: 'Show hidden devices',
+      installAPK: 'Install APK',
+      apk: 'APK',
+      enableTCP: 'Enable ADB TCP Connection',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -419,7 +422,11 @@ export const i18n = createI18n({
       topicsTips: '输入要搜索的话题,一行一个话题',
       titlesTips: '输入视频的标题和标签,一行一个标题',
       hideTips: '隐藏这个设备',
-      showHiddenDevices: '显示隐藏设备'
+      showHiddenDevices: '显示隐藏设备',
+      installAPK: '安装 APK',
+      apk: 'APK',
+      init: '初始化',
+      enableTCP: '启用 ADB TCP 连接',
     }
   }
 })

@@ -51,6 +51,12 @@
         <span class="text-xs block font-normal">{{ $t('upload') }}</span>
         <input id="upload_video_input" type="file" v-on:change="on_upload_video" multiple hidden />
       </button>
+      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('installAPK')"
+        @click="app_install">
+        <font-awesome-icon icon="fa-brands fa-android" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">{{ $t('apk') }}</span>
+        <input id="app_install_input" type="file" v-on:change="on_app_install" multiple hidden />
+      </button>
       <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
       @click="show_text_input_dialog">
         <font-awesome-icon icon="fa fa-keyboard" class="h-4 w-4 text-blue-500" />
@@ -118,6 +124,12 @@ export default {
     on_upload_video(e) {
       console.log(e.target.files)
       this.$emitter.emit('uploadFiles',e.target.files)
+    },
+    app_install() {
+      document.getElementById('app_install_input').click()
+    },
+    on_app_install(e) {
+      this.$emitter.emit('installApks',e.target.files)
     },
   }
 }

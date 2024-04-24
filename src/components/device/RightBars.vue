@@ -51,12 +51,12 @@
         <span class="text-xs block font-normal">{{ $t('upload') }}</span>
         <input id="upload_video_input" type="file" v-on:change="on_upload_video" multiple hidden />
       </button>
-      <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('installAPK')"
+      <!-- <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('installAPK')"
         @click="app_install">
         <font-awesome-icon icon="fa-brands fa-android" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('apk') }}</span>
         <input id="app_install_input" type="file" v-on:change="on_app_install" multiple hidden />
-      </button>
+      </button> -->
       <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block"
       @click="show_text_input_dialog">
         <font-awesome-icon icon="fa fa-keyboard" class="h-4 w-4 text-blue-500" />

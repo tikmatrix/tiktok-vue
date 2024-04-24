@@ -18,7 +18,7 @@
         
        
         <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('enableProxy')"
-        @click="$emitter.emit('adbEventData',{args:['shell', 'settings', 'put', 'global', 'http_proxy', `${this.settings.proxy_url}`]})">
+        @click="$emitter.emit('adbEventData',{args:['shell', 'settings', 'put', 'global', 'http_proxy', `${settings.proxy_url}`]})">
         <font-awesome-icon icon="fa-solid fa-link" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('proxy') }}</span>
         </button>
@@ -47,16 +47,33 @@
         <font-awesome-icon icon="fa-solid fa-graduation-cap" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('train') }}</span>
         </button>
-        <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('init')"
+        <!-- <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('init')"
         @click="$emitter.emit('initDevice')">
         <font-awesome-icon icon="fa-solid fa-arrows-rotate" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('init') }}</span>
-        </button>
+        </button> -->
         
     </div>
 </template>
 <script>
 export default {
   name: 'LeftBars',
+  data() {
+    return {
+      settings: {
+        proxy_url: 'http://127.0.0.1:8090'
+      }
+    }
+  },
+  methods: {
+    get_settings() {
+      this.$service.get_settings().then(res => {
+        this.settings = res.data
+      })
+    },
+  },
+  mounted() {
+    this.get_settings()
+  },
 }
 </script>

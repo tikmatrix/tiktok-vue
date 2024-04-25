@@ -291,7 +291,8 @@ export default {
   },
   mounted() {
     this.syncDisplay()
-    this.$emitter.on('syncEventData', (data) => {
+    if (!this.big){
+      this.$emitter.on('syncEventData', (data) => {
       console.log("receive syncEventData: ",data.devices)
       if (!data.devices.includes(this.device.serial)) {
         return
@@ -300,6 +301,8 @@ export default {
         this.scrcpy.send(data.data)
       }
     });
+    }
+    
     this.timer_fps = setInterval(() => {
       this.fps = this.periodImageCount / 0.5
       this.periodImageCount = 0

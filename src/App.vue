@@ -209,6 +209,14 @@ export default {
     }
   },
   methods: {
+    initDevice() {
+      this.adb_command(['uninstall', 'com.github.tikmatrix'])
+      this.adb_command(['uninstall', 'com.github.tikmatrix.test'])
+      setTimeout(() => {
+        this.adb_command(['install', '-r','-t','-g', 'bin/apk/com.github.tikmatrix.apk'])
+        this.adb_command(['install', '-r','-t','-g', 'bin/apk/com.github.tikmatrix.test.apk'])
+      },3000)
+    },
     selectAll() {
       this.isSelecteAll = !this.isSelecteAll
       if (this.isSelecteAll) {
@@ -331,6 +339,7 @@ export default {
     this.$emitter.on('closeDevice', (device) => {
       this.device = null
       this.selection=[]
+      this.isSelecteAll = false
     });
     this.$emitter.on('adbEventData', (data) => {
       console.log("receive adbEventData: ",data)
@@ -346,6 +355,9 @@ export default {
     });
     this.$emitter.on('installApks', (files) => {
       this.installApks(files)
+    });
+    this.$emitter.on('initDevice', () => {
+      this.initDevice()
     });
     this.$emitter.on('eventData', (data) => {
       let new_data={

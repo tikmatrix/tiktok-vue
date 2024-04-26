@@ -15,8 +15,6 @@
         <font-awesome-icon icon="fa-brands fa-tiktok" class="h-4 w-4 text-pink-500" />
         <span class="text-xs block font-normal">{{ $t('clear') }}</span>
         </button>
-        
-       
         <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('enableProxy')"
         @click="$emitter.emit('adbEventData',{args:['shell', 'settings', 'put', 'global', 'http_proxy', `${settings.proxy_url}`]})">
         <font-awesome-icon icon="fa-solid fa-link" class="h-4 w-4 text-blue-500" />
@@ -52,6 +50,12 @@
         <font-awesome-icon icon="fa-solid fa-arrows-rotate" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('init') }}</span>
         </button>
+        <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('matchAccount')"
+        @click="$emitter.emit('scriptEventData',{name:'match',args:['0','50','50','50','','300','']})">
+        <font-awesome-icon icon="fa-solid fa-graduation-cap" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">{{ $t('match') }}</span>
+        </button>
+        
         
     </div>
 </template>

@@ -244,6 +244,8 @@ export const i18n = createI18n({
       installAPK: 'Install APK',
       apk: 'APK',
       enableTCP: 'Enable ADB TCP Connection',
+      match: 'Match',
+      matchAccount: 'Match Account',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -427,6 +429,8 @@ export const i18n = createI18n({
       apk: 'APK',
       init: '初始化',
       enableTCP: '启用 ADB TCP 连接',
+      match: '匹配',
+      matchAccount: '匹配账号',
     }
   }
 })

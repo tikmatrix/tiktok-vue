@@ -41,20 +41,25 @@
         <span class="text-xs block font-normal">{{ $t('register') }}</span>
         </button>
         <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('train')"
-        @click="$emitter.emit('scriptEventData',{name:'train',args:['0','50','50','50','','300','']})">
+        @click="train">
         <font-awesome-icon icon="fa-solid fa-graduation-cap" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('train') }}</span>
         </button>
+        <!-- <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('post')"
+        @click="post">
+        <font-awesome-icon icon="fa-solid fa-paper-plane" class="h-4 w-4 text-blue-500" />
+        <span class="text-xs block font-normal">{{ $t('post') }}</span>
+        </button> -->
         <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('init')"
         @click="$emitter.emit('initDevice')">
         <font-awesome-icon icon="fa-solid fa-arrows-rotate" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('init') }}</span>
         </button>
-        <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('matchAccount')"
+        <!-- <button class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip" :data-tip="$t('matchAccount')"
         @click="$emitter.emit('scriptEventData',{name:'match',args:['0','50','50','50','','300','']})">
         <font-awesome-icon icon="fa-solid fa-graduation-cap" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('match') }}</span>
-        </button>
+        </button> -->
         
         
     </div>
@@ -62,14 +67,85 @@
 <script>
 export default {
   name: 'LeftBars',
+  props: {
+    device: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+  },
   data() {
     return {
       settings: {
         proxy_url: 'http://127.0.0.1:8090'
+      },
+      accounts: [],
+      group: {
+        like_probable: 0,
+        floow_probable: 0,
+        collect_probable: 0,
+        duration: 300,
+        topic: '',
       }
     }
   },
   methods: {
+    train() {
+      let topics=this.group.topic.split("\n");
+      let ramdomTopic=''
+      if(topics.length>0){
+        ramdomTopic=topics[Math.floor(Math.random()*topics.length)];
+      }
+      
+      this.$emitter.emit('scriptEventData',{name:'train',args:[
+        '0',
+        `${this.group.like_probable}`,
+        `${this.group.floow_probable}`,
+        `${this.group.collect_probable}`,
+        '',
+        `${this.group.train_duration}`,
+        ramdomTopic
+      ]})
+    },
+    post() {
+      this.$service.get_and_use_one_material({
+        group_id: this.group.id
+      }).then(res => {
+        let titles=this.group.title.split("\n");
+        let ramdomTitle=''
+        if(titles.length>0){
+          ramdomTitle=Math.floor(Math.random()*titles.length);
+        }
+        let video=res.data.name
+        this.$emitter.emit('scriptEventData',{name:'publish',args:[
+          '0',
+          video,
+          ramdomTitle,
+          ''
+        ]})
+      }).catch(err => {
+        
+      })
+      
+    },
+    
+    get_accounts_by_device() {
+      this.$service.get_accounts_by_device({
+        device: this.device.serial
+      }).then(res => {
+        this.accounts = res.data
+        this.get_group_by_account()
+      })   
+    },
+    get_group_by_account() {
+      if (this.accounts.length === 0) return
+      this.$service.get_group_by_id({
+        id: this.accounts[0].group_id
+      }).then(res => {
+        this.group=res.data
+      })
+    },
     get_settings() {
       this.$service.get_settings().then(res => {
         this.settings = res.data
@@ -78,6 +154,7 @@ export default {
   },
   mounted() {
     this.get_settings()
+    this.get_accounts_by_device()
   },
 }
 </script>

@@ -1,10 +1,6 @@
 <template>
   <div class="flex flex-col items-start p-12 w-full">
-    <div class="toast toast-top toast-center z-50" v-if="showToast">
-      <div class="alert alert-success">
-        <span>Copied!</span>
-      </div>
-    </div>
+    
     <h1 class="text-2xl mb-6">{{ $t('settings') }}</h1>
     <label class="form-control w-full max-w-md">
       <div class="join">
@@ -130,7 +126,6 @@ export default {
         name: '',
         left_days: 0
       },
-      showToast: false
     }
   },
   methods: {
@@ -152,12 +147,7 @@ export default {
 
       try {
           var successful = document.execCommand('copy'); // 执行复制操作
-          var msg = successful ? 'successful' : 'unsuccessful';
-          console.log('Copying text command was ' + msg);
-          this.showToast = true
-          setTimeout(() => {
-            this.showToast = false
-          }, 2000)
+          this.$emitter.emit('showToast',this.$t('copySuccess'))
       } catch (err) {
           console.log('Unable to copy', err);
       }

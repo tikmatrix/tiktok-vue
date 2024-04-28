@@ -26,7 +26,7 @@
         </div>
         
         <div class="flex flex-row flex-1 ">
-          <LeftBars v-if="big" />
+          <LeftBars v-if="big" :device="device"/>
           <div>
             <video ref="display" autoplay poster="../../assets/preview.jpg" :class="'flex-1 object-fill' + (big ? ' w-[320px] h-[580px]':' w-[110px] h-[200px]')"
               @mousedown="mouseDownListener"

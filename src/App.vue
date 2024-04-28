@@ -95,6 +95,7 @@
           </drag-select-option>
         </drag-select>
       </div>
+      <Toast />
       <ManageDashboard v-if="selectedItem === 'dashboard'" />
       <ManageDevices v-if="selectedItem === 'devices'" />
       <ManageGroups v-if="selectedItem === 'groups'" />
@@ -166,6 +167,7 @@ import RunAgentTips from './components/RunAgentTips.vue'
 import Miniremote from './components/device/Miniremote.vue'
 import { inject } from 'vue'
 import * as util from './utils'
+import Toast from './components/Toast.vue'
 
 export default {
   name: 'app',
@@ -194,7 +196,8 @@ export default {
     ManageProxys,
     ManagePostBots,
     ManageEditBots,
-    Miniremote
+    Miniremote,
+    Toast
   },
   data() {
     return {
@@ -210,12 +213,15 @@ export default {
   },
   methods: {
     initDevice() {
+      this.$emitter.emit('showToast',this.$t('initStart'))
       this.adb_command(['uninstall', 'com.github.tikmatrix'])
       this.adb_command(['uninstall', 'com.github.tikmatrix.test'])
       setTimeout(() => {
         this.adb_command(['install', '-r','-t','-g', 'bin/apk/com.github.tikmatrix.apk'])
         this.adb_command(['install', '-r','-t','-g', 'bin/apk/com.github.tikmatrix.test.apk'])
+        this.$emitter.emit('showToast',this.$t('initSuccess'))
       },3000)
+      
     },
     selectAll() {
       this.isSelecteAll = !this.isSelecteAll

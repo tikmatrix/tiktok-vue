@@ -246,6 +246,10 @@ export const i18n = createI18n({
       enableTCP: 'Enable ADB TCP Connection',
       match: 'Match',
       matchAccount: 'Match Account',
+      post: 'Post',
+      copySuccess: 'Copy Success',
+      initStart: 'Init Start,It will take about 10 seconds',
+      initSuccess: 'Init Success',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -431,6 +435,11 @@ export const i18n = createI18n({
       enableTCP: '启用 ADB TCP 连接',
       match: '匹配',
       matchAccount: '匹配账号',
+      post: '发布',
+      copySuccess: '复制成功',
+      copy: '复制',
+      initStart: '初始化开始,大概需要10秒钟',
+      initSuccess: '初始化成功',
     }
   }
 })

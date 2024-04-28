@@ -712,7 +712,8 @@ window.vm = new Vue({
     dumpHierarchy: function () { // v2
       this.dumping = true
       return $.ajax({
-        url: 'http://' + this.serial + '/hierarchy',
+        url: 'http://127.0.0.1:18090/api/device/hierarchy?serial=' + this.serial,
+        // url: 'http://' + this.serial + '/hierarchy',
         type: 'GET',
         cache: false
       })
@@ -720,6 +721,7 @@ window.vm = new Vue({
           this.showAjaxError(ret);
         })
         .then((xml) => {
+          console.log(xml)
           localStorage.setItem("xmlHierarchy", xml);
           json = this.xml2json(xml);
           console.log(json)
@@ -822,8 +824,8 @@ window.vm = new Vue({
 
         androidHierarchyToJson = (pageXml) => {
           // console.log(pageXml)
-          const dom = new DOMParser().parseFromString(pageXml, 'text/xml');
-          const root = dom.documentElement;
+          // const dom = new DOMParser().parseFromString(pageXml, 'text/xml');
+          const root = pageXml.documentElement;
 
           const travel = (node) => {
             if (!node.attributes) {
@@ -901,7 +903,8 @@ window.vm = new Vue({
         url = null
         dtd.reject();
       }
-      var url = 'http://' + this.serial + '/screenshot/0';
+      // var url = 'http://' + this.serial + '/screenshot/0';
+      var url = 'http://127.0.0.1:18090/api/device/screenshot?serial=' + this.serial;
       img.src = url;
       return dtd;
     },

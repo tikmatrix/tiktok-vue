@@ -44,6 +44,18 @@
             {{ selections[item.id].length }}
             {{ $t('units') }}
           </span>
+          <div class="tooltip" :data-tip="$t('moveToGroup')">
+            <details :ref="'moveToGroupMenu_' + item.id" class="dropdown dropdown-top">
+              <summary class="btn btn-xs bg-transparent hover:bg-transparent border-0">
+                <font-awesome-icon icon="fa-solid fa-share" class="text-blue-500"></font-awesome-icon>
+              </summary>
+              <ul class="dropdown-content z-[10] menu menu-sm p-2 shadow bg-base-200 rounded-box w-52">
+                <li v-for="(subitem, index) in groups" :key="subitem.id"><a @click="moveToGroup(item.id, subitem.id)">{{
+                  subitem.name }}</a>
+                </li>
+              </ul>
+            </details>
+          </div>
         </div>
 
         <div class="flex flex-row form-control items-center">
@@ -55,6 +67,18 @@
             {{ selections[0].length }}
             {{ $t('units') }}
           </span>
+          <div class="tooltip" :data-tip="$t('moveToGroup')">
+            <details ref="moveToGroupMenu" class="dropdown dropdown-top">
+              <summary class="btn btn-xs bg-transparent hover:bg-transparent border-0">
+                <font-awesome-icon icon="fa-solid fa-share" class="text-blue-500"></font-awesome-icon>
+              </summary>
+              <ul class="dropdown-content z-[10] menu menu-sm p-2 shadow bg-base-200 rounded-box w-52">
+                <li v-for="(item, index) in groups" :key="item.id"><a @click="moveToGroup(0, item.id)">{{
+                  item.name }}</a>
+                </li>
+              </ul>
+            </details>
+          </div>
         </div>
         <drag-select v-model="selection">
           <drag-select-option v-for="(item, index) in devices" :value="item.serial" :key="item.serial">
@@ -123,18 +147,22 @@ export default {
 
   emits: ['menu_selected'],
   methods: {
-
+    moveToGroup(src_id, dst_id) {
+      this.$service.move_to_group({ src_id: src_id, dst_id: dst_id }).then(res => {
+        this.refreshSelections()
+        this.$refs.moveToGroupMenu.removeAttribute('open')
+        for (let i = 0; i < this.groups.length; i++) {
+          // console.log(this.$refs['moveToGroupMenu_' + this.groups[i].id])
+          this.$refs['moveToGroupMenu_' + this.groups[i].id][0].removeAttribute('open')
+        }
+      })
+    },
     get_groups() {
       this.$service
         .get_groups()
         .then(res => {
           this.groups = res.data
-          this.groupDevices[0] = this.devices;
-          for (let i = 0; i < this.groups.length; i++) {
-            this.selections[this.groups[i].id] = []
-            this.selectedAlls[this.groups[i].id] = false
-            this.groupDevices[this.groups[i].id] = this.devices.filter(device => device.group_id === this.groups[i].id)
-          }
+          this.refreshSelections()
         })
     },
     uploadFiles(files) {
@@ -223,6 +251,12 @@ export default {
       this.refreshSelections()
     },
     refreshSelections() {
+      this.groupDevices[0] = this.devices;
+      for (let i = 0; i < this.groups.length; i++) {
+        this.selections[this.groups[i].id] = []
+        this.selectedAlls[this.groups[i].id] = false
+        this.groupDevices[this.groups[i].id] = this.devices.filter(device => device.group_id === this.groups[i].id)
+      }
       this.selections[0] = this.devices.filter(device => this.selection.includes(device.serial))
       this.selectedAlls[0] = this.selections[0].length > 0
       for (let i = 0; i < this.groups.length; i++) {

@@ -14,7 +14,6 @@
                 <th>{{ $t('username') }}</th>
                 <th>{{ $t('fans') }}</th>
                 <th>{{ $t('device') }}</th>
-                <th>{{ $t('group') }}</th>
                 <th>{{ $t('actions') }}</th>
               </tr>
             </thead>
@@ -23,19 +22,23 @@
                 <td>{{ account.id }}</td>
                 <td>{{ account.email }}</td>
                 <td>
-                  <a class="link link-primary" :href="`https://www.tiktok.com/${account.username}`" target="_blank">{{ account.username }}</a>
+                  <a class="link link-primary" :href="`https://www.tiktok.com/${account.username}`" target="_blank">{{
+                    account.username }}</a>
                 </td>
                 <td>{{ account.fans }}</td>
 
                 <td>
-                  <a class="cursor-pointer underline text-blue-500" @click="show_device(account.device_index,account.device)">{{ account.device_index }} - {{ account.device }}</a>
+                  <a class="cursor-pointer underline text-blue-500"
+                    @click="show_device(account.device_index, account.device)">{{ account.device_index }} - {{
+                      account.device }}</a>
                 </td>
 
-                <td>{{ account.group_name }}</td>
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="editAccount(account)">{{ $t('edit') }}</button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deleteAccount(account)">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="editAccount(account)">{{ $t('edit') }}</button>
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      @click="deleteAccount(account)">
                       {{ $t('delete') }}
                     </button>
                   </div>
@@ -54,7 +57,7 @@
       <Add @add="addAccount" />
     </Modal>
 
- 
+
   </div>
 </template>
 <script>
@@ -80,15 +83,14 @@ export default {
   data() {
     return {
       accounts: [],
-      groups: [],
       currentAccount: null,
       showAddAccount: false,
     }
   },
   methods: {
-    show_device(index,serial) {
-      let mydevice=this.devices.find(d => d.serial === serial)
-      mydevice.index=index-1
+    show_device(index, serial) {
+      let mydevice = this.devices.find(d => d.serial === serial)
+      mydevice.index = index - 1
       this.$emitter.emit('openDevice', mydevice)
     },
 
@@ -102,7 +104,6 @@ export default {
             let device_index = this.devices.findIndex(device => device.serial === account.device)
             account.device_index = device_index + 1
           })
-          this.get_groups()
         })
         .catch(err => {
           console.log(err)
@@ -118,7 +119,6 @@ export default {
           pwd: account.pwd,
           fans: account.fans,
           device: account.device,
-          group_id: account.group_id,
           username: account.username
         })
         .then(() => {
@@ -140,7 +140,6 @@ export default {
           pwd: account.pwd,
           fans: account.fans,
           device: account.device,
-          group_id: account.group_id,
           username: account.username
         })
         .then(() => {
@@ -162,20 +161,7 @@ export default {
           console.log(err)
         })
     },
-    get_groups() {
-      this.$service
-        .get_groups()
-        .then(res => {
-          this.groups = res.data
-          this.accounts.forEach(account => {
-            let group = this.groups.find(group => group.id === account.group_id)
-            account.group_name = group ? group.name : 'Group not found'
-          })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+
   },
   mounted() {
     this.get_accounts()

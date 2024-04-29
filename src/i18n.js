@@ -255,6 +255,7 @@ export const i18n = createI18n({
       addGroup: 'Add Group',
       general: 'General',
       toolbox: 'Toolbox',
+      moveToGroup: 'Move To Group',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -452,6 +453,7 @@ export const i18n = createI18n({
       toolbox: '工具箱',
       clearAll: '清空所有',
       allStatus: '全部状态',
+      moveToGroup: '移动到分组',
     }
   }
 })

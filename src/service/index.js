@@ -102,18 +102,18 @@ export function get_publish_jobs() {
     url: api.publish_job
   })
 }
-export function add_account({ email, pwd, fans, device, group_id, username }) {
+export function add_account(account) {
   return request({
     method: 'post',
     url: api.account,
-    data: { email, pwd, fans, device, group_id, username }
+    data: account
   })
 }
-export function update_account({ id, email, pwd, fans, device, group_id, username }) {
+export function update_account(account) {
   return request({
     method: 'put',
     url: api.account,
-    data: { id, email, pwd, fans, device, group_id, username }
+    data: account
   })
 }
 export function delete_account({ id }) {
@@ -585,5 +585,12 @@ export function get_group_by_id({ id }) {
     method: 'get',
     params: { id },
     url: api.get_group_by_id
+  })
+}
+export function move_to_group({ src_id, dst_id }) {
+  return request({
+    method: 'get',
+    params: { src_id, dst_id },
+    url: api.move_to_group
   })
 }

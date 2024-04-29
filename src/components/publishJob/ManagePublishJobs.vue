@@ -1,10 +1,11 @@
 <template>
   <div class="w-full">
-    <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account', 'device_index']" @refresh="get_publish_jobs">
+    <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account', 'device_index']"
+      @refresh="get_publish_jobs">
       <template v-slot:buttons>
         <MyButton @click="retry_all_failed" label="retryAllFaied" />
         <MyButton onclick="confirm_modal.showModal()" label="clearAll" />
-        <select v-model="searchStatus" class="select select-bordered max-w-xs ml-2">
+        <select v-model="searchStatus" class="select select-sm select-bordered max-w-xs ml-2">
           <option value="">{{ $t('allStatus') }}</option>
           <option value="0">{{ $t('waiting') }}</option>
           <option value="1">{{ $t('execing') }}</option>
@@ -41,25 +42,30 @@
                 <td>{{ publish_job.remark }}</td>
                 <td>
                   <template v-if="publish_job.material.endsWith('.mp4') || publish_job.material.endsWith('.webm')">
-                    <video :src="`${$config.apiUrl}/${publish_job.material}`" class="w-[100px] h-[100px] max-w-none"></video>
+                    <video :src="`${$config.apiUrl}/${publish_job.material}`"
+                      class="w-[100px] h-[100px] max-w-none"></video>
                   </template>
                   <template v-else>
                     <img :src="`${$config.apiUrl}/${publish_job.material}`" class="w-[100px] h-[100px] max-w-none" />
                   </template>
                 </td>
                 <td>
-                  <a class="link link-primary" :href="`https://www.tiktok.com/${publish_job.username}`" target="_blank">{{ publish_job.username }}</a>
+                  <a class="link link-primary" :href="`https://www.tiktok.com/${publish_job.username}`"
+                    target="_blank">{{
+                      publish_job.username }}</a>
                 </td>
                 <td>
-                  <a class="cursor-pointer underline text-blue-500" @click="show_device(publish_job.device_index,publish_job.device)"
-                    >{{ publish_job.device_index }} - {{ publish_job.device }}</a
-                  >
+                  <a class="cursor-pointer underline text-blue-500"
+                    @click="show_device(publish_job.device_index, publish_job.device)">{{
+                      publish_job.device_index }} - {{ publish_job.device }}</a>
                 </td>
                 <td>{{ publish_job.group_name || 'N/A' }}</td>
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="retry(publish_job)">{{ $t('retry') }}</button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deleteJob(publish_job)">
+                    <button class="btn-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="retry(publish_job)">{{ $t('retry') }}</button>
+                    <button class="btn-sm bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      @click="deleteJob(publish_job)">
                       {{ $t('delete') }}
                     </button>
                   </div>
@@ -70,7 +76,7 @@
         </div>
       </template>
     </Pagination>
-    
+
     <dialog id="confirm_modal" class="modal">
       <div class="modal-box">
         <form method="dialog">
@@ -130,10 +136,10 @@ export default {
           console.log(err)
         })
     },
-   
-    show_device(index,serial) {
-      let mydevice=this.devices.find(d => d.serial === serial)
-      mydevice.index=index-1
+
+    show_device(index, serial) {
+      let mydevice = this.devices.find(d => d.serial === serial)
+      mydevice.index = index - 1
       this.$emitter.emit('openDevice', mydevice)
     },
     get_publish_jobs() {

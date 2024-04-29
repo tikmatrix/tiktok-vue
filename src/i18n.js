@@ -250,6 +250,11 @@ export const i18n = createI18n({
       copySuccess: 'Copy Success',
       initStart: 'Init Start,It will take about 10 seconds',
       initSuccess: 'Init Success',
+      units: 'Units',
+      allDevices: 'All Devices',
+      addGroup: 'Add Group',
+      general: 'General',
+      toolbox: 'Toolbox',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -440,6 +445,13 @@ export const i18n = createI18n({
       copy: '复制',
       initStart: '初始化开始,大概需要10秒钟',
       initSuccess: '初始化成功',
+      units: '台',
+      allDevices: '全部设备',
+      addGroup: '新增分组',
+      general: '常用设置',
+      toolbox: '工具箱',
+      clearAll: '清空所有',
+      allStatus: '全部状态',
     }
   }
 })

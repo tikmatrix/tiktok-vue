@@ -1,8 +1,9 @@
 import api from '../api'
 let devices = []
-for (let i = 1; i <= 200; i++) {
+for (let i = 1; i <= 88; i++) {
   devices.push({
     id: i,
+    group_id: Math.floor(Math.random() * 3) + 1,
     serial: 'divice' + i,
     forward_port: '10800',
     ip: '192.168.0.' + i,
@@ -10,7 +11,7 @@ for (let i = 1; i <= 200; i++) {
   })
 }
 let groups = []
-for (let i = 1; i <= 20; i++) {
+for (let i = 1; i <= 3; i++) {
   groups.push({
     id: i,
     name: 'Group' + i,

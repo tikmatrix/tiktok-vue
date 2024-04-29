@@ -1,10 +1,11 @@
 <template>
   <div class="w-full">
-    <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account', 'device_index']" @refresh="get_train_jobs">
+    <Pagination :items="filter_jobs" :searchKeys="['device', 'id', 'account', 'device_index']"
+      @refresh="get_train_jobs">
       <template v-slot:buttons>
         <MyButton @click="retry_all_failed" label="retryAllFaied" />
         <MyButton onclick="confirm_modal.showModal()" label="clearAll" />
-        <select v-model="searchStatus" class="select select-bordered max-w-xs ml-2">
+        <select v-model="searchStatus" class="select select-sm select-bordered max-w-xs ml-2">
           <option value="">{{ $t('allStatus') }}</option>
           <option value="0">{{ $t('waiting') }}</option>
           <option value="1">{{ $t('execing') }}</option>
@@ -39,18 +40,21 @@
                 </td>
                 <td>{{ train_job.remark }}</td>
                 <td>
-                  <a class="link link-primary" :href="`https://www.tiktok.com/${train_job.username}`" target="_blank">{{ train_job.username }}</a>
+                  <a class="link link-primary" :href="`https://www.tiktok.com/${train_job.username}`" target="_blank">{{
+                    train_job.username }}</a>
                 </td>
                 <td>
-                  <a class="cursor-pointer underline text-blue-500" @click="show_device(train_job.device_index,train_job.device)"
-                    >{{ train_job.device_index }} - {{ train_job.device }}</a
-                  >
+                  <a class="cursor-pointer underline text-blue-500"
+                    @click="show_device(train_job.device_index, train_job.device)">{{ train_job.device_index }} - {{
+                      train_job.device }}</a>
                 </td>
                 <td>{{ train_job.group_name || 'N/A' }}</td>
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="retry(train_job)">{{ $t('retry') }}</button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deleteJob(train_job)">{{ $t('delete') }}</button>
+                    <button class="btn-sm bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="retry(train_job)">{{ $t('retry') }}</button>
+                    <button class="btn-sm bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      @click="deleteJob(train_job)">{{ $t('delete') }}</button>
                   </div>
                 </td>
               </tr>
@@ -59,7 +63,7 @@
         </div>
       </template>
     </Pagination>
-    
+
     <dialog id="confirm_modal" class="modal">
       <div class="modal-box">
         <form method="dialog">
@@ -120,10 +124,10 @@ export default {
           console.log(err)
         })
     },
-   
-    show_device(index,serial) {
-      let mydevice=this.devices.find(d => d.serial === serial)
-      mydevice.index=index-1
+
+    show_device(index, serial) {
+      let mydevice = this.devices.find(d => d.serial === serial)
+      mydevice.index = index - 1
       this.$emitter.emit('openDevice', mydevice)
     },
     get_train_jobs() {

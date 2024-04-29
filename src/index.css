@@ -14,12 +14,12 @@
   width: 100%;
   border: 1px solid #ccc;
   padding: 5px;
-  margin: 10px;
-  border-radius: 5px;
+  margin: 2px;
+  border-radius: 1px;
 }
 
 .drag-select__area {
-  background: rgba(66, 153, 225, .5)
+  background: #fff;
 }
 
 .drag-select__area:after {
@@ -36,14 +36,15 @@
 .drag-select-option {
   width: auto;
   height: 20px;
-  margin: 2px;
-  color: #fff;
-  background: #ccc;
-  border-radius: 5px;
+  margin: 1px;
+  color: #969696;
+  background: #f1f0f0;
+  border-radius: 1px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 4px;
+  font-size: x-small;
 }
 
 .drag-select-option--selected {

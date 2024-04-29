@@ -1,23 +1,26 @@
 <template>
   <div class="bg-base-100">
     <div class="w-full flex items-center p-4">
-      <span class="font-bold p-2">{{ $t('total') }}: {{ filteredItems.length }}</span>
+      <span class="font-bold p-2 text-sm">{{ $t('total') }}: {{ filteredItems.length }}</span>
       <div class="join">
-        <button class="join-item btn" @click="prevPage" :disabled="currentPage === 1">{{ $t('previous') }}</button>
-        <button class="join-item btn btn-disabled">{{ currentPage }} / {{ pageCount }}</button>
-        <button class="join-item btn" @click="nextPage" :disabled="currentPage === pageCount">{{ $t('next') }}</button>
+        <button class="join-item btn btn-sm" @click="prevPage" :disabled="currentPage === 1">{{ $t('previous')
+          }}</button>
+        <button class="join-item btn btn-disabled btn-sm">{{ currentPage }} / {{ pageCount }}</button>
+        <button class="join-item btn btn-sm" @click="nextPage" :disabled="currentPage === pageCount">{{ $t('next')
+          }}</button>
       </div>
-      <select v-model="pageSize" class="select select-bordered max-w-xs ml-2">
+      <select v-model="pageSize" class="select select-bordered max-w-xs ml-2 select-sm">
         <option :value="filteredItems.length">{{ $t('showAll') }}</option>
         <option v-for="size in [5, 10, 20, 50, 100]" :key="size" :value="size">{{ size }}</option>
       </select>
-      
+
       <div class="relative ml-2">
         <font-awesome-icon :icon="['fas', 'search']" class="absolute left-3 top-1/2 transform -translate-y-1/2" />
-        <input type="search" v-model="searchTerm" :placeholder="$t('enterTips')" class="input input-bordered w-full max-w-xs pl-8" />
+        <input type="search" v-model="searchTerm" :placeholder="$t('enterTips')"
+          class="input input-bordered w-full max-w-xs pl-8 input-sm" />
       </div>
       <template v-if="uniqueGroupNames.length > 0">
-        <select v-model="searchGroup" class="select select-bordered max-w-xs ml-2">
+        <select v-model="searchGroup" class="select select-bordered max-w-xs ml-2 select-sm">
           <option value="">{{ $t('allGroups') }}</option>
           <option v-for="item in uniqueGroupNames" :key="item.group_name" :value="item.group_name">
             {{ item.group_name }}
@@ -25,11 +28,11 @@
         </select>
       </template>
       <MyButton icon="fa fa-refresh" @click="$emit('refresh')" label="refresh" v-if="showRefBtn" />
-    <slot name="buttons"></slot>
+      <slot name="buttons"></slot>
     </div>
-    
+
     <slot :items="paginatedItems"></slot>
-    
+
   </div>
 </template>
 
@@ -57,7 +60,7 @@ export default {
   data() {
     return {
       currentPage: 1,
-      pageSize: 20,
+      pageSize: 10,
       searchTerm: '',
       searchGroup: '',
       showDemoTip: false

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-start p-12 w-full">
+  <div class="flex flex-col items-start w-full">
     <h1 class="text-2xl mb-6">{{ $t('dashboard') }}</h1>
     <!-- <div tabindex="0" class="collapse collapse-arrow border border-base-300 bg-base-200">
       <div class="collapse-title text-xl font-medium">
@@ -50,14 +50,14 @@
         <CountUp class="stat-value" :end="publish_job_count" />
         <div class="stat-desc">{{ $t('successRate') }} {{ publish_job_sucess_rate * 100 }}%</div>
       </div>
-      <div class="stat">
+      <!-- <div class="stat">
         <div class="stat-figure text-secondary">
           <font-awesome-icon :icon="['fas', 'robot']" />
         </div>
         <div class="stat-title">{{ $t('commentJobCount') }}</div>
         <CountUp class="stat-value" :end="comment_job_count" />
         <div class="stat-desc">{{ $t('successRate') }} {{ comment_job_sucess_rate * 100 }}%</div>
-      </div>
+      </div> -->
     </div>
     <div class="divider">{{ $t('overview') }}</div>
     <div class="stats shadow">
@@ -77,14 +77,14 @@
         <CountUp class="stat-value" :end="publish_job_queue" />
         <div class="stat-desc">{{ running_publish_job_count }} {{ $t('isRunning') }}</div>
       </div>
-      <div class="stat">
+      <!-- <div class="stat">
         <div class="stat-figure text-primary">
           <font-awesome-icon :icon="['fas', 'cogs']" />
         </div>
         <div class="stat-title">{{ $t('commentJobQueue') }}</div>
         <CountUp class="stat-value" :end="comment_job_queue" />
         <div class="stat-desc">{{ running_comment_job_count }} {{ $t('isRunning') }}</div>
-      </div>
+      </div> -->
     </div>
     <div class="divider">{{ $t('matrixGroup') }}</div>
     <div class="stats bg-primary text-primary-content carousel carousel-center rounded-box max-w-full">
@@ -93,7 +93,8 @@
           <div class="stat-value">{{ group.name }}</div>
           <div class="stat-title text-primary-content">{{ $t('accountCount') }}: {{ group.account_count }}</div>
           <div class="stat-actions">
-            <button class="btn btn-sm btn-success" @click="addMaterial(group)">{{ $t('addMaterial') }}:{{ group.unused_material_count }}</button>
+            <button class="btn btn-sm btn-success" @click="addMaterial(group)">{{ $t('addMaterial') }}:{{
+              group.unused_material_count }}</button>
           </div>
         </div>
         <div class="divider lg:divider-horizontal"></div>

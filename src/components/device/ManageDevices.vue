@@ -18,11 +18,7 @@
           </div>
         </div>
 
-        <div class="p-2 bg-base-300 rounded-lg shadow-md ml-2" @click="expand">
-          <label class="cursor-pointer label">
-            <font-awesome-icon icon="fa-solid fa-expand" />
-          </label>
-        </div>
+
         <MyButton class="btn btn-success ml-2" @click="showHiddenDevices" label="showHiddenDevices" />
       </template>
       <template v-slot:default="slotProps">
@@ -91,29 +87,7 @@ export default {
 
   methods: {
 
-    expand() {
-      // fullscreen: fixed top-0 left-0 w-screen h-screen z-10
-      if (this.fullscreen) {
-        this.$refs.device_panel.$el.classList.remove('w-screen')
-        this.$refs.device_panel.$el.classList.remove('h-screen')
-        this.$refs.device_panel.$el.classList.remove('fixed')
-        this.$refs.device_panel.$el.classList.remove('top-0')
-        this.$refs.device_panel.$el.classList.remove('left-0')
-        this.$refs.device_panel.$el.classList.remove('z-10')
-        this.$refs.device_panel.$el.classList.remove('overflow-y-auto')
-        this.fullscreen = false
-      } else {
-        this.$refs.device_panel.$el.classList.add('w-screen')
-        this.$refs.device_panel.$el.classList.add('h-screen')
-        this.$refs.device_panel.$el.classList.add('fixed')
-        this.$refs.device_panel.$el.classList.add('top-0')
-        this.$refs.device_panel.$el.classList.add('left-0')
-        this.$refs.device_panel.$el.classList.add('z-10')
-        this.$refs.device_panel.$el.classList.add('overflow-y-auto')
-        this.fullscreen = true
-      }
 
-    },
     get_groups() {
       this.$service
         .get_groups()

@@ -6,7 +6,7 @@
       </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <th>{{ $t('id') }}</th>
@@ -27,7 +27,8 @@
                   </div>
                 </td>
                 <td>
-                  <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="delete_avatar(avatar)">{{ $t('delete') }}</button>
+                  <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    @click="delete_avatar(avatar)">{{ $t('delete') }}</button>
                 </td>
               </tr>
             </tbody>

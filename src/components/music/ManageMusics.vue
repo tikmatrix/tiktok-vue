@@ -6,7 +6,7 @@
       </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <th>{{ $t('id') }}</th>
@@ -22,8 +22,10 @@
                 <td>{{ music.release_name }}</td>
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="editmusic(music)">{{ $t('edit') }}</button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deletemusic(music)">{{ $t('delete') }}</button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="editmusic(music)">{{ $t('edit') }}</button>
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      @click="deletemusic(music)">{{ $t('delete') }}</button>
                   </div>
                 </td>
               </tr>

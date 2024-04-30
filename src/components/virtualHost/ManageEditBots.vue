@@ -9,7 +9,7 @@
       </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <th>{{ $t('id') }}</th>
@@ -32,18 +32,14 @@
                       <div class="stat-title text-white">{{ $t('background') }}</div>
                       <CountUp class="stat-value" :end="item.status?.background_video_count" />
                       <div class="stat-actions">
-                        <button
-                          class="btn btn-sm btn-success text-white"
+                        <button class="btn btn-sm btn-success text-white"
                           :disabled="item.status?.status == 1 || item.status?.uploading"
-                          @click="upload_background(item)"
-                        >
+                          @click="upload_background(item)">
                           {{ $t('upload') }}
                         </button>
-                        <button
-                          class="btn btn-sm btn-error text-white ml-1"
+                        <button class="btn btn-sm btn-error text-white ml-1"
                           :disabled="item.status?.status == 1 || item.status?.uploading"
-                          @click="clear_background(item)"
-                        >
+                          @click="clear_background(item)">
                           {{ $t('clear') }}
                         </button>
                       </div>
@@ -54,18 +50,12 @@
 
                       <CountUp class="stat-value" :end="item.status?.overlay_video_count" />
                       <div class="stat-actions">
-                        <button
-                          class="btn btn-sm btn-success text-white"
-                          :disabled="item.status?.status == 1 || item.status?.uploading"
-                          @click="upload_overlay(item)"
-                        >
+                        <button class="btn btn-sm btn-success text-white"
+                          :disabled="item.status?.status == 1 || item.status?.uploading" @click="upload_overlay(item)">
                           {{ $t('upload') }}
                         </button>
-                        <button
-                          class="btn btn-sm btn-error text-white ml-1"
-                          :disabled="item.status?.status == 1 || item.status?.uploading"
-                          @click="clear_overlay(item)"
-                        >
+                        <button class="btn btn-sm btn-error text-white ml-1"
+                          :disabled="item.status?.status == 1 || item.status?.uploading" @click="clear_overlay(item)">
                           {{ $t('clear') }}
                         </button>
                       </div>
@@ -75,11 +65,8 @@
 
                       <CountUp class="stat-value" :end="item.status?.finished_video_count" />
                       <div class="stat-actions">
-                        <button
-                          class="btn btn-sm btn-error text-white"
-                          :disabled="item.status?.status == 1 || item.status?.uploading"
-                          @click="clear_finished(item)"
-                        >
+                        <button class="btn btn-sm btn-error text-white"
+                          :disabled="item.status?.status == 1 || item.status?.uploading" @click="clear_finished(item)">
                           {{ $t('clear') }}
                         </button>
                       </div>
@@ -93,15 +80,12 @@
                         <span class="loading loading-spinner text-warning" v-if="item.status?.loading"></span>
                       </div>
                       <div class="stat-actions">
-                        <button
-                          @click="start_edit_bot(item)"
-                          class="btn btn-sm btn-primary text-white"
-                          :disabled="item.status?.loading"
-                          v-if="item.status?.status == 0"
-                        >
+                        <button @click="start_edit_bot(item)" class="btn btn-sm btn-primary text-white"
+                          :disabled="item.status?.loading" v-if="item.status?.status == 0">
                           {{ $t('start_bot') }}
                         </button>
-                        <button @click="stop_edit_bot(item)" class="btn btn-sm btn-error text-white" :disabled="item.status?.loading" v-else>
+                        <button @click="stop_edit_bot(item)" class="btn btn-sm btn-error text-white"
+                          :disabled="item.status?.loading" v-else>
                           {{ $t('stop_bot') }}
                         </button>
                       </div>
@@ -112,13 +96,10 @@
                 <td>
                   <div class="space-x-4">
                     <MyButton label="init" icon="fa fa-refresh" @click="init_virtualHost(item)" />
-                    <MyButton class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" label="edit" icon="fa fa-edit" @click="edit(item)" />
-                    <MyButton
-                      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      label="delete"
-                      icon="fa fa-trash"
-                      @click="delete_virtualHost(item)"
-                    />
+                    <MyButton class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" label="edit"
+                      icon="fa fa-edit" @click="edit(item)" />
+                    <MyButton class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" label="delete"
+                      icon="fa fa-trash" @click="delete_virtualHost(item)" />
                   </div>
                 </td>
               </tr>
@@ -128,8 +109,10 @@
       </template>
     </Pagination>
   </div>
-  <input ref="upload_input_overlay" type="file" accept="video/mp4,video/x-m4v,video/*" v-on:change="on_upload_overlay" multiple hidden />
-  <input ref="upload_input_background" type="file" accept="video/mp4,video/x-m4v,video/*" v-on:change="on_upload_background" multiple hidden />
+  <input ref="upload_input_overlay" type="file" accept="video/mp4,video/x-m4v,video/*" v-on:change="on_upload_overlay"
+    multiple hidden />
+  <input ref="upload_input_background" type="file" accept="video/mp4,video/x-m4v,video/*"
+    v-on:change="on_upload_background" multiple hidden />
   <!-- upload progress dialog -->
   <dialog ref="upload_dialog" class="modal">
     <div class="modal-box">
@@ -138,7 +121,8 @@
       </form>
       <h3 class="font-bold text-lg">Upload Progress</h3>
       <div class="py-4">
-        <progress class="progress progress-success w-full" :value="upload_progress" :max="max_upload_progress"></progress>
+        <progress class="progress progress-success w-full" :value="upload_progress"
+          :max="max_upload_progress"></progress>
       </div>
     </div>
   </dialog>
@@ -153,19 +137,26 @@
       <div class="flex flex-col items-center gap-2 mb-2 w-full">
         <div class="col-span-2 flex items-center gap-4">
           <div class="flex items-center">
-            <input type="radio" id="postBot" value="0" v-model="currentVirtualHost.bot_type" class="form-radio text-blue-500 h-4 w-4" />
+            <input type="radio" id="postBot" value="0" v-model="currentVirtualHost.bot_type"
+              class="form-radio text-blue-500 h-4 w-4" />
             <label for="postBot" class="ml-2">Post Bot</label>
           </div>
           <div class="flex items-center">
-            <input type="radio" id="editBot" value="1" v-model="currentVirtualHost.bot_type" class="form-radio text-blue-500 h-4 w-4" />
+            <input type="radio" id="editBot" value="1" v-model="currentVirtualHost.bot_type"
+              class="form-radio text-blue-500 h-4 w-4" />
             <label for="editBot" class="ml-2">Edit Bot</label>
           </div>
         </div>
-        <input class="input input-bordered w-full max-w-xs" placeholder="name" autocomplete="off" v-model="currentVirtualHost.name" />
-        <input class="input input-bordered w-full max-w-xs" placeholder="host" autocomplete="off" v-model="currentVirtualHost.host" />
-        <input class="input input-bordered w-full max-w-xs" placeholder="port" autocomplete="off" v-model="currentVirtualHost.port" />
-        <input class="input input-bordered w-full max-w-xs" placeholder="username" autocomplete="off" v-model="currentVirtualHost.username" />
-        <input class="input input-bordered w-full max-w-xs" placeholder="password" autocomplete="off" v-model="currentVirtualHost.password" />
+        <input class="input input-bordered w-full max-w-xs" placeholder="name" autocomplete="off"
+          v-model="currentVirtualHost.name" />
+        <input class="input input-bordered w-full max-w-xs" placeholder="host" autocomplete="off"
+          v-model="currentVirtualHost.host" />
+        <input class="input input-bordered w-full max-w-xs" placeholder="port" autocomplete="off"
+          v-model="currentVirtualHost.port" />
+        <input class="input input-bordered w-full max-w-xs" placeholder="username" autocomplete="off"
+          v-model="currentVirtualHost.username" />
+        <input class="input input-bordered w-full max-w-xs" placeholder="password" autocomplete="off"
+          v-model="currentVirtualHost.password" />
       </div>
       <div class="modal-action">
         <form method="dialog">

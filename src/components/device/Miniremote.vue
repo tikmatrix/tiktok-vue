@@ -5,17 +5,17 @@
         <div class="flex flex-row drag  bg-base-300">
           <div class="flex flex-1  justify-center items-center text-center pr-1 pl-1">
             <div class="flex-1 justify-center items-center text-center">
-              <span class="text-xs font-bold">{{ index + 1 }}</span>
+              <span class="text-xs font-bold bg-blue-300 pl-2 pr-2 rounded-md">{{ index + 1 }}</span>
               <span :class="'text-xs' + (task_status == 'RUNNING' ? ' text-green-500' : ' text-red-500')" v-if="big"> -
                 {{
                   $t(task_status) }}</span>
-              <button class="btn bg-transparent hover:bg-transparent hover:text-red-500 text-red-700 border-0"
+              <button class="btn btn-sm  bg-base-200 hover:bg-base-100 hover:text-red-500 text-red-700 border-0"
                 v-if="big && task_status == 'RUNNING'" @click="stop_task">
                 <font-awesome-icon icon="fa fa-stop" class="h-4 w-4" />{{ $t('stop') }}</button>
             </div>
             <div class="justify-center items-center text-center">
               <span class="text-xs mr-2 font-bold" v-if="big">{{ device.serial }} </span>
-              <span class="text-xs">FPS: {{ fps.toFixed(0) }}</span>
+              <span class="text-xs font-sans">FPS: {{ fps.toFixed(0) }}</span>
             </div>
           </div>
           <button
@@ -34,9 +34,9 @@
           <LeftBars v-if="big" :device="device" />
           <div>
             <div :class="'relative flex-1 object-fill' + (big ? ' w-[320px] h-[580px]' : ' w-[110px] h-[200px]')">
-              <video class="absolute top-0 left-0 w-full h-full" ref="display" autoplay preload="auto" muted
-                @mousedown="mouseDownListener" @mouseup="mouseUpListener" @mouseleave="mouseLeaveListener"
-                @mousemove="mouseMoveListener"></video>
+              <video class="absolute top-0 left-0 w-full h-full" ref="display" autoplay
+                poster="../../assets/preview.jpg" muted @mousedown="mouseDownListener" @mouseup="mouseUpListener"
+                @mouseleave="mouseLeaveListener" @mousemove="mouseMoveListener"></video>
               <div class="absolute top-0 left-0 w-full h-full bg-base-200 flex justify-center items-center"
                 v-if="loading">
                 <font-awesome-icon icon="fa-solid fa-hourglass-end" class="h-6 w-6 text-blue-500 rotate" />
@@ -54,10 +54,10 @@
 
       </div>
     </div>
-    <div v-if="!big && !loading && !operating"
+    <!-- <div v-if="!big && !loading && !operating"
       class="indicator-item indicator-center indicator-middle badge badge-lg badge-neutral bg-opacity-50 font-bold">
       <span>{{ index + 1 }}</span>
-    </div>
+    </div> -->
 
   </div>
 

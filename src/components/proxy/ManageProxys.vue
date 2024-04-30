@@ -6,7 +6,7 @@
       </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               ``
               <tr>
@@ -31,7 +31,8 @@
                 <td>{{ item.delay }}</td>
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="test_speed(item)">{{ $t('test') }}</button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="test_speed(item)">{{ $t('test') }}</button>
                   </div>
                 </td>
               </tr>
@@ -49,7 +50,8 @@
         <h3 class="font-bold text-lg">Add new Proxies!</h3>
 
         <div class="flex flex-row items-center gap-2 mb-2 w-full">
-          <textarea class="textarea textarea-success w-full max-w-xs" placeholder="paste proxies here..." autocomplete="off" v-model="new_urls"> </textarea>
+          <textarea class="textarea textarea-success w-full max-w-xs" placeholder="paste proxies here..."
+            autocomplete="off" v-model="new_urls"> </textarea>
         </div>
         <div class="modal-action">
           <form method="dialog">

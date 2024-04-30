@@ -4,7 +4,7 @@
       <template v-slot:buttons> </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <!-- <th>{{ $t('id') }}</th> -->
@@ -23,7 +23,8 @@
               <tr v-for="(item, index) in slotProps.items" :key="index">
                 <!-- <td>{{ item.id }}</td> -->
                 <td>
-                  <a class="link link-primary" :href="`https://www.tiktok.com/@${item.username}`" target="_blank">@{{ item.username }}</a>
+                  <a class="link link-primary" :href="`https://www.tiktok.com/@${item.username}`" target="_blank">@{{
+                    item.username }}</a>
                 </td>
 
                 <td>

@@ -7,7 +7,7 @@
       </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               ``
               <tr>
@@ -34,7 +34,8 @@
                 <td>{{ post_comment.account_count }}</td>
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="add_topic(post_comment)">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="add_topic(post_comment)">
                       {{ $t('addTopic') }}
                     </button>
                   </div>
@@ -54,7 +55,8 @@
         <h3 class="font-bold text-lg">Add Post Comments!</h3>
         <label class="input input-bordered flex items-center gap-2 my-4">
           Post Url
-          <input type="text" class="grow" placeholder="https://www.tiktok.com/@ferchugimenez/video/" v-model="new_post_url" />
+          <input type="text" class="grow" placeholder="https://www.tiktok.com/@ferchugimenez/video/"
+            v-model="new_post_url" />
         </label>
         <div class="modal-action">
           <form method="dialog">

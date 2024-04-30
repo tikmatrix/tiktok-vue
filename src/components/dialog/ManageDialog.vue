@@ -6,7 +6,7 @@
       </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <th>{{ $t('id') }}</th>
@@ -24,8 +24,10 @@
                 <td>{{ parseInt(watcher.status) === 0 ? $t('disable') : $t('enable') }}</td>
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="editWatcher(watcher)">{{ $t('edit') }}</button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deleteWatcher(watcher)">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="editWatcher(watcher)">{{ $t('edit') }}</button>
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      @click="deleteWatcher(watcher)">
                       {{ $t('delete') }}
                     </button>
                   </div>

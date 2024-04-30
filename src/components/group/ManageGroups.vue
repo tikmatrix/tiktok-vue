@@ -6,7 +6,7 @@
       </template>
       <template v-slot:default="slotProps">
         <div class="overflow-x-auto">
-          <table class="table">
+          <table class="table table-sm">
             <thead>
               <tr>
                 <th>{{ $t('id') }}</th>
@@ -31,9 +31,12 @@
 
                 <td>
                   <div class="space-x-4">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="editgroup(group)">{{ $t('edit') }}</button>
-                    <button class="btn btn-sm btn-success" @click="addMaterial(group)">{{ $t('addMaterial') }}:{{ group.unused_material_count }}</button>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" @click="deletegroup(group)">{{ $t('delete') }}</button>
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                      @click="editgroup(group)">{{ $t('edit') }}</button>
+                    <button class="btn btn-sm btn-success" @click="addMaterial(group)">{{ $t('addMaterial') }}:{{
+                      group.unused_material_count }}</button>
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      @click="deletegroup(group)">{{ $t('delete') }}</button>
                   </div>
                 </td>
               </tr>
@@ -54,7 +57,8 @@
         </form>
         <h3 class="font-bold text-lg">Upload Progress</h3>
         <div class="py-4">
-          <progress class="progress progress-success w-full" :value="upload_progress" :max="max_upload_progress"></progress>
+          <progress class="progress progress-success w-full" :value="upload_progress"
+            :max="max_upload_progress"></progress>
         </div>
       </div>
     </dialog>
@@ -64,7 +68,7 @@
 <script>
 import Modal from '../Modal.vue'
 import MyButton from '../Button.vue'
-import Add from './Add.vue'
+import Add from './EditGroup.vue'
 import Pagination from '../Pagination.vue'
 
 export default {

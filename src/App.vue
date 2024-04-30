@@ -5,9 +5,9 @@
   <template v-if="!agentRunning">
     <RunAgentTips />
   </template>
-  <div class="flex flex-row items-start bg-base-300" v-else>
+  <div class="flex flex-row items-start bg-base-300 h-screen w-screen" v-else>
     <Sidebar @menu_selected="menu_selected" :selectedItem="selectedItem" />
-    <div class="">
+    <div class="flex-1 p-4 rounded-lg">
       <div
         class="bg-base-100 text-base-content sticky top-0 z-10 flex 
         h-16 w-full justify-center bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)]">
@@ -77,7 +77,7 @@
   <vue-draggable-resizable v-if="device && device.serial" :w="411" :h="677" :resizable="false" :parent="false" :z="20"
     drag-handle=".drag"
     class="bg-base-100 fixed top-16 left-16 border-1 border-base-300 justify-center items-center flex flex-col">
-    <Miniremote :max_size="1200" :device="device" :index="device.index" :big="true" />
+    <Miniremote :device="device" :index="device.index" :big="true" :key="device.serial + '_big'" />
   </vue-draggable-resizable>
   <dialog ref="page_dialog" class="modal">
     <div class="modal-box w-11/12 max-w-5xl">

@@ -97,7 +97,6 @@ export default {
       settings: {
         proxy_url: 'http://127.0.0.1:8090'
       },
-      accounts: [],
       group: {
         like_probable: 0,
         floow_probable: 0,
@@ -150,19 +149,12 @@ export default {
       })
 
     },
-
-    get_accounts_by_device() {
-      this.$service.get_accounts_by_device({
-        device: this.device.serial
-      }).then(res => {
-        this.accounts = res.data
-        this.get_group_by_account()
-      })
-    },
-    get_group_by_account() {
-      if (this.accounts.length === 0) return
+    get_group_by_id() {
+      if (this.device.group_id == 0) {
+        return;
+      }
       this.$service.get_group_by_id({
-        id: this.accounts[0].group_id
+        id: this.device.group_id
       }).then(res => {
         this.group = res.data
       })
@@ -175,7 +167,7 @@ export default {
   },
   mounted() {
     this.get_settings()
-    this.get_accounts_by_device()
+    this.get_group_by_id()
   },
 }
 </script>

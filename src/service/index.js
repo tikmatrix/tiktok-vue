@@ -587,10 +587,10 @@ export function get_group_by_id({ id }) {
     url: api.get_group_by_id
   })
 }
-export function move_to_group({ src_id, dst_id }) {
+export function move_to_group(data) {
   return request({
-    method: 'get',
-    params: { src_id, dst_id },
+    method: 'post',
+    data,
     url: api.move_to_group
   })
 }

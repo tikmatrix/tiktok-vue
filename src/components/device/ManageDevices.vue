@@ -1,24 +1,21 @@
 <template>
   <div class="w-full">
-    <!-- <BatchButtons :devices="devices" /> -->
-    <!-- <div class="divider"></div> -->
-    
     <Pagination ref="device_panel" :items="devices" :searchKeys="['serial', 'account']" :showRefBtn="false">
       <template v-slot:buttons>
         <div class="p-2 bg-accent rounded-lg shadow-md ml-2">
-            <div class="form-control center">
-                <label class="swap swap-flip">
-                  <input type="checkbox" @change="toggleUsbTcp" :checked="isTcp" />
-                  <div class="swap-on ml-1">
-                    <font-awesome-icon icon="fa-solid fa-network-wired" />
-                    <kbd class="kbd">TCP</kbd>
-                  </div>
-                  <div class="swap-off ml-1">
-                    <font-awesome-icon icon="fas fa-plug" />
-                    <kbd class="kbd">USB</kbd>
-                  </div>
-                </label>
-            </div>
+          <div class="form-control center">
+            <label class="swap swap-flip">
+              <input type="checkbox" @change="toggleUsbTcp" :checked="isTcp" />
+              <div class="swap-on ml-1">
+                <font-awesome-icon icon="fa-solid fa-network-wired" />
+                <kbd class="kbd">TCP</kbd>
+              </div>
+              <div class="swap-off ml-1">
+                <font-awesome-icon icon="fas fa-plug" />
+                <kbd class="kbd">USB</kbd>
+              </div>
+            </label>
+          </div>
         </div>
 
         <div class="p-2 bg-base-300 rounded-lg shadow-md ml-2" @click="expand">
@@ -27,37 +24,40 @@
           </label>
         </div>
         <MyButton class="btn btn-success ml-2" @click="showHiddenDevices" label="showHiddenDevices" />
-       </template>
+      </template>
       <template v-slot:default="slotProps">
-      <div class="flex flex-wrap gap-2 p-4">
-       
-        <div class="flex flex-wrap gap-2 flex-1">
-          <div
-            v-for="(device, index) in devices" 
-            :key="device.serial">
-            <Miniremote 
-              :device="device" 
-              :index="index"
-               />
+        <div class="flex flex-wrap gap-2 p-4">
+
+          <div class="flex flex-wrap gap-2 flex-1">
+            <div v-for="(device, index) in devices" :key="device.serial">
+              <Miniremote :device="device" :index="index" :key="device.serial" />
+            </div>
           </div>
         </div>
-      </div>
-        <div v-if="slotProps.items.length == 0&&settings.adb_mode=='TCP'" class="p-4">
+        <div v-if="slotProps.items.length == 0 && settings.adb_mode == 'TCP'" class="p-4">
           <div role="alert" class="alert alert-error">
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
             <span>Plase wait 10 seconds ! System is scanning and connecting your net devices.</span>
           </div>
-          
+
         </div>
-        <div v-if="slotProps.items.length == 0&&settings.adb_mode=='USB'"  class="p-4">
+        <div v-if="slotProps.items.length == 0 && settings.adb_mode == 'USB'" class="p-4">
           <div role="alert" class="alert alert-error">
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
             <span>No devices found! Please connect your device via USB!</span>
           </div>
         </div>
       </template>
     </Pagination>
-   
+
   </div>
 </template>
 <script>
@@ -88,9 +88,9 @@ export default {
       fullscreen: false,
     }
   },
-  
+
   methods: {
-    
+
     expand() {
       // fullscreen: fixed top-0 left-0 w-screen h-screen z-10
       if (this.fullscreen) {
@@ -102,7 +102,7 @@ export default {
         this.$refs.device_panel.$el.classList.remove('z-10')
         this.$refs.device_panel.$el.classList.remove('overflow-y-auto')
         this.fullscreen = false
-      }else{
+      } else {
         this.$refs.device_panel.$el.classList.add('w-screen')
         this.$refs.device_panel.$el.classList.add('h-screen')
         this.$refs.device_panel.$el.classList.add('fixed')
@@ -112,7 +112,7 @@ export default {
         this.$refs.device_panel.$el.classList.add('overflow-y-auto')
         this.fullscreen = true
       }
-      
+
     },
     get_groups() {
       this.$service
@@ -158,12 +158,12 @@ export default {
           console.log(err)
         })
     },
-    showHiddenDevices(){
+    showHiddenDevices() {
       this.$emitter.emit('show-hidden-devices')
     }
-    
+
   },
-  
+
   mounted() {
     this.get_settings()
   },

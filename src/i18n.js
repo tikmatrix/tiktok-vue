@@ -256,6 +256,7 @@ export const i18n = createI18n({
       general: 'General',
       toolbox: 'Toolbox',
       moveToGroup: 'Move To Group',
+      noDevicesSelected: 'No Devices Selected',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -454,6 +455,7 @@ export const i18n = createI18n({
       clearAll: '清空所有',
       allStatus: '全部状态',
       moveToGroup: '移动到分组',
+      noDevicesSelected: '未选择设备',
     }
   }
 })

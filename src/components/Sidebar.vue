@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white m-4 flex flex-col rounded-lg shadow">
+  <div class="bg-white m-4 flex flex-col rounded-lg shadow max-w-96">
     <div class="bg-blue-500 p-4 rounded-t-lg">
       <div class="flex flex-row items-center">
         <font-awesome-icon icon="fa-brands fa-tiktok" class="text-white h-8 w-8 mr-2" />
@@ -148,11 +148,22 @@ export default {
   emits: ['menu_selected'],
   methods: {
     moveToGroup(src_id, dst_id) {
-      this.$service.move_to_group({ src_id: src_id, dst_id: dst_id }).then(res => {
+      let serials = []
+      for (let i = 0; i < this.selections[src_id].length; i++) {
+        serials.push(this.selections[src_id][i])
+      }
+      if (serials.length == 0) {
+        this.$emitter.emit('showToast', this.$t('noDevicesSelected'))
+        for (let i = 0; i < this.groups.length; i++) {
+          this.$refs['moveToGroupMenu_' + this.groups[i].id][0].removeAttribute('open')
+        }
+        this.$refs.moveToGroupMenu.removeAttribute('open')
+        return
+      }
+      this.$service.move_to_group({ serials: serials, dst_id: dst_id }).then(res => {
         this.refreshSelections()
         this.$refs.moveToGroupMenu.removeAttribute('open')
         for (let i = 0; i < this.groups.length; i++) {
-          // console.log(this.$refs['moveToGroupMenu_' + this.groups[i].id])
           this.$refs['moveToGroupMenu_' + this.groups[i].id][0].removeAttribute('open')
         }
       })
@@ -257,7 +268,7 @@ export default {
         this.selectedAlls[this.groups[i].id] = false
         this.groupDevices[this.groups[i].id] = this.devices.filter(device => device.group_id === this.groups[i].id)
       }
-      this.selections[0] = this.devices.filter(device => this.selection.includes(device.serial))
+      this.selections[0] = this.devices.filter(device => this.selection.includes(device.serial)).map(device => device.serial)
       this.selectedAlls[0] = this.selections[0].length > 0
       for (let i = 0; i < this.groups.length; i++) {
         let group_id = this.groups[i].id

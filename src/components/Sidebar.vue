@@ -76,8 +76,8 @@
             </label>
             <font-awesome-icon icon="fa-solid fa-edit" class="text-blue-500 cursor-pointer ml-2"
               @click="selectItem({ name: 'editGroup', group: item })"></font-awesome-icon>
-            <font-awesome-icon icon="fa-solid fa-upload" class="text-blue-500 cursor-pointer ml-2"
-              @click="uploadVideos(item.id)"></font-awesome-icon>
+            <!-- <font-awesome-icon icon="fa-solid fa-upload" class="text-blue-500 cursor-pointer ml-2"
+              @click="uploadVideos(item.id)"></font-awesome-icon> -->
             <font-awesome-icon icon="fa-solid fa-trash" class="text-red-500 cursor-pointer ml-2"
               @click="deleteGroup(item.id)"></font-awesome-icon>
             <span class="label-text text-xs text-right flex-1">{{ $t('selected') }}

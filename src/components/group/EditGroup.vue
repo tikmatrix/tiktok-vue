@@ -196,10 +196,7 @@ export default {
           topic: group.topic
         })
         .then(() => {
-          this.get_groups()
-        })
-        .catch(err => {
-          console.log(err)
+          this.$emitter.emit('closePageDialog', {})
         })
     },
   },

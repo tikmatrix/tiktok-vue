@@ -456,6 +456,8 @@ export const i18n = createI18n({
       allStatus: '全部状态',
       moveToGroup: '移动到分组',
       noDevicesSelected: '未选择设备',
+      showTimeSetting: '显示时间设置',
+      showLanguageSetting: '显示语言设置',
     }
   }
 })

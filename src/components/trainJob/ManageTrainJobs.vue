@@ -44,7 +44,7 @@
                     train_job.username }}</a>
                 </td>
                 <td>
-                  <a class="cursor-pointer underline text-blue-500"
+                  <a class="link link-primary"
                     @click="show_device(train_job.device_index, train_job.device)">{{ train_job.device_index }} - {{
                       train_job.device }}</a>
                 </td>

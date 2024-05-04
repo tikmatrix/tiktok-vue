@@ -49,19 +49,25 @@
         </div>
       </template>
     </Pagination>
-
-    <Modal :show="currentAccount" @close="currentAccount = null">
-      <Edit :account="currentAccount" @update="updateAccount" />
-    </Modal>
-    <Modal :show="showAddAccount" @close="showAddAccount = false">
-      <Add @add="addAccount" />
-    </Modal>
-
-
+    <dialog ref="edit_dialog" class="modal">
+      <div class="modal-box">
+        <Edit :account="currentAccount" @update="updateAccount" v-if="currentAccount"/>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+  </dialog>
+  <dialog ref="add_dialog" class="modal">
+      <div class="modal-box">
+        <Add @add="addAccount" />
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+  </dialog>
   </div>
 </template>
 <script>
-import Modal from '../Modal.vue'
 import MyButton from '../Button.vue'
 import Edit from './Edit.vue'
 import Add from './Add.vue'
@@ -70,7 +76,6 @@ import { inject } from 'vue'
 export default {
   name: 'app',
   components: {
-    Modal,
     MyButton,
     Edit,
     Add,
@@ -83,8 +88,7 @@ export default {
   data() {
     return {
       accounts: [],
-      currentAccount: null,
-      showAddAccount: false,
+      currentAccount: {},
     }
   },
   methods: {
@@ -110,7 +114,7 @@ export default {
         })
     },
     add_account() {
-      this.showAddAccount = true
+      this.$refs.add_dialog.showModal()
     },
     addAccount(account) {
       this.$service
@@ -124,6 +128,7 @@ export default {
         .then(() => {
           this.showAddAccount = false
           this.get_accounts()
+          this.$refs.add_dialog.close()
         })
         .catch(err => {
           console.log(err)
@@ -131,6 +136,8 @@ export default {
     },
     editAccount(account) {
       this.currentAccount = account
+      console.log(this.currentAccount)
+      this.$refs.edit_dialog.showModal()
     },
     updateAccount(account) {
       this.$service
@@ -144,6 +151,7 @@ export default {
         })
         .then(() => {
           this.get_accounts()
+          this.$refs.edit_dialog.close()
         })
         .catch(err => {
           console.log(err)

@@ -24,7 +24,6 @@
             <!-- this hidden checkbox controls the state -->
             <input type="checkbox" class="theme-controller" value="dark" />
             <input type="checkbox" class="theme-controller" value="dark" />
-
             <!-- sun icon -->
             <svg class="swap-off fill-current w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path
@@ -77,6 +76,8 @@
             </label>
             <font-awesome-icon icon="fa-solid fa-edit" class="text-blue-500 cursor-pointer ml-2"
               @click="selectItem({ name: 'editGroup', group: item })"></font-awesome-icon>
+            <font-awesome-icon icon="fa-solid fa-upload" class="text-blue-500 cursor-pointer ml-2"
+              @click="uploadVideos(item.id)"></font-awesome-icon>
             <font-awesome-icon icon="fa-solid fa-trash" class="text-red-500 cursor-pointer ml-2"
               @click="deleteGroup(item.id)"></font-awesome-icon>
             <span class="label-text text-xs text-right flex-1">{{ $t('selected') }}
@@ -250,11 +251,16 @@ export default {
         return
       }
       this.$service.move_to_group({ serials: serials, dst_id: dst_id }).then(res => {
-        this.refreshSelections()
         this.$refs.moveToGroupMenu.removeAttribute('open')
         for (let i = 0; i < this.groups.length; i++) {
           this.$refs['moveToGroupMenu_' + this.groups[i].id][0].removeAttribute('open')
         }
+        this.devices.map(device=>{
+          if(serials.includes(device.serial)){
+            device.group_id=dst_id
+          }
+        })
+        this.refreshSelections()
       })
     },
     get_groups() {
@@ -365,7 +371,6 @@ export default {
           .filter(device => this.selection.includes(device.serial)).map(device => device.serial)
         this.selectedAlls[group_id] = this.selections[group_id].length > 0
       }
-
     },
     get_menus() {
       this.$service.get_menus().then(res => {
@@ -397,7 +402,7 @@ export default {
     this.get_settings()
     this.get_groups()
     this.$emitter.on('openDevice', (device) => {
-      this.selection.push(device.serial)
+      this.selection=[device.serial]
       this.refreshSelections()
     });
     this.$emitter.on('closeDevice', (device) => {
@@ -405,7 +410,7 @@ export default {
       this.refreshSelections()
     });
     this.$emitter.on('adbEventData', (data) => {
-      console.log("receive adbEventData: ", data)
+      console.log("receive adbEventData: ", data, this.selection,)
       this.adb_command(data.args)
 
     });

@@ -107,8 +107,9 @@ export default {
       this.input_callback = this.post_adb_input_dialog
     },
     post_input_dialog() {
-      let encodedText = btoa(this.input_dialog_text)
-      this.$emitter.emit('adbEventData',{args:['shell', 'am', 'broadcast', '-a', 'ADB_INPUT_TEXT', '--es', 'text', `"${encodedText}"`]})
+      // let encodedText = btoa(encodeURIComponent(this.input_dialog_text));
+      // this.$emitter.emit('adbEventData',{args:['shell', 'am', 'broadcast', '-a', 'ADB_INPUT_TEXT', '--es', 'text', `"${encodedText}"`]})
+      this.$emitter.emit('setText',this.input_dialog_text)
       this.input_dialog_text = ''
       this.$refs.input_dialog.close()
     },

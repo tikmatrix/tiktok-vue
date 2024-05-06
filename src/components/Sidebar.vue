@@ -394,7 +394,26 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    }
+    },
+    setText(text) {
+      this.$service.set_text({
+          text: text,
+          serials: this.selection,
+      }).then(res => {
+        console.log(res)
+      })
+    },
+    initDevice() {
+      this.$emitter.emit('showToast', this.$t('initStart'))
+      this.adb_command(['uninstall', 'com.github.tikmatrix'])
+      this.adb_command(['uninstall', 'com.github.tikmatrix.test'])
+      setTimeout(() => {
+        this.adb_command(['install', '-r', '-t', '-g', 'bin/apk/com.github.tikmatrix.apk'])
+        this.adb_command(['install', '-r', '-t', '-g', 'bin/apk/com.github.tikmatrix.test.apk'])
+        this.$emitter.emit('showToast', this.$t('initSuccess'))
+      }, 3000)
+
+    },
   },
   mounted() {
     this.$i18n.locale = this.locale
@@ -426,6 +445,9 @@ export default {
     });
     this.$emitter.on('initDevice', () => {
       this.initDevice()
+    });
+    this.$emitter.on('setText', (text) => {
+      this.setText(text)
     });
     this.$emitter.on('eventData', (data) => {
       let new_data = {

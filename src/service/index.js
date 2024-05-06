@@ -594,3 +594,10 @@ export function move_to_group(data) {
     url: api.move_to_group
   })
 }
+export function set_text(data) {
+  return request({
+    method: 'post',
+    data,
+    url: api.set_text
+  })
+}

@@ -343,7 +343,6 @@ export default {
     selectAll(id) {
       this.selectedAlls[id] = !this.selectedAlls[id]
       console.log(this.devices);
-
       if (this.selectedAlls[id]) {
         if (id == 0) {
           this.selection = this.devices.map(device => device.serial)

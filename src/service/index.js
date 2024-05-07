@@ -279,11 +279,11 @@ export function get_settings() {
     url: api.settings
   })
 }
-export function update_settings({ proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix, password }) {
+export function update_settings(settings) {
   return request({
     method: 'put',
     url: api.settings,
-    data: { proxy_url, server_url, timezone, wifi_name, wifi_password, adb_mode, version, openai_api_key, email_suffix, password }
+    data: settings
   })
 }
 export function get_task_status({ serial }) {
@@ -306,29 +306,7 @@ export function add_license({ key }) {
     data: { key }
   })
 }
-export function get_avatars() {
-  return request({
-    method: 'get',
-    url: api.avatar
-  })
-}
-export function upload_avatar(formData) {
-  return post({
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    url: api.avatar,
-    data: formData
-  })
-}
-export function delete_avatar({ id }) {
-  return request({
-    method: 'delete',
-    url: api.avatar,
 
-    params: { id }
-  })
-}
 export function count_train_job_by_status() {
   return request({
     method: 'get',

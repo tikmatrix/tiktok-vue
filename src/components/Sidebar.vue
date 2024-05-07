@@ -71,7 +71,7 @@
           <div class="flex flex-row form-control items-center" v-for="(item, index) in groups" :key="item.id">
             <label class="label cursor-pointer">
               <input type="checkbox" class="checkbox checkbox-sm" @change="selectAll(item.id)"
-                :checked="selectedAlls[item.id]" />
+                :checked="isSelectAll(item.id)" />
               <span class="label-text text-blue-500  text-xs">{{ item.name }}({{ groupDevices[item.id].length }})</span>
             </label>
             <font-awesome-icon icon="fa-solid fa-edit" class="text-blue-500 cursor-pointer ml-2"
@@ -101,7 +101,7 @@
 
           <div class="flex flex-row form-control items-center">
             <label class="label cursor-pointer">
-              <input type="checkbox" class="checkbox checkbox-sm" @change="selectAll(0)" :checked="selectedAlls[0]" />
+              <input type="checkbox" class="checkbox checkbox-sm" @change="selectAll(0)" :checked="isSelectAll(0)" />
               <span class="label-text text-blue-500 text-xs">{{ $t('allDevices') }} ({{ groupDevices[0].length
                 }})</span>
             </label>
@@ -170,11 +170,10 @@ export default {
         { name: 'postBots', icon: 'upload' },
         { name: 'editBots', icon: 'video' },
         { name: 'musics', icon: 'music' },
-        { name: 'avatars', icon: 'user-circle' },
         { name: 'publishJobs', icon: 'robot' },
         { name: 'trainJobs', icon: 'sync-alt' },
         { name: 'dialogWatcher', icon: 'exclamation-circle' },
-        { name: 'settings', icon: 'cogs' }
+        { name: 'settings', icon: 'cogs' },
       ],
       settings: {
         version: '0.0.1',
@@ -186,9 +185,9 @@ export default {
       selections: {
         0: [],
       },
-      selectedAlls: {
-        0: false
-      },
+      // selectedAlls: {
+      //   0: false
+      // },
       groupDevices: {
         0: [],
       },
@@ -340,10 +339,18 @@ export default {
           break
       }
     },
+    isSelectAll(id) {
+      return this.selections[id].length == this.groupDevices[id].length
+    },
     selectAll(id) {
-      this.selectedAlls[id] = !this.selectedAlls[id]
-      console.log(this.devices);
-      if (this.selectedAlls[id]) {
+      // if (this.isSelectAll(id)) {
+      //   this.selectedAlls[id]=false
+      // }else{
+      //   this.selectedAlls[id]=true
+      // }
+      // this.selectedAlls[id] = !this.selectedAlls[id]
+      // console.log(this.selectedAlls[id]);
+      if (!this.isSelectAll(id)) {
         if (id == 0) {
           this.selection = this.devices.map(device => device.serial)
         } else {
@@ -359,16 +366,16 @@ export default {
       this.groupDevices[0] = this.devices;
       for (let i = 0; i < this.groups.length; i++) {
         this.selections[this.groups[i].id] = []
-        this.selectedAlls[this.groups[i].id] = false
+        // this.selectedAlls[this.groups[i].id] = false
         this.groupDevices[this.groups[i].id] = this.devices.filter(device => device.group_id === this.groups[i].id)
       }
       this.selections[0] = this.devices.filter(device => this.selection.includes(device.serial)).map(device => device.serial)
-      this.selectedAlls[0] = this.selections[0].length > 0
+      // this.selectedAlls[0] = this.selections[0].length > 0
       for (let i = 0; i < this.groups.length; i++) {
         let group_id = this.groups[i].id
         this.selections[group_id] = this.devices.filter(device => device.group_id === group_id)
           .filter(device => this.selection.includes(device.serial)).map(device => device.serial)
-        this.selectedAlls[group_id] = this.selections[group_id].length > 0
+        // this.selectedAlls[group_id] = this.selections[group_id].length > 0
       }
     },
     get_menus() {

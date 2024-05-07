@@ -39,7 +39,6 @@
       <ManageComments v-if="selectedItem.name === 'comments'" />
       <ManageProxys v-if="selectedItem.name === 'proxys'" />
       <ManageMusics v-if="selectedItem.name === 'musics'" />
-      <ManageAvatars v-if="selectedItem.name === 'avatars'" />
       <ManagePublishJobs v-if="selectedItem.name === 'publishJobs'" />
       <ManageTrainJobs v-if="selectedItem.name === 'trainJobs'" />
       <ManageDialog v-if="selectedItem.name === 'dialogWatcher'" />
@@ -69,7 +68,6 @@ import ManageTrainJobs from './components/trainJob/ManageTrainJobs.vue'
 import ManageGroups from './components/group/ManageGroups.vue'
 import ManageMusics from './components/music/ManageMusics.vue'
 import ManageSettings from './components/settings/ManageSettings.vue'
-import ManageAvatars from './components/avatar/ManageAvatars.vue'
 import ManageComments from './components/comment/ManageComments.vue'
 import ManageProxys from './components/proxy/ManageProxys.vue'
 import ManagePostBots from './components/virtualHost/ManagePostBots.vue'
@@ -104,7 +102,6 @@ export default {
     ManageGroups,
     ManageMusics,
     ManageSettings,
-    ManageAvatars,
     ManageComments,
     ManageProxys,
     ManagePostBots,

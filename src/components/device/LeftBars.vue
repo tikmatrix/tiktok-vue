@@ -56,6 +56,12 @@
     </button>
     <button
       class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip"
+      :data-tip="$t('profileTips')" @click="$emitter.emit('scriptEventData', { name: 'profile', args: [] })">
+      <font-awesome-icon icon="fa-solid fa-user-plus" class="h-4 w-4 text-blue-500" />
+      <span class="text-xs block font-normal">{{ $t('profile') }}</span>
+    </button>
+    <button
+      class="btn bg-transparent hover:bg-transparent border-0 text-black-500 hover:text-blue-700 p-0 block tooltip"
       :data-tip="$t('train')" @click="train">
       <font-awesome-icon icon="fa-solid fa-graduation-cap" class="h-4 w-4 text-blue-500" />
       <span class="text-xs block font-normal">{{ $t('train') }}</span>
@@ -77,6 +83,7 @@
         <font-awesome-icon icon="fa-solid fa-graduation-cap" class="h-4 w-4 text-blue-500" />
         <span class="text-xs block font-normal">{{ $t('match') }}</span>
         </button> -->
+        
 
 
   </div>

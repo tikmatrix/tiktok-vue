@@ -16,7 +16,6 @@ const api = {
   task_status: '/api/device/task_status',
   get_license: '/api/get_license',
   add_license: '/api/add_license',
-  avatar: '/api/avatar',
   count_train_job_by_status: '/api/train_job/count_by_status',
   count_publish_job_by_status: '/api/publish_job/count_by_status',
   count_online_device: '/api/device/count_online',

@@ -31,7 +31,7 @@
   <dialog ref="page_dialog" class="modal">
     <div class="modal-box w-11/12 max-w-5xl">
       <h3 class="font-bold text-lg">{{ page_title }}</h3>
-      <ManageDashboard v-if="selectedItem.name === 'dashboard'" />
+      <ManageDashboard v-if="selectedItem.name === 'dashboard' && $refs.page_dialog.open" />
       <ManageGroups v-if="selectedItem.name === 'groups'" />
       <ManageAccounts v-if="selectedItem.name === 'accounts'" />
       <ManageAnalytics v-if="selectedItem.name === 'analytics'" />
@@ -45,7 +45,7 @@
       <ManageSettings v-if="selectedItem.name === 'settings'" />
       <ManagePostBots v-if="selectedItem.name === 'postBots'" />
       <ManageEditBots v-if="selectedItem.name === 'editBots'" />
-      <EditGroup :group="selectedItem.group" v-if="selectedItem.name === 'editGroup'" />
+      <EditGroup :group="selectedItem.group" v-if="selectedItem.name === 'editGroup' && $refs.page_dialog.open" />
     </div>
     <form method="dialog" class="modal-backdrop">
       <button>close</button>
@@ -126,6 +126,14 @@ export default {
     menu_selected(item) {
       this.selectedItem = item
       this.$refs.page_dialog.showModal()
+      console.log(this.$refs.page_dialog.open)
+      //listener
+      this.$refs.page_dialog.addEventListener('close', () => {
+        console.log(this.$refs.page_dialog.open)
+        console.log('close',(this.selectedItem.name === 'editGroup' && this.$refs.page_dialog.open))
+        this.selectedItem = {}
+
+      })
     },
     checkAuth() {
       if (import.meta.env.VITE_APP_MOCK === 'true') {

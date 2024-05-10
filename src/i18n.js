@@ -271,6 +271,7 @@ export const i18n = createI18n({
       avatarsPath: 'Avatars Path',
       profile: 'Profile',
       profileTips: 'Setup Profile',
+      proxys: 'Proxys',
     },
     'zh-CN': {
       siteName: 'Tik Matrix',
@@ -486,6 +487,7 @@ export const i18n = createI18n({
       avatarsPath: '头像路径',
       profile: '资料',
       profileTips: '设置个人资料',
+      proxys: '代理',
     }
   }
 })

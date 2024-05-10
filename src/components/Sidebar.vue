@@ -340,7 +340,7 @@ export default {
       }
     },
     isSelectAll(id) {
-      return this.selections[id].length == this.groupDevices[id].length
+      return this.groupDevices[id].length>0 && this.selections[id].length == this.groupDevices[id].length
     },
     selectAll(id) {
       // if (this.isSelectAll(id)) {

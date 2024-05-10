@@ -201,6 +201,7 @@ export default {
     },
   },
   mounted() {
+    console.log('mounted', this.group)
     this.mygroup = this.group
     if (this.mygroup.train_start_time) {
       const [train_time1, train_time2, train_time3, train_time4, train_time5, train_time6] = this.mygroup.train_start_time.split(',')
@@ -220,6 +221,9 @@ export default {
       this.publish_time5 = publish_time5
       this.publish_time6 = publish_time6
     }
+  },
+  unmounted() {
+    console.log('unmounted', this.group)
   }
 }
 </script>

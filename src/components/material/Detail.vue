@@ -1,10 +1,11 @@
 <template>
   <div class="m-4 flex">
     <template v-if="material.name.endsWith('.mp4') || material.name.endsWith('.webm')">
-      <video :src="`${material.name}`" class="max-w-[800px] max-h-[800px] rounded-lg" controls></video>
+      <video :src="`${$config.apiUrl}/${material.name}`" class="max-w-[800px] max-h-[800px] rounded-lg"
+        controls></video>
     </template>
     <template v-else>
-      <img :src="`${material.name}`" class="max-w-[800px] max-h-[800px] rounded-lg" />
+      <img :src="`${$config.apiUrl}/${material.name}`" class="max-w-[800px] max-h-[800px] rounded-lg" />
     </template>
   </div>
 </template>
@@ -17,6 +18,9 @@ export default {
         return {}
       }
     }
+  },
+  unmounted() {
+    console.log('unmounted detail', this.material)
   }
 }
 </script>

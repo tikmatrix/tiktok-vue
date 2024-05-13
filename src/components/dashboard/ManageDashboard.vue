@@ -101,7 +101,20 @@
       </div>
     </div>
   </div>
-  <input id="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden />
+  <input ref="upload_material_input" type="file" v-on:change="on_upload_material" multiple hidden />
+  <!-- upload progress dialog -->
+  <dialog ref="upload_dialog" class="modal">
+    <div class="modal-box">
+      <form method="dialog">
+        <!-- <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button> -->
+      </form>
+      <h3 class="font-bold text-lg">Upload Progress</h3>
+      <div class="py-4">
+        <progress class="progress progress-success w-full" :value="upload_progress"
+          :max="max_upload_progress"></progress>
+      </div>
+    </div>
+  </dialog>
 </template>
 <script>
 import CountUp from '../Countup.vue'
@@ -128,7 +141,10 @@ export default {
       running_comment_job_count: 0,
       comment_job_queue: 0,
       groups: [],
-      currentGroup: null
+      currentGroup: null,
+      uploading_id: null,
+      upload_progress: 10,
+      max_upload_progress: 100
     }
   },
   methods: {
@@ -295,33 +311,41 @@ export default {
     },
     addMaterial(group) {
       this.currentGroup = group
-      document.getElementById('upload_material_input').click()
+      this.$refs.upload_material_input.click()
     },
 
     on_upload_material(e) {
       this.uploading_id = this.currentGroup.id
       const totalFiles = e.target.files.length
       let index = 0
-
+      this.upload_progress = index
+      this.max_upload_progress = totalFiles
+      this.$refs.upload_dialog.showModal()
       const uploadBatch = () => {
         const formData = new FormData()
         formData.append('group_id', this.currentGroup.id)
+        let count = 0
         for (let i = 0; i < 10 && index < totalFiles; i++, index++) {
           formData.append('files', e.target.files[index])
+          this.currentGroup.unused_material_count++
+          count++
         }
         this.$service
           .upload_material(formData)
           .then(() => {
-            this.get_unused_material_count(this.currentGroup)
+            this.upload_progress = index
             if (index < totalFiles) {
               uploadBatch() // Upload next batch
             } else {
               this.uploading_id = null // Finish uploading
+              this.$refs.upload_material_input.value = ''
+              this.$refs.upload_dialog.close()
             }
           })
           .catch(err => {
             console.log(err)
             this.uploading_id = null
+            index -= count
           })
       }
 

@@ -13,7 +13,6 @@
                 <th>{{ $t('name') }}</th>
                 <th>{{ $t('status') }}</th>
                 <th>{{ $t('preview') }}</th>
-                <th>{{ $t('group') }}</th>
                 <th>{{ $t('actions') }}</th>
               </tr>
             </thead>
@@ -35,7 +34,6 @@
                     </template>
                   </div>
                 </td>
-                <td>{{ material.group_name }}</td>
                 <td>
                   <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     @click="delete_material(material)">
@@ -49,9 +47,14 @@
       </template>
     </Pagination>
 
-    <Modal :show="showDetailView" @close="showDetailView = false">
-      <Detail :material="currentMaterial" />
-    </Modal>
+    <dialog ref="detail_modal" class="modal">
+      <div class="modal-box w-10/12 max-w-4xl">
+        <form method="dialog">
+          <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+        <Detail :material="currentMaterial" v-if="currentMaterial && $refs.detail_modal.open" />
+      </div>
+    </dialog>
     <dialog id="confirm_modal" class="modal">
       <div class="modal-box">
         <form method="dialog">
@@ -69,23 +72,19 @@
 </template>
 <script>
 import Detail from './Detail.vue'
-import Modal from '../Modal.vue'
 import MyButton from '../Button.vue'
 import Pagination from '../Pagination.vue'
 export default {
   name: 'app',
   components: {
     Detail,
-    Modal,
     MyButton,
     Pagination
   },
   data() {
     return {
       materials: [],
-      groups: [],
       currentMaterial: null,
-      showDetailView: false,
     }
   },
   methods: {
@@ -105,15 +104,19 @@ export default {
         .get_materials()
         .then(res => {
           this.materials = res.data
-          this.get_groups()
         })
         .catch(err => {
           console.log(err)
         })
     },
     show_material(material) {
-      this.showDetailView = true
+      console.log(material)
       this.currentMaterial = material
+      this.$refs.detail_modal.showModal()
+      //listener
+      this.$refs.detail_modal.addEventListener('close', () => {
+        this.currentMaterial = null
+      })
     },
     delete_material(material) {
       this.$service
@@ -127,23 +130,7 @@ export default {
           console.log(err)
         })
     },
-    get_groups() {
-      this.$service
-        .get_groups()
-        .then(res => {
-          this.groups = res.data
-          this.materials.forEach(material => {
-            if (material.group_id === 0) {
-              material.group_name = this.$t('defaultGroup')
-              return
-            }
-            material.group_name = this.groups.find(group => group.id === material.group_id).name
-          })
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+
   },
   mounted() {
     this.get_materials()

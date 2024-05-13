@@ -32,19 +32,19 @@
     <div class="modal-box w-11/12 max-w-5xl">
       <h3 class="font-bold text-lg">{{ page_title }}</h3>
       <ManageDashboard v-if="selectedItem.name === 'dashboard' && $refs.page_dialog.open" />
-      <ManageGroups v-if="selectedItem.name === 'groups'" />
-      <ManageAccounts v-if="selectedItem.name === 'accounts'" />
-      <ManageAnalytics v-if="selectedItem.name === 'analytics'" />
-      <ManageMaterials v-if="selectedItem.name === 'materials'" />
-      <ManageComments v-if="selectedItem.name === 'comments'" />
-      <ManageProxys v-if="selectedItem.name === 'proxys'" />
-      <ManageMusics v-if="selectedItem.name === 'musics'" />
-      <ManagePublishJobs v-if="selectedItem.name === 'publishJobs'" />
-      <ManageTrainJobs v-if="selectedItem.name === 'trainJobs'" />
-      <ManageDialog v-if="selectedItem.name === 'dialogWatcher'" />
-      <ManageSettings v-if="selectedItem.name === 'settings'" />
-      <ManagePostBots v-if="selectedItem.name === 'postBots'" />
-      <ManageEditBots v-if="selectedItem.name === 'editBots'" />
+      <ManageGroups v-if="selectedItem.name === 'groups' && $refs.page_dialog.open" />
+      <ManageAccounts v-if="selectedItem.name === 'accounts' && $refs.page_dialog.open" />
+      <ManageAnalytics v-if="selectedItem.name === 'analytics' && $refs.page_dialog.open" />
+      <ManageMaterials v-if="selectedItem.name === 'materials' && $refs.page_dialog.open" />
+      <ManageComments v-if="selectedItem.name === 'comments' && $refs.page_dialog.open" />
+      <ManageProxys v-if="selectedItem.name === 'proxys' && $refs.page_dialog.open" />
+      <ManageMusics v-if="selectedItem.name === 'musics' && $refs.page_dialog.open" />
+      <ManagePublishJobs v-if="selectedItem.name === 'publishJobs' && $refs.page_dialog.open" />
+      <ManageTrainJobs v-if="selectedItem.name === 'trainJobs' && $refs.page_dialog.open" />
+      <ManageDialog v-if="selectedItem.name === 'dialogWatcher' && $refs.page_dialog.open" />
+      <ManageSettings v-if="selectedItem.name === 'settings' && $refs.page_dialog.open" />
+      <ManagePostBots v-if="selectedItem.name === 'postBots' && $refs.page_dialog.open" />
+      <ManageEditBots v-if="selectedItem.name === 'editBots' && $refs.page_dialog.open" />
       <EditGroup :group="selectedItem.group" v-if="selectedItem.name === 'editGroup' && $refs.page_dialog.open" />
     </div>
     <form method="dialog" class="modal-backdrop">
@@ -122,7 +122,7 @@ export default {
     }
   },
   methods: {
-    
+
     menu_selected(item) {
       this.selectedItem = item
       this.$refs.page_dialog.showModal()
@@ -130,7 +130,7 @@ export default {
       //listener
       this.$refs.page_dialog.addEventListener('close', () => {
         console.log(this.$refs.page_dialog.open)
-        console.log('close',(this.selectedItem.name === 'editGroup' && this.$refs.page_dialog.open))
+        console.log('close', (this.selectedItem.name === 'editGroup' && this.$refs.page_dialog.open))
         this.selectedItem = {}
 
       })

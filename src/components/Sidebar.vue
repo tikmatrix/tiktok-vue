@@ -76,8 +76,8 @@
             </label>
             <font-awesome-icon icon="fa-solid fa-edit" class="text-blue-500 cursor-pointer ml-2"
               @click="selectItem({ name: 'editGroup', group: item })"></font-awesome-icon>
-            <!-- <font-awesome-icon icon="fa-solid fa-upload" class="text-blue-500 cursor-pointer ml-2"
-              @click="uploadVideos(item.id)"></font-awesome-icon> -->
+            <font-awesome-icon icon="fa-solid fa-film" class="text-blue-500 cursor-pointer ml-2"
+              @click="selectItem({ name: 'materials', group: item })"></font-awesome-icon>
             <font-awesome-icon icon="fa-solid fa-trash" class="text-red-500 cursor-pointer ml-2"
               @click="deleteGroup(item.id)"></font-awesome-icon>
             <span class="label-text text-xs text-right flex-1">{{ $t('selected') }}
@@ -254,9 +254,9 @@ export default {
         for (let i = 0; i < this.groups.length; i++) {
           this.$refs['moveToGroupMenu_' + this.groups[i].id][0].removeAttribute('open')
         }
-        this.devices.map(device=>{
-          if(serials.includes(device.serial)){
-            device.group_id=dst_id
+        this.devices.map(device => {
+          if (serials.includes(device.serial)) {
+            device.group_id = dst_id
           }
         })
         this.refreshSelections()
@@ -340,7 +340,7 @@ export default {
       }
     },
     isSelectAll(id) {
-      return this.groupDevices[id].length>0 && this.selections[id].length == this.groupDevices[id].length
+      return this.groupDevices[id].length > 0 && this.selections[id].length == this.groupDevices[id].length
     },
     selectAll(id) {
       // if (this.isSelectAll(id)) {
@@ -403,8 +403,8 @@ export default {
     },
     setText(text) {
       this.$service.set_text({
-          text: text,
-          serials: this.selection,
+        text: text,
+        serials: this.selection,
       }).then(res => {
         console.log(res)
       })
@@ -427,7 +427,7 @@ export default {
     this.get_settings()
     this.get_groups()
     this.$emitter.on('openDevice', (device) => {
-      this.selection=[device.serial]
+      this.selection = [device.serial]
       this.refreshSelections()
     });
     this.$emitter.on('closeDevice', (device) => {

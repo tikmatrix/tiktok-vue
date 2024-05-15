@@ -1,4 +1,4 @@
-# tiktok-vue
+# move to [tiktok-matrix](https://github.com/tikmatrix/tiktok-matrix)
 
 [tiktok-server](https://github.com/niostack/tiktok-server) is the back end of this project
 
